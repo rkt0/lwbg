@@ -1,0 +1,235 @@
+:root {
+  --extra-space-left:   432px;
+  --extra-space-top:    324px;
+  --extra-space-bottom: 324px;
+  --raw-board-width:   4176px;
+  --raw-board-height:  2232px;
+  --human-space-size: 72px;
+  --trex-space-size: 24px;
+  --jump-land-width:  78px;
+  --jump-land-height: 42px;
+  --jump-land-border-width: 3px;
+  --human-piece-width:  36px;
+  --human-piece-height: 60px;
+  --raptor-piece-width: 144px;
+  --raptor-piece-height: 72px;
+  --trex-piece-width:  75px;
+  --trex-piece-height: 48px;
+}
+
+.full-board {
+  position: absolute;
+  width: calc(
+    var(--raw-board-width) +
+    var(--extra-space-left, 0px) +
+    var(--extra-space-right, 0px)
+  );
+  height: calc(
+    var(--raw-board-height) +
+    var(--extra-space-top, 0px) +
+    var(--extra-space-bottom, 0px)
+  );
+}
+
+.human-space {
+  position: absolute;
+  box-sizing: border-box;
+  width:  var(--human-space-size);
+  height: var(--human-space-size);
+  background: #929e74;
+  border: solid var(--board-border-width)
+          var(--color-border);
+  border-radius: 50%;
+}
+
+.human-space.move,
+.human-space.selected {
+  border-color: var(--color-selected);
+}
+
+.human-space.path:not(.selected) {
+  border-color: var(--color-path);
+}
+
+.human-space.dead,
+.human-space.under-building {
+  display: none;
+}
+
+.trex-space {
+  position: absolute;
+  box-sizing: border-box;
+  width:  var(--trex-space-size);
+  height: var(--trex-space-size);
+  background: var(--color-dino-space);
+  border: solid var(--board-border-width)
+          var(--color-border);
+}
+
+.human-edge,
+.trex-edge,
+.building {
+  stroke: var(--color-border);
+  stroke-width: var(--board-border-width);
+}
+
+.human-space.more-visible {
+  border-color: #fff;
+}
+.human-edge.more-visible {
+  stroke: #fff;
+}
+
+.human-edge.path {
+  stroke: var(--color-path);
+}
+
+.raptor-space {
+  stroke: var(--color-dino-space);
+  stroke-width: var(--board-border-width);
+  fill: none;
+}
+
+.building {
+  pointer-events: auto;
+}
+
+.raptor-space.move,
+.building.move {
+  stroke: var(--color-selected);
+  fill:   var(--color-selected-fill);
+}
+
+.raptor-space.path,
+.building.path {
+  stroke: var(--color-path);
+  fill:   var(--color-path-fill);
+}
+
+.raptor-entrance {
+  stroke: var(--color-dino-space);
+  stroke-width: 4px;
+  fill: #d69724;
+  pointer-events: none;
+}
+
+.jump-land-marker {
+  position: absolute;
+  box-sizing: border-box;
+  width: var(--jump-land-width);
+  height: var(--jump-land-height);
+  line-height: calc(
+    var(--jump-land-height) -
+    var(--jump-land-border-width) * 2
+  );
+  border: solid var(--jump-land-border-width)
+          var(--color-border);
+  background: #8c7899;
+  pointer-events: none;
+}
+
+.jump-land-marker::before {
+  content: attr(data-jl);
+  text-transform: capitalize;
+}
+
+.helo {
+  position: absolute;
+  pointer-events: none;
+}
+
+#human-edges,
+#trex-edges,
+#buildings-map {
+  pointer-events: none;
+}
+
+.debug-labels {
+  font: var(--font-large);
+  pointer-events: none;
+}
+
+#human-space-labels {
+  fill: #00a;
+}
+
+#raptor-point-labels {
+  fill: var(--color-selected);
+}
+
+#raptor-space-labels {
+  fill: var(--color-dino-space);
+}
+
+.human-piece {
+  position: absolute;
+  width:  var(--human-piece-width);
+  height: var(--human-piece-height);
+  --color-highlight: #008b4bcc;
+}
+
+.raptor-piece {
+  position: absolute;
+  width:  var(--raptor-piece-width);
+  height: var(--raptor-piece-height);
+  --color-highlight: var(--color-dino-highlighted);
+}
+
+.trex-piece {
+  position: absolute;
+  width:  var(--trex-piece-width);
+  height: var(--trex-piece-height);
+  --color-highlight: var(--color-dino-highlighted);
+}
+
+.human-component {
+  position: absolute;
+  left: 6px;  /*  ceil((36px - 25px) / 2) */
+  top:  5px;  /* floor((60px - 49px) / 2) */
+              /* component size is 25x49  */
+}
+
+.raptor-component {
+  position: absolute;
+  left: 9px;  /* ceil((144px - 126px) / 2) */
+  top:  9px;  /* ceil(( 72px -  55px) / 2) */
+              /* component size is 126x55  */
+}
+
+.trex-component {
+  position: absolute;
+  left: 0px;  /* floor((75px - 75px) / 2) */
+  top:  0px;  /* floor((48px - 48px) / 2) */
+              /* component size is 75x48  */
+}
+
+.dead-marker {
+  display: none;
+  font: var(--font-large);
+}
+
+.dead-marker::before {
+  content: "X";
+}
+
+.dead .dead-marker {
+  display: block;
+}
+
+.dead img.human-component {
+  opacity: 0.6;
+}
+
+.human-piece.selected,
+.raptor-piece.selected {
+  outline: solid var(--board-border-width)
+           var(--color-selected);
+}
+
+.human-piece.dead {
+  --color-highlight: #aaac;
+}
+
+.highlighted.on {
+  background: var(--color-highlight);
+}

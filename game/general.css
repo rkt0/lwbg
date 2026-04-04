@@ -1,0 +1,63 @@
+:root {
+
+  --color-dark: #16171a;
+  --color-text:   var(--color-dark);
+  --color-border: var(--color-dark);
+
+  --color-selected:       #fabf00;
+  --color-selected-fill:  #fabf0066;
+  --color-zoom:           #fabf00aa;
+  --color-player-control: #fabf0044;
+
+  --color-path:      #a67e00;
+  --color-path-fill: #a67e0033;
+
+  --color-dino-space:       #a3061b;
+  --color-dino-highlighted: #a3061bcc;
+
+  --font-normal: bold 24px Atkinson;
+  --font-large:  bold 36px Atkinson;
+
+  --board-border-width: 6px;
+
+  /* Also see custom propertes in animation.js */
+
+}
+
+@font-face {
+  font-family: Atkinson;
+  src: url(font/atkinson-bold.ttf) format("truetype");
+  font-weight: bold;
+}
+
+body {
+  margin: 0px;
+  overscroll-behavior: none;
+  background: var(--color-dark);
+  color: var(--color-text);
+  text-align: center;
+  user-select: none;
+  font: var(--font-normal);
+  image-rendering: pixelated;
+}
+
+::-webkit-scrollbar {
+  width:  0;
+  height: 0;
+}
+
+h1 {
+  font: var(--font-large);
+}
+
+#title-container {
+  background: #5a5c5f;
+  display: none;
+}
+
+#start-container,
+#gameplay-container {
+  background-image:  url("img/bg/jungle.png");
+  background-repeat: repeat;
+  display:           none;
+}

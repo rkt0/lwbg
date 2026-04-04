@@ -1,0 +1,257 @@
+'use strict';
+
+const edit = {};
+
+edit.clear = () => {
+  edit.on = false;
+  edit.gsPrevious = {};
+  edit.selected = {species: null, piece: null};
+  edit.dieCodes = {movement: 0, continue: 0};
+};
+edit.clear();
+
+// Banner
+{
+  const editGame = gsNew => {
+    gp.clearMoveObject();
+    for (const [p, s] of gsNew.humans.entries()) {
+      edit.relocatePiece('human', p, s);
+    }
+    gp.adjustHumanPositions();
+    for (const [p, s] of gsNew.raptors.entries()) {
+      edit.relocatePiece('raptor', p, s);
+    }
+    edit.relocatePiece('trex', null, gsNew.trex);
+    // Must assign object after piece moves since
+    //   otherwise piece moves are skipped due to
+    //   guard clause in functions above
+    Object.assign(gs, gsNew);
+    gp.checkGameOver();
+    if (gs.turn === 'over') return;
+    ui.displayTurn(gs.turn);
+    if (gs.phase === 'roll') {
+      ui.replaceButton('roll-display', 'roll-button');
+    } else {
+      ui.displayRollResult(true);
+    }
+    if (ai.control[gs.turn] && gs.phase !== 'roll') {
+      ui.showButton('ok-ai-move');
+    } else {
+      ui.hideButton('ok-ai-move');
+      if (gs.je) gp.startJumpEnter();
+    }
+    if (gs.turn === 'trex' && gs.phase === 'move') {
+      ui.showButton(
+        gs.rollN ? 'ok-trex-move' : 'ok-no-move'
+      );
+    }
+    ui.humanItemsClickable(gs.turn === 'human');
+    ui.raptorItemsClickable(gs.turn === 'raptor');
+  };
+  const endEditMode = () => {
+    $('#cancel-edits, #confirm-edits')
+        .prop('disabled', true);
+    edit.clear();
+    $('.selected').removeClass('selected');
+    $(
+      '.edit-control, .die-button-wrapper, ' +
+          '.edit-kill-human'
+    ).fadeOut(anim.time.editControlFade);
+    ui.showButton('show-more');
+    if (gs.turn === 'over') ui.showGameOver();
+  };
+  const cancelEdits = () => {
+    editGame(edit.gsPrevious);
+    endEditMode();
+  };
+  const confirmEdits = () => {
+    editGame(gs);
+    endEditMode();
+    autoSave.update(true);
+  };
+  $('<div></div>').attr('id', 'edit-mode-indicator')
+      .addClass('info edit-control banner')
+      .appendTo('#gameplay-menu');
+  $('<button></button>').attr('type', 'button')
+      .attr('id', 'cancel-edits')
+      .addClass('edit-control banner')
+      .click(cancelEdits).prop('disabled', true)
+      .appendTo('#gameplay-menu');
+  $('<button></button>').attr('type', 'button')
+      .attr('id', 'confirm-edits')
+      .addClass('edit-control banner')
+      .click(confirmEdits).prop('disabled', true)
+      .appendTo('#gameplay-menu');
+}
+
+// Turn and dice
+{
+
+  // Used for editing both turn and dice
+  const replaceDieValue = (species, type, value) => {
+    const cSel = `.face-${species}.face-${type}`;
+    $(cSel).css('display', 'none');
+    const x = type === 'movement' ? 'N' : 'Go';
+    gs[`roll${x}`] = value;
+    const aSel = `[data-roll="${value}"]`;
+    $(`${cSel}${aSel}`).css('display', 'block');
+    if (type === 'movement') {
+      gs.je = value === 'Jump' || value === 'Enter';
+    }
+  };
+
+  // Turn
+  const changeTurn = () => {
+    const species = gs.turn === 'trex' ? 'raptor' :
+        gs.turn === 'raptor' ? 'human' :
+        gp.nHumansOn(bd.humanStart) ? 'trex' :
+            'raptor';
+    gs.turn = species;
+    ui.displayTurn(species, true);
+    if (gs.phase === 'roll') return;
+    if (species === 'trex') gs.phase = 'move';
+    if (species === 'raptor') gs.phase = 'select';
+    const d = dice[species];
+    gs.rollN = d.movement[edit.dieCodes.movement];
+    gs.rollGo = species === 'trex' ? 0 :
+        d.continue[edit.dieCodes.continue];
+    replaceDieValue(species, 'movement', gs.rollN);
+    if (species !== 'trex') {
+      replaceDieValue(species, 'continue', gs.rollGo);
+    }
+    $('.die').css('display', 'none')
+        .removeClass('rolled no-animation');
+    $(`.die-${species}`)
+        .addClass('rolled no-animation')
+        .css('display', 'inline');
+    $('.die-button-wrapper').css('display', 'none');
+    $(`.die-button-wrapper-${species}`)
+        .css('display', 'block');
+  };
+  $('<div></div>').attr('id', 'turn-button-area')
+      .addClass('edit-control slot-turn')
+      .addClass('edit-button-area edit-turn')
+      .css('display', 'none')
+      .appendTo('#gameplay-menu');
+  $('<div></div>').addClass('flex-container')
+      .appendTo('#turn-button-area');
+  $('<button></button>').attr('type', 'button')
+      .attr('id', 'change-turn')
+      .addClass('obstructive')
+      .click(changeTurn)
+      .appendTo('#turn-button-area .flex-container');
+
+  // Dice
+  const unrollDice = () => {
+    gp.clearRoll();
+    const idsToHide = [
+      'decline-button', 'ok-no-move', 'ok-trex-move',
+      'roll-display',
+    ];
+    for (const id of idsToHide) ui.hideButton(id);
+    $('.edit-dice')
+        .fadeOut(anim.time.editControlFade);
+  };
+  $('<button></button>').attr('type', 'button')
+      .attr('id', 'unroll-dice')
+      .addClass('edit-control slot-cancel edit-dice')
+      .click(unrollDice).appendTo('#gameplay-menu');
+  $('<div></div>').attr('id', 'die-button-area')
+      .addClass('edit-control slot-roll')
+      .addClass('edit-button-area edit-dice')
+      .css('display', 'none')
+      .appendTo('#gameplay-menu');
+  $('<div></div>').addClass('flex-container')
+      .appendTo('#die-button-area');
+  const changeDie = (species, type) => {
+    const die = dice[species][type];
+    const current = die[edit.dieCodes[type]];
+    while(die[edit.dieCodes[type]] === current) {
+      edit.dieCodes[type]++;
+    }
+    if (die[edit.dieCodes[type]] === undefined) {
+      edit.dieCodes[type] = 0;
+    }
+    const changed = die[edit.dieCodes[type]];
+    replaceDieValue(species, type, changed);
+  };
+  const makeDieButton = (species, type, handler) => {
+    $('<div></div>').addClass('die-button-wrapper')
+        .addClass(`die-button-wrapper-${species}`)
+        .appendTo(
+          '#die-button-area .flex-container'
+        );
+    $('<button></button>').attr('type', 'button')
+        .attr('id', `die-button-${species}-${type}`)
+        .addClass('obstructive')
+        .click(() => changeDie(species, type))
+        .appendTo('.die-button-wrapper:last-child');
+  };
+  makeDieButton('human', 'movement');
+  makeDieButton('human', 'continue');
+  makeDieButton('raptor', 'movement');
+  makeDieButton('raptor', 'continue');
+  makeDieButton('trex', 'movement');
+
+}
+
+// Piece locations (also used for loading saved game)
+{
+  edit.relocatePiece = (species, piece, space) => {
+    let $p;
+    if (species === 'trex') {
+      if (gs.trex === space) return;
+      gs.trex = space;
+      $p = $('#trex-piece');
+    } else {
+      if (gs[`${species}s`][piece] === space) return;
+      gs[`${species}s`][piece] = space;
+      $p = $(`#${species}-piece-${piece}`);
+    }
+    if (species === 'human') {
+      $p.toggleClass('dead', space === bd.humanDead);
+    }
+    const [l, t] = pl[species][space];
+    $p.css({top: `${t}px`, left: `${l}px`});
+  };
+}
+
+// T-rex
+{
+  const editTrexAdvance = () => {
+    if (gs.trex === 0) return;
+    gp.moveTrex(gs.trex - 1, false, true);
+  };
+  const editTrexRetreat = () => {
+    if (gs.trex === bd.trexStart) return;
+    gp.moveTrex(gs.trex + 1, false, true);
+  };
+  $('<button></button>').attr('type', 'button')
+      .attr('id', 'edit-trex-advance')
+      .addClass('edit-control small-button')
+      .click(editTrexAdvance).appendTo('#trex-piece');
+  $('<button></button>').attr('type', 'button')
+      .attr('id', 'edit-trex-retreat')
+      .addClass('edit-control small-button')
+      .click(editTrexRetreat).appendTo('#trex-piece');
+}
+
+// Kill
+{
+  const editKillHuman = () => {
+    const piece = edit.selected.piece;
+    gp.moveHuman(piece, bd.humanDead, false);
+    $(`#human-piece-${piece} .edit-kill-human`)
+        .fadeOut(anim.time.editControlFade);
+    $('.selected').removeClass('selected');
+    ui.raptorItemsClickable(true);
+    edit.selected.species = null;
+    edit.selected.piece = null;
+  };
+  $('<button></button>').attr('type', 'button')
+      .addClass('edit-kill-human small-button')
+      .click(e => {
+        e.stopPropagation();
+        editKillHuman();
+      }).appendTo('.human-piece');
+}

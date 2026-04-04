@@ -1,0 +1,107 @@
+This uses the original version of Raptor AI Level 1,
+randNotAwayAll, which handles infinite distances in
+an undesirable way.
+
+See ai-performance-1.txt for improved results.
+
+
+
+nSaved	 rA		rNAA	 rC		 eS
+rA		0.28	0.11	0.02	0.00
+rF		2.20	1.30	0.41	0.08
+rAD		4.68	3.50	1.50	0.29
+eS		8.71	7.27	5.37	2.61
+
+-logit	 rA		rNAA	 rC		 eS
+rA		3.73	4.72	6.28	8.65
+rF		1.50	2.11	3.33	4.99
+rAD		0.45	0.89	1.95	3.70
+eS	   -0.97   -0.43	0.21	1.28
+
+
+
+Human: randAll   Raptor: randAll
+   0    1   2  3  4  5  6  7  8  9 10 11 12
+7464 2262 260 14  0  0  0  0  0  0  0  0  0
+Mean: 0.28   SD: 0.51   95% CI: (0.27, 0.29)
+
+Human: randAll   Raptor: randNotAwayAll
+   0   1  2  3  4  5  6  7  8  9 10 11 12
+8982 972 45  1  0  0  0  0  0  0  0  0  0
+Mean: 0.11   SD: 0.32   95% CI: (0.10, 0.11)
+
+Human: randAll   Raptor: randCloser
+   0   1  2  3  4  5  6  7  8  9 10 11 12
+9776 224  0  0  0  0  0  0  0  0  0  0  0
+Mean: 0.02   SD: 0.15   95% CI: (0.02, 0.03)
+
+Human: randAll   Raptor: evalSimple
+   0  1  2  3  4  5  6  7  8  9 10 11 12
+9979 21  0  0  0  0  0  0  0  0  0  0  0
+Mean: 0.00   SD: 0.05   95% CI: (0.00, 0.00)
+
+
+
+Human: randForward   Raptor: randAll
+  0    1    2    3    4   5   6  7  8  9 10 11 12
+987 2460 2824 2002 1062 451 171 34  9  0  0  0  0
+Mean: 2.20   SD: 1.42   95% CI: (2.17, 2.22)
+
+Human: randForward   Raptor: randNotAwayAll
+   0    1    2   3   4  5  6  7  8  9 10 11 12
+2587 3669 2377 981 297 72 14  1  2  0  0  0  0
+Mean: 1.30   SD: 1.11   95% CI: (1.28, 1.32)
+
+Human: randForward   Raptor: randCloser
+   0    1   2  3  4  5  6  7  8  9 10 11 12
+6303 3270 402 25  0  0  0  0  0  0  0  0  0
+Mean: 0.41   SD: 0.58   95% CI: (0.40, 0.43)
+
+Human: randForward   Raptor: evalSimple
+   0   1  2  3  4  5  6  7  8  9 10 11 12
+9211 767 21  1  0  0  0  0  0  0  0  0  0
+Mean: 0.08   SD: 0.28   95% CI: (0.08, 0.09)
+
+
+
+Human: randAvoidDanger   Raptor: randAll
+ 0   1   2    3    4    5    6   7   8  9 10 11 12
+18 137 658 1586 2315 2259 1724 854 330 96 22  1  0
+Mean: 4.68   SD: 1.63   95% CI: (4.65, 4.71)
+
+Human: randAvoidDanger   Raptor: randNotAwayAll
+  0   1    2    3    4    5   6   7  8  9 10 11 12
+153 746 1815 2524 2215 1493 730 240 74  9  1  0  0
+Mean: 3.50   SD: 1.56   95% CI: (3.47, 3.53)
+
+Human: randAvoidDanger   Raptor: randCloser
+   0    1    2    3   4  5  6  7  8  9 10 11 12
+1554 3784 3122 1234 265 39  2  0  0  0  0  0  0
+Mean: 1.50   SD: 1.01   95% CI: (1.48, 1.52)
+
+Human: randAvoidDanger   Raptor: evalSimple
+   0    1   2  3  4  5  6  7  8  9 10 11 12
+7391 2346 249 12  2  0  0  0  0  0  0  0  0
+Mean: 0.29   SD: 0.51   95% CI: (0.28, 0.30)
+
+
+
+Human: evalSimple   Raptor: randAll
+ 0  1  2  3   4   5   6    7    8    9   10   11  12
+ 0  5 21 74 233 449 806 1205 1515 1718 1709 1439 826
+Mean: 8.71   SD: 2.11   95% CI: (8.67, 8.75)
+
+Human: evalSimple   Raptor: randNotAwayAll
+ 0  1  2   3   4    5    6    7    8    9   10  11  12
+ 2 24 83 293 684 1087 1437 1692 1646 1422 1001 493 136
+Mean: 7.27   SD: 2.16   95% CI: (7.23, 7.32)
+
+Human: evalSimple   Raptor: randCloser
+ 0   1   2    3    4    5    6    7   8   9  10 11 12
+37 211 555 1099 1619 1830 1690 1365 887 466 183 52  6
+Mean: 5.37   SD: 2.08   95% CI: (5.33, 5.41)
+
+Human: evalSimple   Raptor: evalSimple
+  0    1    2    3    4   5   6   7  8  9 10 11 12
+785 1937 2452 2053 1458 817 340 118 27 12  1  0  0
+Mean: 2.61   SD: 1.63   95% CI: (2.58, 2.64)

@@ -1,0 +1,77 @@
+X ~ Geo(1/2)
+Y|X ~ Bin(X,1/2)
+
+P(Y=y|X=x) = x! / 2^x y! (x-y)!
+
+P(X=x, Y=y) = [x! / 2^x y! (x-y)!] [1 / 2^x]
+  
+      x!      1
+= ---------  ---
+  y! (x-y)!  4^x
+
+= C(x,y) (1/4)^x I(x≥1, 0≤y≤x)
+
+	Let r = y+1, k = x-y => y = r-1, x = k+r-1
+
+= C(k+r-1, r-1) (1/4)^(k+r-1) I(k≥0, r≥1)
+
+= C(k+r-1, k) (1/4)^k (1/4)^(r-1) I(k≥0, r≥1, (k,r)≠(0,1))
+
+= C(k+r-1, k) (1/4)^k (3/4)^r
+	* (3/4)^(-r) (1/4)^(r-1)
+	* I(k≥0, r≥1, (k,r)≠(0,1))
+
+Above is the joint pmf of K and R
+
+Then the marginal pmf of R for r≠1 is
+
+P(R=r) = 4 (1/3)^r I(r≥2)
+
+This sums to 2/3, so P(R=1) = 1/3.
+
+P(R=1) = 1/3
+P(R=r) = 4 (1/3)^r, r≥2
+
+Then
+
+P(Y=0) = 1/3
+P(Y=y) = 4 (1/3)^(y+1), y≥1
+
+
+P(Y=0) = 1/3
+P(Y=1) = 4/9
+P(Y=2) = 4/27
+P(Y=3) = 4/81
+etc.
+
+
+Alternative formulation of Y:
+
+ Z  ~ Bern(2/3)
+Y|Z ~ Z * Geo1(2/3)
+
+where Geo1 denotes the geometric distibution on {1,2,…}
+
+
+E(Y) = E[E(Y|Z)] = 1
+
+Var(Y) = E[Var(Y|Z)] + Var[E(Y|Z)]
+= (2/3)(3/4) + (3/2)^2 (2/3)(1/3)
+= 1/2 + 1/2
+= 1
+
+
+So, rather astonishingly, E(Y) = Var(Y) = 1.
+
+Thus, Y can probably be approximated reasonably well by a Poisson(1) distribution.
+
+
+
+
+Thus, again rather astonishingly and quite conveniently, the number of spaces moved by the T-rex in n turns is approximately a Poisson(n) random variable.
+
+Under this approximation, the waiting time for m T-rex moves is Gamma(11,1).
+
+
+Then the probability that the T-rex has failed to arrive at the start space within t T-rex turns is approximately the probability that a Gamma(11,1) is greater than t.
+

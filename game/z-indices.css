@@ -1,0 +1,93 @@
+/* Top level within gameplay container */
+
+#raptor-map {
+  z-index: 0;
+}
+
+#human-edges,
+#trex-edges {
+  z-index: 1;
+}
+
+.human-space,
+.trex-space {
+  z-index: 2;
+}
+
+#buildings-map {
+  z-index: 3;
+}
+
+.jump-land-marker {
+  z-index: 4;
+}
+
+.human-piece,
+.helo {
+  z-index: 5;
+}
+
+.raptor-piece,
+.trex-piece {
+  z-index: 6;
+}
+
+.human-piece.selected {
+  z-index: 7;
+}
+
+.debug-labels {
+  z-index: 8;
+}
+
+#gameplay-menu,
+.edit-control {
+  z-index: 9;
+}
+
+#message-container,
+#toggle-audio {
+  z-index: 10;
+}
+
+#game-over,
+#edit-mode-banner {
+  z-index: 11;
+}
+
+#more-menu {
+  z-index: 12;
+}
+
+
+/* Subordinate levels */
+
+.human-component.shoes       {z-index: 0;}
+.human-component.pants       {z-index: 1;}
+.human-component.skin        {z-index: 2;}
+.human-component.under       {z-index: 3;}
+.human-component.shirt       {z-index: 4;}
+.human-component.hat         {z-index: 5;}
+.human-component.shadow      {z-index: 6;}
+.human-component.dead-marker {z-index: 7;}
+
+.raptor-component.base   {z-index: 0;}
+.raptor-component.shadow {z-index: 1;}
+
+.trex-component.base   {z-index: 0;}
+.trex-component.shadow {z-index: 1;}
+
+#zoom-display {z-index: 0;}
+.zoom-button  {z-index: 1;}
+
+
+/* Player control screen relative to containers */
+
+#start-container,
+#gameplay-container {
+  z-index: 0;
+}
+
+#player-control {
+  z-index: 1;
+}

@@ -1,0 +1,14 @@
+Overview:
+1. Danger from raptors
+2. Danger from T-rex
+3. Survival probability using danger results and
+   remaining distance to goal
+
+Clearly danger estimation must depend on whether 
+STOP or GO was rolled.
+
+If the next turn belongs to the raptors
+(human STOP or raptor GO),
+the danger calculations should be easier,
+so let's deal with that possibility first.
+

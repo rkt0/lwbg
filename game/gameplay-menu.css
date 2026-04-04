@@ -1,0 +1,271 @@
+:root {
+  --button-width: 111px;
+  --button-height: 57px;
+  --zoom-display-height:  87px;
+  --turn-display-height:  87px;
+  --roll-display-height: 201px;
+  --zoom-button-width:  36px;
+  --zoom-button-height: 36px;
+  --edit-banner-button-width: 183px;
+  --edit-turn-die-button-height: 48px;
+}
+
+
+/* Overall */
+
+#gameplay-menu {
+  position: fixed;
+}
+
+#gameplay-menu button,
+#gameplay-menu .info {
+  box-sizing: border-box;
+  position: absolute;
+  width: var(--button-width);
+  border-style: none solid solid none;
+  padding: 0px;
+}
+
+#gameplay-menu button {
+  height: var(--button-height);
+}
+
+.default-action {
+  background: #00cb98aa;
+}
+
+
+/* Permanent area */
+
+#show-more::before {
+  content: "• • •";
+}
+
+#zoom-display {
+  top: var(--button-height);
+  height: var(--zoom-display-height);
+  background: var(--color-zoom);
+}
+
+#gameplay-menu .zoom-button {
+  box-sizing: border-box;
+  top: calc(
+    var(--button-height) +
+    var(--zoom-display-height) -
+    var(--button-border-width) -
+    var(--zoom-button-height)
+  );
+  width:  var(--zoom-button-width);
+  height: var(--zoom-button-height);
+  border-style: none;
+  background: none;
+  backdrop-filter: none;
+}
+
+#gameplay-menu .zoom-button.current {
+  box-shadow: none;
+  cursor: default;
+  color: var(--color-text);
+}
+
+#zoom-out::after {
+  content: "–";
+}
+
+#zoom-default {
+  left: var(--zoom-button-width);
+}
+
+#zoom-default::after {
+  content: "•";
+}
+
+#zoom-in {
+  left: calc(var(--zoom-button-width) * 2);
+}
+
+#zoom-in::after {
+  content: "+";
+}
+
+.zoom-indicator {
+  display: none;
+  position: relative;
+  top: calc(0px - var(--zoom-button-height) / 2);
+  margin-bottom:
+       calc(0px - var(--zoom-button-height) * 5 / 6);
+}
+.zoom-indicator::before {
+  content: "▾";
+}
+
+.current .zoom-indicator {
+  display: block;
+}
+
+.slot-turn {
+  top: calc(
+    var(--button-height) +
+    var(--zoom-display-height)
+  );
+}
+
+#turn-display {
+  height: var(--turn-display-height);
+}
+
+
+/* Changing area */
+
+.slot-roll {
+  top: calc(
+    var(--button-height) +
+    var(--zoom-display-height) +
+    var(--turn-display-height)
+  );;
+}
+
+#roll-button::before {
+  content: "Roll";
+}
+
+#roll-display {
+  height: var(--roll-display-height);
+}
+
+.slot-cancel {
+  top: calc(
+    var(--button-height) +
+    var(--zoom-display-height) +
+    var(--turn-display-height) +
+    var(--roll-display-height)
+  );;
+}
+
+#cancel-button {
+  background: #ff2f4eaa;
+}
+
+#cancel-button::before {
+  content: "Cancel";
+}
+
+#decline-button::before {
+  content: "Decline";
+}
+
+#ok-trex-move::before,
+#ok-ai-move::before {
+  content: "Move";
+}
+
+#ok-no-move::before {
+  content: "OK";
+}
+
+#confirm-button {
+  top: calc(
+    2 * var(--button-height) +
+    var(--zoom-display-height) +
+    var(--turn-display-height) +
+    var(--roll-display-height)
+  );
+}
+
+#confirm-button::before {
+  content: "Confirm";
+}
+
+
+/* Edit mode controls */
+
+#gameplay-menu .edit-control.banner {
+  width: var(--edit-banner-button-width);
+  height: var(--button-height);
+  line-height: calc(
+    var(--button-height) - var(--button-border-width)
+  );
+}
+
+#edit-mode-indicator::before {
+  content: "Edit Mode On";
+}
+
+#cancel-edits {
+  left:  var(--edit-banner-button-width);
+}
+
+#cancel-edits::before {
+  content: "Cancel Edits";
+}
+
+#confirm-edits {
+  left: calc(var(--edit-banner-button-width) * 2);
+}
+
+#confirm-edits::before {
+  content: "Confirm Edits";
+}
+
+#gameplay-menu .edit-button-area {
+  position: absolute;
+  left: var(--button-width);
+  width: var(--button-width);
+}
+
+#gameplay-menu .edit-button-area .flex-container {
+  align-items: start;
+}
+
+#gameplay-menu .edit-button-area button {
+  height: var(--edit-turn-die-button-height);
+  border-top-style: solid;
+}
+
+#gameplay-menu .edit-button-area .slim:not(:hover) {
+  width: 33px;
+  color: #0000;
+}
+
+#turn-button-area {
+  height: calc(
+    var(--turn-display-height) -
+    var(--button-border-width)
+  );
+}
+
+#change-turn::before {
+  content: "Change";
+}
+
+#die-button-area {
+  height: calc(
+    var(--roll-display-height) -
+    var(--button-border-width)
+  );
+}
+
+.die-button-wrapper {
+  box-sizing: border-box;
+  display: none;
+  height: calc(
+    var(--die-content-height) +
+    var(--die-border-width) * 2
+  );
+  padding-top: calc(
+    (
+      var(--die-content-height) +
+      var(--die-border-width) * 2 -
+      var(--edit-turn-die-button-height)
+    ) / 2
+  );
+  margin-left: -21px;
+}
+
+.die-button-wrapper button::before {
+  content: "Change";
+}
+
+#unroll-dice::before {
+  content: "Unroll";
+}

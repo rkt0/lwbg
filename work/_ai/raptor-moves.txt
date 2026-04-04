@@ -1,0 +1,438 @@
+BEGIN SUMMARY
+
+Let X be the number of ordinary (non-enter) moves that
+the raptors get to make on a single turn.
+
+Then P(X = 0) = 1/11, while for x > 0,
+
+	P(X = x) = sqrt(12/5) * (a^(x+1) - b^(x+1)),
+
+where
+
+	a = (2 + sqrt(15)) / 11,
+	b = (2 - sqrt(15)) / 11.
+
+Alternatively, these probabilities may be calculated
+via the recurrence relation (for x > 2)
+
+	P(X = x) = 4/11 * P(X = x-1) + 1/11 * P(X = x-2)
+
+with the initial values
+
+	P(X = 1) =  48/121,
+	P(X = 2) = 324/1331,
+
+noting that the closed-form solution is obtained by
+solving precisely this recurrence relation.
+
+The cdf of X is
+
+	P(X ≤ x) = 1 - 
+		sqrt(12/5) * (a^(x+2)/(1-a) - b^(x+2)/(1-b).
+
+For the purposes of the game, a more useful result is
+
+	P(X ≥ x) = 
+		sqrt(12/5) * (a^(x+1)/(1-a) - b^(x+1)/(1-b),
+
+i.e., the probability that the raptors will be able
+to move at least x spaces on their turn.
+
+END SUMMARY
+
+
+
+
+
+
+Let X be the number of ordinary (non-enter) moves that
+the raptors get to make on a single turn.
+
+A single raptor movement die roll M satisfies 
+P(M = 0) = 1/6,
+P(M = 1) = 2/3,
+P(M = 2) = 1/6.
+The number of raptor die rolls on a raptor turn is a 
+Geometric(1/2) random variable on {1, 2, ...}.
+If (0, GO) is rolled, then the situation simply repeats, so we can ignore that possibility altogether and treat the results of a raptor die roll as:
+
+RESULT		PROBABILITY
+(0, STOP)	1/11
+(1, STOP)	4/11
+(2, STOP)	1/11
+(1, GO)		4/11
+(2, GO)		1/11
+
+First few possibilities:
+
+P(X = 0) = f(0, STOP) = 1/11.
+P(X = 1) = f(1, STOP) + f(1, GO) * P(X = 0)
+		 = 4/11 + (4/11)*(1/11) = 48/121.
+P(X = 2) = f(2, STOP) + f(2, GO) * P(X = 0)
+		   + f(1, GO) * P(X = 1)
+		 = 1/11 + (1/11)(1/11) + (4/11)(48/121)
+		 = 324/1331.
+P(X = 3) = f(2, GO) * P(X = 1) + f(1, GO) * P(X = 2)
+		 = (1/11)(48/121) + (4/11)(324/1331)
+		 = 1824/14641.
+P(X = 4) = f(2, GO) * P(X = 2) + f(1, GO) * P(X = 3)
+		 = (1/11)(324/1331) + (4/11)(1824/14641)
+		 = 10860/161051.
+
+Clearly there is a recursive characterization:
+
+P(X = 0) = 1/11 = 11/121 = 121/1331,
+P(X = 1) =        48/121 = 524/1331,
+P(X = 2) =                 324/1331,
+
+and for x > 2,
+P(X = x) = 1/11 * P(X = x-2) + 4/11 * P(X = x-1).
+
+This is a linear recurrence relation:
+p_n = 4/11 * p_{n-1} + 1/11 * p_{n-2}.
+
+Its characteristic equation is
+r^2 - 4/11 * r - 1/11 = 0,
+or equivalently,
+11 * r^2 - 4 * r - 1 = 0.
+
+The roots of this equation are
+lambda = (4 ± √(16+44))/22
+	   = 2/11 * (1 ± √15),
+i.e.,
+lambda_1 = 2/11 * (1 + √15),
+lambda_2 = 2/11 * (1 - √15).
+
+Then the general solution of the recurrence relation
+is given by
+p_n = C_1 * lambda_1 ^ n + C_2 * lambda_2 ^ n.
+
+We can use p_3 and p_4 to solve for C_1 and C_2:
+p_3 = 1824/14641 =
+	C_1*(2/11*(1+√15))^3 + C_2*(2/11*(1-√15))^3
+<=> 
+2^5 * 3 * 19 / 11^4 =
+	2^3 / 11^3 * (C_1 * (1+√15)^3 + C_2 * (1-√15)^3)
+<=>
+228/11 = C_1 * (1+√15)^3 + C_2 * (1-√15)^3,
+and
+p_4 = 10860/161051 = 
+	C_1*(2/11*(1+√15))^4 + C_2*(2/11*(1-√15))^4
+<=>
+2^2 * 3 * 5 * 181 / 11^5 =
+	2^4 / 11^4 * (C_1 * (1+√15)^4 + C_2 * (1-√15)^4)
+<=>
+2715/44 = C_1 * (1+√15)^4 + C_2 * (1-√15)^4.
+
+Thus the equations are
+ 228/11 = C_1 * (1+√15)^3 + C_2 * (1-√15)^3,
+2715/44 = C_1 * (1+√15)^4 + C_2 * (1-√15)^4.
+
+Let a_1 = C_1 * (1+√15)^3, a_2 = C_2 * (1-√15)^3.
+Then the equations above become
+a_1 + a_2 = 228/11,
+(1+√15) * a_1 + (1-√15) * a_2 = 2715/44.
+The second is equivalent to
+(a_1 + a_2) + √15 (a_1 - a_2) = 2715/44,
+and substituting the first into this yields
+228/11 + √15 (a_1 - a_2) = 2715/44,
+i.e.,
+a_1 - a_2 = 1803/44√15.
+Then
+a_1 = (228/11 + 1803/44√15)/2
+	= (912√15 + 1803)/88√15,
+a_2 = (912√15 - 1803)/88√15,
+or equivalently,
+a_1 = 114/11 + 1803/88√15,
+a_2 = 114/11 - 1803/88√15.
+
+Just out of curiosity, let's find the following:
+(1+√15)^3 = 1 + 3√15 + 45 + 15√15 = 46 + 18√15,
+(1-√15)^3 = 1 - 3√15 + 45 - 15√15 = 46 - 18√15,
+which doesn't seem to be useful.
+
+Thus, for x ≥ 3,
+P(X = x) = 
+(114/11 + 1803/88√15)/(1+√15)^3 * (2/11 (1+√15))^x +
+(114/11 - 1803/88√15)/(1+√15)^3 * (2/11 (1-√15))^x
+=
+(13680 + 1803√15)/1320 * (2/11)^x * (1+√15)^(x-3) +
+(13680 - 1803√15)/1320 * (2/11)^x * (1-√15)^(x-3)
+=
+[(2/11)^x / 1320] * 
+[(13680 + 1803√15) * (1+√15)^(x-3)
+	+ (13680 - 1803√15) * (1-√15)^(x-3)].
+To simplify this a bit, let
+g = 13680, h = 1803, and work with y = x - 3.
+
+Then for y ≥ 0,
+P(X = 3 + y) = 
+(2/11)^y / 219615 * 
+[(g+h√15) * (1+√15)^y + (g-h√15) * (1-√15)^y].
+
+Now note that
+(1+√15)^y = \sum_{i=0}^y B(y,i) 15^(i/2),
+(1-√15)^y = \sum_{i=0}^y B(y,i) (-1)^i 15^(i/2).
+
+Let z = floor(y/2). Then
+(1+√15)^y = \sum_{i=0}^y B(y,i) 15^(i/2)
+= \sum_{i even, 0≤i≤y} B(y,i) 15^(i/2) + 
+  \sum_{i odd,  0≤i≤y} B(y,i) 15^(i/2)
+= \sum_{j=0}^z [B(y, 2j) 15^j + B(y, 2j+1) 15^j * √15]
+= \sum_{j=0}^z 15^j * [B(y, 2j) + B(y, 2j+1) * √15],
+and
+(1-√15)^y = \sum_{i=0}^y B(y,i) (-1)^i 15^(i/2)
+= \sum_{i even, 0≤i≤y} B(y,i) 15^(i/2) + 
+  \sum_{i odd,  0≤i≤y} B(y,i) (-1) 15^(i/2)
+= \sum_{j=0}^z [B(y, 2j) 15^j - B(y, 2j+1) 15^j * √15]
+= \sum_{j=0}^z 15^j * [B(y, 2j) - B(y, 2j+1) * √15].
+
+Then
+(g+h√15) * (1+√15)^y + (g-h√15) * (1-√15)^y
+=
+\sum_{j=0}^z 15^j [
+	g * B(y, 2j) + g * √15 * B(y, 2j+1)
+	+ h * √15 * B(y, 2j) + h * 15 * B(y, 2j+1)
+]
++
+\sum_{j=0}^z 15^j [
+	g * B(y, 2j) - g * √15 * B(y, 2j+1)
+	- h * √15 * B(y, 2j) + h * 15 * B(y, 2j+1)
+]
+=
+2 \sum_{j=0}^z 15^j [g * B(y, 2j) + 15h * B(y, 2j+1)]
+=
+2 *
+\sum_{j=0}^z 15^(j+1) [912 B(y, 2j) + 1803 B(y, 2j+1)]
+=
+6 *
+\sum_{j=0}^z 15^(j+1) [304 B(y, 2j) + 601 B(y, 2j+1)].
+
+Therefore, for y≥0, 
+P(X = 3 + y) = 
+(2/11)^y / 219615 * 6
+\sum_{j=0}^z 15^(j+1) [304 B(y, 2j) + 601 B(y, 2j+1)]
+=
+(2/11)^y * 6/14641
+\sum_{j=0}^z 15^j [304 B(y, 2j) + 601 B(y, 2j+1)].
+
+Let's check this.
+
+Plugging in y=0 yields
+P(X = 3) = 1824/14641.
+Plugging in y=1 yields
+P(X = 4) = 10860/161051.
+These are correct.
+
+Those binomial coefficients are a bit unclear and arguably even incorrect.  There number of total terms in that sum should be y+1.  Let's rewrite it as
+P(X = 3 + y) =
+	6/14641 * (2/11)^y * \sum_{k=0}^y D_k B(y, k),
+where
+D_k = 304 * 15^(k/2)	 if k is even,
+D_k = 601 * 15^[(k-1)/2] if k is odd.
+
+We can enter this pmf in R as this function:
+pmf <- function(x) {
+	if (x == 0) return(1/11)
+	if (x == 1) return(48/121)
+	if (x == 2) return(324/1331)
+	y <- x - 3
+	summands <- choose(y, 0:y) * 
+		15^((0:y) %/% 2) * 
+		(304 + 297*((0:y) %% 2))
+	return(6/14641 * (2/11)^y * sum(summands))
+}
+
+
+
+Okay, we botched something.
+
+Clearly the eigenvalues are correct:
+lambda_1 = (1+√15)*2/11, lambda_2 = (1-√15)*2/11.
+
+Let's try again to solve the initial conditions, but this time let's use 1 and 2:
+48/121 = C_1 * (1+√15)*2/11 + C_2 * (1-√15)*2/11,
+324/1331 = C_1 * [(1+√15)*2/11]^2 + 
+		   C_2 * [(1-√15)*2/11]^2.
+Let a_1 = C_1 * (1+√15)*2/11
+and a_2 = C_2 * (1-√15)*2/11.
+Then
+48/121 = a_1 + a_2,
+324/1331 = a_1 * (1+√15)*2/11 + a_2 * (1–√15)*2/11,
+or equivalently,
+a_1 + a_2 = 48/121,
+a_1 + a_2 + √15 * (a_1 - a_2) = 162/121.
+Substituting the first into the second yields
+a_1 - a_2 = 114/121/√15.
+Then
+a_1 = (8 + 19/√15)*3/121,
+a_2 = (8 - 19/√15)*3/121.
+Rationalizing the denominators yields
+a_1 = (120 + 19√15)/605,
+a_2 = (120 - 19√15)/605.
+
+Then
+C_1 = (120 + 19√15)/605 * 11/2 / (1+√15)
+	= (120 + 19√15)/110 * (√15 - 1) / 14
+	= (120 + 19√15)*(√15 - 1)/1540
+	= (165 + 101√15)/1540,
+C_2 = (120 - 19√15)/605 * 11/2 / (1-√15)
+	= (120 - 19√15)/110 * -(√15 + 1) / 14
+	= (19√15 - 120)*(√15 + 1)/1540
+	= (165 - 101√15)/1540.
+
+Then our pmf has P(X = 0) = 1/11, and for x > 0,
+P(X = x)
+=
+C_1 * [(1+√15)*2/11]^x + C_2 * [(1-√15)*2/11]^x
+=
+1/1540 * (2/11)^x * 
+[(165+101√15) * (1+√15)^x + (165-101√15) * (1-√15)^x].
+
+Let's try to simplify the term in square brackets:
+(165+101√15) * (1+√15)^x + (165-101√15) * (1-√15)^x
+=
+(165+101√15) \sum_i B(x,i) 15^(i/2) +
+(165-101√15) \sum_i B(x,i) 15^(i/2) (-1)^i
+=
+(165+101√15) \sum_{i even} B(x,i) 15^(i/2) + 
+(165+101√15) \sum_{i odd } B(x,i) 15^(i/2) + 
+(165-101√15) \sum_{i even} B(x,i) 15^(i/2) +
+(101√15-165) \sum_{i odd } B(x,i) 15^(i/2)
+=
+   330 \sum_{i even} B(x,i) 15^(i/2) +
+202√15 \sum_{i odd } B(x,i) 15^(i/2).
+
+Thus, for x>0,
+P(X = x) = (2/11)^x / 1540 * \sum_{i=0}^x B(x,i) D_i,
+where
+D_i = 330 * 15^(i/2)     if i is even,
+D_i = 202 * 15^[(i+1)/2] if i is odd.
+
+This can be slightly simplified to (for x>0)
+P(X = x) = (2/11)^x / 770 * \sum_{i=0}^x B(x,i) D_i,
+where
+D_i = 165 * 15^(i/2)     if i is even,
+D_i = 101 * 15^[(i+1)/2] if i is odd.
+
+Let's check this:
+P(X = 1) = 2/11 / 770 * (165 + 101*15)
+		 = 48/121,
+P(X = 2) = 4/121 / 770 * (165 + 2*101*15 + 165*15)
+		 = 324/1331,
+P(X = 3) = 8/1331 / 770 * 
+		   (165 + 3*101*15 + 3*165*15 + 101*225)
+
+THIS IS STILL WRONG.
+THIS IS STILL WRONG.
+THIS IS STILL WRONG.
+THIS IS STILL WRONG.
+THIS IS STILL WRONG.
+THIS IS STILL WRONG.
+
+I DID THE QUADRATIC FORMULA WRONG. I AM AN IDIOT.
+I DID THE QUADRATIC FORMULA WRONG. I AM AN IDIOT.
+I DID THE QUADRATIC FORMULA WRONG. I AM AN IDIOT.
+I DID THE QUADRATIC FORMULA WRONG. I AM AN IDIOT.
+I DID THE QUADRATIC FORMULA WRONG. I AM AN IDIOT.
+I DID THE QUADRATIC FORMULA WRONG. I AM AN IDIOT.
+I DID THE QUADRATIC FORMULA WRONG. I AM AN IDIOT.
+I DID THE QUADRATIC FORMULA WRONG. I AM AN IDIOT.
+I DID THE QUADRATIC FORMULA WRONG. I AM AN IDIOT.
+I DID THE QUADRATIC FORMULA WRONG. I AM AN IDIOT.
+I DID THE QUADRATIC FORMULA WRONG. I AM AN IDIOT.
+I DID THE QUADRATIC FORMULA WRONG. I AM AN IDIOT.
+
+The correct eigenvalues are
+lambda_1 = (2+√15)/11, lambda_2 = (2-√15)/11.
+
+So the correct equations to solve are
+48/121 = C_1 * (2+√15)/11 + C_2 * (2-√15)/11,
+324/1331 = C_1 * [(2+√15)/11]^2 + 
+		   C_2 * [(2-√15)/11]^2.
+Let a_1 = C_1 * (2+√15)/11
+and a_2 = C_2 * (2-√15)/11.
+Then
+48/121 = a_1 + a_2,
+324/1331 = a_1 * (2+√15)/11 + a_2 * (2–√15)/11,
+or equivalently,
+a_1 + a_2 = 48/121,
+(a_1 + a_2) * 2 + (a_1 - a_2) * √15 = 324/121
+Substituting the first into the second yields
+a_1 - a_2 = 228/121/√15.
+Then
+a_1 = 1/2 * (48 + 228/√15)/121
+	= (4 + 19/√15) * 6/121,
+a_2 = 1/2 * (48 - 228/√15)/121
+	= (4 - 19/√15) * 6/121.
+Rationalizing the denominators yields
+a_1 = (60 - 19√15) * 2/605,
+a_2 = (60 - 19√15) * 2/605.
+
+Then 
+C_1 = a_1 * 11 / (2+√15)
+= (60 + 19√15) * (√15 - 2) * 2/605
+= (15 + 2√15) * 2/55
+= (1 + 2/√15) * 6/11
+= (2 + √15)/11 * 2 * √(3/5)
+= 2 * √(3/5) * lambda_1,
+C_2 = a_2 * 11 / (2-√15)
+= (19√15 - 60) * (√15 + 2) * 2/605
+= (15 - 2√15) * 2/55
+= (1 - 2/√15) * 6/11
+= -2 * √(3/5) * (2 - √15)/11
+= -2 * √(3/5) * lambda_2.
+
+Thus, the final result is that for x > 0,
+P(X = x) = 
+√(12/5) * [lambda_1^(x+1) - lambda_2^(x+1)],
+where
+lambda_1 = (2+√15)/11, lambda_2 = (2-√15)/11.
+This can immediately be simplified to
+P(X = x) =
+√(12/5) * (2/11)^(x+1) * [u_1^(x+1) - u_2^(x+1)],
+where u_1 = 1 + √(15/4), u_2 = 1 - √(15/4).
+
+Now let's simplify the expression in square brackets.
+More generally, for n > 0,
+(1+√t)^n - (1-√t)^n
+= \sum_{i=0}^n B(n,i) t^(i/2)
+	- \sum_{i=0}^n B(n,i) t^(i/2) (-1)^i
+= \sum_{i even} B(n,i) t^(i/2)
+	+ \sum_{i odd} B(n,i) t^(i/2)
+	- \sum_{i even} B(n,i) t^(i/2)
+	+ \sum_{i odd} B(n,i) t^(i/2)
+= 2 * \sum_{i odd} B(n,i) t^(i/2)
+= 2√t * \sum_{j=0}^m B(n, 2j+1) t^j,
+where m = floor(n/2).
+
+That doesn't really lead to any simplification.
+
+So the simplest form of the solution is probably just
+P(X = x) = 
+√(12/5) * [lambda_1^(x+1) - lambda_2^(x+1)],
+for x > 0, where
+lambda_1 = (2+√15)/11, lambda_2 = (2-√15)/11.
+
+A curious observation is that if we attempt to apply 
+the formula above to x = 0 (incorrectly), we get
+√(12/5) * √15 * 2/11 = 12/11,
+which is too large in an additive sense by exactly 1.
+There may be some deeper significance to this fact,
+but I'm not sure what it is.
+
+From here on, let's simplify the expressions by writing u = lambda_1 and v = lambda_2.
+
+Also note that since the main result is simply the difference of two geometric series, it is trivial to find the infinite sum:
+\sum_{x=1}^\infty P(X = x)
+= √(12/5) * [u^2 / (1-u) - v^2 / (1-v)]
+= 10/11,
+as required.
+
+This approach also allows us to easily find results related to the cdf, such as (for x > 0)
+P(X ≥ x) = \sum_{i=x}^\infty P(X = i)
+= √(12/5) * [u^(x+1) / (1-u) - v^(x+1) / (1-v)].
+
+Note that the cdf itself is
+F(x) = P(X ≤ x) = 1 - P(X > x) = 1 - P(X ≥ x+1)
+= 1 - √(12/5) * [u^(x+2) / (1-u) - v^(x+2) / (1-v)].

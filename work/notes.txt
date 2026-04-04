@@ -1,0 +1,1445 @@
+Board size:
+19.5in by 36.75in
+
+Human space size:
+20mm plus 2mm border
+
+Human edges:
+3mm (dashed)
+
+Raptor space borders:
+2mm
+
+
+
+My browser window:
+1280px by 620px
+
+My conversion rate:
+about 4.5px/mm
+
+
+
+Board size when scaled as above:
+4201px by 2229px
+
+Map size for measuring coordinates:
+420px by 223px (so multiply by 10)
+
+Button/message text should be 21px with 15px padding
+Resulting button inner area is 54px high (after 
+  adjustment for leading)
+Turn display would be 78px high unless we adjust its 
+  line height for more space between text rows
+
+Human spaces should be 60px with a 6px border
+
+
+
+
+Raptor sprite sizes:
+
+Row 1:  116x54*
+Row 2:  117x54  120x52* 119x52  118x54 
+            117x54  118x50  115x52  114x53
+Row 3:  115x53  116x54  118x54  119x55
+Row 4:  121x54  125x51  126x53
+
+Row 6:  (skip 2)  124x63  124x50  124x63  120x51
+
+Row 9:  (skip 4)  114x52  123x52  125x52
+Row 10: 115x55  118x53  112x53 (skip 3) 114x52
+
+Widths (+100):
+12 14 14 14 15 15 15 16 16 17 17 18 18 18 18 19 19 
+20 20 21 23 24 24 24 25 25 26
+
+Heights:
+50 50 51 51 52 52 52 52 52 52 52 53 53 53 53 53
+54 54 54 54 54 54 54 55 55 63 63
+
+1,1; 2,2; 2,4; 2,6; 3,2; 3,3; 6,4; 9,5; 10,7
+
+https://opengameart.org/
+https://incompetech.com/music/royalty-free/music.html
+file:///Users/dksparks/lwbg/game/game.html
+
+
+
+
+
+HUMAN SHIRTS
+red
+maroon
+pink
+orange
+yellow
+green
+light blue
+blue
+dark blue
+purple
+white
+gray
+
+HUMAN PANTS (each x2)
+light   x2
+khaki   x2
+brown   x1
+l blue  x2
+m blue  x2
+navy    x1
+black   x1
+gray    x1
+
+HUMAN HATS
+white cowboy
+brown cowboy
+black cowboy
+white
+white
+black
+black
+navy
+navy
+blue
+orange
+red
+
+HUMAN UNDERSHIRTS
+none/bare   x4
+buttoned up x4
+white       x3
+black       x1
+
+HUMAN SHOES
+white x1
+light x2
+khaki x2
+brown x4
+black x3
+
+HUMAN SKIN
+2 pale
+3 light
+2 tan
+1 asian
+2 hispanic
+1 black
+1 african
+
+
+ #  SKIN    SHIRT     PANTS     HAT    SHOES    UNDER
+ 0  pale
+ 1  light
+ 2  light
+ 3  hisp
+ 4  asian
+ 5  afro
+ 6  tan
+ 7  black
+ 8  tan
+ 9  pale
+10  hisp
+11  light
+
+
+
+SHADOW EFFECTS
+   Bright          Medium             Dark
+ 68 102 170      34  68 136         0  34  68
+170 170 170     136 136 136       102 102 102
+170 102 102     136  68  68
+
+                1/2 2/3 4/5       0/1 1/3 2/5
+                4/5 4/5 4/5       3/5 3/5 3/5
+                4/5 2/3 2/3
+                
+                 15  20  24         0  10  12
+                 24  24  24        18  18  18
+                 24  20  20
+
+                   13/18          22/59 3/4
+
+Medium is  13/18  of bright
+Dark   is 265/472 of medium and 3445/8496 of bright
+
+Medium ≈ 184  (–71 from full)
+Dark   ≈ 103  (–81 from medium)
+
+SKIN TONES, PRELIMINARY
+
+Type        Bright        Shadow            Bright L*
+
+ 0        255 219 172   237 202 156         89
+ 1        241 194 125   223 178 109         81
+ 2        224 172 105   206 156  89         74
+ 3        198 134  65   179 119  51         61
+ 4        141  85  36   124  71  22         42
+
+ 5         77  42  34    62  29  22         21
+
+ 6        111  53  45    95  39  32         30
+ 7        201 144 111   184 128  96         65
+ 8        217 171 141   200 155 126         73
+
+ 9        248 223 207   231 206 190         90
+10        244 212 163   227 195 147         86
+11        214 172 138   197 156 123         73
+12        177 127  87   160 112  73         57
+13        125  82  60   109  68  47         39
+
+FINAL SKIN CHOICES
+ 9 x2
+ 8 x2
+ 7 x2
+11
+10
+12
+13
+ 6
+ 5
+
+
+SKINS (STILL WORKING)
+
+           R   G   B    L*  a*  b*
+
+ 0        248 233 207   90   6  11
+ 1        217 171 141   73  13  22
+ 2        214 172 138   73  11  23
+ 3        201 144 111   65  18  26
+ 4        177 127  87   57  15  29
+ 5        244 212 163   86   4  28
+ 6        125  82  60   39  15  20
+ 7        111  53  45   30  25  17
+ 8         77  42  34   21  15  12
+
+1.5       215 171 139   73  12  23
+
+xv        250 231 218   93   4   9
+viii      253 228 200   92   4  17
+ix        240 213 190   87   6  15
+x         238 206 179   85   7  18  <- use (?)
+i         255 195 170   84  18  21  <- use (?)
+iv        232 190 172   80  12  15  <- use
+xi        234 189 157   80  12  22
+ii        240 184 160   79  17  20
+xiii      225 184 153   78  10  21
+iii       225 172 150   75  16  19
+xiv       224 177 132   75  11  30
+xii       231 158 109   71  22  36  <- use (?)
+
+ a        245 201 174   84  12  19
+ b        232 191 172   80  12  15
+ c        225 179 153   76  13  20
+ d        231 158 109   71  22  36
+
+
+
+SKINS (FINAL CHOICES)
+
+           R   G   B    L*  a*  b*
+
+ 0        248 233 207   90   6  11
+ 1        244 212 163   86   4  28
+ 2        245 201 174   84  12  19
+ 3        232 191 172   80  12  15
+ 4        225 179 153   76  13  20
+ 5        215 171 139   73  12  23
+ 6        231 158 109   71  22  36
+ 7        201 144 111   65  18  26
+ 8        177 127  87   57  15  29
+ 9        125  82  60   39  15  20
+10        111  53  45   30  25  17
+11         77  42  34   21  15  12
+
+
+
+
+
+
+SHIRTS
+
+Color     Bright        Medium        Dark
+
+red       215  24  42   163  18  32   112  12  22
+orange    250  70  22   199  56  18   148  42  13
+green       0 107  37     0  64  22     0  38  13
+blue        0  33 165     0  23 115     0  14  69
+yellow    252 195  23   201 156  18   150 116  14
+purple    113  54 116    67  32  69    40  19  41
+lt blue   130 185 235   102 145 184    73 105 133
+dk blue     0  34  66     0  21  41     0  13  26
+white     240 240 240   189 189 189   138 138 138
+gray      177 179 182   126 128 130    77  78  79
+pink      241 118 106   191  94  84   140  69  62
+dk red    130   0   0    79   0   0    48   0   0
+
+rejected    0 158 222     0 122 171     0  86 120
+
+
+
+PANTS
+
+Color     Bright        Medium        Dark
+
+gray      177 179 182   126 128 130    77  78  79
+dk blue     0  34  66     0  21  41     0  13  26
+black      25  25  25    15  15  15     9   9   9
+lt blue   111 143 175    79 102 125    47  60  74
+md blue    55  89 121    32  53  71    20  32  43
+khaki     195 176 145   143 129 106    92  83  68
+russet    128  70  27    76  42  16    46  25  10
+sand      223 201 166   171 154 127   120 108  89
+wood      193 154 107   143 114  79    92  73  51
+chamois   160 120  90   110  82  62    66  49  37
+yonder     80 114 167    55  78 115    33  47  69
+indigo      0  65 106     0  39  64     0  23  38
+
+reject    177 179 182   151 153 156   126 128 130
+reject      0  34  66     0  26  51     0  21  41
+tuscan    166 123  91   L*=55
+gld brn   153 101  21   L*=47
+umber     130 102  68   L*=45
+beaver    159 129 112   L*=56
+copper    184 115  51   L*=55
+windsor   167  85   2   L*=45
+payne      83 104 120   L*=43
+steel      70 130 180   L*=52
+
+
+
+HATS
+
+Color     Bright        Medium        Dark
+
+white     240 240 240   189 189 189   138 138 138
+black      25  25  25    15  15  15     9   9   9
+dk blue     0  34  66     0  21  41     0  13  26
+blue        0  33 165     0  23 115     0  14  69
+orange    250  70  22   199  56  18   148  42  13
+red       215  24  42   163  18  32   112  12  22
+
+almond    255 239 207   L*=95
+russet    128  70  27   L*=36
+chamois   160 120  90   L*=54
+wood      193 154 107   L*=66
+khaki     195 176 145   L*=73
+sand      223 201 166   L*=82
+
+
+
+SHOES
+
+gray      177 179 182   L*=72.869
+white     240 240 240   L*=94.796
+dk gray    51  51  51
+charcoal   38  38  38
+black      25  25  25   L*= 8.757
+van dyke   68  54  47   L*=24
+almond    255 239 207   L*=95
+russet    128  70  27   L*=36
+chamois   160 120  90   L*=54
+wood      193 154 107   L*=66
+khaki     195 176 145   L*=73
+sand      223 201 166   L*=82
+
+
+
+
+
+RAPTOR COLORS
+
+center    128  96  64     43.250  8.738 23.261
+
+Differences: Small
+a         118  92  63     41.040  6.528 21.051
+b         126  89  55     41.040 10.948 25.471
+c         131 103  65     45.460  6.528 25.471
+d         136 100  73     45.460 10.948 21.051
+
+Differences: Medium
+a         102  85  60
+b         122  78  40
+c         137 114  67
+d         150 107  89
+
+Differences: Large
+a          75  74  56
+b         114  59  16
+c         146 132  70
+d         173 119 114
+
+* Medium is best of three above
+
+Another Attempt
+0 0 0     117 103  64
+- - -      91  91  60
+- + +     112  85  40
++ - +     126 121  67
++ + -     140 115  89
+- - +      95  91  39
+- + -     109  85  61
++ - -     120 121  88
++ + +     144 114  68
+
+Best Eight
+a          91  91  60   \
+b         112  85  40    |  overall, these seem
+c         126 121  67    |  slightly better
+d         140 115  89   /
+e          95  91  39   \
+f         109  85  61    |  overall, these seem
+g         120 121  88    |  slightly worse
+h         144 114  68   /
+
+FINAL CHOICES
+0          91  91  60
+1         112  85  40
+2         126 121  67
+3         140 115  89
+
+
+
+
+T-REX COLORS
+
+alizarin   78  21   0     16.288   25.742   24.698
+van dyke   34  27  21     10.395    2.232    5.419
+dk sienna  95  46  31     25.219   20.800   19.660
+
+CIELAB mean of above
+a          69  32  19     17.301   16.258   16.592
+
+3*vd+2*ds+1*ac
+b          62  33  22     16.319   12.340   13.379
+
+cadmium   255 236   0     92.245  -12.390   90.923
+ochre     199 155   0     66.203    5.000   70.057
+indian    255 184   0     79.355   14.023   81.890
+
+CIELAB mean of all six
+c         149 107  25     48.284    9.235   48.774
+
+3*yo+2*iy+1*cy
+d         227 178   0     74.927    5.109   77.479
+
+b+d
+e         140 101  26     45.623    8.725   45.429
+
+2*b+1*d
+f         113  77  27     35.855    9.930   34.746
+
+f brightened so that #555 shadow leaves f
+g         169 116  40     53.038   13.965   48.061
+
+g with CIELAB b* reduced to same as f
+h         166 116  67     53.038   13.965   34.746
+
+GO WITH h ABOVE: rgb(166,116,67)
+
+
+
+
+
+
+BACKGROUNDS
+
+Color     L*  a*  b*
+
+000       00  00  00
+050       31 -39  37
+550       35 -10  42
+5a0       62 -49  63
+5a5       63 -43  36
+aa5       68 -12  43
+
+000       00  00  00
+030       17 -28  24
+330       20 -07  28
+060       37 -44  42
+360       38 -33  44
+363       39 -29  24
+660       42 -11  48
+663       42 -08  29
+090       55 -59  57
+390       56 -52  58
+393       56 -50  44
+690       58 -37  60
+693       58 -34  47
+696       59 -28  22
+993       61 -13  51
+996       62 -08  27
+0c0       72 -73  70
+3c0       72 -69  71
+3c3       72 -67  61
+6c0       74 -57  73
+6c3       74 -55  63
+6c6       74 -50  42
+9c0       76 -39  76
+9c3       76 -38  66
+9c6       77 -34  45
+9c9       77 -27  20
+cc0       80 -18  80
+cc3       80 -17  71
+cc6       80 -14  50
+cc9       81 -08  26
+0f0       88 -86  83
+3f0       88 -83  84
+3f3       88 -82  76
+6f0       89 -74  85
+6f3       89 -73  77
+6f6       90 -69  60
+9f0       91 -60  87
+9f3       91 -59  80
+9f6       91 -56  62
+9f9       92 -50  40
+cf0       94 -42  90
+cf3       94 -41  83
+cf6       94 -38  66
+cf9       95 -33  44
+cfc       95 -26  19
+ff0       97 -22  94
+ff3       97 -21  88
+ff6       98 -18  71
+ff9       98 -14  49
+ffc       99 -08  24
+
+Possibilities
+030       17 -28  24
+060       37 -44  42
+360       38 -33  44
+363       39 -29  24
+090       55 -59  57
+390       56 -52  58
+393       56 -50  44
+690       58 -37  60
+693       58 -34  47
+696       59 -28  22
+0c0       72 -73  70
+3c0       72 -69  71
+3c3       72 -67  61
+6c0       74 -57  73
+6c3       74 -55  63
+6c6       74 -50  42
+9c0       76 -39  76
+9c3       76 -38  66
+9c6       77 -34  45
+9c9       77 -27  20
+
+Four from photo after reduction:
+Color     R   G   B      H      S      L     (H)
+a        23  33   6   .22839 .69229 .07647  82.22°
+b        59  78  20   .22126 .59183 .19216  79.65°
+c        86 101  29   .20139 .55384 .25490  72.50°
+d       135 147  58   .18914 .43415 .40196  68.09°
+
+One from photo after reduction:
+e        61  73  22   .20588 .53684 .18627  74.12°
+
+One from 2e.png after reduction (or scaling):
+f        78  93  29   .20573 .52459 .23922  74.06°
+
+Already in 2c.png or 2d.png:
+#030      0  51   0   .33333  1     .10000 120.00°
+#330     51  51   0   .16667  1     .10000  60.00°
+#360     51 102   0   .25000  1     .20000  90.00°
+#663    102 102  51   .16667 .33333 .30000  60.00°
+#993    153 153  51   .16667 .50000 .40000  60.00°
+
+New creations:
+
+a0       24  36   3   .22839 .84614 .07647  82.22°
+b0       62  88  10   .22126 .79591 .19216  79.65°
+c0       94 115  15   .20139 .77692 .25490  72.50°
+d0      156 176  29   .18914 .71707 .40196  68.09°
+
+a1       11  36   3          .84614 .07647 105.40°
+b1       32  88  10          .79591 .19216 102.83°
+c1       55 115  15          .77692 .25490  95.68°
+d1       99 176  29          .71707 .40196  91.27°
+
+a2       19  36   3          .84614 .07647  90.01°
+b2       52  88  10          .79591 .19216  87.44°
+c2       81 115  15          .77692 .25490  80.29°
+d2      137 176  29          .71707 .40196  75.88°
+
+
+
+CIELAB of above:
+a     11.156  -10.106   13.929    
+b     30.470  -17.376   30.555
+c     40.204  -16.809   37.186
+d     58.343  -17.268   44.527
+e     28.941  -13.477   28.024
+f     36.999  -16.119   33.640
+#030  17.308  -27.673   24.198
+#330  20.328   -6.921   28.489
+#360  38.210  -33.297   43.996
+#663  42.103   -8.054   28.622
+#993  61.477  -13.052   51.383
+
+
+Eight from photo after reduction:
+Color     R   G   B      H      S      L     (H)
+a        23  33   6   .22839 .69229 .07647  82.22°
+b        53  75  14   .22678 .68541 .17451  81.64°
+c        86 101  29   .20139 .55384 .25490  72.50°
+d       100  99  62   .16228 .23457 .31765  58.42°
+e       113 138  35   .20712 .59537 .33922  74.56°
+f       120 138  74   .21354 .30189 .41569  76.87°
+g       145 134  83   .13710 .27193 .44706  49.35°
+h       147 153  67   .17829 .39090 .43137  64.19°
+
+Oil Pants:
+Color
+sap      10  52  16   .35714 .67744 .12157 128.57°
+cadmium 255 236   0   .15425  1     .50000  55.53°
+ochre   199 155   0   .12982  1     .39020  46.73°
+indian  255 184   0   .12026  1     .50000  43.29°
+mix hue angle = 90.01°
+s5c1     51  83  13   .24286 .72917 .18824  87.43°
+s2c1     92 113  11   .20098 .82258 .24314  72.35°
+s1c1    133 144   8   .18015 .89473 .29804  64.85°
+
+2k.png:
+sap      10  52  16   .35714 .67744 .12157 128.57°
+s5c1     51  83  13   .24286 .72917 .18824  87.43°
+s2c1     92 113  11   .20098 .82258 .24314  72.35°
+s1c1    133 144   8   .18015 .89473 .29804  64.85°
+
+2l.png:
+sap      10  52  16   .35714 .67744 .12157 128.57°
+s5c1     71  87   9   .24286 .82258 .18824  72.35°
+s2c1     66 107  17   .20098 .72917 .24314  87.43°
+s1c1    133 144   8   .18015 .89473 .29804  64.85°
+
+2m.png:
+sap      10  52  16   .35714 .67744 .12157 128.57°
+s5c1     69  83  13   .24286 .72917 .18824  72.35°
+s2c1     66 113  11   .20098 .82258 .24314  87.43°
+s1c1    133 144   8   .18015 .89473 .29804  64.85°
+
+3a.png = 2k.png:
+s6c0     10  52  16   .35714 .67744 .12157 128.57°
+s5c1     51  83  13   .24286 .72917 .18824  87.43°
+s4c2     92 113  11   .20098 .82258 .24314  72.35°
+s3c3    133 144   8   .18015 .89473 .29804  64.85°
+
+CIELAB intermediates:
+s6c0    18.178  -23.408   18.360
+s5c1*   30.523  -21.572   30.454
+s4c2*   42.867  -19.735   42.548
+s3c3*   55.212  -17.899   54.642
+s0c6    92.245  -12.390   90.923
+
+RGB conversions of above:
+s5c1*   51.482   79.637   19.989
+s4c2*   89.441  108.655   22.384
+s3c3*  128.571  138.914   22.938
+
+3b.png:
+s6c0     10  52  16
+s5c1*    51  80  20
+s4c2*    89 109  22
+s3c3*   129 139  23
+
+CIELAB of 3a.png:
+s6c0    18.178  -23.408   18.360
+s5c1    31.622  -23.971   34.404
+s4c2    44.390  -21.311   47.327
+s3c3    57.028  -18.921   59.377
+
+CIELAB without drop in a* component:
+s6c0    18.178  -23.408   18.360
+s5c1    31.622  -23.971   34.404
+s4c2$   44.390  -23.971   47.327
+s3c3$   57.028  -23.971   59.377
+
+RGB of above (3c.png):
+s6c0     10  52  16
+s5c1     51  83  13
+s4c2$    87 114  10
+s3c3$   124 146   6
+
+FINAL CHOICE: 3c.png
+
+
+
+
+TITLE SCREEN
+
+Average L* of background: 38.879
+
+#16171a		 7.750    0.338   -2.278
+#4c4e51		33.091   -0.138   -2.051
+#8a8c8f		58.172   -0.135   -1.853
+
+Title:		38.879   -0.137   -2.005
+
+Title RGB:	 90	 92	 95
+Title hex:	#5a5c5f
+
+
+
+BUILDING BACKGROUNDS
+
+                R   G   B   CIELAB
+
+brick-a  0    151 123 131   54.433   12.185   -0.256
+brick-a  1    153 117 122   52.841   14.900    2.716
+brick-a  2    166 142 146   61.246    9.682    1.220
+
+brick-x  0    130 107  86   46.888    5.834   15.201
+brick-x  1    138  84  57   41.281   19.595   25.115
+brick-x  2    144 111  86   49.461    9.507   18.939
+
+brick-b  0    158 134 112   57.602    5.834   15.201
+brick-b  1    168 110  82   51.995   19.595   25.115
+brick-b  2    173 138 112   60.175    9.507   18.939
+
+brick-c  0    155 129 122   56.018    9.010    7.473
+brick-c  1    161 114 102   52.418   17.248   13.916
+brick-c  2    170 140 129   60.711    9.595   10.080
+
+block-a  0    109 106 102
+block-a  1    168 171 170   69.720   -1.251    0.142
+block-a  2    190 195 194   78.387   -1.910   -0.101
+
+block-b  0    109 106 102
+block-b  1    182 170 133   69.720   -1.251   20.640
+block-b  2    205 194 156   78.387   -1.910   20.397
+
+block-c  0    109 106 102
+block-c  1    207 159 152   69.720   16.501   10.391
+block-c  2    230 183 176   78.387   15.842   10.148
+
+block-d  0    109 106 102
+block-d  1    141 180 151   69.720  -19.003   10.391
+block-d  2    162 204 174   78.387  -19.662   10.148
+
+block-e  0    109 106 102
+block-e  1    146 173 207   69.720   -1.251  -20.356
+block-e  2    168 197 232   78.387   -1.910  -20.599
+
+block-f  0    109 106 102
+block-f  1    128 123 105   51.518   -1.251   10.391
+block-f  2    150 147 128   60.635   -1.910   10.148
+
+block-g  0    109 106 102
+block-g  1    151 146 127   60.394   -1.251   10.391
+block-g  2    174 170 151   69.511   -1.910   10.148
+
+wood-2-x 0     85  76  74   33.124    3.351    2.551
+wood-2-x 1    117 102  96   44.418    4.879    5.578
+wood-2-x 2    140 120 113   52.064    6.534    6.702
+wood-2-x 3    171 151 142   63.954    5.880    7.448
+
+wood-2-a 0    132  88  35   41.138    6.273   27.718
+wood-2-a 1    188 115  37   55.164   22.776   52.174
+wood-2-a 2    206 154  98   67.365   12.897   36.779
+wood-2-a 3    215 174 131   73.779    9.134   27.718
+
+wood-1-x 0     67  66  62   27.947   -0.439    2.582
+wood-1-x 1    130 129 125   53.950   -0.404    2.296
+wood-1-x 2    173 173 170   70.645   -0.560    1.538
+wood-1-x 3    198 198 194   79.778   -0.727    2.000
+
+wood-n   1    176  61  12   42.150   44.964   49.834
+wood-n   2    184  77  20   46.381   40.649   50.890
+wood-n   3    198 102  44   53.701   34.218   48.226
+
+wood-1-b 0     87  35  14   21.075   22.482   24.917
+wood-1-b 1    176  61  12   42.150   44.964   49.834
+wood-1-b 2    197  88  31   50.612   40.649   50.890
+wood-1-b 3    234 132  72   65.252   34.218   48.226
+
+wood-o   1    129  83  43   39.630   15.051   30.835
+wood-o   2    189 156 106   66.242    5.511   30.740
+wood-o   3    194 176 145   72.605    1.576   18.254
+
+wood-p   1    134  83  48   40.360   17.682   29.061
+wood-p   2    169 114  71   52.869   17.052   32.398
+wood-p   3    194 139  88   62.204   15.200   35.367
+
+wood-?-a 0    132  88  35   41.138    6.273   27.718
+wood-?-a 1    188 115  37   55.164   22.776   52.174
+wood-?-a 2    206 154  98   67.365   12.897   36.779
+wood-?-a 3    215 174 131   73.779    9.134   27.718
+
+wood-?-b 0     87  35  14   21.075   22.482   24.917
+wood-?-b 1    176  61  12   42.150   44.964   49.834
+wood-?-b 2    197  88  31   50.612   40.649   50.890
+wood-?-b 3    234 132  72   65.252   34.218   48.226
+
+wood-?-c 0    101  75  29   33.743    5.511   30.740
+wood-?-c 1    169 119  77   54.209   15.051   30.835
+wood-?-c 2    189 156 106   66.242    5.511   30.740
+wood-?-c 3    194 176 145   72.605    1.576   18.254
+
+wood-?-d 0     93  48   7   25.122   17.052   32.398
+wood-?-d 1    134  83  48   40.360   17.682   29.061
+wood-?-d 2    169 114  71   52.869   17.052   32.398
+wood-?-d 3    194 139  88   62.204   15.200   35.367
+
+wood-2 pattern is lighter than wood-1 pattern,
+so wood-2 should get darker colors to compensate
+
+color scheme lightness:
+b ≈ d  <<  c < a
+
+FINAL CHOICE: wood-1-a, wood-1-c, wood-2-b, wood-2-d
+
+
+
+MUSIC https://incompetech.com/music/royalty-free/music.html
+So far: Suspenseful, Dark, Action, Aggressive, 
+        Driving, Eerie, Epic, Intense
+* Constance
+* Drums of the Deep
+* Enter the Maze
+* Feral Chase
+* Grim Idol
+* Gustav Sting
+* Hot Pursuit
+* Prelude and Action
+* River of Io
+* Serpentine Trek
+* Volatile Reaction
++ Chee Zee Caves V2
++ Darkling
++ Eternal Terminal
++ Impending Boom
++ Invariance
++ Malicious
++ Mistake the Getaway
++ Movement Proposition
++ Obliteration
++ Shamanistic
++ Stormfront
++ The Escalation
++ Trouble with Tribals
++ Zombie Chase
+- All This
+- Black Vortex
+- Chase
+- Chee Zee Jungle
+- Clenched Teeth
+- Constancy Part One
+- Crypto
+- Dama-May
+- Dangerous
+- Division
+- Exotic Battle
+- Faceoff
+- Firebrand
+- Gloom Horizon
+- Grave Blow
+- Interloper
+- Nerves
+- News of Sorrow
+- Oppressive Gloom
+- Our Story Begins
+- Power Restored
+- Scattershot
+- Suvaco do Cristo
+- Tikopia
+- Unlight
+
+quality tier (1 = best)
+|	ok for start screen
+|	|	length
+|   |    |		loudness integrated (LUFS)
+|   |    |		   |	loudness true peak (dBTP)
+|   |    |         |
+1	*	1:06	-19.0	-0.5	Feral Chase
+1		3:44	-10.1	+0.6	Grim Idol
+1		2:43	- 7.9	+1.2	Volatile Reaction
+1.5	*	1:47	-18.0	+0.1	Serpentine Trek
+2	*	2:20	-16.9	-0.1	Constance
+2.5	*	2:54	-22.7	-1.4	Drums of the Deep
+2		2:49	-15.1	-1.6	Hot Pursuit
+2		1:38	-13.1	+1.0	Prelude and Action
+2		3:18	-13.9	-0.0	Eternal Terminal
+2	*	3:43	-12.5	+0.0	Malicious
+2		2:03	-12.8	+0.2	Mistake the Getaway
+2		2:29	-10.5	+0.1	Obliteration
+3.0		2:58	-14.3	-0.1	Enter the Maze
+3.0	*	4:09	-15.6	-2.0	River of Io
+3.0		2:50	- 9.9	+0.5	Darkling
+3.0	*	3:02	-17.4	+1.1	Shamanistic
+3.0	?	2:23	-14.0	-1.0	Zombie Chase
+3.0		2:50	-15.5	+0.1	Black Vortex
+3.0	*	2:13	-18.5	+0.1	Chase
+3.0		1:31	-12.2	+0.2	Clenched Teeth
+3.0	*	0:58	-16.1	+0.2	Dangerous
+3.0	*	1:13	-17.3	+0.1	Faceoff
+3.0		2:52	-12.7	+0.1	Nerves
+3.0		2:49	-20.9	-0.1	Exotic Battle
+3.5	*	0:18 ?	Gustav Sting
+3.5	*	2:36	Impending Boom
+3.5	*	3:37 $	Invariance
+3.5	*	3:24	Crypto
+3.5	*	1:36	Grave Blow
+3.5	*	0:53	News of Sorrow
+3.5	*	3:19	Oppressive Gloom
+3.5	*	1:12	Power Restored
+3.5	*	1:06	Division
+4		3:52	Chee Zee Caves V2
+4		2:21	Movement Proposition
+4		5:34 ?	Stormfront
+4		5:24 ?	The Escalation
+4		2:50	Trouble with Tribals
+4		3:49	All This
+4		2:42	Chee Zee Jungle
+4		1:05	Constancy Part One
+4		5:14 ?	Dama-May
+4		5:59 ?	Firebrand
+4		2:08	Gloom Horizon
+4		4:23 ?	Interloper
+4		1:25	Our Story Begins
+4		2:02	Scattershot
+4		2:36	Suvaco do Cristo
+4		3:48	Tikopia
+4		3:09	Unlight
+
+Loudness profiles of raw sound effects:
+				II (LUFS)	ITP (dBTP)	My Change
+raptor-0.mp3	  - 5.9		   -0.3		-11.5 dB	
+raptor-1.mp3	  - 5.9		   -1.0		-10.0 dB
+raptor-2.mp3	  - 4.6		   +1.0		-12.5 dB
+raptor-3.mp3	  -12.9		   -0.9		- 0.5 dB
+raptor-4.mp3	  -11.3		   -0.9		- 2.0 dB
+raptor-5.mp3	  -12.4		   -3.4		- 4.0 dB
+raptor-6.mp3	  - 9.5		   -1.7		- 9.0 dB
+trex-stomp.mp3	  -16.5		   -3.7		  none
+trex-roar.mp3	  -11.6		   -1.4		  none
+
+
+Loudness profiles of normalized sound effects:
+				II (LUFS)	ITP (dBTP)
+raptor-0.mp3	  -17.9		  -12.0
+raptor-1.mp3	  -16.3		  -11.3
+raptor-2.mp3	  -17.5		  -12.1
+raptor-3.mp3	  -13.8		  - 1.8
+raptor-4.mp3	  -13.7		  - 3.3
+raptor-5.mp3	  -16.9		  - 7.9
+raptor-6.mp3	  -18.7		  -11.1
+trex-stomp.mp3	  -16.5		  - 3.7
+trex-roar.mp3	  -11.6		  - 1.4
+
+
+Music loudness target: -30.0 LUFS
+
+						  II	 ITP	My Change
+Grim Idol           	-10.1	+0.6	-20.0 dB
+Feral Chase				-19.0	-0.5	-11.0 dB
+Volatile Reaction   	- 7.9	+1.2	-22.0 dB
+Serpentine Trek     	-18.0	+0.1	-12.0 dB
+Constance           	-16.9	-0.1	-13.0 dB
+Drums of the Deep   	-22.7	-1.4	- 7.0 dB
+Hot Pursuit         	-15.1	-1.6	-15.0 dB
+Prelude and Action  	-13.1	+1.0	-17.0 dB
+Eternal Terminal    	-13.9	-0.0	-16.0 dB
+Malicious           	-12.5	+0.0	-17.5 dB
+Mistake the Getaway 	-12.8	+0.2	-17.0 dB
+Obliteration        	-10.5	+0.1	-19.5 dB
+Enter the Maze      	-14.3	-0.1	-16.0 dB
+River of Io         	-15.6	-2.0	-14.5 dB
+Darkling            	- 9.9	+0.5	-20.0 dB
+Shamanistic         	-17.4	+1.1	-12.5 dB
+Zombie Chase        	-14.0	-1.0	-16.0 dB
+Black Vortex        	-15.5	+0.1	-14.5 dB
+Chase               	-18.5	+0.1	-11.5 dB
+Clenched Teeth      	-12.2	+0.2	-18.0 dB
+Dangerous           	-16.1	+0.2	-14.0 dB
+Faceoff             	-17.3	+0.1	-13.0 dB
+Nerves              	-12.7	+0.1	-17.0 dB
+Exotic Battle       	-20.9	-0.1	- 9.0 dB
+
+
+OK (20):
+[YES] Black Vortex
+[YES] Chase
+[YES] Clenched Teeth
+[YES] Constance
+[YES] Dangerous
+[YES] Darkling
+[YES] Enter the Maze
+[YES] Eternal Terminal
+[YES] Exotic Battle
+[YES] Faceoff
+[YES] Feral Chase
+[YES] Grim Idol
+[YES] Hot Pursuit
+[YES] Malicious
+[YES] Mistake the Getaway
+[YES] Obliteration
+[YES] Prelude and Action
+[YES] River of Io
+[YES] Serpentine Trek
+[YES] Volatile Reaction
+
+Maybe too quiet (3):
+[YES] Drums of the Deep
+[YES] Shamanistic
+[YES] Zombie Chase
+
+Maybe too loud (1):
+[YES] Nerves
+
+
++3dB to Drums of the Deep
+(?) might be slightly too loud now
+(?) maybe try +2dB instead
++2dB seems about right
+
++3dB to Shamanistic
+(?) might be about right
+(?) middle might be too quiet, end might be too loud
+(?) maybe try +2dB instead
++2dB seems about right
+
++3dB to Zombie Chase
+(?) might still be too quiet
+(?) maybe try +4dB instead
++4dB seems about right
+
+-3dB to Nerves
+(?) might be slightly too quiet now
+(?) maybe try -2dB instead
+-2dB seems about right
+
+
+DEFINITIVE QUALITY RANKINGS (LOWER NUMBER = BETTER)
+
+1a	Grim Idol
+1a	Obliteration
+1a	Volatile Reaction
+1s	Feral Chase
+1s	Malicious
+
+2a	Black Vortex
+2a	Eternal Terminal
+2a	Mistake the Getaway
+2s	Hot Pursuit		[PROMOTE to 1s]
+2s	Serpentine Trek
+2s	Shamanistic
+
+3a	Chase
+3a	Clenched Teeth
+3s	Constance
+3s	Drums of the Deep
+3s	Prelude and Action
+3s	Zombie Chase	[PROMOTE to 2s]
+
+4a	Darkling		[PROMOTE to 3a]
+4a	Exotic Battle
+4a	Faceoff
+4a	Nerves
+4s	Dangerous
+4s	Enter the Maze
+4s	River of Io
+
+
+
+
+
+
+
+
+FONTS (https://fonts.google.com/)
+
+STENCIL-ISH:
+Black Ops One
+Allerta Stencil
+Wallpoet
+Stardos Stencil
+Saira Stencil One
+Big Shoulders Stencil Display
+Stick No Bills
+
+OTHER
+Train One
+
+BODY TEXT (FIRST TRY, NO GOOD)
+Ubuntu
+PT Sans
+Work Sans
+Oxygen
+Cabin
+Asap
+Assistant
+Exo
+Public Sans
+PT Sans Caption
+Recursive
+Allerta
+
+SANS SERIF WITH BOTH I & l DIFFERENT FROM LINES
+Atkinson Hyperlegible
+IBM Plex Sans
+IBM Plex Sans Condensed
+Monda
+Recursive
+Anaheim
+Lekton
+PT Sans Caption		(ugly 3)
+Miriam Libre		(ugly 3)
+Trispace			(ugly 3)
+M PLUS 1 Code		(ugly 3)
+M PLUS Code Latin	(ugly 3)
+
+
+
+
+
+
+
+
+
+
+
+
+MORE COLOR STUFF
+
+
+jungle.png:
+
+           R   G   B        L*       a*       b*
+42996      10  52  16     18.178  -23.408   18.360
+87281      51  83  13     31.622  -23.971   34.404
+68820      87 114  10     44.351  -24.071   47.374
+63047     124 146   6     56.935  -23.961   59.326
+
+weighted average:
+#47640e    71 100  14     38.847  -23.903   41.171
+reduce a* and b* by half:
+#546039    84  96  57     38.847  -11.951   20.586
+lighten:
+#727f56   114 127  86     51.156  -11.951   20.586
+lighten further:
+#929e74   146 158 116     63.327  -11.951   20.586
+reduce yellow further:
+#8d9f81   141 159 129     63.327  -11.951   13.724
+lighten even further:
+#aabc9c   170 188 156     74.005  -11.951   13.724
+too far!
+
+first try at human space color: #8d9f81
+
+revised decision for human space color: #929e74
+
+
+
+
+raptor lines
+
+initial:
+#d7182a   215  24  42     46.005   68.462   42.577
+multiply a* and b* by 5/6 and darken slightly:
+#a3061b   163   6  27     34.071   45.641   28.385
+
+raptor line color: #a3061b
+
+
+
+raptor entrance fill
+UF orange:
+#fa4616   250  70  22     56.850   66.118   62.991
+UF other orange:
+#fcaf17   252 175  23     76.934   17.673   77.147
+average of above in L*a*b* space:
+#fd8116   253 129  22     66.892   41.895   70.069
+darken other orange slightly, multiply a*b* by 5/6:
+#d69724   214 151  36     66.920   14.727   64.289
+
+raptor entrance fill color: #d69724
+
+
+
+jump markers
+UF purple:
+#593674    89  54 116     29.471   28.393  -29.779
+lighten and multiply a*b* by 1/2:
+#8c7899   140 120 153     53.180   14.196  -14.889
+
+jump marker color: #8c7899
+
+
+
+human dice
+
+start with human space color:
+#929e74   146 158 116     63.327  -11.951   20.586
+lighten significantly:
+#c6d3a6   198 211 166     82.437  -11.951   20.586
+
+human die color: #c6d3a6
+
+
+
+raptor dice
+
+start with raptor line color:
+#a3061b   163   6  27     34.071   45.641   28.385
+reduce a*b* to match human dice:
+#74433d   116  67  61     34.071   20.206   12.566
+lighten significantly:
+#b67f77   182 127 119     58.416   20.206   12.566
+increase lightness halfway to that of human dice:
+#d89e96   216 158 150     70.426   20.206   12.566
+too pink!
+
+raptor (and t-rex) die color: #b67f77
+
+
+
+
+
+buttons
+
+
+NCS green:
+#009f6b     0 159 107     57.900  -48.031   17.436
+NCS blue:
+#0087bd     0 135 189     52.949  -10.886  -36.695
+mix in 5:1 ratio by L*a*b*:
+#159b79    21 155 121     57.075  -41.840    8.414
+mix in exp(2):1 ratio by L*a*b*:
+#119c75    17 156 117     57.310  -43.603   10.983
+expand a*b* to edge of space:
+#009d75     0 157 117     57.310  -44.780   11.280
+
+first attempt at ok color: #009d75
+
+
+NCS red:
+#c40233   196   2  51     41.251   66.543   31.024
+NCS yellow:
+#ffd300   255 211   0     85.933    0.105   86.430
+mix in exp(2):1 ratio by L*a*b*:
+#cd3533   205  53  51     46.577   58.623   37.629
+expand a*b* to edge of space:
+#de0024   222   0  36     46.577   72.634   46.622
+
+first attempt at cancel color: #de0024
+
+PROBLEM: cancel color is too dark
+
+
+UF gray:
+#b1b3b6   177 179 182     72.869   -0.131   -1.772
+
+info display color: #b1b3b6
+with opacity:       #b1b3b6aa
+
+this seems pretty close to perfect
+
+
+green color from above:
+#009d75     0 157 117     57.310  -44.780   11.280
+lighten to match gray:
+#009d75     0 157 117     72.869  -44.780   11.280
+expand a*b* to edge of space:
+#00cb98     0 203 152     72.869  -54.273   13.671
+
+this looks like a perfect ok color: #00cb98
+
+
+red color from above:
+#de0024   222   0  36     46.577   72.634   46.622
+lighten to match gray, reduce a*b* to edge of space:
+#ff9689   255 150 137     72.869   37.770   24.243
+
+problem: this is much too light
+
+darken and expand a*b* to edge of space:
+#ff6156   255  97  86     61.963   59.560   38.230
+further:
+#ff4542   255  69  66     57.965   69.002   44.291
+further:
+#ff112e   255  17  46     53.859   79.462   51.004
+try in between last two:
+#ff3238   255  50  56     55.922   74.087   47.554
+
+that works for a cancel color: #ff3238
+
+
+NCS blue:
+#0087bd     0 135 189     52.949  -10.886  -36.695
+NCS red:
+#c40233   196   2  51     41.251   66.543   31.024
+mix in exp(2):1 ratio by L*a*b*:
+#537eab    83 126 171     51.555   -1.656  -28.623
+expand a*b* to edge of space:
+#0080c9     0 128 201     51.555   -2.631  -45.488
+lighten to match gray and adjust a*b*:
+#71b8ff   113 184 255     72.869   -2.421  -41.853
+darken and adjust a*b*:
+#009cf3     0 156 243     61.963   -3.037  -52.502
+
+that works for a neutral button color: #009cf3
+
+
+UF gray:
+#b1b3b6   177 179 182     72.869   -0.131   -1.772
+lighten halfway to pure white:
+#d6d8dc   214 216 220     86.434   -0.131   -1.772
+
+
+
+cancel color looks too orange on jungle background
+let's try to fix it
+last try at cancel color:
+#ff3238   255  50  56     55.922   74.087   47.554
+
+angle of color above: 32.695°
+angle of NCS red:     24.996°
+angle of NCS yellow:  89.930°
+
+adjust angle halfway to NCS red: 28.846°
+scale to put a*b* at edge of space:
+#ff3144   255  49  68     55.922   74.876   41.242
+
+try using angle of plain NCS red: 24.996°
+scale to put a*b* at edge of space:
+#ff2f4e   255  47  78     55.922   75.641   35.266
+
+that works for a better cancel color: #ff2f4e
+
+
+
+
+FIRST TRY AT SELECTION COLORS
+
+
+NCS yellow:
+#ffd300   255 211   0     85.933    0.105   86.430
+NCS red:
+#c40233   196   2  51     41.251   66.543   31.024
+mix in exp(2):1 ratio by L*a*b*:
+#fabf17   250 191  23     80.607    8.025   79.825
+expand a*b* to edge of space:
+#fabf00   250 191   0     80.607    8.292   82.483
+
+that works for a selection color: #fabf00
+
+
+selection color from above:
+#fabf00   250 191   0     80.607    8.292   82.483
+reduce a*b* by half:
+#e9c37b   233 195 123     80.607    4.146   41.242
+
+too beige!
+
+instead try darkening with a*b* adjusted properly:
+#dca800   220 168   0     71.599    7.521   74.812
+
+not different enough from selection color!
+
+darken further:
+#b78b00   183 139   0     60.460    6.559   65.244
+
+
+SECOND TRY AT SELECTION COLORS
+
+first try from above:
+#fabf00   250 191   0     80.607    8.292   82.483
+lighten halfway to NCSY:
+#ffc73e   255 199  62     83.270    7.222   71.843
+
+nope, this is worse
+
+stick with first try at selection color: #fabf00
+
+now go back to last path color:
+#b78b00   183 139   0     60.460    6.559   65.244
+reduce a*b* by a third:
+#af8d43   175 141  67     60.460    4.373   43.496
+
+that looks awful; need to keep a*b* at edge of space
+
+try making path color just a bit darker:
+#a67e00   166 126   0     55.089    6.100   60.677
+
+that looks good for a path color: #a67e00
+
+
+
+
+HIGHLIGHT COLORS
+
+for raptor highlight color, use raptor line color:
+#a3061b   163   6  27     33.980   56.970   35.495
+
+for human, go opposite to raptor in a* and adjust:
+#005962     0  89  98     33.980  -18.910  -11.820
+
+no good; too dark and too blue
+
+angle of raptor line color: 31.925°
+rotate by 120° instead:    151.925°
+
+now scale up to match a*b*:
+#005d30     0  93  48     33.980  -35.476   18.922
+brighten and scale a*b*:
+#008b4b     0 139  75     50.639  -47.262   25.209
+
+that works
+
+ human highlight color: #008b4b (#008b4bcc)
+raptor highlight color: #a3061b (#a3061bcc)
+  trex highlight color: #a3061b (#a3061bcc)
+
+
+
+LET'S CHECK THE RAPTOR DIE COLOR AGAIN
+
+raptor die color:
+#b67f77   182 127 119     58.416   20.206   12.566
+raptor line color:
+#a3061b   163   6  27     33.980   56.970   35.495
+
+possibly still too pink
+
+
+
+OKAY, LET'S TRY TO FIX THE (UGLY) DINOSAUR DIE COLORS
+
+human die color:
+#c6d3a6   198 211 166     82.437  -11.951   20.586
+
+here's the center of the raptor piece colors:
+#806040   128  96  64     43.250    8.738   23.261
+here's the trex piece color:
+#a67443   166 116  67     52.955   14.295   34.590
+combine those weighted 4:1 to raptor color:
+#886441   136 100  65     45.191    9.849   25.527
+lighten halfway to human die color:
+#bb936e   187 147 110     63.814    9.849   25.527
+
+still a bit too pink
+angle of above: 68.902°
+
+instead try and 78.902° scale a*b* accordingly:
+#b4966b   180 150 107     63.814    5.267   26.849
+instead try and 88.902° scale a*b* accordingly:
+#ad996a   173 153 106     63.814    0.524   27.356
+
+this works as a dinosaur die color: #ad996a
+
+
+
+
+MORE OPTIONS SHADE
+
+weighted average of jungle.png:
+#47640e    71 100  14     38.847  -23.903   41.171
+
+grayed-out version (a*b* set to zero):
+#5b5b5b    91  91  91     38.847    0.000    0.000
+
+version with a*b* set to match #16171a (color.dark):
+#5a5b5f    90  91  95     38.847    0.338   -2.278

@@ -1,0 +1,132 @@
+What is the expected number of humans that will be 
+eaten by the T-rex, assuming that it is d spaces
+away and that there are h humans on the start space?
+
+Recall that the pmf of the number of moves X that the
+T-rex will get to make on its turn is
+
+	P(X = 0) = 1/3,
+	P(X = x) = 4/[3^(x+1]	for x ≥ 1,
+
+which satisfies E(X) = Var(X) = 1 and therefore
+can be approximated by a Poisson(1) distribution.
+
+Alternatively, we can consider X as a mixture:
+
+	X = 0          with probability 1/3,
+	X ~ Geo1(2/3)  with probability 2/3,
+
+where Geo1 denotes the formulation of the geometric 
+distribution with support on {1,2,…}.
+
+Now Y be the sum of n independent random variables
+with this distribution, which can be expressed as
+a mixture of negative binomial random variables:
+
+	  W   ~ Bin(n, 2/3),
+	Y | W ~ NegBin(W, 2/3).
+
+Then
+
+	P(Y = y, W = w) = P(Y = y | W = w) P(W = w)
+	= C(y-1, w-1) (2/3)^w (1/3)^(y-w)
+		* C(n, w) (2/3)^w (1/3)^(n-w)
+    = C(y-1, w-1) C(n, w) 2^(2w) / 3^(y+n).
+
+This doesn't seem to be going anywhere, and even if
+it did, the results would only apply to these
+specific dice and not to the game in general.
+
+
+
+Let's instead ask a different question.
+
+How many turns will it take for all of the humans
+to leave the start space, provided that the human
+player uses all ordinary rolls for this purpose?
+
+Let Z be the number of humans moved from the start
+space on a single human turn.
+
+Then
+
+	P(Z = 0) = f(E, STOP) = 1/11,
+	P(Z = 1) = f(#, STOP) + f(#, GO) * P(Z = 0)
+			 = 5/11 + 5/11 * 1/11 = 60/121,
+	P(Z = 2) = f(#, GO) * P(Z = 1)
+			 = 5/11 * 60/121 = 300/1331,
+
+and so on, which clearly obeys a recurrence relation.
+
+
+
+Let's try something completely different.
+
+Let u(h, d) be the expected number of humans eaten
+if there are h humans still on the start space with
+the T-rex d spaces away and about to roll.
+
+Let v(h, d) be the same thing but with the humans
+about to roll.
+
+Clearly we have
+
+	u(h, 0) = v(h, 0) = h   for all h,
+	u(0, d) = v(0, d) = 0   for all d.
+
+Let p(x, d) denote the probability that the T-rex 
+will get to move exactly x spaces on its turn,
+capped at d (i.e., it is only d spaces away).
+
+Let q(y, h) denote the probability that the humans will move exactly y humans on their turn, capped at h
+(i.e., there are only h humans left).
+
+Then from the possible results of the players' turns,
+
+	u(h, d) = \sum_{x=0}^d p(x, d) v(h, d-x),
+	v(h, d) = \sum_{y=0}^h q(y, h) u(h-y, d).
+
+Does this give us what we need?
+
+Let's try one step:
+
+	u(1, 1) = p(0, 1) v(1, 1) + p(1, 1) v(1, 0)
+			= p(0, 1) v(1, 1) + p(1, 1),
+	v(1, 1) = q(0, 1) u(1, 1) + q(1, 1) u(0, 1)
+			= q(0, 1) u(1, 1).
+
+Thus
+
+	u(1, 1) = p(0, 1) q(0, 1) u(1, 1) + p(1, 1),
+
+which implies that
+
+	u(1, 1) = p(1, 1) / [1 - p(0, 1) q(0, 1)].
+
+The sums for u and v can be written more usefully as
+
+	u(h, d) = \sum_{x=1}^d p(x, d) v(h, d-x)
+				+ p(0, d) v(h, d)
+			= A(h, d) + p(0, d) v(h, d),
+	v(h, d) = \sum_{y=1}^d q(y, h) u(h-y, d)
+				+ q(0, h) u(h, d)
+			= B(h, d) + q(0, h) u(h, d),
+
+where
+
+	A(h, d) = \sum_{x=1}^d p(x, d) v(h, d-x),
+	B(h, d) = \sum_{y=1}^h q(y, h) u(h-y, d).
+
+Then
+
+	u(h, d) = A(h, d) + p(0, d) B(h, d)
+				+ p(0, d) q(0, h) u(h, d),
+	v(h, d) = B(h, d) + q(0, h) A(h, d)
+				+ q(0, h) p(0, d) v(h, d),
+
+which implies that
+
+	u(h, d) = [A(h, d) + p(0, d) B(h, d)] / 
+				[1 - p(0, d) q(0, h)],
+	v(h, d) = [B(h, d) + q(0, h) A(h, d)] /
+				[1 - p(0, d) q(0, h)].

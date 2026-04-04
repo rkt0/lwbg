@@ -1,0 +1,73 @@
+What is the probability that a raptor will enter a
+specific building before the raptors' turn ends?
+
+To do so, it must first reach the entrance without
+rolling STOP when it does so, and then it must roll
+ENTER before the turn ends.
+
+Let's consider the first part: the probability that
+the raptor will reach the entrance before the turn
+ends and without rolling STOP when it does so.
+
+This is a similar situation to ordinary moves.
+
+Let q(x) denote the probability that a raptor reaches
+a space x moves away on its turn without rolling STOP
+when it does so (ignoring the issue of "overshoot").
+
+The first few values of q(x) are
+
+	q(0) = 1,
+	q(1) = f(1, GO) + f(2, GO) = 4/11 + 1/11 = 5/11,
+	q(2) = f(2, GO) + f(1, GO) * q(1)
+		 = 1/11 + 4/11 * 5/11 = 31/121
+		 = f(1, GO) * q(1) + f(2, GO) * q(0),
+	q(3) = f(1, GO) * q(2) + f(2, GO) * q(1),
+	q(4) = f(1, GO) * q(3) + f(2, GO) * q(2).
+
+Clearly this is the same recurrence relation as for
+ordinary moves, just with different initial values.
+
+Then in general,
+
+	q(x) = a_1 * lambda_1^x + a_2 + lambda_2^x,
+
+where
+
+	lambda_1 = (2 + √15)/11, lambda_2 = (2 - √15)/11,
+
+and a_1 and a_2 are found using the initial values:
+
+	   1 = a_1 + a_2,
+	5/11 = a_1 (2 + √15)/11 + a_2 (2 - √15)/11,
+
+and thus
+
+	a_1 = [1 + √(3/5)]/2 = (5 + √15)/10,
+	a_2 = [1 - √(3/5)]/2 = (5 - √15)/10.
+
+Although we have a closed-form solution for the dice
+used in the game, we should still calculate q(x)
+using the recurrence relation for maximum generality.
+
+Now let's move on to the second part: the probability
+that the raptor will roll ENTER before the turn ends.
+
+This probability z satisfies
+
+	z = P(E) + [1 - P(E)] * P(GO) * z,
+
+or equivalently,
+
+	z = P(E) / (1 - [1 - P(E)] * P(GO))
+	  = P(E) / [1 - P(GO) + P(E) * P(GO)]
+	  = P(E) / (P(E) + [1 - P(E)] * [1 - P(GO)]),
+
+which makes sense.
+
+The result above for z is general, i.e., it holds for
+any dice.
+
+For the specific dice used in the game, we have
+
+	z = (1/6) / (1/6 + 5/6 * 1/2) = 2/7.

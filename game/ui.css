@@ -1,0 +1,294 @@
+:root {
+  --button-border-width: 3px;
+  --small-button-size: 36px;
+  --start-button-height: 81px;
+  --color-info: #b1b3b6aa;
+}
+
+
+/* General */
+
+button,
+.info,
+#more-menu {
+  backdrop-filter: blur(5px);
+}
+
+button:hover,
+#message-container:hover {
+  box-shadow: inset 0px 0px 0px 999px #0003;
+  cursor: pointer;
+  color: #000;
+}
+
+button,
+.info {
+  border: solid var(--button-border-width)
+          var(--color-border);
+}
+
+button {
+  box-sizing: content-box;
+  padding: 0px;
+  outline: none;
+  background: #009cf3aa;
+  color: var(--color-text);
+  font: var(--font-normal);
+}
+
+.info {
+  width: 450px;
+  padding: 24px;
+  background: var(--color-info);
+}
+
+.info p {
+  text-align: left;
+}
+
+.info p:first-child {
+  margin-top: 0;
+}
+
+.info p:last-child {
+  margin-bottom: 0;
+}
+
+.flex-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.flex-container.row {
+  width: 100%;
+  height: auto;
+  flex-direction: row;
+}
+
+.flex-container.tight {
+  justify-content: center;
+}
+
+.full-screen {
+  position: fixed;
+  width:  100%;
+  height: 100%;
+}
+
+
+/* Title screen */
+
+#title-container .info {
+  width: auto;
+  font: var(--font-large);
+  padding: 36px;
+}
+
+
+/* Start screen */
+
+#start-options button {
+  width: 350px;
+  height: var(--start-button-height);
+  font: var(--font-large);
+}
+
+#start-message {
+  position: fixed;
+  left: 50%;
+  top:  50%;
+  transform: translate(-50%, -50%);
+  text-align: left;
+}
+
+#load-choose-save button {
+  width: 324px;
+  height: 54px;
+}
+
+
+/* Gameplay menu */
+/* see gameplay-menu.css */
+
+
+/* More menu */
+
+#more-menu {
+  background: #5a5b5faa;
+}
+
+#more-menu button {
+  width: 288px;
+  height: 54px;
+}
+
+
+/* Message */
+
+#message-container {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width:  auto;
+  height: auto;
+  padding: 12px;
+  border-top-style: none;
+}
+
+#message-container .hider {
+  position: absolute;
+  top: 0;
+}
+
+
+/* Game Over */
+
+#game-over {
+  position: fixed;
+  left: 50%;
+  top:  50%;
+  width: auto;
+  transform: translate(-50%, -50%);
+  padding: 24px 36px;
+}
+
+
+/* Edit mode controls */
+
+.edit-control {
+  display: none;
+}
+
+.small-button {
+  width:  var(--small-button-size);
+  height: var(--small-button-size);
+}
+
+button[id^="edit-trex"] {
+  position: absolute;
+  top: calc(
+    (
+      var(--trex-piece-height) -
+      var(--small-button-size)
+    ) / 2 - var(--button-border-width)
+  );
+}
+
+#edit-trex-advance {
+  left: 84px;
+}
+
+#edit-trex-advance::before {
+  content: "⬆︎";
+}
+
+#edit-trex-retreat {
+  left: 132px;
+}
+
+#edit-trex-retreat::before {
+  content: "⬇";
+}
+
+.edit-kill-human {
+  display: none;
+  position: absolute;
+  top: calc(
+    var(--human-piece-height) +
+    var(--board-border-width) + 6px
+  );
+  left: calc(
+    (
+      var(--human-piece-width) -
+      var(--small-button-size)
+    ) / 2 - var(--button-border-width)
+  );
+}
+
+.edit-kill-human::before {
+  content: "✖︎";
+}
+
+
+/* Audio toggle */
+
+#toggle-audio {
+  position: fixed;
+  right: 0;
+  border-style: none none solid solid;
+}
+
+#toggle-audio .icon {
+  --size: 24px;
+  width:  var(--size);
+  height: var(--size);
+  margin: calc(
+    (var(--small-button-size) - var(--size)) / 2
+  );
+}
+
+#start-toggle-audio {
+  text-align: left;
+}
+
+#start-toggle-audio .icon {
+  --size: 36px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width:  var(--size);
+  height: var(--size);
+  margin: calc(
+    (var(--start-button-height) - var(--size)) / 2
+  );
+  margin-right: 36px;
+}
+
+#start-toggle-audio span {
+  padding-left: 36px;
+}
+
+
+/* Player select screen */
+
+#player-control .info {
+  width:  auto;
+  height: auto;
+  margin: 54px 18px 36px;
+}
+
+#player-control h1 {
+  margin-top: 18px;
+  text-transform: capitalize;
+}
+
+#player-control .info button {
+  box-sizing: content-box;
+  --size: 48px;
+  height: var(--size);
+  min-width: var(--size);
+  margin: 3px;
+  background: var(--color-player-control);
+}
+
+#player-control .info button.manual {
+  width: 216px;
+  height: 54px;
+  margin-bottom: 24px;
+}
+
+#player-control .info button.current {
+  background: var(--color-selected);
+  box-shadow: none;
+  cursor: default;
+  color: var(--color-text);
+}
+
+#player-control #continue-from-control {
+  width: 216px;
+  height: var(--start-button-height);
+  font: var(--font-large);
+}

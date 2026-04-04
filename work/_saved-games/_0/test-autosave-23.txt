@@ -1,0 +1,3 @@
+LWBG
+0,0
+AE;Di;gB,HX;Bi;IC,Ha;Bi;QC,HU;Ey;mA,HR;Ei;gG,HX;Ai;Ha;Bi;QA,HU;Fi;mG,HX;Bi;IB,Ha;Cy;SC,HX;Ai;Ha;Ci;SD,HU;Dy;kF,HR;Ey;iA,HR;Di;kG,Ha;Bi;SC,HU;Ey;mR,HR;Di;iG,Ha;Bi;SD,HU;Fy;HR;Ci;gC,Ha;Ci;gT,QC,HU;AJ;By;SE,HR;Cy;QB,HR;By;QC,HR;Bi;QD,HU;Ey;kR,HR;Ci;iC,Ha;Gi;HU;Fy;HR;Fy;HR;Ci;iG,Ha;Gy;HR;Gi;HU;Ey;iK,HR;Ey;iC,HR;Fy;HR;Ei;iK,Ha;Cy;QF,HR;Bi;SH,HU;Cy;iF,HR;Dy;iG,HR;Fy;HR;Ei;iK,Ha;mL,Ci;iT,QA,HU;Ci;mT,AO;

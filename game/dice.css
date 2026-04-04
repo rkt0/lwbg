@@ -1,0 +1,71 @@
+:root {
+  --die-content-width:  60px;
+  --die-content-height: 66px;
+  --die-border-width: 3px;
+}
+
+.die {
+  box-sizing: content-box;
+  width:  var(--die-content-width);
+  height: var(--die-content-height);
+  padding: 0 3px;   /* (dch - dcw) / 2 */
+  border: solid var(--die-border-width)
+          var(--color-border);
+  border-radius: 12px;
+}
+
+.die-human {
+  background: #c6d3a6;
+  color:      #c6d3a6;
+}
+
+.die-trex,
+.die-raptor {
+  background: #ad996a;
+  color:      #ad996a;
+}
+
+.die-content {
+  font: var(--font-large);
+  line-height: var(--die-content-height);
+}
+
+.die.rolled {
+  transform: rotate(var(--die-spin-count));
+  color: var(--color-text);
+  transition-property: transform, color;
+  transition-duration: var(--die-roll-time), calc(
+    var(--die-roll-time) - var(--die-roll-delay)
+  );
+  transition-delay: 0s, var(--die-roll-delay);
+}
+
+.die.rolled.no-animation {
+  transition-property: none;
+}
+
+.face {
+  font: var(--font-large);
+  line-height: var(--die-content-height);
+}
+
+.face::before {
+  content: attr(data-roll);
+  text-transform: uppercase;
+}
+
+.face-continue[data-roll="0"]::before {
+  content: "Stop";
+}
+
+.face-continue[data-roll="1"]::before {
+  content: "Go";
+}
+
+.face-trex[data-roll="0"]::before {
+  content: "✖︎";
+}
+
+.face-trex[data-roll="1"]::before {
+  content: "⬆︎";
+}
