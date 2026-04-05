@@ -128,11 +128,6 @@
   pointer-events: none;
 }
 
-.jump-land-marker::before {
-  content: attr(data-jl);
-  text-transform: capitalize;
-}
-
 .helo {
   position: absolute;
   pointer-events: none;

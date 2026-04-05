@@ -941,11 +941,11 @@ const pl = {human: [], trex: [], raptor: []};
     for (const [i, [j, l]] of jMarkers.entries()) {
       const [jl, jt] = arrayMinus(j, jOffset);
       const [ll, lt] = arrayMinus(l, jOffset);
-      $('<div></div>').attr('data-jl', 'jump')
+      $('<div></div>').html('Jump')
           .css({top: `${jt}px`, left: `${jl}px`})
           .addClass('jump-land-marker')
           .appendTo('#gameplay-container');
-      $('<div></div>').attr('data-jl', 'land')
+      $('<div></div>').html('Land')
           .css({top: `${lt}px`, left: `${ll}px`})
           .addClass('jump-land-marker')
           .appendTo('#gameplay-container');
