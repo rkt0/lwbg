@@ -7,6 +7,8 @@
     redButton: [27, 88, 90],        // escape x z
     toggleAudio: [77],              // m
     skipTrack: [75],                // k (with Shift)
+    fullscreen: [70],               // f
+    displayMode: [84],              // t
     zoomOut: [189],                 // -
     zoomIn: [187],                  // +/=
     zoomDefault: [48],              // 0
@@ -66,12 +68,22 @@
       clickIfOk('cancel-button');
     }
   };
+  const full = e => {
+    e.preventDefault();
+    ui.toggleFullscreen();
+  };
+  const dM = e => {
+    e.preventDefault();
+    ui.cycleDisplayMode();
+  };
 
   const keyboardListener = e => {
     const keyCode = e.which;
-    // Audio controls work everywhere
+    // Audio and display controls work everywhere
     if (keys.toggleAudio.includes(keyCode)) tA(e);
     if (keys.skipTrack.includes(keyCode)) sT(e);
+    if (keys.fullscreen.includes(keyCode)) full(e);
+    if (keys.displayMode.includes(keyCode)) dM(e);
     // Other keys only work in gameplay
     const tsc = '#title-container, #start-container';
     const mm = '#more-menu';

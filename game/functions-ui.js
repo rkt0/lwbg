@@ -164,3 +164,21 @@ const ui = {};
     return strArr.map(x => `<p>${x}</p>`).join('');
   };
 }
+
+// Change display options
+{
+  ui.toggleFullscreen = () => {
+    const element = document.documentElement;
+    if (!document.fullscreenElement) {
+      element?.requestFullscreen();
+    } else document.exitFullscreen();
+  };
+  ui.displayModes = ['', 'tv'];
+  ui.cycleDisplayMode = () => {
+    const modes = ui.displayModes;
+    const valueOld = document.body.dataset.display;
+    const indexOld = modes.indexOf(valueOld);
+    const indexNew = (indexOld + 1) % modes.length;
+    document.body.dataset.display = modes[indexNew];
+  };
+}

@@ -1,13 +1,14 @@
 :root {
   --button-width: 111px;
   --button-height: 57px;
-  --zoom-display-height:  87px;
-  --turn-display-height:  87px;
+  --zoom-display-height:  93px;
+  --turn-display-height:  78px;
   --roll-display-height: 201px;
   --zoom-button-width:  36px;
   --zoom-button-height: 36px;
   --edit-banner-button-width: 183px;
   --edit-turn-die-button-height: 48px;
+  --compressed-line-height: 1.0625;
 }
 
 
@@ -15,6 +16,8 @@
 
 #gameplay-menu {
   position: fixed;
+  top: var(--matte-top, 0);
+  left: var(--matte-left, 0);
 }
 
 #gameplay-menu button,
@@ -45,6 +48,11 @@
   top: var(--button-height);
   height: var(--zoom-display-height);
   background: var(--color-zoom);
+  line-height: var(--compressed-line-height);
+}
+
+#zoom-display .flex-container {
+  height: calc(100% - 15px);
 }
 
 #gameplay-menu .zoom-button {
@@ -91,7 +99,7 @@
 .zoom-indicator {
   display: none;
   position: relative;
-  top: calc(0px - var(--zoom-button-height) / 2);
+  top: calc(0px - var(--zoom-button-height) * 5 / 8);
   margin-bottom:
        calc(0px - var(--zoom-button-height) * 5 / 6);
 }
@@ -112,6 +120,7 @@
 
 #turn-display {
   height: var(--turn-display-height);
+  line-height: var(--compressed-line-height);
 }
 
 

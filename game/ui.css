@@ -74,8 +74,16 @@ button {
 
 .full-screen {
   position: fixed;
+  box-sizing: border-box;
+  padding: var(--matte, 0);
   width:  100%;
   height: 100%;
+}
+
+.centered {
+  left: calc(50% + var(--matte-center-shift-lr, 0px));
+  top: calc(50% + var(--matte-center-shift-tb, 0px));
+  transform: translate(-50%, -50%);
 }
 
 
@@ -98,9 +106,6 @@ button {
 
 #start-message {
   position: fixed;
-  left: 50%;
-  top:  50%;
-  transform: translate(-50%, -50%);
   text-align: left;
 }
 
@@ -118,6 +123,7 @@ button {
 
 #more-menu {
   background: #5a5b5faa;
+  width: stretch;
 }
 
 #more-menu button {
@@ -130,7 +136,8 @@ button {
 
 #message-container {
   position: fixed;
-  left: 50%;
+  top: var(--matte-top, 0);
+  left: calc(50% + var(--matte-center-shift-lr, 0px));
   transform: translateX(-50%);
   width:  auto;
   height: auto;
@@ -148,10 +155,7 @@ button {
 
 #game-over {
   position: fixed;
-  left: 50%;
-  top:  50%;
   width: auto;
-  transform: translate(-50%, -50%);
   padding: 24px 36px;
 }
 
@@ -217,7 +221,8 @@ button[id^="edit-trex"] {
 
 #toggle-audio {
   position: fixed;
-  right: 0;
+  top: var(--matte-top, 0);
+  right: var(--matte-right, 0);
   border-style: none none solid solid;
 }
 

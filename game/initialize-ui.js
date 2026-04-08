@@ -146,7 +146,8 @@
   );
 
   $('<div></div>').attr('id', 'start-message')
-      .addClass('info').css('display', 'none')
+      .addClass('info centered')
+      .css('display', 'none')
       .appendTo('#start-container');
 
 }
@@ -497,6 +498,8 @@
   $('#turn-display-content').html(turnDisplayHtml);
   $('#zoom-display .flex-container')
       .html('Zoom<br>&nbsp;');
+  $('<div></div>').addClass('spacer')
+      .appendTo('#zoom-display');
 }
 
 // Buttons
@@ -932,9 +935,18 @@
 // Game over
 {
   $('<div></div>').attr('id', 'game-over')
-      .addClass('info non-zoom')
+      .addClass('info non-zoom centered')
       .css('display', 'none')
       .appendTo('#gameplay-container');
+}
+
+// Display matte for TV mode
+{
+  const sides = ['top', 'bottom', 'left', 'right'];
+  for (const side of sides) {
+    $('<div></div>').addClass('display-matte')
+        .addClass(side).appendTo('body');
+  }
 }
 
 // Audio toggle button in gameplay

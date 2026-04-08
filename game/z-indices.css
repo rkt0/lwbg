@@ -81,7 +81,7 @@
 .zoom-button  {z-index: 1;}
 
 
-/* Player control screen relative to containers */
+/* Other elements relative to containers */
 
 #start-container,
 #gameplay-container {
@@ -90,4 +90,8 @@
 
 #player-control {
   z-index: 1;
+}
+
+.display-matte {
+  z-index: 2;
 }

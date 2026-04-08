@@ -1,0 +1,41 @@
+body[data-display="tv"] {
+  --matte-top: 35px;
+  --matte-right: 159.5px;
+  --matte-bottom: 125px;
+  --matte-left: 0.5px;
+  --matte: var(--matte-top) var(--matte-right)
+    var(--matte-bottom) var(--matte-left);
+  --matte-center-shift-lr: calc(
+    (var(--matte-left) - var(--matte-right)) / 2
+  );
+  --matte-center-shift-tb: calc(
+    (var(--matte-top) - var(--matte-bottom)) / 2
+  );
+}
+
+.display-matte {
+  position: fixed;
+  background: #17181b;
+  height: 100vh;
+  width: 100vw;
+}
+
+.display-matte.top {
+  top: 0;
+  height: var(--matte-top, 0);
+}
+
+.display-matte.bottom {
+  bottom: 0;
+  height: var(--matte-bottom, 0);
+}
+
+.display-matte.left {
+  left: 0;
+  width: var(--matte-left, 0);
+}
+
+.display-matte.right {
+  right: 0;
+  width: var(--matte-right, 0);
+}
