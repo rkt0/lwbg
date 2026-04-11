@@ -1,44 +1,36 @@
 'use strict';
 
-// gp - Container object for gameplay functions
-const gp = {};
-
-// gp - Number of pieces on a space
-{
-  gp.nHumansOn = space => {
+const gp = {
+  nHumansOn(space) {
     return gs.humans.filter(x => x === space).length;
-  };
-  gp.nRaptorsOn = space => {
+  },
+  nRaptorsOn(space) {
     return gs.raptors.filter(x => x === space).length;
-  };
-}
-
-// gp - Move pieces, start/end turns/phases
-{
-  gp.checkGameOver = () => {
+  },
+  checkGameOver() {
     const g = bd.humanGoal;
     const d = bd.humanDead;
     if (gs.humans.every(x => x === g || x === d)) {
       gs.turn = 'over';
       // Set gs.phase to 'roll' so that 'over' state
-      //   is treated as state with nothing rolled
+      // is treated as state with nothing rolled
       gs.phase = 'roll';
       autoSave.update();
       setTimeout(
         ui.showGameOver, anim.time.gameOverDelay
       );
     }
-  };
-  const hPiecesOn = space => {
+  },
+  hPiecesOn(space) {
     return gs.humans.flatMap(
       (s, p) => s === space ? p : []
     );
-  };
-  gp.adjustHumanPositions = () => {
+  },
+  adjustHumanPositions() {
     const bldgs = [...bd.bldgHumanSpaces];
     for (const space of [...bldgs, bd.humanDead]) {
-      const occupants = hPiecesOn(space);
-      if (! occupants.length) continue;
+      const occupants = this.hPiecesOn(space);
+      if (!occupants.length) continue;
       const sep = pl.human.ps[0] + (
         space === bd.humanDead ? 0 : pl.human.margin
       );
@@ -51,64 +43,64 @@ const gp = {};
         );
       }
     }
-  };
-  const checkEatenByRaptor = rPiece => {
+  },
+  checkEatenByRaptor(rPiece) {
     const rLoc = gs.raptors[rPiece];
     const hsIn = bd.humanSpacesInRaptorSpace[rLoc];
     for (const [hp, hs] of gs.humans.entries()) {
-      if (! hsIn.includes(hs)) continue;
-      gp.moveHuman(hp, bd.humanDead, false);
+      if (!hsIn.includes(hs)) continue;
+      this.moveHuman(hp, bd.humanDead, false);
       const m = "Human eaten by raptor!";
       ui.showMessage(m, true);
     }
-  };
-  const startTurn = species => {
+  },
+  startTurn(species) {
     if (gs.turn === 'over') return;
     gs.turn = species;
-    gp.clearRoll();
+    this.clearRoll();
     ui.replaceButton('roll-display', 'roll-button');
     ui.displayTurn(species);
     ui.humanItemsClickable(species === 'human');
     ui.raptorItemsClickable(species === 'raptor');
     autoSave.update();
-  };
-  gp.clearMoveObject = () => {
+  },
+  clearMoveObject() {
     mv.selected = null;
     mv.plan = [];
     mv.toGo = gs.rollN;
-  };
-  gp.clearRoll = () => {
+  },
+  clearRoll() {
     gs.rollN = null;
     gs.rollGo = 0;
     gs.phase = 'roll';
     gs.je = false;
     $('.face').css('display', 'none');
-  };
-  gp.endTurn = () => {
-    gp.clearMoveObject();
+  },
+  endTurn() {
+    this.clearMoveObject();
     if (gs.turn === 'human') {
-      gp.adjustHumanPositions();
-      if (! gs.rollGo) {
+      this.adjustHumanPositions();
+      if (!gs.rollGo) {
         for (let r = 0; r < gs.raptors.length; r++) {
-          checkEatenByRaptor(r);
+          this.checkEatenByRaptor(r);
         }
       }
     }
     const isHumanNextish = gs.turn === 'human' ?
-        gs.rollGo : ! gs.rollGo;
+      gs.rollGo : ! gs.rollGo;
     const nextSpecies =
-        isNull(gs.turn) ? bd.firstTurn :
-        gs.turn === 'trex' ? 'raptor' :
-        isHumanNextish ? 'human' :
-        gp.nHumansOn(bd.humanStart) ? 'trex' :
-            'raptor';
-    gp.checkGameOver();
-    startTurn(nextSpecies);
-  };
-  gp.startJumpEnter = () => {
+      isNull(gs.turn) ? bd.firstTurn :
+      gs.turn === 'trex' ? 'raptor' :
+      isHumanNextish ? 'human' :
+      this.nHumansOn(bd.humanStart) ? 'trex' :
+      'raptor';
+    this.checkGameOver();
+    this.startTurn(nextSpecies);
+  },
+  startJumpEnter() {
     const [jeArr, nOnFn] = gs.turn === 'human' ?
-        [bd.humanJumps, gp.nHumansOn] :
-        [bd.raptorEntrances, gp.nRaptorsOn];
+      [bd.humanJumps, this.nHumansOn] :
+      [bd.raptorEntrances, this.nRaptorsOn];
     let nChoices = 0;
     for (const s of jeArr) nChoices += nOnFn(s[0]);
     if (nChoices) {
@@ -117,39 +109,40 @@ const gp = {};
     } else {
       let m = `No ${gs.turn} is in position to `;
       m += gs.turn === 'human' ?
-          'jump' : 'enter a building';
+        'jump' : 'enter a building';
       m += ".<br>Click 'OK' to continue.";
       ui.showMessage(m, true);
       mv.toGo = -1;
       ui.showButton('ok-no-move');
     }
-  };
-  gp.moveHuman = (piece, space, isLast) => {
+  },
+  moveHuman(piece, space, isLast) {
     if (gs.humans[piece] === space) return;
     const $p = $(`#human-piece-${piece}`);
     $p.removeClass('dead');
     if (space === bd.humanDead) $p.addClass('dead');
     // Piece location update needs to occur
-    //   here for checkGameOver() to work right
+    // here for checkGameOver() to work right
     gs.humans[piece] = space;
     const [l, t] = pl.human[space];
     const at = anim.time;
+    const actionAfter = () => {
+      this.adjustHumanPositions();
+      if (isLast) this.endTurn();
+    };
     $p.animate(
       {top: `${t}px`, left: `${l}px`},
       space === bd.humanDead ? at.killHuman :
-          gs.je ? at.jumpHuman : at.moveHuman,
-      () => {
-        gp.adjustHumanPositions();
-        if (isLast) gp.endTurn();
-      }
+        gs.je ? at.jumpHuman : at.moveHuman,
+      actionAfter
     );
-  };
-  gp.moveRaptor = (piece, space, isLast) => {
+  },
+  moveRaptor(piece, space, isLast) {
     const [l, t] = pl.raptor[space];
-    if (! sfx.raptorAlreadyPlayed) {
+    if (!sfx.raptorAlreadyPlayed) {
       // Sound effect should play only if raptor is
-      //   eating a human on this move or is moving
-      //   close enough to do so on its next move
+      // eating a human on this move or is moving
+      // close enough to do so on its next move
       const maxN = ai.maxN.raptor;
       const {move, enter} = ai.raptorHumanDistance({
         raptors: [space], humans: gs.humans,
@@ -162,21 +155,20 @@ const gp = {};
       {top: `${t}px`, left: `${l}px`},
       anim.time.moveRaptor,
       () =>  {
-        // Piece location update needs to occur
-        //   here for checkEatenByRaptor(piece)
-        //   to work right
+        // Piece location update needs to occur here
+        // for checkEatenByRaptor to work right
         gs.raptors[piece] = space;
-        checkEatenByRaptor(piece);
+        this.checkEatenByRaptor(piece);
         if (isLast) {
           sfx.raptorAlreadyPlayed = false;
-          gp.endTurn();
+          this.endTurn();
         }
       }
     );
-  };
-  gp.moveTrex = (space, isLast, skipFx) => {
+  },
+  moveTrex(space, isLast, skipFx) {
     const [l, t] = pl.trex[space];
-    if (! skipFx) {
+    if (!skipFx) {
       const sound = gs.trex === 1 ? 'Roar' : 'Stomp';
       sfx[`trex${sound}`]();
     }
@@ -184,7 +176,7 @@ const gp = {};
       {top: `${t}px`, left: `${l}px`},
       anim.time.moveTrex,
       () => {
-        if (! skipFx) {
+        if (!skipFx) {
           $('#gameplay-container').effect('bounce', {
             duration: anim.time.trexScreenBounce,
             distance: 36,
@@ -193,16 +185,17 @@ const gp = {};
         }
         gs.trex = space;
         if (gs.trex === 0) {
-          for (const h of hPiecesOn(bd.humanStart)) {
-            gp.moveHuman(h, bd.humanDead, false);
+          const kill = this.hPiecesOn(bd.humanStart);
+          for (const h of kill) {
+            this.moveHuman(h, bd.humanDead, false);
             const m = "Human eaten by T-rex!";
             ui.showMessage(m, true);
           }
         }
         // Using isLast here too enables reuse of this
         // function for edit/load purposes
-        if (isLast) gp.endTurn();
+        if (isLast) this.endTurn();
       }
     );
-  };
-}
+  },
+};

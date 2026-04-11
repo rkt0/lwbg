@@ -656,9 +656,10 @@
     const end = mv.plan[mv.plan.length - 1];
     const moveFn = (gs.turn === 'human') ?
         gp.moveHuman : gp.moveRaptor;
+    const moveFnBound = moveFn.bind(gp);
     bringIntoView(movePlanRegion(gs.turn), () => {
       for (const s of mv.plan.slice(1)) {
-        moveFn(mv.selected, s, s === end);
+        moveFnBound(mv.selected, s, s === end);
       }
     });
   };

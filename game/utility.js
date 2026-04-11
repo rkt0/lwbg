@@ -7,7 +7,7 @@ function isNull(x) {
   return x === null;
 }
 function sequence(n) {
-  return new Array(n).fill().map((e, i) => i);
+  return new Array(n).fill().map((_, i) => i);
 }
 
 function arrayMinus(arrFrom, arrSubtracted) {
@@ -18,7 +18,7 @@ function arraySum(arr) {
 }
 function arrayCumSum(arr) {
   return arr.map(
-    (e, i, a) => arraySum(a.slice(0, i + 1))
+    (_, i, a) => arraySum(a.slice(0, i + 1))
   );
 }
 
