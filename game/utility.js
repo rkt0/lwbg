@@ -22,6 +22,13 @@ function arrayCumSum(arr) {
   );
 }
 
+async function loadConfig(file, dir = 'config') {
+  const path = `${dir}/${file}`;
+  const response = await fetch(path);
+  if (response.ok) return await response.json();
+  throw new Error(`HTTP ${response.status}`);
+}
+
 function rollDie(die, prngFn) {
   return die[Math.floor(prngFn() * die.length)];
 }
