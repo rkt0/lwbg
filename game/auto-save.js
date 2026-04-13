@@ -18,6 +18,10 @@ autoSave.clear = () => {
 };
 autoSave.clear();
 
+// Set callback function in gp object
+// (done this way to eliminate circular dependency)
+gp.setSaveFunction(() => autoSave.update());
+
 // Begin new auto-save file (or skip) and start game
 {
   const executeLoadFromFile = async fhLoad => {

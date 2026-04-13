@@ -24,7 +24,7 @@ const gp = {};
     // Set gs.phase to 'roll' so that 'over' state
     //   is treated as state with nothing rolled
     gs.phase = 'roll';
-    autoSave.update();
+    gp.save();
     setTimeout(
       () => ui.showGameOver(nSaved, nTotal),
       immediate ? 0 : anim.time.gameOverDelay
@@ -71,7 +71,7 @@ const gp = {};
     ui.displayTurn(species);
     ui.humanItemsClickable(species === 'human');
     ui.raptorItemsClickable(species === 'raptor');
-    autoSave.update();
+    gp.save();
   };
   gp.clearMoveObject = () => {
     mv.selected = null;
@@ -227,4 +227,10 @@ const gp = {};
     const [l, t] = pl[species][space];
     $p.css({top: `${t}px`, left: `${l}px`});
   };
+}
+
+// Set function for auto-save update
+// (done this way to eliminate circular dependency)
+{
+  gp.setSaveFunction = (fn) => {gp.save = fn;};
 }

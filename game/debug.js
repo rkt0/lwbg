@@ -4,7 +4,7 @@
 const debug = {};
 
 // Skip autosave
-debug.skipAutoSave = true;
+debug.skipAutoSave = false;
 
 // Speed up animations (set to false or number > 1)
 debug.animationSpeed = false;

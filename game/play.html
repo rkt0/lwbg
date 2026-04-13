@@ -70,7 +70,7 @@
   functions-gameplay.js
     adds to global namespace: gp
       gp methods use: bd, ai, anim, ui, gs, mv, pl,
-                      autoSave, sfx
+                      sfx
 
   functions-ui.js
     adds to global namespace: ui
@@ -115,6 +115,7 @@
       autoSave methods use: debug, ai, anim, pieces, 
                             gp, ui, gs
     executes autoSave.clear()
+    executes setting of gp save function
 
   key-bindings.js
     executes setup of keyboard listener
@@ -138,21 +139,5 @@
     executes creation of edit dice/turn controls
     executes creation of edit t-rex buttons
     executes creation of human kill buttons
-
--->
-<!--
-
-  global objects with non-trivial dependencies:
-    gp
-    autoSave
-    edit
-
-  gp and autoSave depend on each other
-  edit depends on autoSave
-  edit depends on gp
-
-  plan:
-    move autoSave.update() out of gp methods (x2)
-      result: gp will no longer depend on autoSave
 
 -->
