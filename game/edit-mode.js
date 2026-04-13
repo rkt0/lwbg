@@ -58,7 +58,7 @@ edit.clear();
           '.edit-kill-human'
     ).fadeOut(anim.time.editControlFade);
     ui.showButton('show-more');
-    if (gs.turn === 'over') ui.showGameOver();
+    gp.checkGameOver(true);
   };
   const cancelEdits = () => {
     editGame(edit.gsPrevious);

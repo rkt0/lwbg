@@ -15,19 +15,20 @@ const gp = {};
 
 // gp - Move pieces, start/end turns/phases
 {
-  gp.checkGameOver = () => {
-    const g = bd.humanGoal;
-    const d = bd.humanDead;
-    if (gs.humans.every(x => x === g || x === d)) {
-      gs.turn = 'over';
-      // Set gs.phase to 'roll' so that 'over' state
-      //   is treated as state with nothing rolled
-      gs.phase = 'roll';
-      autoSave.update();
-      setTimeout(
-        ui.showGameOver, anim.time.gameOverDelay
-      );
-    }
+  gp.checkGameOver = (immediate) => {
+    const nSaved = gp.nHumansOn(bd.humanGoal);
+    const nDead = gp.nHumansOn(bd.humanDead);
+    const nTotal = gs.humans.length;
+    if (nSaved + nDead < nTotal) return;
+    gs.turn = 'over';
+    // Set gs.phase to 'roll' so that 'over' state
+    //   is treated as state with nothing rolled
+    gs.phase = 'roll';
+    autoSave.update();
+    setTimeout(
+      () => ui.showGameOver(nSaved, nTotal),
+      immediate ? 0 : anim.time.gameOverDelay
+    );
   };
   const hPiecesOn = space => {
     return gs.humans.flatMap(

@@ -87,9 +87,7 @@ const ui = {};
     $container.removeClass('appendable')
         .slideUp(anim.time.messageSlide);
   };
-  ui.showGameOver = () => {
-    const nSaved = gp.nHumansOn(bd.humanGoal);
-    const nTotal = gs.humans.length;
+  ui.showGameOver = (nSaved, nTotal) => {
     const gameOverHtml = '<h1>Game Over</h1>' +
         `Humans Saved:<br>${nSaved} of ${nTotal}`;
     ui.hideMessage();
