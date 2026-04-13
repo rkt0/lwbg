@@ -39,17 +39,18 @@ const ui = {};
       () => $span.html(speciesText).fadeIn(aTime)
     );
   };
-  ui.displayRollResult = skipFx => {
+  ui.displayRollResult = (rollState, skipFx) => {
     $('.die').css('display', 'none')
         .removeClass('rolled no-animation');
-    const $dice = $(`.die-${gs.turn}`);
+    const {turn, rollN, rollGo} = rollState;
+    const $dice = $(`.die-${turn}`);
     $dice.css('display', 'inline');
-    for (const type of ['movement', 'continue']) {
-      const cSel = `.face-${gs.turn}.face-${type}`;
+    for (const die of ['movement', 'continue']) {
+      const cSel = `.face-${turn}.face-${die}`;
       $(cSel).css('display', 'none');
-      const x = type === 'movement' ? 'N' : 'Go';
-      const dataRoll = gs[`roll${x}`];
-      const aSel = `[data-roll="${dataRoll}"]`;
+      const aSel = `[data-roll="${
+        die === 'movement' ? rollN : rollGo
+      }"]`;
       $(`${cSel}${aSel}`).css('display', 'block');
     }
     ui.replaceButton('roll-button', 'roll-display');

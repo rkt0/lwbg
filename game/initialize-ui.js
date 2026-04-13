@@ -717,7 +717,7 @@
     gs.rollGo = gs.turn === 'trex' ? 0 : rollDie(
       dice[gs.turn].continue, prng.dice[gs.turn]
     );
-    ui.displayRollResult();
+    ui.displayRollResult(gs);
     gs.je =
         gs.rollN === 'Jump' || gs.rollN === 'Enter';
     autoSave.update();

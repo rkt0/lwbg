@@ -142,9 +142,7 @@ autoSave.clear();
     ui.displayTurn(gs.turn);
     if (gs.phase === 'roll') {
       ui.replaceButton('roll-display', 'roll-button');
-    } else {
-      ui.displayRollResult(true);
-    }
+    } else ui.displayRollResult(gs, true);
     autoSave.gsPrevious = deepCopy(gs);
     if (ai.control[gs.turn] && gs.phase !== 'roll') {
       ui.showButton('ok-ai-move');
