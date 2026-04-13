@@ -34,7 +34,7 @@ pieces.addImgs = () => {
   const hFeature = pieces.human.feature;
   const hShadow = pieces.human.shadow;
   const hKeys = Object.keys(hFeature).sort();
-  for (let h = 0; h < gs.humans.length; h++) {
+  for (let h = 0; h < bd.nHumanPieces; h++) {
     for (const k of hKeys) {
       const n = hFeature[k][h];
       const imgStr = `img/human/${k}/${k}-${n}.png`;
