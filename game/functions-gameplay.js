@@ -207,3 +207,24 @@ const gp = {};
     );
   };
 }
+
+// Relocate pieces (used for edit/load, not gameplay)
+{
+  gp.relocatePiece = (species, piece, space) => {
+    let $p;
+    if (species === 'trex') {
+      if (gs.trex === space) return;
+      gs.trex = space;
+      $p = $('#trex-piece');
+    } else {
+      if (gs[`${species}s`][piece] === space) return;
+      gs[`${species}s`][piece] = space;
+      $p = $(`#${species}-piece-${piece}`);
+    }
+    if (species === 'human') {
+      $p.toggleClass('dead', space === bd.humanDead);
+    }
+    const [l, t] = pl[species][space];
+    $p.css({top: `${t}px`, left: `${l}px`});
+  };
+}

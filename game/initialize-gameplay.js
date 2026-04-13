@@ -45,12 +45,12 @@ gp.initializeObjects = () => {
   // If playing again, relocate pieces instead
   if (gs.humans) {
     for (let h = 0; h < bd.nHumanPieces; h++) {
-      edit.relocatePiece('human', h, bd.humanStart);
+      gp.relocatePiece('human', h, bd.humanStart);
     }
     gp.adjustHumanPositions();
-    edit.relocatePiece('trex', null, bd.trexStart);
+    gp.relocatePiece('trex', null, bd.trexStart);
     for (const [r, s] of bd.raptorStart.entries()) {
-      edit.relocatePiece('raptor', r, s);
+      gp.relocatePiece('raptor', r, s);
     }
     return;
   }

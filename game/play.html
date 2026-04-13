@@ -113,7 +113,7 @@
   auto-save.js
     adds to global namespace: autoSave
       autoSave methods use: debug, ai, anim, pieces, 
-                            gp, ui, gs, edit
+                            gp, ui, gs
     executes autoSave.clear()
 
   key-bindings.js
@@ -148,12 +148,10 @@
     edit
 
   gp and autoSave depend on each other
-  autoSave and edit depend on each other
-  edit depends on gp (but not the other way around)
+  edit depends on autoSave
+  edit depends on gp
 
   plan:
-    make .relocatePiece a method of gp instead of edit
-      result: autoSave will no longer depend on edit
     move autoSave.update() out of gp methods (x2)
       result: gp will no longer depend on autoSave
 

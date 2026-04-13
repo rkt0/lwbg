@@ -15,13 +15,13 @@ edit.clear();
   const editGame = gsNew => {
     gp.clearMoveObject();
     for (const [p, s] of gsNew.humans.entries()) {
-      edit.relocatePiece('human', p, s);
+      gp.relocatePiece('human', p, s);
     }
     gp.adjustHumanPositions();
     for (const [p, s] of gsNew.raptors.entries()) {
-      edit.relocatePiece('raptor', p, s);
+      gp.relocatePiece('raptor', p, s);
     }
-    edit.relocatePiece('trex', null, gsNew.trex);
+    gp.relocatePiece('trex', null, gsNew.trex);
     // Must assign object after piece moves since
     //   otherwise piece moves are skipped due to
     //   guard clause in functions above
@@ -191,27 +191,6 @@ edit.clear();
   makeDieButton('raptor', 'continue');
   makeDieButton('trex', 'movement');
 
-}
-
-// Piece locations (also used for loading saved game)
-{
-  edit.relocatePiece = (species, piece, space) => {
-    let $p;
-    if (species === 'trex') {
-      if (gs.trex === space) return;
-      gs.trex = space;
-      $p = $('#trex-piece');
-    } else {
-      if (gs[`${species}s`][piece] === space) return;
-      gs[`${species}s`][piece] = space;
-      $p = $(`#${species}-piece-${piece}`);
-    }
-    if (species === 'human') {
-      $p.toggleClass('dead', space === bd.humanDead);
-    }
-    const [l, t] = pl[species][space];
-    $p.css({top: `${t}px`, left: `${l}px`});
-  };
 }
 
 // T-rex

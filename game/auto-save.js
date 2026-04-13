@@ -108,7 +108,7 @@ autoSave.clear();
               ['Jump', 'Enter'].includes(gs.rollN);
         } else if (first === '|') {
           const changeInt = charCodes[0];
-          edit.relocatePiece(
+          gp.relocatePiece(
             'trex', null, changeInt & 15
           );
         } else {
@@ -117,11 +117,11 @@ autoSave.clear();
           const pieceCode = changeInt >> 14;
           const loc = changeInt & 127;
           if (pieceCode >> 2) {
-            edit.relocatePiece(
+            gp.relocatePiece(
               'human', pieceCode - 4, loc
             );
           } else {
-            edit.relocatePiece(
+            gp.relocatePiece(
               'raptor', pieceCode, loc
             );
           }
