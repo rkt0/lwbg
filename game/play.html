@@ -56,27 +56,33 @@
 
   ai.js
     adds to global namespace: ai
+      ai methods use: bd, dice
 
   animation.js
     adds to global namespace: anim (data only)
+      anim data uses: debug
     creates CSS variables for dice (using anim)
 
   pieces.js
     adds to global namespace: pieces
+      pieces methods use: debug, prng, bd
 
   functions-gameplay.js
     adds to global namespace: gp
+      gp methods use: bd, ai, anim, ui, gs, mv, pl,
+                      autoSave, sfx
 
   functions-ui.js
     adds to global namespace: ui
+      ui methods use: anim, zd
 
   initialize-gameplay.js
-    adds to global namespace: gs
-    adds to global namespace: mv
-    adds to global namespace: zd
+    adds to global namespace: gs (data only)
+    adds to global namespace: mv (data only)
+    adds to global namespace: zd (data only)
     executes initialization of gameplay objects
     executes creation of gameplay container element
-    adds to global namespace: pl
+    adds to global namespace: pl (data only)
     executes creation of board elements and listeners
     executes piece layout adjustments
     executes svg bottom chop
@@ -106,6 +112,8 @@
 
   auto-save.js
     adds to global namespace: autoSave
+      autoSave methods use: debug, ai, anim, pieces, 
+                            gp, ui, gs, edit
     executes autoSave.clear()
 
   key-bindings.js
@@ -113,18 +121,40 @@
 
   music.js
     adds to global namespace: music
+      music methods use: debug, prng
     executes creation of music audio element
 
   sfx.js
     adds to global namespace: sfx
+      sfx methods use: prng
     executes creation of sfx audio element
 
   edit-mode.js
     adds to global namespace: edit
+      edit methods use: bd, dice, ai, anim, gp, ui,
+                        gs, pl, autoSave
     executes edit.clear()
     executes creation of edit mode banner
     executes creation of edit dice/turn controls
     executes creation of edit t-rex buttons
     executes creation of human kill buttons
+
+-->
+<!--
+
+  global objects with non-trivial dependencies:
+    gp
+    autoSave
+    edit
+
+  gp and autoSave depend on each other
+  autoSave and edit depend on each other
+  edit depends on gp (but not the other way around)
+
+  plan:
+    make .relocatePiece a method of edit instead of gp
+      result: autoSave will no longer depend on edit
+    move autoSave.update() out of gp methods (x2)
+      result: gp will no longer depend on autoSave
 
 -->
