@@ -35,12 +35,12 @@ function loadScript(src) {
     document.body.appendChild(script);
   });
 }
-async function loadAllScripts() {
+async function loadAll() {
+  loadModule('jquery.js');
   for (const src of scriptFiles) {
     if (filesLoadedAsModules.includes(src)) continue;
     await loadScript(src);
   }
 }
 
-loadModule('jquery.js');
-loadAllScripts();
+loadAll();
