@@ -1,7 +1,5 @@
-'use strict';
-
 // Container object for board with basic information
-const bd = {
+export const bd = {
   nHumanSpaces: 109,
   nHumanPieces: 12,
   humanStart: 0, humanGoal: 107, humanDead: 108,
@@ -217,7 +215,7 @@ const bd = {
 }
 
 // Separate object for dice
-const dice = {
+export const dice = {
   human: {
     movement: ['Jump', 2, 3, 3, 4, 4],
     continue: [0, 0, 0, 1, 1, 1],

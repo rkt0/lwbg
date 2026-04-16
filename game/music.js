@@ -1,6 +1,7 @@
-'use strict';
+import {debug} from './debug.js';
+import {prng} from './prngs.js';
 
-const music = {
+export const music = {
   id: 'music-player',
   dir: 'audio/music',
   tooRecent: 6,

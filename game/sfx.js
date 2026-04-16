@@ -1,6 +1,6 @@
-'use strict';
+import {prng} from './prngs.js';
 
-const sfx = {
+export const sfx = {
   id: 'sfx-player',
   dir: 'audio/sfx',
 };

@@ -1,7 +1,13 @@
-'use strict';
+import {debug} from './debug.js';
+import {ai} from './ai.js';
+import {anim} from './animation.js';
+import {pieces} from './pieces.js';
+import {gs} from './game-objects.js';
+import {ui} from './functions-ui.js';
+import {gp} from './functions-gameplay.js';
 
 // Container object for auto-save
-const autoSave = {
+export const autoSave = {
   defaultDirectory: 'desktop',
   fileType: {
     description: 'Text Files',

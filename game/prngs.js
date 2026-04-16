@@ -1,8 +1,6 @@
-'use strict';
-
 // Initialize PRNGs
 // Set seeds to null for nondeterministic results
-const prng = {
+export const prng = {
   pieces: new Math.seedrandom(null),
   dice: {
     human: new Math.seedrandom(null),

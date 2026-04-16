@@ -1,7 +1,8 @@
-'use strict';
+import {anim} from './animation.js';
+import {zd} from './game-objects.js';
 
 // Container object for UI-related functions
-const ui = {};
+export const ui = {};
 
 // Gameplay menu
 {

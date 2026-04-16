@@ -1,7 +1,12 @@
-'use strict';
+import {bd} from './logic.js';
+import {ai} from './ai.js';
+import {anim} from './animation.js';
+import {sfx} from './sfx.js';
+import {ui} from './functions-ui.js';
+import {gs, mv, pl} from './game-objects.js';
 
 // gp - Container object for gameplay functions
-const gp = {};
+export const gp = {};
 
 // gp - Number of pieces on a space
 {

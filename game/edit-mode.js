@@ -1,6 +1,12 @@
-'use strict';
+import {bd, dice} from './logic.js';
+import {ai} from './ai.js';
+import {anim} from './animation.js';
+import {gs} from './game-objects.js';
+import {ui} from './functions-ui.js';
+import {gp} from './functions-gameplay.js';
+import {autoSave} from './auto-save.js';
 
-const edit = {};
+export const edit = {};
 
 edit.clear = () => {
   edit.on = false;

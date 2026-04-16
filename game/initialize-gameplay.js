@@ -1,35 +1,43 @@
-'use strict';
+import {debug} from './debug.js';
+import {bd} from './logic.js';
+import {ai} from './ai.js';
+import {anim} from './animation.js';
+import {pieces} from './pieces.js';
+import {gs, mv, zd, pl} from './game-objects.js';
+import {ui} from './functions-ui.js';
+import {gp} from './functions-gameplay.js';
+import {edit} from './edit-mode.js';
 
-// Game state object
-const gs = {
-  // turn: null,
-  // phase: 'roll',
-  // je: false,   // Jump or enter
-  // rollN: null,
-  // rollGo: 0,
-};
+// // Game state object
+// const gs = {
+//   // turn: null,
+//   // phase: 'roll',
+//   // je: false,   // Jump or enter
+//   // rollN: null,
+//   // rollGo: 0,
+// };
 
-// Initialize pieces on start spaces
-{
-  // gs.humans =
-  //     new Array(bd.nHumanPieces).fill(bd.humanStart);
-  // gs.trex = bd.trexStart;
-  // gs.raptors = [...bd.raptorStart];
-}
+// // Initialize pieces on start spaces
+// {
+//   // gs.humans =
+//   //     new Array(bd.nHumanPieces).fill(bd.humanStart);
+//   // gs.trex = bd.trexStart;
+//   // gs.raptors = [...bd.raptorStart];
+// }
 
-// Planned move object
-const mv = {
-  // selected: null,
-  // toGo: null,
-  // plan: [],
-};
+// // Planned move object
+// const mv = {
+//   // selected: null,
+//   // toGo: null,
+//   // plan: [],
+// };
 
-// Zoom data object
-const zd = {
-  factor: {current: null, in: 2, outMax: 0.125},
-  center: {},
-  highlightBlinkIds: [],
-};
+// // Zoom data object
+// const zd = {
+//   factor: {current: null, in: 2, outMax: 0.125},
+//   center: {},
+//   highlightBlinkIds: [],
+// };
 
 // Initialize game objects
 gp.initializeObjects = () => {
@@ -69,8 +77,8 @@ gp.initializeObjects();
       .addClass('full-board').appendTo('body');
 }
 
-// Piece layout information
-const pl = {human: [], trex: [], raptor: []};
+// // Piece layout information
+// const pl = {human: [], trex: [], raptor: []};
 
 // Initialize everything that uses extra space
 {

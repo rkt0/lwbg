@@ -1,7 +1,9 @@
-'use strict';
+import {bd, dice} from './logic.js';
+
+
 
 // Container object for ai-related calculations
-const ai = {};
+export const ai = {};
 
 
 

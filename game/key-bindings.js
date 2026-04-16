@@ -1,4 +1,8 @@
-'use strict';
+import {ai} from './ai.js';
+import {music} from './music.js';
+import {gs, mv, zd} from './game-objects.js';
+import {ui} from './functions-ui.js';
+import {edit} from './edit-mode.js';
 
 {
 

@@ -1,7 +1,7 @@
-'use strict';
+import {debug} from './debug.js';
 
 // Container object for everything animation-related
-const anim = {};
+export const anim = {};
 
 // Base time in milliseconds
 anim.baseTime = 309 / (debug.animationSpeed || 1);

@@ -1,6 +1,8 @@
-'use strict';
+import {debug} from './debug.js';
+import {prng} from './prngs.js';
+import {bd} from './logic.js';
 
-const pieces = {
+export const pieces = {
   human: {
     feature: {
       shoes: sequence(bd.nHumanPieces),

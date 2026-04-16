@@ -1,7 +1,5 @@
-'use strict';
-
 // Container object
-const debug = {};
+export const debug = {};
 
 // Skip autosave
 debug.skipAutoSave = false;
