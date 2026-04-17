@@ -1,3 +1,6 @@
+import {
+  deepCopy, isNull, rollDie, cssInt,
+} from './utility.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
 import {bd, dice} from './logic.js';
@@ -5,6 +8,7 @@ import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {pieces} from './pieces.js';
 import {music} from './music.js';
+import {sfx} from './sfx.js';
 import {gs, mv, zd, pl} from './game-objects.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
@@ -950,6 +954,16 @@ import {edit} from './edit-mode.js';
       .css('display', 'none')
       .appendTo('#gameplay-container');
 }
+
+// Controls for edit mode
+edit.makeControls();
+
+// CSS variables
+anim.makeCssVariables();
+
+// Audio elements
+music.makeElement();
+sfx.makeElement();
 
 // Display matte for TV mode
 {

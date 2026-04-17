@@ -14,10 +14,9 @@ edit.clear = () => {
   edit.selected = {species: null, piece: null};
   edit.dieCodes = {movement: 0, continue: 0};
 };
-edit.clear();
 
 // Banner
-{
+function makeBanner() {
   const editGame = gsNew => {
     gp.clearMoveObject();
     for (const [p, s] of gsNew.humans.entries()) {
@@ -89,7 +88,7 @@ edit.clear();
 }
 
 // Turn and dice
-{
+function makeTurnDiceButtons() {
 
   // Used for editing both turn and dice
   const replaceDieValue = (species, type, value) => {
@@ -200,7 +199,7 @@ edit.clear();
 }
 
 // T-rex
-{
+function makeTrexButtons() {
   const editTrexAdvance = () => {
     if (gs.trex === 0) return;
     gp.moveTrex(gs.trex - 1, false, true);
@@ -220,7 +219,7 @@ edit.clear();
 }
 
 // Kill
-{
+function makeKillButtons() {
   const editKillHuman = () => {
     const piece = edit.selected.piece;
     gp.moveHuman(piece, bd.humanDead, false);
@@ -238,3 +237,10 @@ edit.clear();
         editKillHuman();
       }).appendTo('.human-piece');
 }
+
+edit.makeControls = () => {
+  makeBanner();
+  makeTurnDiceButtons();
+  makeTrexButtons();
+  makeKillButtons();
+};

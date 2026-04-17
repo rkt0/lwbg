@@ -1,3 +1,6 @@
+import {
+  arrayMinus, cssInt, cssIntWH,
+} from './utility.js';
 import {debug} from './debug.js';
 import {bd} from './logic.js';
 import {ai} from './ai.js';
@@ -6,6 +9,7 @@ import {pieces} from './pieces.js';
 import {gs, mv, zd, pl} from './game-objects.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
+import {autoSave} from './auto-save.js';
 import {edit} from './edit-mode.js';
 
 // // Game state object
@@ -70,6 +74,16 @@ gp.initializeObjects = () => {
   
 };
 gp.initializeObjects();
+
+// Initialize (clear) autoSave and edit objects
+{
+  autoSave.clear();
+  edit.clear();
+}
+
+// Set callback function in gp object
+// (done this way to eliminate circular dependency)
+gp.setSaveFunction(() => autoSave.update());
 
 // Create gameplay container
 {

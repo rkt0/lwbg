@@ -1,3 +1,8 @@
+import {
+  deepCopy, isNull, sequence,
+  arrayMinus, arraySum, arrayCumSum,
+  rollDie,
+} from './utility.js';
 import {bd, dice} from './logic.js';
 
 

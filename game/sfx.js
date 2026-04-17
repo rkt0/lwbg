@@ -1,4 +1,6 @@
+import {rollDie} from './utility.js';
 import {prng} from './prngs.js';
+import {music} from './music.js';
 
 export const sfx = {
   id: 'sfx-player',
@@ -63,5 +65,7 @@ sfx.raptor = () => {
 sfx.raptorAlreadyPlayed = false;
 
 // Create audio element
-$('<audio></audio>').attr('id', sfx.id)
+sfx.makeElement = () => {
+  $('<audio></audio>').attr('id', sfx.id)
     .appendTo('body');
+};

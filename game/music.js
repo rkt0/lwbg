@@ -103,5 +103,7 @@ music.next = (skipCurrent, any) => {
 };
 
 // Create audio element
-$('<audio></audio>').attr('id', music.id)
+music.makeElement = () => {
+  $('<audio></audio>').attr('id', music.id)
     .on('ended', () => music.next()).appendTo('body');
+};

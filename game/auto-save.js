@@ -1,3 +1,6 @@
+import {
+  deepCopy, base64, base256,
+} from './utility.js';
 import {debug} from './debug.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -22,11 +25,6 @@ autoSave.clear = () => {
   autoSave.fh = void 0;
   autoSave.gsPrevious = deepCopy(gs);
 };
-autoSave.clear();
-
-// Set callback function in gp object
-// (done this way to eliminate circular dependency)
-gp.setSaveFunction(() => autoSave.update());
 
 // Begin new auto-save file (or skip) and start game
 {

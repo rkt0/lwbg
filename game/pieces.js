@@ -1,3 +1,4 @@
+import {sequence, shuffle} from './utility.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
 import {bd} from './logic.js';

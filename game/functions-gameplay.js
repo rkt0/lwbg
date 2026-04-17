@@ -1,3 +1,4 @@
+import {isNull} from './utility.js';
 import {bd} from './logic.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
