@@ -158,6 +158,11 @@ autoSave.clear = () => {
       ui.hideButton('ok-ai-move');
       if (gs.je) gp.startJumpEnter();
     }
+    if (gs.turn === 'trex' && gs.phase === 'move') {
+      ui.showButton(
+        gs.rollN ? 'ok-trex-move' : 'ok-no-move'
+      );
+    }
     ui.humanItemsClickable(gs.turn === 'human');
     ui.raptorItemsClickable(gs.turn === 'raptor');
   };
