@@ -85,12 +85,6 @@ gp.initializeObjects();
 // (done this way to eliminate circular dependency)
 gp.setSaveFunction(() => autoSave.update());
 
-// Create gameplay container
-{
-  $('<div></div>').attr('id', 'gameplay-container')
-      .addClass('full-board').appendTo('body');
-}
-
 // // Piece layout information
 // const pl = {human: [], trex: [], raptor: []};
 
@@ -607,9 +601,6 @@ gp.setSaveFunction(() => autoSave.update());
       pl.raptor[space][0] += offset[0];
       pl.raptor[space][1] += offset[1];
     }
-    $('<div></div>').attr('id', 'raptor-map')
-        .addClass('full-board')
-        .appendTo('#gameplay-container');
     const svgR = $('#raptor-map').svg().svg('get');
     for (const [i, a] of rSpaceCoords.entries()) {
       const idString = `raptor-space-${i}`;
@@ -618,25 +609,19 @@ gp.setSaveFunction(() => autoSave.update());
           .click({space: i}, clickRaptorSpace);
     }
     if (debug.boardLabels.raptorPoint) {
-      $('<div></div>')
-          .attr('id', 'raptor-point-labels')
-          .addClass('full-board debug-labels')
-          .appendTo('#gameplay-container');
-      const svgLP =
-          $('#raptor-point-labels').svg().svg('get');
+      const $div = $('#raptor-point-labels');
+      $div.css({display: 'block'});
+      const svg = $div.svg().svg('get');
       for (const [i, c] of rPoints.entries()) {
-        svgLP.text(...c, `${i}`);
+        svg.text(...c, `${i}`);
       }
     }
     if (debug.boardLabels.raptorSpace) {
-      $('<div></div>')
-          .attr('id', 'raptor-space-labels')
-          .addClass('full-board debug-labels')
-          .appendTo('#gameplay-container');
-      const svgLS =
-          $('#raptor-space-labels').svg().svg('get');
+      const $div = $('#raptor-space-labels');
+      $div.css({display: 'block'});
+      const svg = $div.svg().svg('get');
       for (const [i, c] of pl.raptor.entries()) {
-        svgLS.text(...c, `${i}`);
+        svg.text(...c, `${i}`);
       }
     }
     const bldgBg = [
@@ -657,9 +642,6 @@ gp.setSaveFunction(() => autoSave.update());
       ['concrete.png',  [500, 250]],
       ['asphalt.png',   [250, 180]],
     ];
-    $('<div></div>').attr('id', 'buildings-map')
-        .addClass('full-board')
-        .appendTo('#gameplay-container');
     const svgB = $('#buildings-map').svg().svg('get');
     const defs = svgB.defs();
     for (const [i, [src, dim]] of bgInfo.entries()) {
@@ -833,9 +815,6 @@ gp.setSaveFunction(() => autoSave.update());
       $div.appendTo('#gameplay-container');
       if (! isBldg) pl.human[i] = [x, y];
     }
-    $('<div></div>').attr('id', 'human-edges')
-        .addClass('full-board')
-        .appendTo('#gameplay-container');
     const svgE = $('#human-edges').svg().svg('get');
     for (const edge of bd.humanEdges) {
       const idString = 'human-edge-' +
@@ -847,14 +826,11 @@ gp.setSaveFunction(() => autoSave.update());
       );
     }
     if (debug.boardLabels.humanSpace)  {
-      $('<div></div>')
-          .attr('id', 'human-space-labels')
-          .addClass('full-board debug-labels')
-          .appendTo('#gameplay-container');
-      const svgL =
-          $('#human-space-labels').svg().svg('get');
+      const $div = $('#human-space-labels');
+      $div.css({display: 'block'});
+      const svg = $div.svg().svg('get');
       for (const [i, coords] of hSpaces.entries()) {
-        svgL.text(...coords, `${i}`);
+        svg.text(...coords, `${i}`);
       }
     }
   }
@@ -899,9 +875,6 @@ gp.setSaveFunction(() => autoSave.update());
       }
       $div.appendTo('#gameplay-container');
     }
-    $('<div></div>').attr('id', 'trex-edges')
-        .addClass('full-board')
-        .appendTo('#gameplay-container');
     const svg = $('#trex-edges').svg().svg('get');
     for (let i = 0; i < bd.trexStart; i++) {
       svg.line(

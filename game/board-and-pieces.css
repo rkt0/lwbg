@@ -145,14 +145,17 @@
 }
 
 #human-space-labels {
+  display: none;
   fill: #00a;
 }
 
 #raptor-point-labels {
+  display: none;
   fill: var(--color-selected);
 }
 
 #raptor-space-labels {
+  display: none;
   fill: var(--color-dino-space);
 }
 
