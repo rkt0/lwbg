@@ -178,7 +178,7 @@ export const ui = {};
   ui.cycleDisplayMode = () => {
     const modes = ui.displayModes;
     const valueOld = document.body.dataset.display;
-    const indexOld = modes.indexOf(valueOld);
+    const indexOld = modes.indexOf(valueOld ?? '');
     const indexNew = (indexOld + 1) % modes.length;
     document.body.dataset.display = modes[indexNew];
   };
