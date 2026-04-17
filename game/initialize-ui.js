@@ -21,8 +21,6 @@ import {edit} from './edit-mode.js';
 
 // Title screen
 {
-  $('<div></div>').attr('id', 'title-container')
-      .addClass('full-screen').appendTo('body');
   ui.makeFlexContainer(
     '#title-container', 'title-content'
   );
@@ -43,12 +41,6 @@ import {edit} from './edit-mode.js';
 // Start screen
 {
 
-  $('<div></div>').attr('id', 'start-container')
-      .addClass('full-screen').appendTo('body');
-
-  $('<div></div>').attr('id', 'start-options')
-      .addClass('flex-container')
-      .appendTo('#start-container');
   const aTime = anim.time.menuFade;
 
   const startNewGame = () => {
@@ -160,19 +152,10 @@ import {edit} from './edit-mode.js';
     () => $('#toggle-audio').click()
   );
 
-  $('<div></div>').attr('id', 'start-message')
-      .addClass('info centered')
-      .css('display', 'none')
-      .appendTo('#start-container');
-
 }
 
 // Clarification of save upon loading game
 {
-  $('<div></div>').attr('id', 'load-choose-save')
-      .addClass('flex-container')
-      .css('display', 'none')
-      .appendTo('#start-container');
   const m0 = "Do you want to use this same file as" +
       " your auto-save file (overwriting it)?";
   const m1 = "Or do you want to leave this file" +
@@ -192,14 +175,6 @@ import {edit} from './edit-mode.js';
 
 // Player control screen
 {
-  // Make it a child of body so that it can be used
-  //   both at start and in game
-  $('<div></div>').attr('id', 'player-control')
-      .addClass('full-screen flex-container tight')
-      .css('display', 'none').appendTo('body');
-  $('<div></div>')
-      .addClass('flex-container row tight')
-      .appendTo('#player-control');
   const savePlayers = async () => {
     if (! ai.control.changed) return;
     ai.control.changed = false;
@@ -296,10 +271,6 @@ import {edit} from './edit-mode.js';
 {
 
   // Container
-  $('<div></div>').attr('id', 'more-menu')
-      .addClass('full-screen non-zoom')
-      .css('display', 'none')
-      .appendTo('#gameplay-container');
   ui.makeFlexContainer('#more-menu', 'more-options');
 
   // Return to game
@@ -486,13 +457,6 @@ import {edit} from './edit-mode.js';
 
 
 // Gameplay menu
-
-// Container
-{
-  $('<div></div>').attr('id', 'gameplay-menu')
-      .addClass('non-zoom')
-      .appendTo('#gameplay-container');
-}
 
 // Zoom, turn, roll displays
 {
@@ -932,27 +896,8 @@ import {edit} from './edit-mode.js';
     $mc.children('.content').css('visibility', cv);
     $mc.children('.hider').css('display', hd);
   }
-  $('<div></div>').attr('id', 'message-container')
-      .click(ui.hideMessage)
-      .hover(() => mouse(true), () => mouse(false))
-      .addClass('flex-container info non-zoom')
-      .css('display', 'none')
-      .appendTo('#gameplay-container');
-  $('<span></span>').addClass('content')
-      .appendTo('#message-container');
-  $('<div></div>').addClass('hider flex-container')
-      .css('display', 'none')
-      .appendTo('#message-container');
-  $('<span></span>').html('Hide Message')
-      .appendTo('#message-container .hider');
-}
-
-// Game over
-{
-  $('<div></div>').attr('id', 'game-over')
-      .addClass('info non-zoom centered')
-      .css('display', 'none')
-      .appendTo('#gameplay-container');
+  $('#message-container').click(ui.hideMessage)
+    .hover(() => mouse(true), () => mouse(false));
 }
 
 // Controls for edit mode
@@ -964,15 +909,6 @@ anim.makeCssVariables();
 // Audio elements
 music.makeElement();
 sfx.makeElement();
-
-// Display matte for TV mode
-{
-  const sides = ['top', 'bottom', 'left', 'right'];
-  for (const side of sides) {
-    $('<div></div>').addClass('display-matte')
-        .addClass(side).appendTo('body');
-  }
-}
 
 // Audio toggle button in gameplay
 {
@@ -988,10 +924,7 @@ sfx.makeElement();
     }
     music.audioOn = ! music.audioOn;
   };
-  $('<button></button>').attr('type', 'button')
-      .attr('id', 'toggle-audio').click(toggleAudio)
-      .addClass('small-button non-zoom')
-      .appendTo('#gameplay-container');
+  $('#toggle-audio').click(toggleAudio);
 }
 
 // Create audio toggle icons (including at start)
