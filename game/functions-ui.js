@@ -145,11 +145,6 @@ export const ui = {};
 
 // Make various UI-related structures
 {
-  ui.makeFlexContainer = (where, id) => {
-    $('<div></div>').attr('id', id)
-        .css('display', 'none')
-        .addClass('flex-container').appendTo(where);
-  };
   ui.makeOption = (where, id, label, handler) => {
     const $button = $('<button></button>');
     if (id) $button.attr('id', id);

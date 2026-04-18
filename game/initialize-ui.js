@@ -21,10 +21,6 @@ import {edit} from './edit-mode.js';
 
 // Title screen
 {
-  ui.makeFlexContainer(
-    '#title-container', 'title-content'
-  );
-  $('#title-content').css('display', 'flex');
   const m = "Click anywhere to start";
   ui.makeInstruction('#title-content', m);
   const aTime = anim.time.menuFade;
@@ -270,9 +266,6 @@ import {edit} from './edit-mode.js';
 // More menu
 {
 
-  // Container
-  ui.makeFlexContainer('#more-menu', 'more-options');
-
   // Return to game
   const hideMore = () => {
     ui.disableMenu('more-menu');
@@ -405,9 +398,6 @@ import {edit} from './edit-mode.js';
 
 // Manual save help screen
 {
-  ui.makeFlexContainer(
-    '#more-menu', 'manual-save-help'
-  );
   const m0 = "You will now be asked to create" +
       " a file. This file will allow you to resume" +
       "  your game later at this exact point.";
@@ -423,7 +413,6 @@ import {edit} from './edit-mode.js';
 
 // Confirm quit screen
 {
-  ui.makeFlexContainer('#more-menu', 'quit-options');
   const m0 = "Do you really want to quit the game?";
   const m1 = "(You'll still be able to resume it" +
       " later from your saved game file.)";
