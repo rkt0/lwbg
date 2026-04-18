@@ -25,13 +25,15 @@ $('#gameplay-menu > .dormant').each((_, e) => {
   ui.hideButton(e.id);
 });
 
+// Animation time for menu fade
+const aTime = anim.time.menuFade;
+
 
 
 // Full-screen interfaces outside of normal gameplay
 
 // Title screen
 {
-  const aTime = anim.time.menuFade;
   $('#title-container').one('click', () => {
     $('#title-container').fadeOut(aTime, () => {
       $('#start-container').fadeIn(aTime);
@@ -42,8 +44,6 @@ $('#gameplay-menu > .dormant').each((_, e) => {
 
 // Start screen
 {
-
-  const aTime = anim.time.menuFade;
 
   $('#start-new').click(() => {
     ui.disableMenu('start-options');
@@ -59,7 +59,6 @@ $('#gameplay-menu > .dormant').each((_, e) => {
     autoSave.fh = fhLoad;
     const $container = $('#start-container');
     const $message = $('#start-message');
-    const aTime = anim.time.menuFade;
     const m = [];
     if (okAlready === 'granted') {
       m[0] = "Your progress will automatically" +
@@ -83,14 +82,13 @@ $('#gameplay-menu > .dormant').each((_, e) => {
   };
   const loadNew = async fhLoad => {
     ui.disableMenu('load-choose-save');
-    $('#load-choose-save').fadeOut(anim.time.menuFade,
+    $('#load-choose-save').fadeOut(aTime,
       () => autoSave.begin(fhLoad)
     );
   };
   const selectFileToLoad = async () => {
     const $container = $('#start-container');
     const $message = $('#start-message');
-    const aTime = anim.time.menuFade;
     $message.fadeOut(aTime);
     let fh;
     try {
@@ -165,7 +163,7 @@ $('#gameplay-menu > .dormant').each((_, e) => {
     savePlayers();
     $('#hide-more').click();
     ui.hideMessage();
-    $('#player-control').fadeOut(anim.time.menuFade);
+    $('#player-control').fadeOut(aTime);
     if (ai.control[gs.turn] && gs.phase !== 'roll') {
       $('#cancel-button').click();
       ui.hideButton('ok-no-move');
@@ -178,7 +176,7 @@ $('#gameplay-menu > .dormant').each((_, e) => {
   };
   const continueAtStart = () => {
     $('#player-control')
-        .fadeOut(anim.time.menuFade, autoSave.begin);
+        .fadeOut(aTime, autoSave.begin);
   };
   $('#continue-from-control').click(() => {
     ui.disableMenu('player-control');
@@ -201,7 +199,7 @@ $('#gameplay-menu > .dormant').each((_, e) => {
     if (isNull(ai.control.human)) return;
     if (isNull(ai.control.raptor)) return;
     $('#continue-from-control')
-        .animate({opacity: 1}, anim.time.menuFade);
+        .animate({opacity: 1}, aTime);
   };
   const addControlAreas = species => {
     $('<div></div>').attr('id', `${species}-control`)
@@ -241,7 +239,7 @@ $('#gameplay-menu > .dormant').each((_, e) => {
   // Return to game
   $('#hide-more').click(() => {
     ui.disableMenu('more-menu');
-    $('#more-menu').fadeOut(anim.time.menuFade,
+    $('#more-menu').fadeOut(aTime,
       () => {
         $('#more-menu > *').css('display', 'none');
         $('body').css({overflow: 'visible'});
@@ -273,7 +271,6 @@ $('#gameplay-menu > .dormant').each((_, e) => {
   };
   $('#new-save-point').click(() => {
     ui.disableMenu('more-options');
-    const aTime = anim.time.menuFade;
     const $msh = $('#manual-save-help');
     $('#more-options').fadeOut(aTime,
       () => $msh.fadeIn(aTime,
@@ -283,8 +280,9 @@ $('#gameplay-menu > .dormant').each((_, e) => {
   });
 
   // Go to edit mode
+  const eTime = anim.time.editControlFade;
   const enableDiceEdit = () => {
-    $('.edit-dice').fadeIn(anim.time.editControlFade);
+    $('.edit-dice').fadeIn(eTime);
     $(`.die-button-wrapper-${gs.turn}`)
         .css('display', 'block');
     const dc = (value, die) => {
@@ -310,13 +308,12 @@ $('#gameplay-menu > .dormant').each((_, e) => {
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',
     ];
     for (const x of hidden) ui.hideButton(x);
-    const aTime = anim.time.editControlFade;
     $('.edit-control:not(.edit-dice):not(.edit-turn)')
-        .fadeIn(aTime);
+        .fadeIn(eTime);
     if (gs.turn === 'over') {
-      $('#game-over').fadeOut(aTime);
+      $('#game-over').fadeOut(eTime);
     } else {
-      $('.edit-turn').fadeIn(aTime);
+      $('.edit-turn').fadeIn(eTime);
     }
     if (gs.phase !== 'roll') enableDiceEdit();
     ui.humanItemsClickable(true);
@@ -329,13 +326,12 @@ $('#gameplay-menu > .dormant').each((_, e) => {
   $('#change-control').click(() => {
     ui.disableMenu('more-options');
     $('#more-options')
-        .fadeOut(anim.time.menuFade, ui.showControl);
+        .fadeOut(aTime, ui.showControl);
   });
 
   // Quit game
   $('#show-quit-options').click(() => {
     ui.disableMenu('more-options');
-    const aTime = anim.time.menuFade;
     $('#more-options').fadeOut(aTime,
       () => $('#quit-options').fadeIn(aTime,
         () => ui.disableMenu('quit-options', false)
@@ -354,7 +350,6 @@ $('#gameplay-menu > .dormant').each((_, e) => {
     $('#hide-more').click();
   });
   $('#confirm-quit').click(() => {
-    const aTime = anim.time.menuFade;
     $('#hide-more').click();
     $('#gameplay-container').fadeOut(aTime, () => {
       gp.initializeObjects();
@@ -381,7 +376,7 @@ $('#gameplay-menu > .dormant').each((_, e) => {
   $('#show-more').click(() => {
     $('body').css({overflow: 'hidden'});
     $('#more-options').css('display', 'flex');
-    $('#more-menu').fadeIn(anim.time.menuFade,
+    $('#more-menu').fadeIn(aTime,
       () => ui.disableMenu('more-options', false)
     );
   });
@@ -707,7 +702,7 @@ $('#gameplay-menu > .dormant').each((_, e) => {
       // Calculation of squeeze transform must be
       // delayed to give browser adequate time
       // to apply correct width to $faceCopy
-      setTimeout(squeezeFn, anim.time.menuFade * 6);
+      setTimeout(squeezeFn, aTime * 6);
       $face.css('display', 'none');
     }
   };
