@@ -26,16 +26,13 @@ $('.dormant').css('display', 'none');
 
 // Title screen
 {
-  const m = "Click anywhere to start";
-  ui.makeInstruction('#title-content', m);
   const aTime = anim.time.menuFade;
-  const goToStart = () => {
+  $('#title-container').one('click', () => {
     $('#title-container').fadeOut(aTime, () => {
       $('#start-container').fadeIn(aTime);
       music.next();
     });
-  };
-  $('#title-container').one('click', goToStart);
+  });
 }
 
 // Start screen
@@ -142,17 +139,6 @@ $('.dormant').css('display', 'none');
     $('#toggle-audio').click();
   });
 
-}
-
-// Clarification of save upon loading game
-{
-  const m0 = "Do you want to use this same file as" +
-      " your auto-save file (overwriting it)?";
-  const m1 = "Or do you want to leave this file" +
-      " alone and create a new auto-save file?";
-  ui.makeInstruction(
-    '#load-choose-save', ui.asParagraphs(m0, m1)
-  );
 }
 
 // Player control screen
@@ -357,29 +343,8 @@ $('.dormant').css('display', 'none');
 
 }
 
-// Manual save help screen
-{
-  const m0 = "You will now be asked to create" +
-      " a file. This file will allow you to resume" +
-      "  your game later at this exact point.";
-  const m1 = "Your progress will continue to be" +
-      " automatically saved to your original" +
-      " saved game file (and not to the file" +
-      " that you're about to create).";
-  const m2 = "Click anywhere to continue."
-  ui.makeInstruction(
-    '#manual-save-help', ui.asParagraphs(m0, m1, m2)
-  );
-}
-
 // Confirm quit screen
 {
-  const m0 = "Do you really want to quit the game?";
-  const m1 = "(You'll still be able to resume it" +
-      " later from your saved game file.)";
-  ui.makeInstruction(
-    '#quit-options', ui.asParagraphs(m0, m1)
-  );
   $('#abort-quit').click(() => {
     $('#hide-more').click();
   });

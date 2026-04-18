@@ -152,10 +152,6 @@ export const ui = {};
     $button.attr('type', 'button').html(label)
         .appendTo(where);
   };
-  ui.makeInstruction = (where, instruction) => {
-    $('<div></div>').addClass('info')
-        .html(instruction).appendTo(where);
-  };
   ui.asParagraphs = (...strArr) => {
     return strArr.map(x => `<p>${x}</p>`).join('');
   };

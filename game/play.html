@@ -62,9 +62,24 @@
     </div>
     <div id="manual-save-help"
       class="flex-container dormant">
+      <div class="info">
+        <p>You will now be asked to create a file.
+        This file will allow you to resume your game
+        later at this exact point.
+        <p>Your progress will continue to be
+        automatically saved to your original
+        saved game file (and not to the file
+        that you're about to create).
+        <p>Click anywhere to continue.
+      </div>
     </div>
     <div id="quit-options"
       class="flex-container dormant">
+      <div class="info">
+        <p>Do you really want to quit the game?
+        <p>(You'll still be able to resume it
+        later from your saved game file.)
+      </div>
       <button type="button" id="abort-quit">
         Return to Game
       </button>
@@ -76,6 +91,7 @@
 </div>
 <div id="title-container" class="full-screen">
   <div id="title-content" class="flex-container">
+    <div class="info">Click anywhere to start</div>
   </div>
 </div>
 <div id="start-container" class="full-screen">
@@ -95,6 +111,12 @@
   </div>
   <div id="load-choose-save"
     class="flex-container dormant">
+    <div class="info">
+      <p>Do you want to use this same file as
+      your auto-save file (overwriting it)?
+      <p>Or do you want to leave this file
+      alone and create a new auto-save file?
+    </div>
     <button type="button" id="load-overwrite">
       Use Same File (Overwrite)
     </button>
