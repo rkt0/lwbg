@@ -26,7 +26,67 @@
     class="full-board debug-labels">
   </div>
   <div id="trex-edges" class="full-board"></div>
-  <div id="gameplay-menu" class="non-zoom"></div>
+  <div id="gameplay-menu" class="non-zoom">
+    <div id="zoom-display" class="info">
+      <div class="flex-container">Zoom<br>&nbsp;</div>
+      <div class="spacer"></div>
+    </div>
+    <div id="turn-display" class="info slot-turn">
+      <div class="flex-container">
+        <div id="turn-display-content">
+          Turn:<br>
+          <span id="species-turn-text">&nbsp;</span>
+        </div>
+      </div>
+    </div>
+    <div id="roll-display"
+      class="info dormant slot-roll">
+      <div class="flex-container"></div>
+    </div>
+    <button type="button" id="show-more">
+      &bull; &bull; &bull;
+    </button>
+    <button type="button" id="ok-no-move"
+      class="dormant default-action slot-cancel">
+      OK
+    </button>
+    <button type="button" id="ok-ai-move"
+      class="dormant default-action slot-cancel">
+      Move
+    </button>
+    <button type="button" id="decline-button"
+      class="dormant slot-cancel">
+      Decline
+    </button>
+    <button type="button" id="cancel-button"
+      class="dormant slot-cancel">
+      Cancel
+    </button>
+    <button type="button" id="confirm-button"
+      class="dormant default-action">
+      Confirm
+    </button>
+    <button type="button" id="ok-trex-move"
+      class="dormant default-action slot-cancel">
+      Move
+    </button>
+    <button type="button" id="roll-button"
+      class="dormant default-action slot-roll">
+      Roll
+    </button>
+    <button type="button" id="zoom-out"
+      class="zoom-button">
+      <div class="zoom-indicator">&dtrif;</div>&ndash;
+    </button>
+    <button type="button" id="zoom-default"
+      class="zoom-button current">
+      <div class="zoom-indicator">&dtrif;</div>&bull;
+    </button>
+    <button type="button" id="zoom-in"
+      class="zoom-button">
+      <div class="zoom-indicator">&dtrif;</div>+
+    </button>
+  </div>
   <div id="message-container"
     class="flex-container info non-zoom dormant">
     <span class="content"></span>

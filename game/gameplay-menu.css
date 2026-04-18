@@ -40,10 +40,6 @@
 
 /* Permanent area */
 
-#show-more::before {
-  content: "• • •";
-}
-
 #zoom-display {
   top: var(--button-height);
   height: var(--zoom-display-height);
@@ -76,24 +72,12 @@
   color: var(--color-text);
 }
 
-#zoom-out::after {
-  content: "–";
-}
-
 #zoom-default {
   left: var(--zoom-button-width);
 }
 
-#zoom-default::after {
-  content: "•";
-}
-
 #zoom-in {
   left: calc(var(--zoom-button-width) * 2);
-}
-
-#zoom-in::after {
-  content: "+";
 }
 
 .zoom-indicator {
@@ -102,9 +86,6 @@
   top: calc(0px - var(--zoom-button-height) * 5 / 8);
   margin-bottom:
        calc(0px - var(--zoom-button-height) * 5 / 6);
-}
-.zoom-indicator::before {
-  content: "▾";
 }
 
 .current .zoom-indicator {
@@ -134,10 +115,6 @@
   );;
 }
 
-#roll-button::before {
-  content: "Roll";
-}
-
 #roll-display {
   height: var(--roll-display-height);
 }
@@ -155,23 +132,6 @@
   background: #ff2f4eaa;
 }
 
-#cancel-button::before {
-  content: "Cancel";
-}
-
-#decline-button::before {
-  content: "Decline";
-}
-
-#ok-trex-move::before,
-#ok-ai-move::before {
-  content: "Move";
-}
-
-#ok-no-move::before {
-  content: "OK";
-}
-
 #confirm-button {
   top: calc(
     2 * var(--button-height) +
@@ -179,10 +139,6 @@
     var(--turn-display-height) +
     var(--roll-display-height)
   );
-}
-
-#confirm-button::before {
-  content: "Confirm";
 }
 
 

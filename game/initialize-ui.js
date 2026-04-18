@@ -20,6 +20,11 @@ import {edit} from './edit-mode.js';
 // Set display to none on dormant elements
 $('.dormant').css('display', 'none');
 
+// Initialize dormant elements in gameplay menu
+$('#gameplay-menu > .dormant').each((_, e) => {
+  ui.hideButton(e.id);
+});
+
 
 
 // Full-screen interfaces outside of normal gameplay
@@ -164,7 +169,7 @@ $('.dormant').css('display', 'none');
     if (ai.control[gs.turn] && gs.phase !== 'roll') {
       $('#cancel-button').click();
       ui.hideButton('ok-no-move');
-      ui.hideButton('decline-move');
+      ui.hideButton('decline-button');
       ui.showButton('ok-ai-move');
     } else {
       ui.hideButton('ok-ai-move');
@@ -369,56 +374,24 @@ $('.dormant').css('display', 'none');
 
 // Gameplay menu
 
-// Zoom, turn, roll displays
-{
-  const makeInfoDiv = (id, position) => {
-    $('<div></div>').attr('id', id)
-        .addClass('info').css('display', 'none')
-        .appendTo('#gameplay-menu');
-    $('<div></div>').addClass('flex-container')
-        .appendTo(`#${id}`);
-  };
-  makeInfoDiv('zoom-display');
-  makeInfoDiv('turn-display');
-  makeInfoDiv('roll-display');
-  $('<div></div>').attr('id', 'turn-display-content')
-      .appendTo('#turn-display .flex-container');
-  const turnDisplayHtml = 'Turn:<br>' +
-      '<span id="species-turn-text">&nbsp;</span>';
-  $('#turn-display-content').html(turnDisplayHtml);
-  $('#zoom-display .flex-container')
-      .html('Zoom<br>&nbsp;');
-  $('<div></div>').addClass('spacer')
-      .appendTo('#zoom-display');
-}
-
 // Buttons
 {
 
-  const makeButton = (id, handler) => {
-    $('<button></button>').attr('type', 'button')
-        .attr('id', id)
-        .click(handler).css('display', 'none')
-        .appendTo('#gameplay-menu');
-  };
-
   // Simple buttons
-  const showMore = () => {
+  $('#show-more').click(() => {
     $('body').css({overflow: 'hidden'});
     $('#more-options').css('display', 'flex');
     $('#more-menu').fadeIn(anim.time.menuFade,
       () => ui.disableMenu('more-options', false)
     );
-  };
-  makeButton('show-more', showMore);
-  const okNoMove = () => {
+  });
+  $('#ok-no-move').click(() => {
     if (gs.phase === 'roll') return;
     ui.hideMessage();
     ui.hideButton('ok-no-move');
     gp.endTurn();
-  };
-  makeButton('ok-no-move', okNoMove);
-  const okAiMove = () => {
+  });
+  $('#ok-ai-move').click(() => {
     if (gs.phase !== 'select') return;
     gs.phase = 'think';
     ui.hideButton('ok-ai-move');
@@ -431,15 +404,14 @@ $('.dormant').css('display', 'none');
     mv.plan = decision[1];
     gs.phase = 'move';
     $('#confirm-button').click();
-  };
-  makeButton('ok-ai-move', okAiMove);
-  const declineMove = () => {
+  });
+  $('#decline-button').click(() => {
     if (gs.phase !== 'select' || ! gs.je) return;
     ui.hideMessage();
     if (mv.toGo) {
       let m = "Are you sure you don't want to ";
       m += gs.turn === 'human' ?
-          'jump' : 'enter a building';
+        'jump' : 'enter a building';
       m += "?<br>Click 'Decline' again to confirm."
       ui.showMessage(m, false);
       mv.toGo--;
@@ -447,8 +419,7 @@ $('.dormant').css('display', 'none');
       ui.hideButton('decline-button');
       gp.endTurn();
     }
-  };
-  makeButton('decline-button', declineMove);
+  });
 
   // More complex buttons
   const clearVisibleMove = () => {
@@ -458,14 +429,13 @@ $('.dormant').css('display', 'none');
     $('.selected, .move, .path')
         .removeClass('selected move path');
   };
-  const cancelMove = () => {
+  $('#cancel-button').click(() => {
     if (gs.phase !== 'move') return;
     gs.phase = 'select';
     clearVisibleMove();
     gp.clearMoveObject();
     if (gs.je) gp.startJumpEnter();
-  };
-  makeButton('cancel-button', cancelMove);
+  });
   const boundingBox = (...regions) => ({
     left:   Math.min(...regions.map(x => x.left)),
     right:  Math.max(...regions.map(x => x.right)),
@@ -538,21 +508,20 @@ $('.dormant').css('display', 'none');
       )
     );
   };
-  const confirmMove = () => {
+  $('#confirm-button').click(() => {
     if (gs.phase !== 'move') return;
     gs.phase = 'execute';
     clearVisibleMove();
     $('#zoom-default').click();
     const end = mv.plan[mv.plan.length - 1];
     const moveFn = (gs.turn === 'human') ?
-        gp.moveHuman : gp.moveRaptor;
+      gp.moveHuman : gp.moveRaptor;
     bringIntoView(movePlanRegion(gs.turn), () => {
       for (const s of mv.plan.slice(1)) {
         moveFn(mv.selected, s, s === end);
       }
     });
-  };
-  makeButton('confirm-button', confirmMove);
+  });
   const spaceRegion = id => {
     const $obj = $(`#${id}`);
     return {
@@ -584,7 +553,7 @@ $('.dormant').css('display', 'none');
       oldSpaceRegion, newSpaceRegion
     );
   };
-  const okTrexMove = () => {
+  $('#ok-trex-move').click(() => {
     if (gs.phase !== 'move') return;
     gs.phase = 'execute';
     ui.hideButton('ok-trex-move');
@@ -593,11 +562,10 @@ $('.dormant').css('display', 'none');
       trexMoveRegion(),
       () => gp.moveTrex(gs.trex - 1, true)
     );
-  };
-  makeButton('ok-trex-move', okTrexMove);
+  });
 
   // Roll
-  const roll = () => {
+  $('#roll-button').click(() => {
     if (gs.phase !== 'roll') return;
     gs.phase = 'execute';
     ui.hideMessage();
@@ -627,14 +595,7 @@ $('.dormant').css('display', 'none');
       }
     };
     setTimeout(fn, delay);
-  };
-  makeButton('roll-button', roll);
-
-  // Default actions
-  $(
-    '#confirm-button, #roll-button, ' +
-    '#ok-trex-move, #ok-no-move, #ok-ai-move'
-  ).addClass('default-action');
+  });
 
   // Zoom buttons
   const highlightPieces = setting => {
@@ -689,7 +650,7 @@ $('.dormant').css('display', 'none');
         .removeClass('slim');
     if (gs.turn === 'over') $('#game-over').show();
   };
-  const zoomOut = () => {
+  $('#zoom-out').click(() => {
     const factorFit = Math.max(
       $(window).width()  / zd.boardSize[0],
       $(window).height() / zd.boardSize[1],
@@ -700,46 +661,16 @@ $('.dormant').css('display', 'none');
     $('#zoom-out').addClass('current');
     $('.edit-control .obstructive').addClass('slim');
     if (gs.turn === 'over') $('#game-over').hide();
-  };
-  const zoomDefault = () => {
+  });
+  $('#zoom-default').click(() => {
     zoomGeneral(1);
     $('#zoom-default').addClass('current');
-  };
-  const zoomIn = () => {
+  });
+  $('#zoom-in').click(() => {
     zoomGeneral(zd.factor.in);
     $('#zoom-in').addClass('current');
-  };
-  makeButton('zoom-out', zoomOut);
-  makeButton('zoom-default', zoomDefault);
-  makeButton('zoom-in', zoomIn);
-  $('#zoom-out, #zoom-default, #zoom-in')
-      .addClass('zoom-button');
-  $('<div></div>').addClass('zoom-indicator')
-      .prependTo('.zoom-button');
-  $('#zoom-default').addClass('current');
+  });
 
-}
-
-// Positioning
-{
-  $('#turn-display').addClass('slot-turn');
-  $('#roll-display, #roll-button')
-      .addClass('slot-roll');
-  $(
-    '#cancel-button, #decline-button, ' +
-    '#ok-trex-move, #ok-no-move, #ok-ai-move'
-  ).addClass('slot-cancel');
-  $(
-    '#show-more, #turn-display, #zoom-display, ' +
-    '#zoom-out, #zoom-default, #zoom-in'
-  ).css('display', 'inline');
-  const hidden = [
-    'roll-button', 'roll-display',
-    'cancel-button', 'decline-button',
-    'ok-trex-move', 'ok-no-move', 'ok-ai-move',
-    'confirm-button'
-  ];
-  for (const x of hidden) ui.hideButton(x);
 }
 
 // Dice in roll display
