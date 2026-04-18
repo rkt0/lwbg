@@ -17,6 +17,11 @@ import {edit} from './edit-mode.js';
 
 
 
+// Set display to none on dormant elements
+$('.dormant').css('display', 'none');
+
+
+
 // Full-screen interfaces outside of normal gameplay
 
 // Title screen
@@ -39,15 +44,11 @@ import {edit} from './edit-mode.js';
 
   const aTime = anim.time.menuFade;
 
-  const startNewGame = () => {
+  $('#start-new').click(() => {
     ui.disableMenu('start-options');
     $('#start-options')
         .fadeOut(aTime, ui.showControl);
-  };
-  ui.makeOption(
-    '#start-options',
-    null, 'Start New Game', startNewGame
-  );
+  });
 
   const loadOverwrite = async fhLoad => {
     ui.disableMenu('load-choose-save');
@@ -121,7 +122,7 @@ import {edit} from './edit-mode.js';
       () => ui.disableMenu('load-choose-save', false)
     );
   }
-  const prepareToLoadFile = () => {
+  $('#load-saved').click(() => {
     ui.disableMenu('start-options');
     $('#start-options').fadeOut(aTime, () => {
       const m0 = "You will now be asked to" +
@@ -136,17 +137,11 @@ import {edit} from './edit-mode.js';
       $('#start-container')
           .one('click', selectFileToLoad);
     });
-  };
-  ui.makeOption(
-    '#start-options',
-    null, 'Load Saved Game', prepareToLoadFile
-  );
+  });
 
-  ui.makeOption(
-    '#start-options',
-    'start-toggle-audio', 'Toggle Audio',
-    () => $('#toggle-audio').click()
-  );
+  $('#start-toggle-audio').click(() => {
+    $('#toggle-audio').click();
+  });
 
 }
 
@@ -158,14 +153,6 @@ import {edit} from './edit-mode.js';
       " alone and create a new auto-save file?";
   ui.makeInstruction(
     '#load-choose-save', ui.asParagraphs(m0, m1)
-  );
-  ui.makeOption(
-    '#load-choose-save', 'load-overwrite',
-    'Use Same File (Overwrite)', null
-  );
-  ui.makeOption(
-    '#load-choose-save', 'load-new',
-    'Create New File', null
   );
 }
 
@@ -203,15 +190,10 @@ import {edit} from './edit-mode.js';
     $('#player-control')
         .fadeOut(anim.time.menuFade, autoSave.begin);
   };
-  const continueFromControl = () => {
+  $('#continue-from-control').click(() => {
     ui.disableMenu('player-control');
     (gs.turn ? continueInGame : continueAtStart)();
-  };
-  ui.makeOption(
-    '#player-control',
-    'continue-from-control', 'Continue',
-    continueFromControl
-  );
+  });
   $('#player-control > button').css({opacity: 0});
   const changeControl = (species, level) => {
     $(`#${species}-control .current`)
@@ -267,7 +249,7 @@ import {edit} from './edit-mode.js';
 {
 
   // Return to game
-  const hideMore = () => {
+  $('#hide-more').click(() => {
     ui.disableMenu('more-menu');
     $('#more-menu').fadeOut(anim.time.menuFade,
       () => {
@@ -275,11 +257,7 @@ import {edit} from './edit-mode.js';
         $('body').css({overflow: 'visible'});
       }
     );
-  };
-  ui.makeOption(
-    '#more-options',
-    'hide-more', 'Return to Game', hideMore
-  );
+  });
 
   // Manual save
   const manualSave = async () => {
@@ -303,7 +281,7 @@ import {edit} from './edit-mode.js';
       $('#hide-more').click();
     }
   };
-  const showManualSaveHelp = () => {
+  $('#new-save-point').click(() => {
     ui.disableMenu('more-options');
     const aTime = anim.time.menuFade;
     const $msh = $('#manual-save-help');
@@ -312,11 +290,7 @@ import {edit} from './edit-mode.js';
         () => $msh.one('click', manualSave)
       )
     );
-  };
-  ui.makeOption(
-    '#more-options',
-    null, 'Create New Save Point', showManualSaveHelp
-  );
+  });
 
   // Go to edit mode
   const enableDiceEdit = () => {
@@ -333,7 +307,7 @@ import {edit} from './edit-mode.js';
     edit.dieCodes.continue =
         dc(gs.rollGo, dice[gs.turn].continue);
   };
-  const beginEditMode = () => {
+  $('#begin-edit').click(() => {
     $('#hide-more').click();
     if (gs.turn !== 'trex' && gs.turn !== 'over') {
       $('#cancel-button').click();
@@ -359,25 +333,17 @@ import {edit} from './edit-mode.js';
     ui.raptorItemsClickable(true);
     $('#cancel-edits, #confirm-edits')
         .prop('disabled', false);
-  };
-  ui.makeOption(
-    '#more-options',
-    null, 'Edit (Cheat)', beginEditMode
-  );
+  });
 
   // Go to player control
-  const showControlInGame = () => {
+  $('#change-player-control').click(() => {
     ui.disableMenu('more-options');
     $('#more-options')
         .fadeOut(anim.time.menuFade, ui.showControl);
-  };
-  ui.makeOption(
-    '#more-options',
-    null, 'Change Player Control', showControlInGame
-  );
+  });
 
   // Quit game
-  const showQuitConfirm = () => {
+  $('#show-quit-options').click(() => {
     ui.disableMenu('more-options');
     const aTime = anim.time.menuFade;
     $('#more-options').fadeOut(aTime,
@@ -385,11 +351,7 @@ import {edit} from './edit-mode.js';
         () => ui.disableMenu('quit-options', false)
       )
     );
-  };
-  ui.makeOption(
-    '#more-options',
-    null, 'Quit Game', showQuitConfirm
-  );
+  });
 
   // Disable at start of game
   ui.disableMenu('more-options');
@@ -419,11 +381,10 @@ import {edit} from './edit-mode.js';
   ui.makeInstruction(
     '#quit-options', ui.asParagraphs(m0, m1)
   );
-  const abortQuit = () => $('#hide-more').click();
-  ui.makeOption(
-    '#quit-options', null, 'Return to Game', abortQuit
-  );
-  const quitGame = () => {
+  $('#abort-quit').click(() => {
+    $('#hide-more').click();
+  });
+  $('#confirm-quit').click(() => {
     const aTime = anim.time.menuFade;
     $('#hide-more').click();
     $('#gameplay-container').fadeOut(aTime, () => {
@@ -436,10 +397,7 @@ import {edit} from './edit-mode.js';
       ui.showStartOptions(true);
       $('#start-container').fadeIn(aTime);
     });
-  };
-  ui.makeOption(
-    '#quit-options', null, 'Quit Game', quitGame
-  );
+  });
   ui.disableMenu('quit-options');
 }
 
@@ -894,9 +852,6 @@ edit.makeControls();
 
 // CSS variables
 anim.makeCssVariables();
-
-// Set display to none on dormant elements
-$('.dormant').css('display', 'none');
 
 // Audio elements
 music.makeElement();
