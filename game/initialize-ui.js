@@ -336,7 +336,7 @@ $('.dormant').css('display', 'none');
   });
 
   // Go to player control
-  $('#change-player-control').click(() => {
+  $('#change-control').click(() => {
     ui.disableMenu('more-options');
     $('#more-options')
         .fadeOut(anim.time.menuFade, ui.showControl);
