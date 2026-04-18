@@ -35,8 +35,7 @@ $('.dormant').css('display', 'none');
       music.next();
     });
   };
-  $('#title-container').one('click', goToStart)
-      .fadeIn(anim.time.menuFade);
+  $('#title-container').one('click', goToStart);
 }
 
 // Start screen
