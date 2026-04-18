@@ -63,28 +63,15 @@ function makeBanner() {
     ui.showButton('show-more');
     gp.checkGameOver(true);
   };
-  const cancelEdits = () => {
+  $('#cancel-edits').click(() => {
     editGame(edit.gsPrevious);
     endEditMode();
-  };
-  const confirmEdits = () => {
+  });
+  $('#confirm-edits').click(() => {
     editGame(gs);
     endEditMode();
     autoSave.update(true);
-  };
-  $('<div></div>').attr('id', 'edit-mode-indicator')
-      .addClass('info edit-control banner')
-      .appendTo('#gameplay-menu');
-  $('<button></button>').attr('type', 'button')
-      .attr('id', 'cancel-edits')
-      .addClass('edit-control banner')
-      .click(cancelEdits).prop('disabled', true)
-      .appendTo('#gameplay-menu');
-  $('<button></button>').attr('type', 'button')
-      .attr('id', 'confirm-edits')
-      .addClass('edit-control banner')
-      .click(confirmEdits).prop('disabled', true)
-      .appendTo('#gameplay-menu');
+  });
 }
 
 // Turn and dice
@@ -131,18 +118,7 @@ function makeTurnDiceButtons() {
     $(`.die-button-wrapper-${species}`)
         .css('display', 'block');
   };
-  $('<div></div>').attr('id', 'turn-button-area')
-      .addClass('edit-control slot-turn')
-      .addClass('edit-button-area edit-turn')
-      .css('display', 'none')
-      .appendTo('#gameplay-menu');
-  $('<div></div>').addClass('flex-container')
-      .appendTo('#turn-button-area');
-  $('<button></button>').attr('type', 'button')
-      .attr('id', 'change-turn')
-      .addClass('obstructive')
-      .click(changeTurn)
-      .appendTo('#turn-button-area .flex-container');
+  $('#change-turn').click(changeTurn);
 
   // Dice
   const unrollDice = () => {
@@ -155,17 +131,7 @@ function makeTurnDiceButtons() {
     $('.edit-dice')
         .fadeOut(anim.time.editControlFade);
   };
-  $('<button></button>').attr('type', 'button')
-      .attr('id', 'unroll-dice')
-      .addClass('edit-control slot-cancel edit-dice')
-      .click(unrollDice).appendTo('#gameplay-menu');
-  $('<div></div>').attr('id', 'die-button-area')
-      .addClass('edit-control slot-roll')
-      .addClass('edit-button-area edit-dice')
-      .css('display', 'none')
-      .appendTo('#gameplay-menu');
-  $('<div></div>').addClass('flex-container')
-      .appendTo('#die-button-area');
+  $('#unroll-dice').click(unrollDice);
   const changeDie = (species, type) => {
     const die = dice[species][type];
     const current = die[edit.dieCodes[type]];

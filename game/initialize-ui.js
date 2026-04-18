@@ -21,9 +21,8 @@ import {edit} from './edit-mode.js';
 $('.dormant').css('display', 'none');
 
 // Initialize dormant elements in gameplay menu
-$('#gameplay-menu > .dormant').each((_, e) => {
-  ui.hideButton(e.id);
-});
+$('#gameplay-menu > .dormant:not(.edit-control)')
+  .each((_, e) => {ui.hideButton(e.id);});
 
 // Animation time for menu fade
 const aTime = anim.time.menuFade;

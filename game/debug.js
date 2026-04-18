@@ -2,7 +2,7 @@
 export const debug = {};
 
 // Skip autosave
-debug.skipAutoSave = false;
+debug.skipAutoSave = true;
 
 // Speed up animations (set to false or number > 1)
 debug.animationSpeed = false;

@@ -152,24 +152,12 @@
   );
 }
 
-#edit-mode-indicator::before {
-  content: "Edit Mode On";
-}
-
 #cancel-edits {
   left:  var(--edit-banner-button-width);
 }
 
-#cancel-edits::before {
-  content: "Cancel Edits";
-}
-
 #confirm-edits {
   left: calc(var(--edit-banner-button-width) * 2);
-}
-
-#confirm-edits::before {
-  content: "Confirm Edits";
 }
 
 #gameplay-menu .edit-button-area {
