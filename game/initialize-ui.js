@@ -906,6 +906,9 @@ edit.makeControls();
 // CSS variables
 anim.makeCssVariables();
 
+// Set display to none on dormant elements
+$('.dormant').css('display', 'none');
+
 // Audio elements
 music.makeElement();
 sfx.makeElement();

@@ -11,54 +11,58 @@
 <link rel="stylesheet" href="z-indices.css">
 <link rel="stylesheet" href="display.css">
 <link rel="icon" type="image/png" sizes="64x64"
-  href="img/icon/icon-64.png"
->
+  href="img/icon/icon-64.png">
 <div id="gameplay-container" class="full-board">
   <div id="raptor-map" class="full-board"></div>
   <div id="raptor-point-labels"
-    class="full-board debug-labels"></div>
+    class="full-board debug-labels">
+  </div>
   <div id="raptor-space-labels"
-    class="full-board debug-labels"></div>
+    class="full-board debug-labels">
+  </div>
   <div id="buildings-map" class="full-board"></div>
   <div id="human-edges" class="full-board"></div>
   <div id="human-space-labels"
-    class="full-board debug-labels"></div>
+    class="full-board debug-labels">
+  </div>
   <div id="trex-edges" class="full-board"></div>
   <div id="gameplay-menu" class="non-zoom"></div>
   <div id="message-container"
-    class="flex-container info non-zoom" 
-    style="display: none;">
+    class="flex-container info non-zoom dormant">
     <span class="content"></span>
-    <div class="hider flex-container"
-      style="display: none;">
+    <div class="hider flex-container dormant">
       <span>Hide Message</span>
     </div>
   </div>
-  <div id="game-over" class="info non-zoom centered" 
-    style="display: none;"></div>
-  <button type="button" id="toggle-audio" 
-    class="small-button non-zoom"></button>
+  <div id="game-over"
+    class="info non-zoom centered dormant">
+  </div>
+  <button type="button" id="toggle-audio"
+    class="small-button non-zoom">
+  </button>
 </div>
 <div id="title-container" class="full-screen"></div>
 <div id="start-container" class="full-screen">
   <div id="start-options" class="flex-container">
   </div>
-  <div id="start-message" class="info centered" 
-    style="display: none;"></div>
-  <div id="load-choose-save" class="flex-container" 
-    style="display: none;"></div>
+  <div id="start-message"
+    class="info centered dormant">
+  </div>
+  <div id="load-choose-save"
+    class="flex-container dormant">
+  </div>
 </div>
 <div id="player-control"
-  class="full-screen flex-container tight" 
-  style="display: none;">
+  class="full-screen flex-container tight dormant">
   <div class="flex-container row tight"></div>
 </div>
-<div id="more-menu" class="full-screen non-zoom"
-  style="display: none;"></div>
-<div class="display-matte top"</div>
-<div class="display-matte bottom"</div>
-<div class="display-matte left"</div>
-<div class="display-matte right"</div>
+<div id="more-menu"
+  class="full-screen non-zoom dormant">
+</div>
+<div class="display-matte top"></div>
+<div class="display-matte bottom"></div>
+<div class="display-matte left"></div>
+<div class="display-matte right"></div>
 <script src="lib/jquery-3.6.0.min.js"></script>
 <script src="lib/jquery-ui-bounce.min.js"></script>
 <script src="lib/jquery.svg.min.js"></script>
