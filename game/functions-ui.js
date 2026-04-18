@@ -100,13 +100,12 @@ export const ui = {};
         .slideUp(anim.time.messageSlide);
   };
   ui.showGameOver = (nSaved, nTotal) => {
-    const gameOverHtml = '<h1>Game Over</h1>' +
-        `Humans Saved:<br>${nSaved} of ${nTotal}`;
+    $('#humans-saved').html(nSaved);
+    $('#humans-total').html(nTotal);
     ui.hideMessage();
     ui.hideButton('roll-display');
     ui.hideButton('turn-display');
     const $el = $('#game-over');
-    $el.html(gameOverHtml);
     if (zd.factor.current >= 1) {
       $el.fadeIn(anim.time.menuFade);
     }
