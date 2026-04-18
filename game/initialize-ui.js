@@ -54,27 +54,13 @@ const aTime = anim.time.menuFade;
   const loadOverwrite = async fhLoad => {
     ui.disableMenu('load-choose-save');
     const okAlready = await fhLoad.queryPermission({
-      mode: 'readwrite'
+      mode: 'readwrite',
     });
     autoSave.fh = fhLoad;
-    const $container = $('#start-container');
-    const $message = $('#start-message');
-    const m = [];
-    if (okAlready === 'granted') {
-      m[0] = "Your progress will automatically" +
-          " be saved to the same file.";
-      m[1] = "Click anywhere to start the game.";
-    } else {
-      m[0] = "You will now be asked for" +
-          " permission to save changes to this file.";
-      m[1] = "When you give permission," +
-          " the game will start.";
-      m[2] = "Click anywhere to continue.";
-    }
-    $message.html(ui.asParagraphs(...m));
+    ui.startMessage(`load-permission-${okAlready}`);
     $('#load-choose-save').fadeOut(aTime,
-      () => $message.fadeIn(aTime,
-        () => $container.one('click',
+      () => $('#start-message').fadeIn(aTime,
+        () => $('#start-container').one('click',
           () => autoSave.begin(fhLoad)
         )
       )
@@ -103,10 +89,7 @@ const aTime = anim.time.menuFade;
     const contents = await file.text();
     const lines = contents.split('\n');
     if (lines[0] !== 'LWBG' || lines[1] !== '0,0') {
-      const m0 =
-          "That file isn't a valid saved game file.";
-      const m1 = "Click anywhere to go back.";
-      $message.html(ui.asParagraphs(m0, m1));
+      ui.startMessage('load-invalid-file');
       $message.fadeIn(aTime,
         () => $container.one(
           'click', ui.showStartOptions
@@ -124,15 +107,8 @@ const aTime = anim.time.menuFade;
   $('#load-saved').click(() => {
     ui.disableMenu('start-options');
     $('#start-options').fadeOut(aTime, () => {
-      const m0 = "You will now be asked to" +
-          " select a saved game file to load.";
-      const m1 = "It can be a file that you created" +
-          " when you started a game or a file" +
-          " that you created manually during a game.";
-      const m2 = "Click anywhere to continue.";
-      $('#start-message')
-          .html(ui.asParagraphs(m0, m1, m2))
-          .fadeIn(aTime);
+      ui.startMessage('load-introduction');
+      $('#start-message').fadeIn(aTime);
       $('#start-container')
           .one('click', selectFileToLoad);
     });

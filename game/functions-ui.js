@@ -66,6 +66,15 @@ export const ui = {};
   };
 }
 
+// Pregame messages
+{
+  ui.startMessage = (templateId) => {
+    $('#start-message')[0].replaceChildren(
+      $(`#${templateId}`)[0].content.cloneNode(true)
+    );
+  };
+}
+
 // Messages and game over
 {
   ui.showMessage = (message, append) => {

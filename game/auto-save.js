@@ -263,29 +263,15 @@ autoSave.clear = () => {
         );
       }
       await writable.close();
-      const m0 = "Your progress will" +
-          " automatically be saved to the file" +
-          " that you just created.";
-      const m1 = "Click anywhere to start the game.";
-      $message.html(ui.asParagraphs(m0, m1));
+      ui.startMessage('save-created');
       $message.fadeIn(aTime,
         () => $container.one('click',
           () => startGame(fhl)
         )
       );
     };
-    const m0 = "You will now be asked to create" +
-        " a file. Your progress will automatically" +
-        " be saved to this file as you play.";
-    const m1 =
-        "Don't pick a file that already exists." +
-        " (That existing file would be erased!)";
-    const m2 = "Once you start playing, you can" +
-        " also manually save your game at any time" +
-        " by clicking the 'Save' button.";
-    const m3 = "Click anywhere to continue.";
-    $message.html(ui.asParagraphs(m0, m1, m2, m3))
-        .fadeIn(anim.time.menuFade);
+    ui.startMessage('save-introduction');
+    $message.fadeIn(anim.time.menuFade);
     $container.one(
       'click', () => createAutoSaveFile(fhLoad)
     );
