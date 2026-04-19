@@ -1,3 +1,26 @@
+export function qs(selector, parent = document) {
+  return parent.querySelector(selector);
+}
+export function qsa(selector, parent = document) {
+  return [...parent.querySelectorAll(selector)];
+}
+export function ael(x, type, fn) {
+  const element = typeof x === 'object' ? x : qs(x);
+  const f = (e) => {
+    e.preventDefault();
+    fn.bind(element, e)();
+  };
+  element.addEventListener(type, f);
+}
+export function aelo(x, type, fn) {
+  const element = typeof x === 'object' ? x : qs(x);
+  const f = (e) => {
+    e.preventDefault();
+    fn.bind(element, e)();
+  };
+  element.addEventListener(type, f, {once: true});
+}
+
 export function deepCopy(x) {
   return JSON.parse(JSON.stringify(x));
 }
