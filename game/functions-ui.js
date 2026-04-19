@@ -77,7 +77,9 @@ export const ui = {};
 
 // Messages and game over
 {
-  ui.showMessage = (message, append) => {
+  ui.showMessage = (templateId, append) => {
+    const template = $(`#${templateId}`)[0];
+    const message = template.innerHTML.trim();
     const $container = $('#message-container');
     const $content = $('#message-container .content');
     const retainedMessage = (
@@ -148,20 +150,6 @@ export const ui = {};
     $('#player-control').fadeIn(anim.time.menuFade,
       () => ui.disableMenu('player-control', false)
     );
-  };
-}
-
-// Make various UI-related structures
-{
-  ui.makeOption = (where, id, label, handler) => {
-    const $button = $('<button></button>');
-    if (id) $button.attr('id', id);
-    if (handler) $button.click(handler);
-    $button.attr('type', 'button').html(label)
-        .appendTo(where);
-  };
-  ui.asParagraphs = (...strArr) => {
-    return strArr.map(x => `<p>${x}</p>`).join('');
   };
 }
 

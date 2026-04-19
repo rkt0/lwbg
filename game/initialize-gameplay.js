@@ -107,17 +107,14 @@ gp.setSaveFunction(() => autoSave.update());
         bd.humanChoices.move : bd.raptorChoices.move;
     const result = ! moveChoices[from].has(space);
     if (result) {
-      const m = "That space isn't adjacent.";
-      ui.showMessage(m, false);
+      ui.showMessage('not-adjacent', false);
     }
     return result;
   };
   const checkNoDoubleBack = space => {
     const result = mv.plan.includes(space);
     if (result) {
-      const m = "You can't go back to" +
-          " a space on the same die roll.";
-      ui.showMessage(m, false);
+      ui.showMessage('no-double-back', false);
     }
     return result;
   };
@@ -127,9 +124,7 @@ gp.setSaveFunction(() => autoSave.update());
     const result =
         bd.bldgHumanSpaces.includes(from) && ! gs.je;
     if (result) {
-      const m = "Entering a building" +
-          " ends your move for that die roll.";
-      ui.showMessage(m, false);
+      ui.showMessage('building-ends-move', false);
     }
     return result;
   };
@@ -137,11 +132,9 @@ gp.setSaveFunction(() => autoSave.update());
     const result =
         ! bd.humanChoices.jump[from].has(space);
     if (result) {
-      const m = bd.bldgHumanSpaces.includes(space) ?
-          "That's not the right landing spot." :
-          "A roll of 'Jump' can only be used" +
-              " to jump.";
-      ui.showMessage(m, false);
+      const id = bd.bldgHumanSpaces.includes(space) ?
+        'wrong-landing' : 'jump-only-jump';
+      ui.showMessage(id, false);
     }
     return result;
   };
@@ -149,17 +142,14 @@ gp.setSaveFunction(() => autoSave.update());
     const result =
         bd.humanChoices.jump[from].has(space);
     if (result) {
-      const m = "Humans must roll 'Jump' to jump.";
-      ui.showMessage(m, false);
+      ui.showMessage('must-roll-jump', false);
     }
     return result;
   };
   const checkNoReturnStart = space => {
     const result = space === bd.humanStart;
     if (result) {
-      const m = "You can't go back to" +
-          " the starting space.";
-      ui.showMessage(m, false);
+      ui.showMessage('no-return-start', false);
     }
     return result;
   };
@@ -167,10 +157,7 @@ gp.setSaveFunction(() => autoSave.update());
     const result = mv.toGo === 1 &&
         gp.nHumansOn(space) && ! isBldg;
     if (result) {
-      const m = "You can't end your move on an" +
-          " ordinary space that's already occupied" +
-          " by another human.";
-      ui.showMessage(m, false);
+      ui.showMessage('human-occupied', false);
     }
     return result;
   };
@@ -266,11 +253,9 @@ gp.setSaveFunction(() => autoSave.update());
     const result =
         ! bd.raptorChoices.enter[from].has(space);
     if (result) {
-      const m = bd.bldgRaptorSpaces.includes(space) ?
-          "That's not the right building to enter." :
-          "A roll of 'Enter' can only be used" +
-              " to enter a building.";
-      ui.showMessage(m, false);
+      const id = bd.bldgRaptorSpaces.includes(space) ?
+          'wrong-entry' : 'enter-only-enter';
+      ui.showMessage(id, false);
     }
     return result;
   };
@@ -278,19 +263,14 @@ gp.setSaveFunction(() => autoSave.update());
     const result =
         bd.raptorChoices.enter[from].has(space);
     if (result) {
-      const m = "Raptors must roll" +
-          " 'Enter' to enter a building.";
-      ui.showMessage(m, false);
+      ui.showMessage('must-roll-enter', false);
     }
     return result;
   };
   const checkRaptorOccupied = space => {
     const result = gp.nRaptorsOn(space) > 0;
     if (result) {
-      const m = "You can't move to (or through)" +
-          " a territory or building that's" +
-          " already occupied by another raptor.";
-      ui.showMessage(m, false);
+      ui.showMessage('raptor-occupied', false);
     }
     return result;
   };
@@ -1012,16 +992,14 @@ gp.setSaveFunction(() => autoSave.update());
   const checkNoLeaveEnd = space => {
     const result = space === bd.humanGoal;
     if (result) {
-      const m = "You can't leave the ending space.";
-      ui.showMessage(m, false);
+      ui.showMessage('no-leave-end', false);
     }
     return result;
   };
   const checkNoSelectDead = space => {
     const result = space === bd.humanDead;
     if (result) {
-      const m = "That human is dead.";
-      ui.showMessage(m, false);
+      ui.showMessage('no-select-dead', false);
     }
     return result;
   };
@@ -1029,9 +1007,7 @@ gp.setSaveFunction(() => autoSave.update());
     const okSpaces = bd.humanJumps.map(s => s[0]);
     const result = ! okSpaces.includes(space);
     if (result) {
-      const m = "That human isn't" +
-          " in position to jump.";
-      ui.showMessage(m, false);
+      ui.showMessage('not-jump-position', false);
     }
     return result;
   };
@@ -1112,9 +1088,7 @@ gp.setSaveFunction(() => autoSave.update());
     const ep = bd.raptorEntrances.map(s => s[0]);
     const result = ! ep.includes(space);
     if (result) {
-      const m = "That raptor isn't" +
-          " in position to enter a building.";
-      ui.showMessage(m, false);
+      ui.showMessage('not-enter-position', false);
     }
     return result;
   };

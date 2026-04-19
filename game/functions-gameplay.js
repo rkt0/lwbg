@@ -65,8 +65,7 @@ export const gp = {};
     for (const [hp, hs] of gs.humans.entries()) {
       if (! hsIn.includes(hs)) continue;
       gp.moveHuman(hp, bd.humanDead, false);
-      const m = "Human eaten by raptor!";
-      ui.showMessage(m, true);
+      ui.showMessage('eaten-raptor', true);
     }
   };
   const startTurn = species => {
@@ -122,11 +121,9 @@ export const gp = {};
       mv.toGo = 1;
       ui.showButton('decline-button');
     } else {
-      let m = `No ${gs.turn} is in position to `;
-      m += gs.turn === 'human' ?
-          'jump' : 'enter a building';
-      m += ".<br>Click 'OK' to continue.";
-      ui.showMessage(m, true);
+      ui.showMessage(`no-${
+        gs.turn === 'human' ? 'jump' : 'enter'
+      }-available`, true);
       mv.toGo = -1;
       ui.showButton('ok-no-move');
     }
@@ -202,8 +199,7 @@ export const gp = {};
         if (gs.trex === 0) {
           for (const h of hPiecesOn(bd.humanStart)) {
             gp.moveHuman(h, bd.humanDead, false);
-            const m = "Human eaten by T-rex!";
-            ui.showMessage(m, true);
+            ui.showMessage('eaten-trex', true);
           }
         }
         // Using isLast here too enables reuse of this

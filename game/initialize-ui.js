@@ -219,8 +219,7 @@ const aTime = anim.time.menuFade;
       const writable = await fh.createWritable();
       await writable.write(contents);
       await writable.close();
-      const m = "Your game has been saved.";
-      ui.showMessage(m, false);
+      ui.showMessage('manual-save-success', false);
     } finally {
       $('#hide-more').click();
     }
@@ -359,11 +358,9 @@ const aTime = anim.time.menuFade;
     if (gs.phase !== 'select' || ! gs.je) return;
     ui.hideMessage();
     if (mv.toGo) {
-      let m = "Are you sure you don't want to ";
-      m += gs.turn === 'human' ?
-        'jump' : 'enter a building';
-      m += "?<br>Click 'Decline' again to confirm."
-      ui.showMessage(m, false);
+      ui.showMessage(`confirm-decline-${
+        gs.turn === 'human' ? 'jump' : 'enter'
+      }`, false);
       mv.toGo--;
     } else {
       ui.hideButton('decline-button');
