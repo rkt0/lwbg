@@ -170,12 +170,14 @@ div:is(.edit-turn, .edit-dice) .flex-container {
   align-items: start;
 }
 
-div:is(.edit-turn, .edit-dice) button {
+#gameplay-menu #turn-button-area button,
+#gameplay-menu #die-button-area button {
   height: var(--edit-turn-die-button-height);
   border-top-style: solid;
 }
 
-div:is(.edit-turn, .edit-dice) .slim:not(:hover) {
+#gameplay-menu #turn-button-area .slim:not(:hover),
+#gameplay-menu #die-button-area .slim:not(:hover) {
   width: 33px;
   color: #0000;
 }

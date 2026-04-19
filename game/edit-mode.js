@@ -140,10 +140,10 @@ function makeTurnDiceButtons() {
     const changed = die[edit.dieCodes[type]];
     replaceDieValue(species, type, changed);
   };
-  for (const species of Object.keys(dice)) {
-    for (const die of Object.keys(dice[species])) {
-      $(`#die-button-${species}-${die}`).click(() => {
-        changeDie(species, type);
+  for (const s of Object.keys(dice)) {
+    for (const t of Object.keys(dice[s])) {
+      $(`#die-button-${s}-${t}`).click(() => {
+        changeDie(s, t);
       });
     }
   }
