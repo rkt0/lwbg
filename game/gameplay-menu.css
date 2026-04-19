@@ -160,22 +160,22 @@
   left: calc(var(--edit-banner-button-width) * 2);
 }
 
-#gameplay-menu .edit-button-area {
+div:is(.edit-turn, .edit-dice) {
   position: absolute;
   left: var(--button-width);
   width: var(--button-width);
 }
 
-#gameplay-menu .edit-button-area .flex-container {
+div:is(.edit-turn, .edit-dice) .flex-container {
   align-items: start;
 }
 
-#gameplay-menu .edit-button-area button {
+div:is(.edit-turn, .edit-dice) button {
   height: var(--edit-turn-die-button-height);
   border-top-style: solid;
 }
 
-#gameplay-menu .edit-button-area .slim:not(:hover) {
+div:is(.edit-turn, .edit-dice) .slim:not(:hover) {
   width: 33px;
   color: #0000;
 }
