@@ -627,12 +627,6 @@ const aTime = anim.time.menuFade;
 // Dice in roll display
 {
   const targetWidth = cssInt('--die-content-width');
-  const makeDie = (species, type) => {
-    $('<div></div>')
-        .attr('id', `die-${species}-${type}`)
-        .addClass(`die die-${species} die-${type}`)
-        .appendTo('#roll-display .flex-container');
-  };
   const makeFaces = (species, type) => {
     const values = [... new Set(dice[species][type])];
     for (const v of values) {
@@ -664,7 +658,6 @@ const aTime = anim.time.menuFade;
   };
   for (const ss of Object.keys(dice)) {
     for (const dt of Object.keys(dice[ss])) {
-      makeDie(ss, dt);
       makeFaces(ss, dt);
     }
   }
