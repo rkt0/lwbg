@@ -635,12 +635,11 @@ const aTime = anim.time.menuFade;
           `face face-${species} face-${type}`;
       $face.addClass(classStr).attr('data-roll', v);
       $face.appendTo(`#die-${species}-${type}`);
-      const $faceCopy = $face.clone();
-      $faceCopy.css({position: 'fixed', zIndex: -1})
-          .appendTo('body');
+      const $copy = $face.clone().addClass('copy');
+      $copy.appendTo('body');
       const squeezeFn = () => {
-        const rawWidth = $faceCopy.width();
-        $faceCopy.remove();
+        const rawWidth = $copy.width();
+        $copy.remove();
         if (rawWidth > targetWidth) {
           const s = targetWidth / rawWidth;
           const t = targetWidth * (s - 1) / 2;
@@ -651,7 +650,7 @@ const aTime = anim.time.menuFade;
       };
       // Calculation of squeeze transform must be
       // delayed to give browser adequate time
-      // to apply correct width to $faceCopy
+      // to apply correct width to $copy
       setTimeout(squeezeFn, aTime * 6);
       $face.css('display', 'none');
     }

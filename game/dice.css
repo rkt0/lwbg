@@ -69,3 +69,8 @@
 .face-trex[data-roll="1"]::before {
   content: "⬆︎";
 }
+
+.face.copy {
+  position: fixed;
+  z-index: -1;
+}
