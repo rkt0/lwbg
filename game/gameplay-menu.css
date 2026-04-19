@@ -187,10 +187,6 @@ div:is(.edit-turn, .edit-dice) .slim:not(:hover) {
   );
 }
 
-#change-turn::before {
-  content: "Change";
-}
-
 #die-button-area {
   height: calc(
     var(--roll-display-height) -
@@ -217,8 +213,4 @@ div:is(.edit-turn, .edit-dice) .slim:not(:hover) {
 
 .die-button-wrapper button::before {
   content: "Change";
-}
-
-#unroll-dice::before {
-  content: "Unroll";
 }
