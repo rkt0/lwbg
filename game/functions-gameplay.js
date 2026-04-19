@@ -148,9 +148,9 @@ export const gp = {};
       }
     );
   };
-  gp.moveRaptor = (piece, space, isLast) => {
+  gp.moveRaptor = (piece, space, isLast, silent) => {
     const [l, t] = pl.raptor[space];
-    if (! sfx.raptorAlreadyPlayed) {
+    if (!sfx.raptorAlreadyPlayed && !silent) {
       // Sound effect should play only if raptor is
       //   eating a human on this move or is moving
       //   close enough to do so on its next move
@@ -171,10 +171,10 @@ export const gp = {};
         //   to work right
         gs.raptors[piece] = space;
         checkEatenByRaptor(piece);
-        if (isLast) {
+        if (isLast || silent) {
           sfx.raptorAlreadyPlayed = false;
-          gp.endTurn();
         }
+        if (isLast) gp.endTurn();
       }
     );
   };

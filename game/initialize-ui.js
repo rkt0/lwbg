@@ -687,25 +687,20 @@ edit.makeControls();
 // CSS variables
 anim.makeCssVariables();
 
-// Audio elements
-music.makeElement();
-sfx.makeElement();
-
 // Audio toggle button in gameplay
 {
-  const toggleAudio = () => {
+  $('#toggle-audio').click(() => {
     if (music.audioOn) {
       $('.icon.audio-on').hide();
       $('.icon.audio-off').show();
-      $(`#${music.id}`).get(0).pause();
+      music.element.pause();
     } else {
       $('.icon.audio-off').hide();
       $('.icon.audio-on').show();
-      $(`#${music.id}`).get(0).play();
+      music.element.play();
     }
-    music.audioOn = ! music.audioOn;
-  };
-  $('#toggle-audio').click(toggleAudio);
+    music.audioOn = !music.audioOn;
+  });
 }
 
 // Create audio toggle icons (including at start)

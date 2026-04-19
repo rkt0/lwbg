@@ -1,9 +1,10 @@
+import {qs} from './utility.js';
 import {rollDie} from './utility.js';
 import {prng} from './prngs.js';
 import {music} from './music.js';
 
 export const sfx = {
-  id: 'sfx-player',
+  element: qs('#sfx-player'),
   dir: 'audio/sfx',
 };
 sfx.sound = [
@@ -28,12 +29,10 @@ function SoundEffect(title, freqWeight = 1) {
 
 // Play sounds
 sfx.play = title => {
-  if (! music.audioOn) return;
-  const {src, volume} =
-      sfx.sound.find(x => x.title === title);
-  const el = $(`#${sfx.id}`).get(0);
-  el.src = src;
-  el.play();
+  if (!music.audioOn) return;
+  sfx.element.src =
+    sfx.sound.find(x => x.title === title).src;
+  sfx.element.play();
 };
 
 // T-rex sounds
@@ -51,8 +50,7 @@ sfx.raptorIdArr = sfx.raptorSounds.map(x => {
   return arr;
 }).flat();
 sfx.raptor = () => {
-  const el = $(`#${sfx.id}`).get(0);
-  if (el.src && ! el.ended) return;
+  if (sfx.element.src && ! sfx.element.ended) return;
   const soundId = rollDie(sfx.raptorIdArr, prng.sfx);
   sfx.play(`raptor-${soundId}`);
   sfx.raptorAlreadyPlayed = true;
@@ -63,9 +61,3 @@ sfx.raptor = () => {
 //   is set to true when raptor sound is played
 //   and checked to prevent sound from playing again
 sfx.raptorAlreadyPlayed = false;
-
-// Create audio element
-sfx.makeElement = () => {
-  $('<audio></audio>').attr('id', sfx.id)
-    .appendTo('body');
-};

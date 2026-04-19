@@ -292,7 +292,7 @@ gp.setSaveFunction(() => autoSave.update());
       const piece = edit.selected.piece;
       if (gs.raptors[piece] !== space) {
         if (gp.nRaptorsOn(space)) return;
-        gp.moveRaptor(piece, space, false);
+        gp.moveRaptor(piece, space, false, true);
       }
       $('.selected').removeClass('selected');
       ui.humanItemsClickable(true);

@@ -1,8 +1,9 @@
+import {qs, ael} from './utility.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
 
 export const music = {
-  id: 'music-player',
+  element: qs('#music-player'),
   dir: 'audio/music',
   tooRecent: 6,
   recentIds: [],
@@ -95,15 +96,9 @@ music.next = (skipCurrent, any) => {
       okNext = ! nextIsH;
     }
   }
-  const {src} = music.playlist[nextId];
-  const el = $(`#${music.id}`).get(0);
-  el.src = src;
-  el.play();
+  music.element.src = music.playlist[nextId].src;
+  music.element.play();
   music.nowPlaying = nextId;
 };
 
-// Create audio element
-music.makeElement = () => {
-  $('<audio></audio>').attr('id', music.id)
-    .on('ended', () => music.next()).appendTo('body');
-};
+ael(music.element, 'ended', () => {music.next();});
