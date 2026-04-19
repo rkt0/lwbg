@@ -157,16 +157,15 @@ const aTime = anim.time.menuFade;
     ui.disableMenu('player-control');
     (gs.turn ? continueInGame : continueAtStart)();
   });
-  $('#player-control > button').css({opacity: 0});
   const changeControl = (species, level) => {
     $(`#${species}-control .current`)
         .removeClass('current');
     if (level === -1) {
-      $(`#${species}-control-manual`)
+      $(`#${species}-control .manual`)
           .addClass('current');
       ai.control[species] = false;
     } else {
-      $(`#${species}-control-ai-${level}`)
+      $(`#${species}-control .ai-${level}`)
           .addClass('current');
       ai.control[species] = ai.level[species][level];
     }
@@ -176,35 +175,17 @@ const aTime = anim.time.menuFade;
     $('#continue-from-control')
         .animate({opacity: 1}, aTime);
   };
-  const addControlAreas = species => {
-    $('<div></div>').attr('id', `${species}-control`)
-        .addClass('info')
-        .appendTo('#player-control .row');
-    $('<h1></h1>').html(`${species}s`)
-        .appendTo(`#${species}-control`);
-    ui.makeOption(
-      `#${species}-control`,
-      `${species}-control-manual`, 'Manual Control',
-      () => changeControl(species, -1)
-    );
-    $(`#${species}-control-manual`)
-        .addClass('manual');
-    $('<div>Computer Level</div>')
-        .appendTo(`#${species}-control`);
-    $('<div></div>')
-        .attr('id', `${species}-control-ai`)
-        .appendTo(`#${species}-control`);
+  for (const species of ['human', 'raptor']) {
+    $(`#${species}-control .manual`).click(() => {
+      changeControl(species, -1);
+    });
     const nLevels = ai.level[species].length
     for (let i = 0; i < nLevels; i++) {
-      ui.makeOption(
-        `#${species}-control-ai`,
-        `${species}-control-ai-${i}`,
-        i, () => changeControl(species, i)
-      );
+      $(`#${species}-control .ai-${i}`).click(() => {
+        changeControl(species, i);
+      });
     }
-  };
-  addControlAreas('human');
-  addControlAreas('raptor');
+  }
   ui.disableMenu('player-control');
 }
 

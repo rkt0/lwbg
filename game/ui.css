@@ -263,6 +263,8 @@ button[id^="edit-trex"] {
   width:  auto;
   height: auto;
   margin: 54px 18px 36px;
+  background: #8d997a;
+  backdrop-filter: none;
 }
 
 #player-control h1 {
@@ -296,4 +298,5 @@ button[id^="edit-trex"] {
   width: 216px;
   height: var(--start-button-height);
   font: var(--font-large);
+  opacity: 0;
 }
