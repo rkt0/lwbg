@@ -239,8 +239,7 @@ const aTime = anim.time.menuFade;
   const eTime = anim.time.editControlFade;
   const enableDiceEdit = () => {
     $('.edit-dice').fadeIn(eTime);
-    $(`.die-button-wrapper-${gs.turn}`)
-        .css('display', 'block');
+    $(`.wrapper-${gs.turn}`).css('display', 'block');
     const dc = (value, die) => {
       if (value === null || ! die) return 0;
       // Max to return 0 instead of -1 if not found

@@ -194,7 +194,7 @@ div:is(.edit-turn, .edit-dice) .slim:not(:hover) {
   );
 }
 
-.die-button-wrapper {
+.wrapper {
   box-sizing: border-box;
   display: none;
   height: calc(
@@ -209,8 +209,4 @@ div:is(.edit-turn, .edit-dice) .slim:not(:hover) {
     ) / 2
   );
   margin-left: -21px;
-}
-
-.die-button-wrapper button::before {
-  content: "Change";
 }

@@ -57,8 +57,7 @@ function makeBanner() {
     edit.clear();
     $('.selected').removeClass('selected');
     $(
-      '.edit-control, .die-button-wrapper, ' +
-          '.edit-kill-human'
+      '.edit-control, .wrapper, .edit-kill-human'
     ).fadeOut(anim.time.editControlFade);
     ui.showButton('show-more');
     gp.checkGameOver(true);
@@ -91,7 +90,7 @@ function makeTurnDiceButtons() {
   };
 
   // Turn
-  const changeTurn = () => {
+  $('#change-turn').click(() => {
     const species = gs.turn === 'trex' ? 'raptor' :
         gs.turn === 'raptor' ? 'human' :
         gp.nHumansOn(bd.humanStart) ? 'trex' :
@@ -114,14 +113,12 @@ function makeTurnDiceButtons() {
     $(`.die-${species}`)
         .addClass('rolled no-animation')
         .css('display', 'inline');
-    $('.die-button-wrapper').css('display', 'none');
-    $(`.die-button-wrapper-${species}`)
-        .css('display', 'block');
-  };
-  $('#change-turn').click(changeTurn);
+    $('.wrapper').css('display', 'none');
+    $(`.wrapper-${species}`).css('display', 'block');
+  });
 
   // Dice
-  const unrollDice = () => {
+  $('#unroll-dice').click(() => {
     gp.clearRoll();
     const idsToHide = [
       'decline-button', 'ok-no-move', 'ok-trex-move',
@@ -129,9 +126,8 @@ function makeTurnDiceButtons() {
     ];
     for (const id of idsToHide) ui.hideButton(id);
     $('.edit-dice')
-        .fadeOut(anim.time.editControlFade);
-  };
-  $('#unroll-dice').click(unrollDice);
+      .fadeOut(anim.time.editControlFade);
+  });
   const changeDie = (species, type) => {
     const die = dice[species][type];
     const current = die[edit.dieCodes[type]];
@@ -144,23 +140,13 @@ function makeTurnDiceButtons() {
     const changed = die[edit.dieCodes[type]];
     replaceDieValue(species, type, changed);
   };
-  const makeDieButton = (species, type, handler) => {
-    $('<div></div>').addClass('die-button-wrapper')
-        .addClass(`die-button-wrapper-${species}`)
-        .appendTo(
-          '#die-button-area .flex-container'
-        );
-    $('<button></button>').attr('type', 'button')
-        .attr('id', `die-button-${species}-${type}`)
-        .addClass('obstructive')
-        .click(() => changeDie(species, type))
-        .appendTo('.die-button-wrapper:last-child');
-  };
-  makeDieButton('human', 'movement');
-  makeDieButton('human', 'continue');
-  makeDieButton('raptor', 'movement');
-  makeDieButton('raptor', 'continue');
-  makeDieButton('trex', 'movement');
+  for (const species of Object.keys(dice)) {
+    for (const die of Object.keys(dice[species])) {
+      $(`#die-button-${species}-${die}`).click(() => {
+        changeDie(species, type);
+      });
+    }
+  }
 
 }
 
