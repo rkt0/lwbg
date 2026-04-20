@@ -27,8 +27,8 @@ const editGame = gsNew => {
   }
   gp.relocatePiece('trex', null, gsNew.trex);
   // Must assign object after piece moves since
-  //   otherwise piece moves are skipped due to
-  //   guard clause in functions above
+  // otherwise piece moves are skipped due to
+  // guard clause in functions above
   Object.assign(gs, gsNew);
   gp.checkGameOver();
   if (gs.turn === 'over') return;
@@ -43,9 +43,8 @@ const editGame = gsNew => {
     if (gs.je) gp.startJumpEnter();
   }
   if (gs.turn === 'trex' && gs.phase === 'move') {
-    ui.showButton(
-      gs.rollN ? 'ok-trex-move' : 'ok-no-move'
-    );
+    if (gs.rollN) ui.showButton('ok-trex-move');
+    else ui.showButton('ok-no-move');
   }
   ui.humanItemsClickable(gs.turn === 'human');
   ui.raptorItemsClickable(gs.turn === 'raptor');
@@ -55,9 +54,8 @@ const endEditMode = () => {
     .prop('disabled', true);
   edit.clear();
   $('.selected').removeClass('selected');
-  $(
-    '.edit-control, .wrapper, .edit-kill-human'
-  ).fadeOut(anim.time.editControlFade);
+  $('.edit-control, .wrapper, .edit-kill-human')
+    .fadeOut(anim.time.editControlFade);
   ui.showButton('show-more');
   gp.checkGameOver(true);
 };
@@ -120,8 +118,7 @@ $('#unroll-dice').click(() => {
     'roll-display',
   ];
   for (const id of idsToHide) ui.hideButton(id);
-  $('.edit-dice')
-    .fadeOut(anim.time.editControlFade);
+  $('.edit-dice').fadeOut(anim.time.editControlFade);
 });
 const changeDie = (species, type) => {
   const die = dice[species][type];
