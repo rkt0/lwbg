@@ -681,10 +681,7 @@ const aTime = anim.time.menuFade;
 }
 
 // Controls for edit mode
-edit.makeControls();
-
-// CSS variables
-anim.makeCssVariables();
+edit.makePieceControls();
 
 // Audio toggle button in gameplay
 {

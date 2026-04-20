@@ -16,138 +16,131 @@ edit.clear = () => {
 };
 
 // Banner
-function makeBanner() {
-  const editGame = gsNew => {
-    gp.clearMoveObject();
-    for (const [p, s] of gsNew.humans.entries()) {
-      gp.relocatePiece('human', p, s);
-    }
-    gp.adjustHumanPositions();
-    for (const [p, s] of gsNew.raptors.entries()) {
-      gp.relocatePiece('raptor', p, s);
-    }
-    gp.relocatePiece('trex', null, gsNew.trex);
-    // Must assign object after piece moves since
-    //   otherwise piece moves are skipped due to
-    //   guard clause in functions above
-    Object.assign(gs, gsNew);
-    gp.checkGameOver();
-    if (gs.turn === 'over') return;
-    ui.displayTurn(gs.turn);
-    if (gs.phase === 'roll') {
-      ui.replaceButton('roll-display', 'roll-button');
-    } else ui.displayRollResult(gs, true);
-    if (ai.control[gs.turn] && gs.phase !== 'roll') {
-      ui.showButton('ok-ai-move');
-    } else {
-      ui.hideButton('ok-ai-move');
-      if (gs.je) gp.startJumpEnter();
-    }
-    if (gs.turn === 'trex' && gs.phase === 'move') {
-      ui.showButton(
-        gs.rollN ? 'ok-trex-move' : 'ok-no-move'
-      );
-    }
-    ui.humanItemsClickable(gs.turn === 'human');
-    ui.raptorItemsClickable(gs.turn === 'raptor');
-  };
-  const endEditMode = () => {
-    $('#cancel-edits, #confirm-edits')
-        .prop('disabled', true);
-    edit.clear();
-    $('.selected').removeClass('selected');
-    $(
-      '.edit-control, .wrapper, .edit-kill-human'
-    ).fadeOut(anim.time.editControlFade);
-    ui.showButton('show-more');
-    gp.checkGameOver(true);
-  };
-  $('#cancel-edits').click(() => {
-    editGame(edit.gsPrevious);
-    endEditMode();
-  });
-  $('#confirm-edits').click(() => {
-    editGame(gs);
-    endEditMode();
-    autoSave.update(true);
-  });
-}
-
-// Turn and dice
-function makeTurnDiceButtons() {
-
-  // Used for editing both turn and dice
-  const replaceDieValue = (species, type, value) => {
-    const cSel = `.face-${species}.face-${type}`;
-    $(cSel).css('display', 'none');
-    const x = type === 'movement' ? 'N' : 'Go';
-    gs[`roll${x}`] = value;
-    const aSel = `[data-roll="${value}"]`;
-    $(`${cSel}${aSel}`).css('display', 'block');
-    if (type === 'movement') {
-      gs.je = value === 'Jump' || value === 'Enter';
-    }
-  };
-
-  // Turn
-  $('#change-turn').click(() => {
-    const species = gs.turn === 'trex' ? 'raptor' :
-        gs.turn === 'raptor' ? 'human' :
-        gp.nHumansOn(bd.humanStart) ? 'trex' :
-            'raptor';
-    gs.turn = species;
-    ui.displayTurn(species, true);
-    if (gs.phase === 'roll') return;
-    if (species === 'trex') gs.phase = 'move';
-    if (species === 'raptor') gs.phase = 'select';
-    const d = dice[species];
-    gs.rollN = d.movement[edit.dieCodes.movement];
-    gs.rollGo = species === 'trex' ? 0 :
-        d.continue[edit.dieCodes.continue];
-    replaceDieValue(species, 'movement', gs.rollN);
-    if (species !== 'trex') {
-      replaceDieValue(species, 'continue', gs.rollGo);
-    }
-    $('.die').css('display', 'none')
-        .removeClass('rolled no-animation');
-    $(`.die-${species}`)
-        .addClass('rolled no-animation')
-        .css('display', 'inline');
-    $('.wrapper').css('display', 'none');
-    $(`.wrapper-${species}`).css('display', 'block');
-  });
-
-  // Dice
-  $('#unroll-dice').click(() => {
-    gp.clearRoll();
-    const idsToHide = [
-      'decline-button', 'ok-no-move', 'ok-trex-move',
-      'roll-display',
-    ];
-    for (const id of idsToHide) ui.hideButton(id);
-    $('.edit-dice')
-      .fadeOut(anim.time.editControlFade);
-  });
-  const changeDie = (species, type) => {
-    const die = dice[species][type];
-    const current = die[edit.dieCodes[type]];
-    while(die[edit.dieCodes[type]] === current) {
-      edit.dieCodes[type]++;
-    }
-    if (die[edit.dieCodes[type]] === undefined) {
-      edit.dieCodes[type] = 0;
-    }
-    const changed = die[edit.dieCodes[type]];
-    replaceDieValue(species, type, changed);
-  };
-  for (const s of Object.keys(dice)) {
-    for (const t of Object.keys(dice[s])) {
-      $(`#die-button-${s}-${t}`).click(() => {
-        changeDie(s, t);
-      });
-    }
+const editGame = gsNew => {
+  gp.clearMoveObject();
+  for (const [p, s] of gsNew.humans.entries()) {
+    gp.relocatePiece('human', p, s);
   }
+  gp.adjustHumanPositions();
+  for (const [p, s] of gsNew.raptors.entries()) {
+    gp.relocatePiece('raptor', p, s);
+  }
+  gp.relocatePiece('trex', null, gsNew.trex);
+  // Must assign object after piece moves since
+  //   otherwise piece moves are skipped due to
+  //   guard clause in functions above
+  Object.assign(gs, gsNew);
+  gp.checkGameOver();
+  if (gs.turn === 'over') return;
+  ui.displayTurn(gs.turn);
+  if (gs.phase === 'roll') {
+    ui.replaceButton('roll-display', 'roll-button');
+  } else ui.displayRollResult(gs, true);
+  if (ai.control[gs.turn] && gs.phase !== 'roll') {
+    ui.showButton('ok-ai-move');
+  } else {
+    ui.hideButton('ok-ai-move');
+    if (gs.je) gp.startJumpEnter();
+  }
+  if (gs.turn === 'trex' && gs.phase === 'move') {
+    ui.showButton(
+      gs.rollN ? 'ok-trex-move' : 'ok-no-move'
+    );
+  }
+  ui.humanItemsClickable(gs.turn === 'human');
+  ui.raptorItemsClickable(gs.turn === 'raptor');
+};
+const endEditMode = () => {
+  $('#cancel-edits, #confirm-edits')
+    .prop('disabled', true);
+  edit.clear();
+  $('.selected').removeClass('selected');
+  $(
+    '.edit-control, .wrapper, .edit-kill-human'
+  ).fadeOut(anim.time.editControlFade);
+  ui.showButton('show-more');
+  gp.checkGameOver(true);
+};
+$('#cancel-edits').click(() => {
+  editGame(edit.gsPrevious);
+  endEditMode();
+});
+$('#confirm-edits').click(() => {
+  editGame(gs);
+  endEditMode();
+  autoSave.update(true);
+});
 
+// Used for editing both turn and dice
+const replaceDieValue = (species, type, value) => {
+  const cSel = `.face-${species}.face-${type}`;
+  $(cSel).css('display', 'none');
+  const x = type === 'movement' ? 'N' : 'Go';
+  gs[`roll${x}`] = value;
+  const aSel = `[data-roll="${value}"]`;
+  $(`${cSel}${aSel}`).css('display', 'block');
+  if (type === 'movement') {
+    gs.je = value === 'Jump' || value === 'Enter';
+  }
+};
+
+// Turn
+$('#change-turn').click(() => {
+  const species = gs.turn === 'trex' ? 'raptor' :
+    gs.turn === 'raptor' ? 'human' :
+    gp.nHumansOn(bd.humanStart) ? 'trex' :
+    'raptor';
+  gs.turn = species;
+  ui.displayTurn(species, true);
+  if (gs.phase === 'roll') return;
+  if (species === 'trex') gs.phase = 'move';
+  if (species === 'raptor') gs.phase = 'select';
+  const d = dice[species];
+  gs.rollN = d.movement[edit.dieCodes.movement];
+  gs.rollGo = species === 'trex' ? 0 :
+    d.continue[edit.dieCodes.continue];
+  replaceDieValue(species, 'movement', gs.rollN);
+  if (species !== 'trex') {
+    replaceDieValue(species, 'continue', gs.rollGo);
+  }
+  $('.die').css('display', 'none')
+    .removeClass('rolled no-animation');
+  $(`.die-${species}`)
+    .addClass('rolled no-animation')
+    .css('display', 'inline');
+  $('.wrapper').css('display', 'none');
+  $(`.wrapper-${species}`).css('display', 'block');
+});
+
+// Dice
+$('#unroll-dice').click(() => {
+  gp.clearRoll();
+  const idsToHide = [
+    'decline-button', 'ok-no-move', 'ok-trex-move',
+    'roll-display',
+  ];
+  for (const id of idsToHide) ui.hideButton(id);
+  $('.edit-dice')
+    .fadeOut(anim.time.editControlFade);
+});
+const changeDie = (species, type) => {
+  const die = dice[species][type];
+  const current = die[edit.dieCodes[type]];
+  while(die[edit.dieCodes[type]] === current) {
+    edit.dieCodes[type]++;
+  }
+  if (die[edit.dieCodes[type]] === undefined) {
+    edit.dieCodes[type] = 0;
+  }
+  const changed = die[edit.dieCodes[type]];
+  replaceDieValue(species, type, changed);
+};
+for (const s of Object.keys(dice)) {
+  for (const t of Object.keys(dice[s])) {
+    $(`#die-button-${s}-${t}`).click(() => {
+      changeDie(s, t);
+    });
+  }
 }
 
 // T-rex
@@ -190,9 +183,7 @@ function makeKillButtons() {
       }).appendTo('.human-piece');
 }
 
-edit.makeControls = () => {
-  makeBanner();
-  makeTurnDiceButtons();
+edit.makePieceControls = () => {
   makeTrexButtons();
   makeKillButtons();
 };

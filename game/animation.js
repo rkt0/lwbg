@@ -35,12 +35,10 @@ anim.time = Object.fromEntries(
 );
 
 // Create CSS variables for settings related to dice
-anim.makeCssVariables = () => {
-  const dieSpinCount = 2;
-  const timeInS = x => `${anim.time[x] / 1000}s`;
-  $(':root').css({
-    '--die-spin-count': `${dieSpinCount}turn`,
-    '--die-roll-time': timeInS('dieRoll'),
-    '--die-roll-delay': timeInS('dieResultDelay'),
-  });
-};
+const dieSpinCount = 2;
+const timeInS = x => `${anim.time[x] / 1000}s`;
+$(':root').css({
+  '--die-spin-count': `${dieSpinCount}turn`,
+  '--die-roll-time': timeInS('dieRoll'),
+  '--die-roll-delay': timeInS('dieResultDelay'),
+});
