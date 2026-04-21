@@ -1,28 +1,28 @@
 :root {
-  --die-content-width:  60px;
+  --die-content-width: 60px;
   --die-content-height: 66px;
   --die-border-width: 3px;
 }
 
 .die {
   box-sizing: content-box;
-  width:  var(--die-content-width);
+  width: var(--die-content-width);
   height: var(--die-content-height);
-  padding: 0 3px;   /* (dch - dcw) / 2 */
+  padding: 0 3px; /* (dch - dcw) / 2 */
   border: solid var(--die-border-width)
-          var(--color-border);
+    var(--color-border);
   border-radius: 12px;
 }
 
 .die-human {
   background: #c6d3a6;
-  color:      #c6d3a6;
+  color: #c6d3a6;
 }
 
 .die-trex,
 .die-raptor {
   background: #ad996a;
-  color:      #ad996a;
+  color: #ad996a;
 }
 
 .die-content {

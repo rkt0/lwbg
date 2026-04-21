@@ -62,23 +62,61 @@
 
 /* Subordinate levels */
 
-.human-component.shoes       {z-index: 0;}
-.human-component.pants       {z-index: 1;}
-.human-component.skin        {z-index: 2;}
-.human-component.under       {z-index: 3;}
-.human-component.shirt       {z-index: 4;}
-.human-component.hat         {z-index: 5;}
-.human-component.shadow      {z-index: 6;}
-.human-component.dead-marker {z-index: 7;}
+.human-component.shoes {
+  z-index: 0;
+}
 
-.raptor-component.base   {z-index: 0;}
-.raptor-component.shadow {z-index: 1;}
+.human-component.pants {
+  z-index: 1;
+}
 
-.trex-component.base   {z-index: 0;}
-.trex-component.shadow {z-index: 1;}
+.human-component.skin {
+  z-index: 2;
+}
 
-#zoom-display {z-index: 0;}
-.zoom-button  {z-index: 1;}
+.human-component.under {
+  z-index: 3;
+}
+
+.human-component.shirt {
+  z-index: 4;
+}
+
+.human-component.hat {
+  z-index: 5;
+}
+
+.human-component.shadow {
+  z-index: 6;
+}
+
+.human-component.dead-marker {
+  z-index: 7;
+}
+
+.raptor-component.base {
+  z-index: 0;
+}
+
+.raptor-component.shadow {
+  z-index: 1;
+}
+
+.trex-component.base {
+  z-index: 0;
+}
+
+.trex-component.shadow {
+  z-index: 1;
+}
+
+#zoom-display {
+  z-index: 0;
+}
+
+.zoom-button {
+  z-index: 1;
+}
 
 
 /* Other elements relative to containers */

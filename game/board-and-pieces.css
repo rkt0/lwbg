@@ -1,19 +1,19 @@
 :root {
-  --extra-space-left:   432px;
-  --extra-space-top:    324px;
+  --extra-space-left: 432px;
+  --extra-space-top: 324px;
   --extra-space-bottom: 324px;
-  --raw-board-width:   4176px;
-  --raw-board-height:  2232px;
+  --raw-board-width: 4176px;
+  --raw-board-height: 2232px;
   --human-space-size: 72px;
   --trex-space-size: 24px;
-  --jump-land-width:  78px;
+  --jump-land-width: 78px;
   --jump-land-height: 42px;
   --jump-land-border-width: 3px;
-  --human-piece-width:  36px;
+  --human-piece-width: 36px;
   --human-piece-height: 60px;
   --raptor-piece-width: 144px;
   --raptor-piece-height: 72px;
-  --trex-piece-width:  75px;
+  --trex-piece-width: 75px;
   --trex-piece-height: 48px;
 }
 
@@ -34,11 +34,11 @@
 .human-space {
   position: absolute;
   box-sizing: border-box;
-  width:  var(--human-space-size);
+  width: var(--human-space-size);
   height: var(--human-space-size);
   background: #929e74;
   border: solid var(--board-border-width)
-          var(--color-border);
+    var(--color-border);
   border-radius: 50%;
 }
 
@@ -59,11 +59,11 @@
 .trex-space {
   position: absolute;
   box-sizing: border-box;
-  width:  var(--trex-space-size);
+  width: var(--trex-space-size);
   height: var(--trex-space-size);
   background: var(--color-dino-space);
   border: solid var(--board-border-width)
-          var(--color-border);
+    var(--color-border);
 }
 
 .human-edge,
@@ -97,13 +97,13 @@
 .raptor-space.move,
 .building.move {
   stroke: var(--color-selected);
-  fill:   var(--color-selected-fill);
+  fill: var(--color-selected-fill);
 }
 
 .raptor-space.path,
 .building.path {
   stroke: var(--color-path);
-  fill:   var(--color-path-fill);
+  fill: var(--color-path-fill);
 }
 
 .raptor-entrance {
@@ -123,7 +123,7 @@
     var(--jump-land-border-width) * 2
   );
   border: solid var(--jump-land-border-width)
-          var(--color-border);
+    var(--color-border);
   background: #8c7899;
   pointer-events: none;
 }
@@ -161,44 +161,44 @@
 
 .human-piece {
   position: absolute;
-  width:  var(--human-piece-width);
+  width: var(--human-piece-width);
   height: var(--human-piece-height);
   --color-highlight: #008b4bcc;
 }
 
 .raptor-piece {
   position: absolute;
-  width:  var(--raptor-piece-width);
+  width: var(--raptor-piece-width);
   height: var(--raptor-piece-height);
   --color-highlight: var(--color-dino-highlighted);
 }
 
 .trex-piece {
   position: absolute;
-  width:  var(--trex-piece-width);
+  width: var(--trex-piece-width);
   height: var(--trex-piece-height);
   --color-highlight: var(--color-dino-highlighted);
 }
 
 .human-component {
   position: absolute;
-  left: 6px;  /*  ceil((36px - 25px) / 2) */
-  top:  5px;  /* floor((60px - 49px) / 2) */
-              /* component size is 25x49  */
+  left: 6px; /*  ceil((36px - 25px) / 2) */
+  top: 5px; /* floor((60px - 49px) / 2) */
+  /* component size is 25x49  */
 }
 
 .raptor-component {
   position: absolute;
-  left: 9px;  /* ceil((144px - 126px) / 2) */
-  top:  9px;  /* ceil(( 72px -  55px) / 2) */
-              /* component size is 126x55  */
+  left: 9px; /* ceil((144px - 126px) / 2) */
+  top: 9px; /* ceil(( 72px -  55px) / 2) */
+  /* component size is 126x55  */
 }
 
 .trex-component {
   position: absolute;
-  left: 0px;  /* floor((75px - 75px) / 2) */
-  top:  0px;  /* floor((48px - 48px) / 2) */
-              /* component size is 75x48  */
+  left: 0; /* floor((75px - 75px) / 2) */
+  top: 0; /* floor((48px - 48px) / 2) */
+  /* component size is 75x48  */
 }
 
 .dead-marker {
@@ -221,7 +221,7 @@
 .human-piece.selected,
 .raptor-piece.selected {
   outline: solid var(--board-border-width)
-           var(--color-selected);
+    var(--color-selected);
 }
 
 .human-piece.dead {

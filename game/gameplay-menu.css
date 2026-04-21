@@ -1,10 +1,10 @@
 :root {
   --button-width: 111px;
   --button-height: 57px;
-  --zoom-display-height:  93px;
-  --turn-display-height:  78px;
+  --zoom-display-height: 93px;
+  --turn-display-height: 78px;
   --roll-display-height: 201px;
-  --zoom-button-width:  36px;
+  --zoom-button-width: 36px;
   --zoom-button-height: 36px;
   --edit-banner-button-width: 183px;
   --edit-turn-die-button-height: 48px;
@@ -59,7 +59,7 @@
     var(--button-border-width) -
     var(--zoom-button-height)
   );
-  width:  var(--zoom-button-width);
+  width: var(--zoom-button-width);
   height: var(--zoom-button-height);
   border-style: none;
   background: none;
@@ -94,8 +94,7 @@
 
 .slot-turn {
   top: calc(
-    var(--button-height) +
-    var(--zoom-display-height)
+    var(--button-height) + var(--zoom-display-height)
   );
 }
 
@@ -153,7 +152,7 @@
 }
 
 #cancel-edits {
-  left:  var(--edit-banner-button-width);
+  left: var(--edit-banner-button-width);
 }
 
 #confirm-edits {
