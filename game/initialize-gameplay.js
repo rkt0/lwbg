@@ -13,7 +13,6 @@ import {autoSave} from './auto-save.js';
 import {edit} from './edit-mode.js';
 
 gp.initializeObjects();
-gp.initializeView(false);
 gp.setSaveFunction(() => {autoSave.update();});
 autoSave.clear();
 edit.clear();
@@ -856,11 +855,12 @@ for (const [l, t] of heloCorners) {
     .addClass('helo').appendTo('#gameplay-container');
 }
 
-// Zoom geometry
+// Zoom and view geometry
 zd.initialViewCenter = [414, 1116];
 addExtraSpace([zd.initialViewCenter]);
 zd.boardSize = cssIntWH('--raw-board');
 addExtraSpace([zd.boardSize], true);
+gp.initializeView(false);
 
 // Additional piece layout adjustments
 for (const species of Object.keys(pl)) {
