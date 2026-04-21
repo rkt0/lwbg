@@ -219,13 +219,13 @@ export const gp = {
     gs.trex = bd.trexStart;
     gs.raptors = [...bd.raptorStart];
   },
-  initializeView() {
-    $('#zoom-default').click();
+  initializeView(resetZoom = true) {
+    if (resetZoom) $('#zoom-default').click();
     zd.center.left = zd.initialViewCenter[0];
     zd.center.top = zd.initialViewCenter[1];
     zd.factor.current = null;
     // Click again to apply zoom center
-    $('#zoom-default').click();
+    if (resetZoom) $('#zoom-default').click();
   },
 };
 

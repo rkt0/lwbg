@@ -13,12 +13,10 @@ import {autoSave} from './auto-save.js';
 import {edit} from './edit-mode.js';
 
 gp.initializeObjects();
+gp.initializeView(false);
+gp.setSaveFunction(() => {autoSave.update();});
 autoSave.clear();
 edit.clear();
-
-// Set callback function in gp object
-// (done this way to eliminate circular dependency)
-gp.setSaveFunction(() => autoSave.update());
 
 // Extra space at edges of board
 function addExtraSpace(arr, full = false) {
@@ -1065,4 +1063,3 @@ pieces.shuffleFeatures();
 pieces.addImgs();
 
 // Show initial view at start of game
-gp.initializeView();
