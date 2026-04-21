@@ -4,7 +4,7 @@ import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {sfx} from './sfx.js';
 import {ui} from './functions-ui.js';
-import {gs, mv, pl} from './game-objects.js';
+import {gs, mv, zd, pl} from './game-objects.js';
 
 export const gp = {
   nHumansOn(space) {
@@ -194,6 +194,38 @@ export const gp = {
   },
   setSaveFunction(fn) {
     gp.save = fn;
+  },
+  initializeObjects() {
+    gp.clearMoveObject();
+    gs.turn = null;
+    gs.phase = 'roll';
+    gs.je = false;
+    gs.rollN = null;
+    gs.rollGo = 0;
+    // If playing again, relocate pieces instead
+    if (gs.humans) {
+      for (let h = 0; h < bd.nHumanPieces; h++) {
+        gp.relocatePiece('human', h, bd.humanStart);
+      }
+      gp.adjustHumanPositions();
+      gp.relocatePiece('trex', null, bd.trexStart);
+      for (const [r, s] of bd.raptorStart.entries()) {
+        gp.relocatePiece('raptor', r, s);
+      }
+      return;
+    }
+    gs.humans =
+      new Array(bd.nHumanPieces).fill(bd.humanStart);
+    gs.trex = bd.trexStart;
+    gs.raptors = [...bd.raptorStart];
+  },
+  initializeView() {
+    $('#zoom-default').click();
+    zd.center.left = zd.initialViewCenter[0];
+    zd.center.top = zd.initialViewCenter[1];
+    zd.factor.current = null;
+    // Click again to apply zoom center
+    $('#zoom-default').click();
   },
 };
 
