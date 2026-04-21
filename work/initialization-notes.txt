@@ -1,0 +1,25 @@
+RS: make raptor spaces
+BG: make buildings
+HS: make human spaces
+HE: make human edges
+TS: make t-rex spaces
+TE: make t-rex edges
+EM: make entrance markers
+JM: make jump markers
+CH: make helicopters
+ZV: set zoom and view stuff
+PL: set piece layout adjustments
+SC: apply svg bottom chop
+HP: make human pieces
+TP: make t-rex piece
+RP: make raptor pieces
+IP: add images for pieces
+
+addExtraSpace
+RS HS TS EM JM CH ZV
+
+checkNotAdjacent
+RS HS
+
+checkNoDoubleBack
+RS HS

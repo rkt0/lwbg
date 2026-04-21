@@ -26,7 +26,8 @@
 
 @font-face {
   font-family: Atkinson;
-  src: url(font/atkinson-bold.ttf) format("truetype");
+  src: url("../font/atkinson-bold.ttf")
+    format("truetype");
   font-weight: bold;
 }
 
@@ -56,7 +57,7 @@ h1 {
 
 #start-container,
 #gameplay-container {
-  background-image: url("img/bg/jungle.png");
+  background-image: url("../img/bg/jungle.png");
   background-repeat: repeat;
   display: none;
 }
