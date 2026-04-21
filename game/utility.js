@@ -28,7 +28,7 @@ export function isNull(x) {
   return x === null;
 }
 export function sequence(n) {
-  return new Array(n).fill().map((e, i) => i);
+  return new Array(n).fill().map((_, i) => i);
 }
 
 export function arrayMinus(arrFrom, arrSubtracted) {
@@ -38,9 +38,10 @@ export function arraySum(arr) {
   return arr.reduce((a, e) => a + e);
 }
 export function arrayCumSum(arr) {
-  return arr.map(
-    (e, i, a) => arraySum(a.slice(0, i + 1))
-  );
+  return arr.map((_, i, a) => {
+    const partial = a.slice(0, i + 1);
+    return arraySum(partial);
+  });
 }
 
 export function rollDie(die, prngFn) {
@@ -61,35 +62,20 @@ export function shuffle(arr, prngFn) {
 export function cssInt(property, where = ':root') {
   return parseInt($(where).css(property) ?? 0);
 }
-export function cssIntWH(propertyStem, where = ':root') {
-  return ['width', 'height'].map(
-    x => cssInt(`${propertyStem}-${x}`, where)
-  );
+export function cssIntWH(stem, where = ':root') {
+  const dims = ['width', 'height'];
+  return dims.map(x => cssInt(`${stem}-${x}`, where));
 }
 
 // Encode array of one-byte integers to base64
-//   and keep a specified number of characters
+// and keep a specified number of characters
 export function base64(codeArr, nKeep) {
-  return btoa(
-    String.fromCharCode(...codeArr)
-  ).substring(0, nKeep);
+  const str = String.fromCharCode(...codeArr);
+  return btoa(str).substring(0, nKeep);
 }
 
 // Decode base64 into array of one-byte integers
 export function base256(base64string) {
-  return atob(base64string).split('').map(
-    x => x.charCodeAt(0)
-  );
-}
-
-// Detect if script is running in simulation mode
-//   (i.e., in node rather than in a broswer)
-// If so, assign settings needed for simulation
-//   to the global object
-if(typeof global !== typeof void 0) {
-  Object.assign(global, {
-    deepCopy, isNull, sequence,
-    arrayMinus, arraySum, arrayCumSum,
-    rollDie, shuffle,
-  });
+  const arr = atob(base64string).split('');
+  return arr.map(x => x.charCodeAt(0));
 }
