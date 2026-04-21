@@ -1,4 +1,3 @@
-// Initialize PRNGs
 // Set seeds to null for nondeterministic results
 export const prng = {
   pieces: new Math.seedrandom(null),
