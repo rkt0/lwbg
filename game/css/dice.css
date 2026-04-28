@@ -47,27 +47,7 @@
 .face {
   font: var(--font-large);
   line-height: var(--die-content-height);
-}
-
-.face::before {
-  content: attr(data-roll);
   text-transform: uppercase;
-}
-
-.face-continue[data-roll="0"]::before {
-  content: "Stop";
-}
-
-.face-continue[data-roll="1"]::before {
-  content: "Go";
-}
-
-.face-trex[data-roll="0"]::before {
-  content: "✖︎";
-}
-
-.face-trex[data-roll="1"]::before {
-  content: "⬆︎";
 }
 
 .face.copy {

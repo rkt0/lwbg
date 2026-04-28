@@ -2,11 +2,12 @@ import {bd} from './logic.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {gs, mv} from './game-objects.js';
+import {gp} from './functions-gameplay.js';
 import {ui} from './functions-ui.js';
 import {edit} from './edit-mode.js';
 
 export function clickHumanPiece(e) {
-  const piece = +e.data.piece;
+  const {piece} = e.data;
   const space = gs.humans[piece];
   if (edit.on) {
     clickHumanPieceEditMode(piece, space)
@@ -37,7 +38,7 @@ export function clickHumanPiece(e) {
 }
 
 export function clickRaptorPiece(e) {
-  const piece = +e.data.piece;
+  const {piece} = e.data;
   const space = gs.raptors[piece];
   if (edit.on) {
     clickRaptorPieceEditMode(piece, space);
@@ -63,6 +64,26 @@ export function clickRaptorPiece(e) {
     );
     gs.phase = 'move';
   }
+}
+
+export function clickEditKill(e) {
+  const {piece} = e.data;
+  gp.moveHuman(piece, bd.humanDead, false);
+  $(`#human-piece-${piece} .edit-kill-human`)
+    .fadeOut(anim.time.editControlFade);
+  $('.selected').removeClass('selected');
+  ui.raptorItemsClickable(true);
+  edit.selected.species = null;
+  edit.selected.piece = null;
+}
+
+export function clickEditTrex(e) {
+  const {change} = e.data;
+  let intended = gs.trex - change;
+  intended = Math.max(intended, 0);
+  intended = Math.min(intended, bd.trexStart);
+  if (intended === gs.trex) return;
+  gp.moveTrex(intended, false, true);
 }
 
 // Needed for human piece click handler

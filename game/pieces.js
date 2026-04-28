@@ -1,4 +1,6 @@
-import {sequence, shuffle} from './utility.js';
+import {
+  qs, ce, sequence, shuffle,
+} from './utility.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
 import {bd} from './logic.js';
@@ -8,9 +10,9 @@ export const pieces = {
     feature: {
       shoes: sequence(bd.nHumanPieces),
       pants: sequence(bd.nHumanPieces),
-      skin:  sequence(bd.nHumanPieces),
+      skin: sequence(bd.nHumanPieces),
       shirt: sequence(bd.nHumanPieces),
-      hat:   sequence(bd.nHumanPieces),
+      hat: sequence(bd.nHumanPieces),
       under: [0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 3, 4],
     },
     shadow: {
@@ -31,52 +33,77 @@ export const pieces = {
     $('.raptor-component').remove();
     $('.trex-component').remove();
   },
-  addImgs() {
-    const hFeature = pieces.human.feature;
-    const hShadow = pieces.human.shadow;
-    const hKeys = Object.keys(hFeature).sort();
-    for (let h = 0; h < bd.nHumanPieces; h++) {
-      for (const k of hKeys) {
-        const n = hFeature[k][h];
-        const imgStr = `img/human/${k}/${k}-${n}.png`;
-        $('<img>').attr('src', imgStr)
-          .addClass(`human-component ${k}`)
-          .appendTo(`#human-piece-${h}`);
-        const shadowSpecifier = hShadow[k] ?
-          `_${hShadow[k][n]}` : '';
-        const shadowStr = 'img/human/shadow/' +
-          `shadow-${k}${shadowSpecifier}.png`;
-        $('<img>').attr('src', shadowStr)
-          .addClass('human-component shadow')
-          .appendTo(`#human-piece-${h}`);
+  addHumanFeatureImg(piece, item, id) {
+    const img = ce('img');
+    img.src = `img/human/${item}/${item}-${id}.png`;
+    img.classList.add('human-component', item);
+    qs(`#human-piece-${piece}`).append(img);
+  },
+  addHumanShadowImg(piece, item) {
+    const img = ce('img');
+    img.src = `img/human/shadow/shadow-${item}.png`;
+    img.classList.add('human-component', 'shadow');
+    qs(`#human-piece-${piece}`).append(img);
+  },
+  addHumanImgs() {
+    const {feature, shadow} = pieces.human;
+    const entriesFeature = Object.entries(feature);
+    for (const [item, idArray] of entriesFeature) {
+      for (const [piece, id] of idArray.entries()) {
+        pieces.addHumanFeatureImg(piece, item, id);
+        let itemShadow = item;
+        if (shadow[item]) {
+          itemShadow += `_${shadow[item][id]}`;
+        }
+        pieces.addHumanShadowImg(piece, itemShadow);
       }
     }
-    const addRaptorImgs = (piece, shape, color) => {
-      const imgStr =
-        `img/raptor/raptor-${shape}-${color}.png`;
-      $('<img>').attr('src', imgStr)
-        .addClass('raptor-component base')
-        .appendTo(`#raptor-piece-${piece}`);
-      const shadowStr =
-        `img/raptor/shadow-raptor-${shape}.png`;
-      $('<img>').attr('src', shadowStr)
-        .addClass('raptor-component shadow')
-        .appendTo(`#raptor-piece-${piece}`);
-    };
-    const prf = pieces.raptor.feature;
-    const drp = debug.raptorPlacement;
-    const nRaptorPieces = $('.raptor-piece').length;
-    for (let r = 0; r < nRaptorPieces; r++) {
-      const shape = drp.on ? drp.shape : prf.shape[r];
-      const color = drp.on ? drp.color : prf.color[r];
-      addRaptorImgs(r, shape, color);
+  },
+  addRaptorBaseImg(piece, id) {
+    const img = ce('img');
+    img.src = `img/raptor/raptor-${id}.png`;
+    img.classList.add('raptor-component', 'base');
+    qs(`#raptor-piece-${piece}`).append(img);
+  },
+  addRaptorShadowImg(piece, id) {
+    const img = ce('img');
+    img.src = `img/raptor/shadow-raptor-${id}.png`;
+    img.classList.add('raptor-component', 'shadow');
+    qs(`#raptor-piece-${piece}`).append(img);
+  },
+  addRaptorImgs() {
+    const {shape, color} = pieces.raptor.feature;
+    for (let [piece, idShape] of shape.entries()) {
+      let idColor = color[piece];
+      if (debug.raptorPlacement.on) {
+        idShape = debug.raptorPlacement.shape;
+        idColor = debug.raptorPlacement.color;
+      }
+      const id = `${idShape}-${idColor}`;
+      pieces.addRaptorBaseImg(piece, id);
+      pieces.addRaptorShadowImg(piece, idShape);
     }
-    $('<img>').attr('src', 'img/trex/trex.png')
-      .addClass('trex-component base')
-      .appendTo('#trex-piece');
-    $('<img>').attr('src', 'img/trex/shadow-trex.png')
-      .addClass('trex-component shadow')
-      .appendTo('#trex-piece');
+  },
+  addTrexBaseImg() {
+    const img = ce('img');
+    img.src = 'img/trex/trex.png';
+    img.classList.add('trex-component', 'base');
+    qs('#trex-piece').append(img);
+  },
+  addTrexShadowImg() {
+    const img = ce('img');
+    img.src = 'img/trex/shadow-trex.png';
+    img.classList.add('trex-component', 'shadow');
+    qs('#trex-piece').append(img);
+  },
+  addTrexImgs() {
+    pieces.addTrexBaseImg();
+    pieces.addTrexShadowImg();
+  },
+  addImgs() {
+    pieces.addHumanImgs();
+    pieces.addRaptorImgs();
+    pieces.addTrexImgs();
   },
   shuffleFeatures() {
     const hf = pieces.human.feature;

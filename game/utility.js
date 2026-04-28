@@ -20,6 +20,13 @@ export function aelo(x, type, fn) {
   };
   element.addEventListener(type, f, {once: true});
 }
+export function ce(...args) {
+  return document.createElement(...args);
+}
+export function click(x, type = 'click') {
+  const element = typeof x === 'object' ? x : qs(x);
+  element.dispatchEvent(new MouseEvent(type));
+}
 
 export function deepCopy(x) {
   return JSON.parse(JSON.stringify(x));

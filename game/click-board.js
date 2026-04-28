@@ -1,3 +1,4 @@
+import {click} from './utility.js';
 import {bd} from './logic.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -155,7 +156,7 @@ function checkHumanOccupied(space, isBldg) {
 function clickHumanPieceOnClickedSpace(space) {
   if (gp.nHumansOn(space) === 1) {
     const piece = gs.humans.indexOf(space);
-    $(`#human-piece-${piece}`).click();
+    click(`#human-piece-${piece}`, 'mousedown');
   }
 }
 function clickHumanSpaceEditMode(space, isBldg) {
@@ -218,7 +219,7 @@ function checkRaptorOccupied(space) {
 function clickRaptorPieceOnClickedSpace(space) {
   if (gp.nRaptorsOn(space) === 1) {
     const piece = gs.raptors.indexOf(space);
-    $(`#raptor-piece-${piece}`).click();
+    click(`#raptor-piece-${piece}`, 'mousedown');
   }
 }
 function clickRaptorSpaceEditMode(space) {

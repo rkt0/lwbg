@@ -1,5 +1,5 @@
 import {
-  arrayMinus, cssInt, cssIntWH,
+  qs, qsa, ael, ce, arrayMinus, cssInt, cssIntWH,
 } from './utility.js';
 import {debug} from './debug.js';
 import {bd} from './logic.js';
@@ -13,6 +13,7 @@ import {
 } from './click-board.js';
 import {
   clickHumanPiece, clickRaptorPiece,
+  clickEditKill, clickEditTrex,
 } from './click-pieces.js';
 
 // Initialize objects
@@ -30,6 +31,9 @@ function addExtraSpace(arr, full = false) {
     arr[i][1] += xs[1] + (full ? xs[3] : 0);
   }
 }
+
+// Store reference to repeatedly used DOM elements
+const gameplayContainer = qs('#gameplay-container');
 
 // Raptor space geometry
 const rPoints = [
@@ -467,18 +471,20 @@ const humanSpaceSize = cssInt('--human-space-size');
 
 // Make human spaces
 for (const [i, [x, y]] of hSpaces.entries()) {
-  const l = x - humanSpaceSize / 2;
-  const t = y - humanSpaceSize / 2;
   const isBldg = bd.bldgHumanSpaces.includes(i);
-  const suffix = isBldg ? '-under' : '';
-  const $div = $('<div></div>');
-  $div.attr('id', `human-space-${i}${suffix}`)
-    .css({top: `${t}px`, left: `${l}px`})
-    .addClass('human-space')
-    .click({space: i}, clickHumanSpace);
-  if (isBldg) $div.addClass('under-building');
-  if (i === bd.humanDead) $div.addClass('dead');
-  $div.appendTo('#gameplay-container');
+  const div = ce('div');
+  div.id = `human-space-${i}`;
+  if (isBldg) div.id += '-under';
+  div.classList.add('human-space');
+  div.classList.toggle('under-building', isBldg);
+  div.classList.toggle('dead', i === bd.humanDead);
+  div.style.left = `${x - humanSpaceSize / 2}px`;
+  div.style.top = `${y - humanSpaceSize / 2}px`;
+  ael(div, 'mousedown', (e) => {
+    e.data = {space: i};
+    clickHumanSpace(e);
+  });
+  gameplayContainer.append(div);
   if (!isBldg) pl.human[i] = [x, y];
 }
 
@@ -522,17 +528,15 @@ const trexSpaceSize = cssInt('--trex-space-size');
 
 // Make T-rex spaces
 for (const [i, [x, y]] of tSpaces.entries()) {
-  const l = x - trexSpaceSize / 2;
-  const t = y - trexSpaceSize / 2;
-  const suffix = i ? '' : '-under';
-  const $div = $('<div></div>');
-  $div.attr('id', `trex-space-${i}${suffix}`)
-    .css({top: `${t}px`, left: `${l}px`})
-    .addClass('trex-space');
-  if (i) {
-    pl.trex[i] = [x + trexSpaceSize / 2, y];
-  } else {
-    $div.addClass('under-building');
+  const div = ce('div');
+  div.id = `trex-space-${i}`;
+  if (!i) div.id += '-under';
+  div.classList.add('trex-space');
+  div.classList.toggle('under-building', !i);
+  div.style.left = `${x - trexSpaceSize / 2}px`;
+  div.style.top = `${y - trexSpaceSize / 2}px`;
+  if (i) pl.trex[i] = [x + trexSpaceSize / 2, y];
+  else {
     const rSpace = bd.bldgRaptorSpaces[
       bd.bldgHumanSpaces.indexOf(bd.humanStart)
     ];
@@ -541,7 +545,7 @@ for (const [i, [x, y]] of tSpaces.entries()) {
     // be adjusted to top-left corners later
     pl.trex[i] = [...pl.raptor[rSpace]];
   }
-  $div.appendTo('#gameplay-container');
+  gameplayContainer.append(div);
 }
 
 // Make T-rex edges
@@ -603,14 +607,17 @@ for (const [j, l] of jMarkers) {
   const jOffset = jumpMarkerSize.map(t => t / 2);
   const [jl, jt] = arrayMinus(j, jOffset);
   const [ll, lt] = arrayMinus(l, jOffset);
-  $('<div></div>').html('Jump')
-    .css({top: `${jt}px`, left: `${jl}px`})
-    .addClass('jump-land-marker')
-    .appendTo('#gameplay-container');
-  $('<div></div>').html('Land')
-    .css({top: `${lt}px`, left: `${ll}px`})
-    .addClass('jump-land-marker')
-    .appendTo('#gameplay-container');
+  const divJ = ce('div');
+  divJ.classList.add('jump-land-marker');
+  divJ.append('Jump');
+  divJ.style.left = `${jl}px`;
+  divJ.style.top = `${jt}px`;
+  const divL = ce('div');
+  divL.classList.add('jump-land-marker');
+  divL.append('Land');
+  divL.style.left = `${ll}px`;
+  divL.style.top = `${lt}px`;
+  gameplayContainer.append(divJ, divL);
 }
 
 // Helicopter geometry
@@ -619,9 +626,12 @@ addExtraSpace(heloCorners);
 
 // Make helicopters
 for (const [l, t] of heloCorners) {
-  $('<img>').attr('src', 'img/helo/helo.png')
-    .css({top: `${t}px`, left: `${l}px`})
-    .addClass('helo').appendTo('#gameplay-container');
+  const img = ce('img');
+  img.src = 'img/helo/helo.png';
+  img.classList.add('helo');
+  img.style.left = `${l}px`;
+  img.style.top = `${t}px`;
+  gameplayContainer.append(img);
 }
 
 // Zoom and view geometry
@@ -663,43 +673,79 @@ $('svg:not(.icon)').attr({
 // Make human pieces
 for (const [p, s] of gs.humans.entries()) {
   const [l, t] = pl.human[s];
-  const idString = `human-piece-${p}`;
-  $('<div></div>').attr('id', idString)
-    .click({piece: p}, clickHumanPiece)
-    .css({top: `${t}px`, left: `${l}px`})
-    .addClass('human-piece')
-    .appendTo('#gameplay-container');
-  $('<div></div>')
-    .addClass('human-component dead-marker')
-    .appendTo(`#${idString}`);
+  const div = ce('div');
+  div.id = `human-piece-${p}`;
+  div.classList.add('human-piece');
+  div.style.left = `${l}px`;
+  div.style.top = `${t}px`;
+  ael(div, 'mousedown', (e) => {
+    e.data = {piece: p};
+    clickHumanPiece(e);
+  });
+  const dm = ce('div');
+  dm.classList.add('human-component', 'dead-marker');
+  const ek = ce('button');
+  ek.type = 'button';
+  ek.classList.add('edit-kill-human', 'small-button');
+  ael(ek, 'mousedown', (e) => {
+    e.stopPropagation();
+    e.data = {piece: p};
+    clickEditKill(e);
+  });
+  div.append(dm, ek);
+  gameplayContainer.append(div);
 }
 gp.adjustHumanPositions();
 
 // Make T-rex piece
 {
   const [l, t] = pl.trex[gs.trex];
-  $('<div></div>').attr('id', 'trex-piece')
-    .css({top: `${t}px`, left: `${l}px`})
-    .addClass('trex-piece')
-    .appendTo('#gameplay-container');
+  const div = ce('div');
+  div.id = 'trex-piece';
+  div.classList.add('trex-piece');
+  div.style.left = `${l}px`;
+  div.style.top = `${t}px`;
+  const ea = ce('button');
+  ea.type = 'button';
+  ea.id = 'edit-trex-advance';
+  ea.classList.add('edit-control', 'small-button');
+  ael(ea, 'mousedown', (e) => {
+    e.data = {change: 1};
+    clickEditTrex(e);
+  });
+  const er = ce('button');
+  er.type = 'button';
+  er.id = 'edit-trex-retreat';
+  er.classList.add('edit-control', 'small-button');
+  ael(er, 'mousedown', (e) => {
+    e.data = {change: -1};
+    clickEditTrex(e);
+  });
+  div.append(ea, er);
+  gameplayContainer.append(div);
 }
 
 // Make raptor pieces
+function makeRaptorPiece(piece, location) {
+  const div = ce('div');
+  div.id = `raptor-piece-${piece}`;
+  div.classList.add('raptor-piece');
+  div.style.left = `${location[0]}px`;
+  div.style.top = `${location[1]}px`;
+  ael(div, 'mousedown', (e) => {
+    e.data = {piece};
+    clickRaptorPiece(e);
+  });
+  gameplayContainer.append(div);
+}
 for (const [p, s] of gs.raptors.entries()) {
-  const [l, t] = pl.raptor[s];
-  $('<div></div>').attr('id', `raptor-piece-${p}`)
-    .click({piece: p}, clickRaptorPiece)
-    .css({top: `${t}px`, left: `${l}px`})
-    .addClass('raptor-piece')
-    .appendTo('#gameplay-container');
+  makeRaptorPiece(p, pl.raptor[s]);
 }
 if (debug.raptorPlacement.on) {
-  $('.raptor-piece').remove();
-  for (const [s, [l, t]] of pl.raptor.entries()) {
-    $('<div></div>').attr('id', `raptor-piece-${s}`)
-      .css({top: `${t}px`, left: `${l}px`})
-      .addClass('raptor-piece')
-      .appendTo('#gameplay-container');
+  const pieces = qsa('.raptor-piece');
+  for (const piece of pieces) piece.remove();
+  for (const [s, location] of pl.raptor.entries()) {
+    makeRaptorPiece(s, location);
   }
 }
 

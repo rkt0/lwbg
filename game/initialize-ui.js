@@ -1,5 +1,5 @@
 import {
-  deepCopy, isNull, rollDie, cssInt,
+  qs, ce, deepCopy, isNull, rollDie, cssInt,
 } from './utility.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
@@ -584,32 +584,44 @@ $('#zoom-in').click(() => {
 });
 
 // Make die faces
-const dieTargetWidth = cssInt('--die-content-width');
+const dieWidth = cssInt('--die-content-width');
+function squeezeFace(element) {
+  const copy = element.cloneNode(true);
+  copy.classList.add('copy');
+  document.body.append(copy);
+  // Calculation of squeeze transform must be delayed
+  // to give browser enough time to render copy
+  setTimeout(() => {
+    const {width} = copy.getBoundingClientRect();
+    copy.remove();
+    if (width <= dieWidth) return;
+    const s = dieWidth / width;
+    const t = dieWidth * (s - 1) / 2;
+    const scale = `scaleX(${s})`;
+    const translate = `translateX(${t}px)`;
+    element.style.transform = `${translate} ${scale}`;
+  }, aTime * 3);
+}
 for (const species of Object.keys(dice)) {
   for (const type of Object.keys(dice[species])) {
+    const divDie = qs(`#die-${species}-${type}`);
     const values = [... new Set(dice[species][type])];
     for (const v of values) {
-      const $face = $('<div></div>');
-      const classStr =
-        `face face-${species} face-${type}`;
-      $face.addClass(classStr).attr('data-roll', v);
-      $face.appendTo(`#die-${species}-${type}`);
-      const $copy = $face.clone().addClass('copy');
-      $copy.appendTo('body');
-      // Calculation of squeeze transform must be
-      // delayed to give browser adequate time
-      // to apply correct width to $copy
-      setTimeout(() => {
-        const rawWidth = $copy.width();
-        $copy.remove();
-        if (rawWidth <= dieTargetWidth) return;
-        const s = dieTargetWidth / rawWidth;
-        const t = dieTargetWidth * (s - 1) / 2;
-        const transformString =
-          `translate(${t}px, 0) scale(${s}, 1)`;
-        $face.css('transform', transformString);
-      }, aTime * 6);
-      $face.css('display', 'none');
+      const divFace = ce('div');
+      divFace.classList.add(
+        'face', `face-${species}`, `face-${type}`,
+      );
+      divFace.dataset.roll = v;
+      let rollText = v;
+      if (type === 'continue') {
+        rollText = v ? 'Go' : 'Stop';
+      } else if (species === 'trex') {
+        rollText = v ? '\u2b06' : '\u2716';
+      }
+      divFace.append(rollText);
+      divDie.append(divFace);
+      squeezeFace(divFace);
+      divFace.style.display = 'none';
     }
   }
 }
@@ -640,6 +652,3 @@ $('#toggle-audio').click(() => {
   }
   music.audioOn = !music.audioOn;
 });
-
-// Make piece-specific controls for edit mode
-edit.makePieceControls();
