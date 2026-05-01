@@ -31,7 +31,7 @@
 }
 
 .die.rolled {
-  transform: rotate(var(--die-spin-count));
+  transform: rotate(2turn);
   color: var(--color-text);
   transition-property: transform, color;
   transition-duration: var(--die-roll-time), calc(
