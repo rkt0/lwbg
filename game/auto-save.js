@@ -34,7 +34,7 @@ const executeLoadFromFile = async fhLoad => {
       );
       // i is -1 if not found, i.e., manual
       const c = i < 0 ? 'manual' : `ai-${i}`;
-      $(`#${species}-control-${c}`).click();
+      $(`#${species}-control .${c}`).click();
       ai.control.changed = false;
     };
     findAndSetLevel('human', h);
