@@ -166,7 +166,7 @@ function checkHumanOccupied(space, isBldg) {
 function clickHumanPieceOnClickedSpace(space) {
   if (gp.nHumansOn(space) === 1) {
     const piece = gs.humans.indexOf(space);
-    click(`#human-piece-${piece}`, 'mousedown');
+    click(`#human-piece-${piece}`);
   }
 }
 function clickHumanSpaceEditMode(space, isBldg) {
@@ -229,7 +229,7 @@ function checkRaptorOccupied(space) {
 function clickRaptorPieceOnClickedSpace(space) {
   if (gp.nRaptorsOn(space) === 1) {
     const piece = gs.raptors.indexOf(space);
-    click(`#raptor-piece-${piece}`, 'mousedown');
+    click(`#raptor-piece-${piece}`);
   }
 }
 function clickRaptorSpaceEditMode(space) {

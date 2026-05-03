@@ -27,7 +27,7 @@ export function cesvg(...args) {
   const uri = 'http://www.w3.org/2000/svg';
   return document.createElementNS(uri, ...args);
 }
-export function click(x, type = 'click') {
+export function click(x, type = 'mousedown') {
   const element = typeof x === 'object' ? x : qs(x);
   element.dispatchEvent(new MouseEvent(type));
 }
