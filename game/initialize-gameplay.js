@@ -653,6 +653,12 @@ for (const species of Object.keys(pl)) {
 pl.trex[0][0] -= pl.trex.ps[0] / 2;
 pl.human.margin = cssInt('--board-border-width');
 
+// Set svg dimensions
+for (const svg of qsa('svg:not(.icon)')) {
+  svg.setAttribute('width', zd.boardSize[0]);
+  svg.setAttribute('height', zd.boardSize[1]);
+}
+
 // Make human pieces
 for (const [p, s] of gs.humans.entries()) {
   const [l, t] = pl.human[s];
