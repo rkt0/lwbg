@@ -177,7 +177,7 @@ const startGame = async fhLoad => {
       gp.initializeView();
       if (!gs.turn) gp.endTurn();
       if (fhLoad) {
-        $('body').css({overflow: 'hidden'});
+        document.body.style.overflow = 'hidden';
         $('#more-menu').fadeIn(aTime, ui.showControl);
       }
     });

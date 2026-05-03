@@ -1,7 +1,7 @@
 export const debug = {
   skipAutoSave: true,
   boardLabels: {
-    humanSpace:  false,
+    humanSpace: false,
     raptorPoint: false,
     raptorSpace: false,
   },

@@ -1,26 +1,27 @@
-import {cssInt} from './utility.js';
+import {qs, qsa, ce, cssInt} from './utility.js';
 import {anim} from './animation.js';
 import {zd} from './game-objects.js';
 
 export const ui = {
   showButton(id) {
-    const $button = $(`#${id}`);
-    $button.css('display', 'inline').animate(
-      {left: '0px'},
-      anim.time.buttonSlide, 'linear',
-      () => {$button.prop('disabled', false);}
-    );
+    const element = qs(`#${id}`);
+    element.style.display = 'inline';
+    const l0 = {left: '0px'};
+    const aTime = anim.time.buttonSlide;
+    $(element).animate(l0, aTime, 'linear', () => {
+      element.disabled = false;
+    });
   },
   hideButton(id, after) {
-    const $button = $(`#${id}`);
-    $button.prop('disabled', true).animate(
-      {left: `-${cssInt('--button-width')}px`},
-      anim.time.buttonSlide, 'linear',
-      () => {
-        $button.css('display', 'none');
-        if (after) after();
-      }
-    );
+    const element = qs(`#${id}`);
+    element.disabled = true;
+    const width = cssInt('--button-width');
+    const lHide = {left: `-${width}px`};
+    const aTime = anim.time.buttonSlide;
+    $(element).animate(lHide, aTime, 'linear', () => {
+      element.style.display = 'none';
+      if (after) after();
+    });
   },
   replaceButton(idOld, idNew) {
     ui.hideButton(idOld, () => {
@@ -31,91 +32,107 @@ export const ui = {
     const speciesText =
       species === 'human' ? 'Humans' :
       species === 'trex' ? 'T-Rex' : 'Raptors';
-    const $div = $('#turn-display-content');
-    if ($div.text().endsWith(speciesText)) return;
-    const $span = $('#species-turn-text');
+    const span = qs('#species-turn-text');
+    if (span.innerHTML === speciesText) return;
     const aTime = skipFx ? 0 : anim.time.turnFade;
-    $span.fadeOut(aTime,
-      () => {$span.html(speciesText).fadeIn(aTime);}
-    );
+    $(span).fadeOut(aTime, () => {
+      span.innerHTML = speciesText;
+      $(span).fadeIn(aTime);
+    });
   },
   displayRollResult(rollState, skipFx) {
-    $('.die').css('display', 'none')
-      .removeClass('rolled no-animation');
+    for (const die of qsa('.die')) {
+      die.style.display = 'none';
+      die.classList.remove('rolled', 'no-animation');
+    }
     const {turn, rollN, rollGo} = rollState;
-    const $dice = $(`.die-${turn}`);
-    $dice.css('display', 'inline');
-    for (const die of ['movement', 'continue']) {
-      const cSel = `.face-${turn}.face-${die}`;
-      $(cSel).css('display', 'none');
-      const aSel = `[data-roll="${
-        die === 'movement' ? rollN : rollGo
-      }"]`;
-      $(`${cSel}${aSel}`).css('display', 'block');
+    const diceToRoll = [];
+    for (const type of ['movement', 'continue']) {
+      const die = qs(`#die-${turn}-${type}`);
+      if (!die) continue;
+      diceToRoll.push(die);
+      die.style.display = 'inline';
+      for (const face of qsa('.face', die)) {
+        face.style.display = 'none';
+      }
+      const value =
+        type === 'movement' ? rollN : rollGo;
+      const face = qs(`[data-roll="${value}"]`, die);
+      face.style.display = 'block';
     }
     ui.replaceButton('roll-button', 'roll-display');
     const delay = skipFx ? 0 :
       anim.time.buttonSlide * 2 +
       anim.time.dieRollDelay;
     setTimeout(() => {
-      $dice.addClass('rolled');
-      if (skipFx) $dice.addClass('no-animation');
+      for (const die of diceToRoll) {
+        die.classList.add('rolled');
+        if (skipFx) die.classList.add('no-animation');
+      }
     }, delay);
   },
   startMessage(templateId) {
-    $('#start-message')[0].replaceChildren(
-      $(`#${templateId}`)[0].content.cloneNode(true)
-    );
+    const message = qs(`#${templateId}`).content;
+    const node = message.cloneNode(true);
+    qs('#start-message').replaceChildren(node);
   },
   showMessage(templateId, append) {
-    const template = $(`#${templateId}`)[0];
-    const message = template.innerHTML.trim();
-    const $container = $('#message-container');
-    const $content = $('#message-container .content');
-    const retainedMessage = (
-      append && $container.hasClass('appendable')
-    ) ? ($content.html() + '<br>') : '';
-    if (append) $container.addClass('appendable');
-    $content.html(retainedMessage + message)
-      .css('visibility', 'visible');
-    $container.slideDown(anim.time.messageSlide);
+    const message = qs(`#${templateId}`).content;
+    const node = message.cloneNode(true);
+    const container = qs('#message-container');
+    const content = qs('.content', container);
+    const previousWasAppendable =
+      container.classList.contains('appendable');
+    if (append && previousWasAppendable) {
+      content.append(ce('br'), node);
+    } else content.replaceChildren(node);
+    if (append) container.classList.add('appendable');
+    content.style.visibility = 'visible';
+    $(container).slideDown(anim.time.messageSlide);
   },
   hideMessage() {
-    const $container = $('#message-container');
-    if (!$container.is(':visible')) return;
-    if ($container.is(':animated')) return;
-    $('#message-container .content')
-      .css('visibility', 'hidden');
-    $('#message-container .hider')
-      .css('display', 'none');
-    $container.removeClass('appendable')
-      .slideUp(anim.time.messageSlide);
+    const container = qs('#message-container');
+    if (!$(container).is(':visible')) return;
+    if ($(container).is(':animated')) return;
+    const content = qs('.content', container);
+    content.style.visibility = 'hidden';
+    const hider = qs('.hider', container);
+    hider.style.display = 'none';
+    container.classList.remove('appendable');
+    $(container).slideUp(anim.time.messageSlide);
   },
   showGameOver(nSaved, nTotal) {
-    $('#humans-saved').html(nSaved);
-    $('#humans-total').html(nTotal);
+    qs('#humans-saved').innerHTML = nSaved;
+    qs('#humans-total').innerHTML = nTotal;
     ui.hideMessage();
     ui.hideButton('roll-display');
     ui.hideButton('turn-display');
-    const $el = $('#game-over');
     if (zd.factor.current >= 1) {
-      $el.fadeIn(anim.time.menuFade);
+      $('#game-over').fadeIn(anim.time.menuFade);
     }
   },
   disableMenu(id, disable) {
-    const d = disable ?? true;
-    $(`#${id}`).find('button').prop('disabled', d);
+    for (const button of qsa(`#${id} button`)) {
+      button.disabled = disable ?? true;
+    }
   },
   humanItemsClickable(clickable) {
     const value = clickable ? 'auto' : 'none';
-    $('.human-space:not(.building), .human-piece')
-      .css('pointer-events', value);
+    const items = qsa(
+      '.human-space:not(.building), .human-piece'
+    );
+    for (const item of items) {
+      item.style.pointerEvents = value;
+    }
   },
   raptorItemsClickable(clickable) {
-    const valueM = clickable ? 'visibleFill' : 'none';
-    $('#raptor-map').css('pointer-events', valueM);
-    const valueP = clickable ? 'auto' : 'none';
-    $('.raptor-piece').css('pointer-events', valueP);
+    const valueMap =
+      clickable ? 'visibleFill' : 'none';
+    const valuePieces = clickable ? 'auto' : 'none';
+    qs('#raptor-map').style.pointerEvents = valueMap;
+    for (const element of qsa('.raptor-piece')) {
+      element.style.pointerEvents = valuePieces;
+    }
   },
   showStartOptions(skipFx) {
     const aTime = skipFx ? 0 : anim.time.menuFade;

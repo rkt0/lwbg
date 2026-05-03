@@ -1,3 +1,4 @@
+import {qs} from './utility.js';
 import {bd} from './logic.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -55,7 +56,8 @@ export function clickRaptorPiece(e) {
       if (checkNotEnterPosition(space)) return;
     }
     ui.hideMessage();
-    $(`#raptor-piece-${piece}`).addClass('selected');
+    const element = qs(`#raptor-piece-${piece}`);
+    element.classList.add('selected');
     mv.selected = piece;
     mv.plan = [space];
     mv.toGo = gs.je ? 1 : gs.rollN;
@@ -71,7 +73,7 @@ export function clickEditKill(e) {
   gp.moveHuman(piece, bd.humanDead, false);
   $(`#human-piece-${piece} .edit-kill-human`)
     .fadeOut(anim.time.editControlFade);
-  $('.selected').removeClass('selected');
+  qs('.selected').classList.remove('selected');
   ui.raptorItemsClickable(true);
   edit.selected.species = null;
   edit.selected.piece = null;
@@ -110,7 +112,7 @@ function selectAppropriate(piece) {
   if (isBldg || space === bd.humanDead) {
     id = `human-piece-${piece}`;
   }
-  $(`#${id}`).addClass('selected');
+  qs(`#${id}`).classList.add('selected');
 }
 function clickHumanPieceEditMode(piece, space) {
   if (edit.selected.species === 'raptor') return;
@@ -141,7 +143,8 @@ function clickRaptorPieceEditMode(piece, space) {
     $(`#raptor-space-${space}`).click();
     return;
   }
-  $(`#raptor-piece-${piece}`).addClass('selected');
+  const element = qs(`#raptor-piece-${piece}`);
+  element.classList.add('selected');
   ui.humanItemsClickable(false);
   edit.selected.species = 'raptor';
   edit.selected.piece = piece;

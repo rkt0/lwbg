@@ -1,4 +1,4 @@
-import {click} from './utility.js';
+import {qs, click} from './utility.js';
 import {bd} from './logic.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -37,14 +37,18 @@ export function clickHumanSpace(e) {
     }
     if (checkHumanOccupied(space, isBldg)) return;
     ui.hideMessage();
-    $('.human-space.move')
-      .removeClass('move').addClass('path');
-    $(`#human-space-${space}`).addClass('move');
+    const moveToPath = qs('.human-space.move');
+    if (moveToPath) {
+      moveToPath.classList.remove('move');
+      moveToPath.classList.add('path');
+    }
+    qs(`#human-space-${space}`).classList.add('move');
     mv.plan.push(space);
     if (!gs.je) {
       const s0 = Math.min(from, space);
       const s1 = Math.max(from, space);
-      $(`#human-edge-${s0}_${s1}`).addClass('path');
+      const edge = qs(`#human-edge-${s0}_${s1}`);
+      edge.classList.add('path');
     }
     if (isBldg) mv.toGo = 0; else mv.toGo--;
     if (!mv.toGo) ui.showButton('confirm-button');
@@ -77,16 +81,22 @@ export function clickRaptorSpace(e) {
     }
     if (checkRaptorOccupied(space)) return;
     ui.hideMessage();
-    $('.move').removeClass('move').addClass('path');
+    const moveToPath = qs('.raptor-space.move');
+    if (moveToPath) {
+      moveToPath.classList.remove('move');
+      moveToPath.classList.add('path');
+    }
+    const moveElement = qs(`#raptor-space-${space}`);
+    moveElement.classList.add('move');
     // Pull space from current location in DOM and
     // append it to end to ensure it is 'on top'
-    $(`#raptor-space-${space}`).addClass('move')
-      .appendTo('#raptor-map svg');
+    qs('#raptor-map svg').append(moveElement);
     if (isBldg) {
-      const hSpace = bd.bldgHumanSpaces[
-        bd.bldgRaptorSpaces.indexOf(space)
-      ];
-      $(`#human-space-${hSpace}`).addClass('move');
+      const {bldgRaptorSpaces, bldgHumanSpaces} = bd;
+      const rIndex = bldgRaptorSpaces.indexOf(space);
+      const hSpace = bldgHumanSpaces[rIndex];
+      const hElement = qs(`#human-space-${hSpace}`);
+      hElement.classList.add('move');
     }
     mv.plan.push(space);
     mv.toGo--;
@@ -182,7 +192,7 @@ function clickHumanSpaceEditMode(space, isBldg) {
   }
   $(`#human-piece-${piece} .edit-kill-human`)
     .fadeOut(aTime);
-  $('.selected').removeClass('selected');
+  qs('.selected').classList.remove('selected');
   ui.raptorItemsClickable(true);
   // If edit.selected were reset immediately,
   // then moving a human to a building (by edit) that
@@ -233,7 +243,7 @@ function clickRaptorSpaceEditMode(space) {
     if (gp.nRaptorsOn(space)) return;
     gp.moveRaptor(piece, space, false, true);
   }
-  $('.selected').removeClass('selected');
+  qs('.selected').classList.remove('selected');
   ui.humanItemsClickable(true);
   edit.selected.species = null;
   edit.selected.piece = null;

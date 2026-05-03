@@ -1,3 +1,4 @@
+import {qs, qsa} from './utility.js';
 import {bd, dice} from './logic.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -50,10 +51,12 @@ const editGame = gsNew => {
   ui.raptorItemsClickable(gs.turn === 'raptor');
 };
 const endEditMode = () => {
-  $('#cancel-edits, #confirm-edits')
-    .prop('disabled', true);
+  const toDisable = '#cancel-edits, #confirm-edits';
+  for (const button of qsa(toDisable)) {
+    button.disabled = true;
+  }
   edit.clear();
-  $('.selected').removeClass('selected');
+  qs('.selected')?.classList.remove('selected');
   $('.edit-control, .wrapper, .edit-kill-human')
     .fadeOut(anim.time.editControlFade);
   ui.showButton('show-more');
@@ -71,12 +74,14 @@ $('#confirm-edits').click(() => {
 
 // Used for editing both turn and dice
 const replaceDieValue = (species, type, value) => {
-  const cSel = `.face-${species}.face-${type}`;
-  $(cSel).css('display', 'none');
+  const die = qs(`#die-${species}-${type}`);
+  for (const face of qsa('.face', die)) {
+    face.style.display = 'none';
+  }
   const x = type === 'movement' ? 'N' : 'Go';
   gs[`roll${x}`] = value;
-  const aSel = `[data-roll="${value}"]`;
-  $(`${cSel}${aSel}`).css('display', 'block');
+  const face = qs(`[data-roll="${value}"]`, die);
+  face.style.display = 'block';
   if (type === 'movement') {
     gs.je = value === 'Jump' || value === 'Enter';
   }
@@ -101,13 +106,20 @@ $('#change-turn').click(() => {
   if (species !== 'trex') {
     replaceDieValue(species, 'continue', gs.rollGo);
   }
-  $('.die').css('display', 'none')
-    .removeClass('rolled no-animation');
-  $(`.die-${species}`)
-    .addClass('rolled no-animation')
-    .css('display', 'inline');
-  $('.wrapper').css('display', 'none');
-  $(`.wrapper-${species}`).css('display', 'block');
+  for (const die of qsa('.die')) {
+    die.style.display = 'none';
+    die.classList.remove('rolled', 'no-animation');
+  }
+  for (const die of qsa(`.die-${species}`)) {
+    die.style.display = 'inline';
+    die.classList.add('rolled', 'no-animation');
+  }
+  for (const wrapper of qsa('.wrapper')) {
+    wrapper.style.display = 'none';
+  }
+  for (const wrapper of qsa(`.wrapper-${species}`)) {
+    wrapper.style.display = 'block';
+  }
 });
 
 // Dice

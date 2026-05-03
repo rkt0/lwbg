@@ -282,22 +282,22 @@ for (const [space, offset] of rAdjustments) {
 const svgR = $('#raptor-map').svg().svg('get');
 for (const [i, a] of rSpaceCoords.entries()) {
   const idString = `raptor-space-${i}`;
-  svgR.polygon(a, {id: idString});
-  $(`#${idString}`).addClass('raptor-space')
-    .click({space: i}, clickRaptorSpace);
+  const element = svgR.polygon(a, {id: idString});
+  element.classList.add('raptor-space');
+  $(element).click({space: i}, clickRaptorSpace);
 }
 if (debug.boardLabels.raptorPoint) {
-  const $div = $('#raptor-point-labels');
-  $div.css({display: 'block'});
-  const svg = $div.svg().svg('get');
+  const element = qs('#raptor-point-labels');
+  element.style.display = 'block';
+  const svg = $(element).svg().svg('get');
   for (const [i, c] of rPoints.entries()) {
     svg.text(...c, `${i}`);
   }
 }
 if (debug.boardLabels.raptorSpace) {
-  const $div = $('#raptor-space-labels');
-  $div.css({display: 'block'});
-  const svg = $div.svg().svg('get');
+  const element = qs('#raptor-space-labels');
+  element.style.display = 'block';
+  const svg = $(element).svg().svg('get');
   for (const [i, c] of pl.raptor.entries()) {
     svg.text(...c, `${i}`);
   }
@@ -345,12 +345,11 @@ for (const [bldg, hSpace] of bhs.entries()) {
     fill: `url(#bldg-bg-${bldgBg[bldg]})`,
   });
   // Then make clickable polygon on top
-  svgB.polygon(coords, {
+  const element = svgB.polygon(coords, {
     id: idString, fill: '#0000',
   });
-  $(`#${idString}`).click(
-    {hSpace: hSpace, rSpace: rSpace}, clickBuilding
-  ).addClass('human-space building');
+  element.classList.add('human-space', 'building');
+  $(element).click({hSpace, rSpace}, clickBuilding);
   pl.human[hSpace] = [...pl.raptor[rSpace]];
 }
 
@@ -500,9 +499,9 @@ for (const edge of bd.humanEdges) {
   );
 }
 if (debug.boardLabels.humanSpace)  {
-  const $div = $('#human-space-labels');
-  $div.css({display: 'block'});
-  const svg = $div.svg().svg('get');
+  const element = qs('#human-space-labels');
+  element.style.display = 'block';
+  const svg = $(element).svg().svg('get');
   for (const [i, coords] of hSpaces.entries()) {
     svg.text(...coords, `${i}`);
   }
@@ -664,7 +663,7 @@ pl.human.margin = cssInt('--board-border-width');
 // which is fine as long as the amount chopped off
 // does not clip any of the actual SVG elements
 //
-const svgBottomChop = 7;
+const svgBottomChop = 0;
 $('svg:not(.icon)').attr({
   width: zd.boardSize[0],
   height: zd.boardSize[1] - svgBottomChop,

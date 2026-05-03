@@ -1,4 +1,4 @@
-import {isNull} from './utility.js';
+import {qs, qsa, isNull} from './utility.js';
 import {bd} from './logic.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -56,7 +56,9 @@ export const gp = {
     gs.rollGo = 0;
     gs.phase = 'roll';
     gs.je = false;
-    $('.face').css('display', 'none');
+    for (const face of qsa('.face')) {
+      face.style.display = 'none';
+    }
   },
   endTurn() {
     gp.clearMoveObject();
@@ -97,23 +99,21 @@ export const gp = {
   },
   moveHuman(piece, space, isLast) {
     if (gs.humans[piece] === space) return;
-    const $p = $(`#human-piece-${piece}`);
-    $p.removeClass('dead');
-    if (space === bd.humanDead) $p.addClass('dead');
+    const element = qs(`#human-piece-${piece}`);
+    const isNowDead = space === bd.humanDead;
+    element.classList.toggle('dead', isNowDead);
     // Piece location update needs to occur
     // here for checkGameOver() to work right
     gs.humans[piece] = space;
     const [l, t] = pl.human[space];
-    const at = anim.time;
-    $p.animate(
-      {top: `${t}px`, left: `${l}px`},
-      space === bd.humanDead ? at.killHuman :
-          gs.je ? at.jumpHuman : at.moveHuman,
-      () => {
-        gp.adjustHumanPositions();
-        if (isLast) gp.endTurn();
-      }
-    );
+    let aTime = anim.time.moveHuman;
+    if (isNowDead) aTime = anim.time.killHuman;
+    else if (gs.je) aTime = anim.time.jumpHuman;
+    const location = {top: `${t}px`, left: `${l}px`};
+    $(element).animate(location, aTime, () => {
+      gp.adjustHumanPositions();
+      if (isLast) gp.endTurn();
+    });
   },
   moveRaptor(piece, space, isLast, silent) {
     const [l, t] = pl.raptor[space];
@@ -129,21 +129,20 @@ export const gp = {
       const de = Math.min(...enter[0]);
       if (dm <= maxN || de === 1) sfx.raptor();
     }
-    $(`#raptor-piece-${piece}`).animate(
-      {top: `${t}px`, left: `${l}px`},
-      anim.time.moveRaptor,
-      () =>  {
-        // Piece location update needs to occur
-        // here for checkEatenByRaptor(piece)
-        // to work right
-        gs.raptors[piece] = space;
-        checkEatenByRaptor(piece);
-        if (isLast || silent) {
-          sfx.raptorAlreadyPlayed = false;
-        }
-        if (isLast) gp.endTurn();
+    const element = qs(`#raptor-piece-${piece}`);
+    const location = {top: `${t}px`, left: `${l}px`};
+    const aTime = anim.time.moveRaptor;
+    $(element).animate(location, aTime, () =>  {
+      // Piece location update needs to occur
+      // here for checkEatenByRaptor(piece)
+      // to work right
+      gs.raptors[piece] = space;
+      checkEatenByRaptor(piece);
+      if (isLast || silent) {
+        sfx.raptorAlreadyPlayed = false;
       }
-    );
+      if (isLast) gp.endTurn();
+    });
   },
   moveTrex(space, isLast, skipFx) {
     const [l, t] = pl.trex[space];
@@ -151,46 +150,47 @@ export const gp = {
       const sound = gs.trex === 1 ? 'Roar' : 'Stomp';
       sfx[`trex${sound}`]();
     }
-    $('#trex-piece').animate(
-      {top: `${t}px`, left: `${l}px`},
-      anim.time.moveTrex,
-      () => {
-        if (!skipFx) {
-          $('#gameplay-container').effect('bounce', {
-            duration: anim.time.trexScreenBounce,
-            distance: 36,
-            times: 6,
-          });
-        }
-        gs.trex = space;
-        if (gs.trex === 0) {
-          for (const h of hPiecesOn(bd.humanStart)) {
-            gp.moveHuman(h, bd.humanDead, false);
-            ui.showMessage('eaten-trex', true);
-          }
-        }
-        // Using isLast here too enables reuse of this
-        // function for edit/load purposes
-        if (isLast) gp.endTurn();
+    const element = qs('#trex-piece');
+    const location = {top: `${t}px`, left: `${l}px`};
+    const aTime = anim.time.moveTrex;
+    $(element).animate(location, aTime, () => {
+      if (!skipFx) {
+        $('#gameplay-container').effect('bounce', {
+          duration: anim.time.trexScreenBounce,
+          distance: 36,
+          times: 6,
+        });
       }
-    );
+      gs.trex = space;
+      if (gs.trex === 0) {
+        for (const h of hPiecesOn(bd.humanStart)) {
+          gp.moveHuman(h, bd.humanDead, false);
+          ui.showMessage('eaten-trex', true);
+        }
+      }
+      // Using isLast here too enables reuse of this
+      // function for edit/load purposes
+      if (isLast) gp.endTurn();
+    });
   },
   relocatePiece(species, piece, space) {
-    let $p;
+    let element;
     if (species === 'trex') {
       if (gs.trex === space) return;
       gs.trex = space;
-      $p = $('#trex-piece');
+      element = qs('#trex-piece');
     } else {
       if (gs[`${species}s`][piece] === space) return;
       gs[`${species}s`][piece] = space;
-      $p = $(`#${species}-piece-${piece}`);
+      element = qs(`#${species}-piece-${piece}`);
     }
     if (species === 'human') {
-      $p.toggleClass('dead', space === bd.humanDead);
+      const isNowDead = space === bd.humanDead;
+      element.classList.toggle('dead', isNowDead);
     }
     const [l, t] = pl[species][space];
-    $p.css({top: `${t}px`, left: `${l}px`});
+    element.style.left = `${l}px`;
+    element.style.top = `${t}px`;
   },
   setSaveFunction(fn) {
     gp.save = fn;
