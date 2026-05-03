@@ -1,5 +1,6 @@
 import {
-  qs, qsa, ael, ce, arrayMinus, cssInt, cssIntWH,
+  qs, qsa, ael, ce, cesvg, arrayMinus,
+  cssInt, cssIntWH,
 } from './utility.js';
 import {debug} from './debug.js';
 import {bd} from './logic.js';
@@ -279,27 +280,40 @@ for (const [space, offset] of rAdjustments) {
 }
 
 // Make raptor spaces
-const svgR = $('#raptor-map').svg().svg('get');
+const svgRaptorMap = cesvg('svg');
+qs('#raptor-map').append(svgRaptorMap);
 for (const [i, a] of rSpaceCoords.entries()) {
-  const idString = `raptor-space-${i}`;
-  const element = svgR.polygon(a, {id: idString});
+  const element = cesvg('polygon');
+  element.id = `raptor-space-${i}`;
+  element.setAttribute('points', a.join(' '));
   element.classList.add('raptor-space');
   $(element).click({space: i}, clickRaptorSpace);
+  svgRaptorMap.append(element);
 }
 if (debug.boardLabels.raptorPoint) {
-  const element = qs('#raptor-point-labels');
-  element.style.display = 'block';
-  const svg = $(element).svg().svg('get');
-  for (const [i, c] of rPoints.entries()) {
-    svg.text(...c, `${i}`);
+  const container = qs('#raptor-point-labels');
+  container.style.display = 'block';
+  const svgRaptorPointLabels = cesvg('svg');
+  container.append(svgRaptorPointLabels);
+  for (const [i, [x, y]] of rPoints.entries()) {
+    const element = cesvg('text');
+    element.setAttribute('x', x);
+    element.setAttribute('y', y);
+    element.textContent = i;
+    svgRaptorPointLabels.append(element);
   }
 }
 if (debug.boardLabels.raptorSpace) {
-  const element = qs('#raptor-space-labels');
-  element.style.display = 'block';
-  const svg = $(element).svg().svg('get');
-  for (const [i, c] of pl.raptor.entries()) {
-    svg.text(...c, `${i}`);
+  const container = qs('#raptor-space-labels');
+  container.style.display = 'block';
+  const svgRaptorSpaceLabels = cesvg('svg');
+  container.append(svgRaptorSpaceLabels);
+  for (const [i, [x, y]] of pl.raptor.entries()) {
+    const element = cesvg('text');
+    element.setAttribute('x', x);
+    element.setAttribute('y', y);
+    element.textContent = i;
+    svgRaptorSpaceLabels.append(element);
   }
 }
 
@@ -322,16 +336,19 @@ const bgInfo = [
   ['concrete.png',  [500, 250]],
   ['asphalt.png',   [250, 180]],
 ];
-const svgB = $('#buildings-map').svg().svg('get');
-for (const [i, [src, dim]] of bgInfo.entries()) {
-  const pattern = svgB.pattern(
-    svgB.defs(), `bldg-bg-${i}`, 0, 0, dim[0], dim[1],
-    {patternUnits: 'userSpaceOnUse'}
-  );
-  svgB.image(
-    pattern, null, null, dim[0], dim[1],
-    `img/bldg/${src}`
-  );
+const svgBuildingsMap = cesvg('svg');
+qs('#buildings-map').append(svgBuildingsMap);
+for (const [i, [src, [w, h]]] of bgInfo.entries()) {
+  const pattern = cesvg('pattern');
+  pattern.id = `bldg-bg-${i}`;
+  pattern.setAttribute('width', w);
+  pattern.setAttribute('height', h);
+  const patternUnits = 'userSpaceOnUse';
+  pattern.setAttribute('patternUnits', patternUnits);
+  const image = cesvg('image');
+  image.setAttribute('href', `img/bldg/${src}`);
+  pattern.append(image);
+  svgBuildingsMap.append(pattern);
 }
 
 // Make buildings
@@ -339,17 +356,19 @@ const bhs = bd.bldgHumanSpaces;
 for (const [bldg, hSpace] of bhs.entries()) {
   const rSpace = bd.bldgRaptorSpaces[bldg];
   const coords = rSpaceCoords[rSpace];
-  const idString = `human-space-${hSpace}`;
   // First make polygon with background only
-  svgB.polygon(coords, {
-    fill: `url(#bldg-bg-${bldgBg[bldg]})`,
-  });
+  const background = cesvg('polygon');
+  background.setAttribute('points', coords.join(' '));
+  const fill = `url(#bldg-bg-${bldgBg[bldg]})`;
+  background.setAttribute('fill', fill);
   // Then make clickable polygon on top
-  const element = svgB.polygon(coords, {
-    id: idString, fill: '#0000',
-  });
-  element.classList.add('human-space', 'building');
-  $(element).click({hSpace, rSpace}, clickBuilding);
+  const clickable = cesvg('polygon');
+  clickable.id = `human-space-${hSpace}`;
+  clickable.setAttribute('points', coords.join(' '));
+  clickable.setAttribute('fill', '#0000');
+  clickable.classList.add('human-space', 'building');
+  svgBuildingsMap.append(background, clickable);
+  $(clickable).click({hSpace, rSpace}, clickBuilding);
   pl.human[hSpace] = [...pl.raptor[rSpace]];
 }
 
@@ -488,22 +507,31 @@ for (const [i, [x, y]] of hSpaces.entries()) {
 }
 
 // Make human edges
-const svgE = $('#human-edges').svg().svg('get');
+const svgHumanEdges = cesvg('svg');
+qs('#human-edges').append(svgHumanEdges);
 for (const edge of bd.humanEdges) {
   const s0 = Math.min(...edge);
   const s1 = Math.max(...edge);
-  const idString = `human-edge-${s0}_${s1}`;
-  svgE.line(
-    ...hSpaces[edge[0]], ...hSpaces[edge[1]],
-    {id: idString, class: 'human-edge'}
-  );
+  const line = cesvg('line');
+  line.id = `human-edge-${s0}_${s1}`;
+  line.setAttribute('x1', hSpaces[edge[0]][0]);
+  line.setAttribute('y1', hSpaces[edge[0]][1]);
+  line.setAttribute('x2', hSpaces[edge[1]][0]);
+  line.setAttribute('y2', hSpaces[edge[1]][1]);
+  line.classList.add('human-edge');
+  svgHumanEdges.append(line);
 }
 if (debug.boardLabels.humanSpace)  {
-  const element = qs('#human-space-labels');
-  element.style.display = 'block';
-  const svg = $(element).svg().svg('get');
-  for (const [i, coords] of hSpaces.entries()) {
-    svg.text(...coords, `${i}`);
+  const container = qs('#human-space-labels');
+  container.style.display = 'block';
+  const svgHumanSpaceLabels = cesvg('svg');
+  container.append(svgHumanSpaceLabels);
+  for (const [i, [x, y]] of hSpaces.entries()) {
+    const element = cesvg('text');
+    element.setAttribute('x', x);
+    element.setAttribute('y', y);
+    element.textContent = i;
+    svgHumanSpaceLabels.append(element);
   }
 }
 
@@ -548,12 +576,16 @@ for (const [i, [x, y]] of tSpaces.entries()) {
 }
 
 // Make T-rex edges
-const svgT = $('#trex-edges').svg().svg('get');
+const svgTrexEdges = cesvg('svg');
+qs('#trex-edges').append(svgTrexEdges);
 for (let i = 0; i < bd.trexStart; i++) {
-  svgT.line(
-    ...tSpaces[i], ...tSpaces[i + 1],
-    {class: 'trex-edge'}
-  );
+  const line = cesvg('line');
+  line.setAttribute('x1', tSpaces[i][0]);
+  line.setAttribute('y1', tSpaces[i][1]);
+  line.setAttribute('x2', tSpaces[i + 1][0]);
+  line.setAttribute('y2', tSpaces[i + 1][1]);
+  line.classList.add('trex-edge');
+  svgTrexEdges.append(line);
 }
 
 // Entrance marker geometry
@@ -585,10 +617,11 @@ for (let i = 0; i < eRays; i++) {
 
 // Make entrance markers
 for (const [x, y] of eMarkers) {
-  svgR.polygon(
-    eShape.map(s => [s[0] + x, s[1] + y]),
-    {class: 'raptor-entrance'}
-  );
+  const element = cesvg('polygon');
+  element.classList.add('raptor-entrance');
+  const a = eShape.map(s => [s[0] + x, s[1] + y]);
+  element.setAttribute('points', a.join(' '));
+  svgRaptorMap.append(element);
 }
 
 // Jump marker geometry
