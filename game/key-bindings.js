@@ -6,8 +6,8 @@ import {ui} from './functions-ui.js';
 import {edit} from './edit-mode.js';
 
 const clickIfOk = buttonId => {
-  const $button = $(`#${buttonId}`);
-  if (!$button.prop('disabled')) $button.click();
+  const button = qs(`#${buttonId}`);
+  if (!button.disabled) $(button).click();
 };
 
 function moreMenuActive() {

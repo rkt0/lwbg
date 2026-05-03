@@ -1,5 +1,5 @@
 import {
-  qs, ce, sequence, shuffle,
+  qs, qsa, ce, sequence, shuffle,
 } from './utility.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
@@ -29,9 +29,13 @@ export const pieces = {
     },
   },
   removeImgs() {
-    $('.human-component:not(.dead-marker)').remove();
-    $('.raptor-component').remove();
-    $('.trex-component').remove();
+    const toRemove = [
+      '.human-component:not(.dead-marker)',
+      '.raptor-component', '.trex-component',
+    ];
+    for (const element of qsa(toRemove.join(', '))) {
+      element.remove();
+    }
   },
   addHumanFeatureImg(piece, item, id) {
     const img = ce('img');

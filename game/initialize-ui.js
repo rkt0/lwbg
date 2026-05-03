@@ -1,5 +1,5 @@
 import {
-  qs, ce, deepCopy, isNull, rollDie, cssInt,
+  qs, qsa, ce, deepCopy, isNull, rollDie, cssInt,
 } from './utility.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
@@ -15,11 +15,14 @@ import {autoSave} from './auto-save.js';
 import {edit} from './edit-mode.js';
 
 // Set display to none on dormant elements
-$('.dormant').css('display', 'none');
+for (const element of qsa('.dormant')) {
+  element.style.display = 'none';
+}
 
 // Initialize dormant elements in gameplay menu
-$('#gameplay-menu > .dormant:not(.edit-control)')
-  .each((_, e) => {ui.hideButton(e.id);});
+for (const button of qsa('#gameplay-menu .dormant')) {
+  ui.hideButton(button.id);
+}
 
 // Disable menus that should be inactive at start
 ui.disableMenu('player-control');
@@ -143,13 +146,13 @@ function continueAtStart() {
   $('#player-control').fadeOut(aTime, autoSave.begin);
 };
 function changeControl(species, level) {
-  const area = `#${species}-control`;
-  $(`${area} .current`).removeClass('current');
+  const area = qs(`#${species}-control`);
+  qs('.current', area)?.classList.remove('current');
   if (level === -1) {
-    $(`${area} .manual`).addClass('current');
+    qs('.manual', area).classList.add('current');
     ai.control[species] = false;
   } else {
-    $(`${area} .ai-${level}`).addClass('current');
+    qs(`.ai-${level}`, area).classList.add('current');
     ai.control[species] = ai.level[species][level];
   }
   if (gs.turn) ai.control.changed = true;
@@ -205,7 +208,9 @@ function dieCode(value, die) {
 }
 function enableDiceEdit() {
   $('.edit-dice').fadeIn(eTime);
-  $(`.wrapper-${gs.turn}`).css('display', 'block');
+  for (const wrapper of qsa(`.wrapper-${gs.turn}`)) {
+    wrapper.style.display = 'block';
+  }
   edit.dieCodes.movement =
     dieCode(gs.rollN, dice[gs.turn].movement);
   edit.dieCodes.continue =
@@ -215,9 +220,12 @@ function enableDiceEdit() {
 // More menu click handlers
 $('#hide-more').click(() => {
   ui.disableMenu('more-menu');
-  $('#more-menu').fadeOut(aTime, () => {
-    $('#more-menu > *').css('display', 'none');
-    $('body').css({overflow: 'visible'});
+  const moreMenu = qs('#more-menu');
+  $(moreMenu).fadeOut(aTime, () => {
+    for (const child of moreMenu.children) {
+      child.style.display = 'none';
+    }
+    document.body.style.overflow = 'visible';
   });
 });
 $('#new-save-point').click(() => {
@@ -252,8 +260,8 @@ $('#begin-edit').click(() => {
   if (gs.phase !== 'roll') enableDiceEdit();
   ui.humanItemsClickable(true);
   ui.raptorItemsClickable(true);
-  $('#cancel-edits, #confirm-edits')
-    .prop('disabled', false);
+  qs('#cancel-edits').disabled = false;
+  qs('#confirm-edits').disabled = false;
 });
 $('#change-control').click(() => {
   ui.disableMenu('more-options');
@@ -288,8 +296,8 @@ $('#confirm-quit').click(() => {
 
 // Simple gameplay menu click handlers
 $('#show-more').click(() => {
-  $('body').css({overflow: 'hidden'});
-  $('#more-options').css('display', 'flex');
+  document.body.style.overflow = 'hidden';
+  qs('#more-options').style.display = 'flex';
   $('#more-menu').fadeIn(aTime, () => {
     ui.disableMenu('more-options', false);
   });
@@ -363,8 +371,11 @@ function clearVisibleMove() {
   ui.hideMessage();
   ui.hideButton('cancel-button');
   ui.hideButton('confirm-button');
-  $('.selected, .move, .path')
-    .removeClass('selected move path');
+  for (const c of ['selected', 'move', 'path'] ) {
+    for (const element of qsa(`.${c}`)) {
+      element.classList.remove(c);
+    }
+  }
 }
 function boundingBox(...regions) {
   return {
@@ -513,17 +524,24 @@ $('#ok-trex-move').click(() => {
 
 // Needed for zoom button click handlers
 function highlightPieces(setting) {
-  const $pieces =
-    $('.raptor-piece, .human-piece, .trex-piece')
+  const pieces = qsa(
+    '.raptor-piece, .human-piece, .trex-piece'
+  );
   const ids = zd.highlightBlinkIds;
   if (setting) {
-    $pieces.addClass('highlighted');
+    for (const piece of pieces) {
+      piece.classList.add('highlighted');
+    }
     const id = setInterval(() => {
-      $('.highlighted').toggleClass('on');
+      for (const element of qsa('.highlighted')) {
+        element.classList.toggle('on');
+      }
     }, anim.time.highlightBlink);
     ids.push(id);
   } else {
-    $pieces.removeClass('highlighted');
+    for (const piece of pieces) {
+      piece.classList.remove('highlighted');
+    }
     while (ids.length) clearInterval(ids.pop());
   }
 }
@@ -549,15 +567,23 @@ function zoomGeneral(factor) {
     zd.center.left = left / zd.factor.current;
     zd.center.top = top / zd.factor.current;
   }
-  $('#gameplay-container').css('zoom', factor);
+  qs('#gameplay-container').style.zoom = factor;
   zd.factor.current = factor;
   applyZoomCenter();
-  $('.non-zoom').css('zoom', 1 / zd.factor.current);
+  for (const element of qsa('.non-zoom')) {
+    element.style.zoom = 1 / zd.factor.current;
+  }
   highlightPieces(factor < 1);
-  $('.human-space, .human-edge')
-    .toggleClass('more-visible', factor < 1);
-  $('.zoom-button').removeClass('current');
-  $('.edit-control .obstructive').removeClass('slim');
+  const humanBoard = qsa('.human-space, .human-edge');
+  for (const element of humanBoard) {
+    const isOut = factor < 1;
+    element.classList.toggle('more-visible', isOut);
+  }
+  const currentButton = qs('.zoom-button.current');
+  currentButton.classList.remove('current')
+  for (const element of qsa('.obstructive')) {
+    element.classList.remove('slim');
+  }
   if (gs.turn === 'over') $('#game-over').show();
 };
 
@@ -570,17 +596,19 @@ $('#zoom-out').click(() => {
   const factorLimited =
     Math.max(factorFit, zd.factor.outMax);
   zoomGeneral(factorLimited);
-  $('#zoom-out').addClass('current');
-  $('.edit-control .obstructive').addClass('slim');
+  qs('#zoom-out').classList.add('current');
+  for (const element of qsa('.obstructive')) {
+    element.classList.add('slim');
+  }
   if (gs.turn === 'over') $('#game-over').hide();
 });
 $('#zoom-default').click(() => {
   zoomGeneral(1);
-  $('#zoom-default').addClass('current');
+  qs('#zoom-default').classList.add('current');
 });
 $('#zoom-in').click(() => {
   zoomGeneral(zd.factor.in);
-  $('#zoom-in').addClass('current');
+  qs('#zoom-in').classList.add('current');
 });
 
 // Make die faces
@@ -628,12 +656,12 @@ for (const species of Object.keys(dice)) {
 
 // Message hover handler
 function mouseover(inbound) {
-  const cv = inbound ? 'hidden' : 'visible';
-  const hd = inbound ? 'flex' : 'none';
-  const $mc = $('#message-container');
-  if ($mc.is(':animated')) return;
-  $mc.children('.content').css('visibility', cv);
-  $mc.children('.hider').css('display', hd);
+  const container = qs('#message-container');
+  if ($(container).is(':animated')) return;
+  qs('.content', container).style.visibility =
+    inbound ? 'hidden' : 'visible';
+  qs('.hider', container).style.display =
+    inbound ? 'flex' : 'none';
 }
 $('#message-container').click(ui.hideMessage).hover(
   () => {mouseover(true);}, () => {mouseover(false);}

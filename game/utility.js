@@ -67,7 +67,9 @@ export function shuffle(arr, prngFn) {
 }
 
 export function cssInt(property, where = ':root') {
-  return parseInt($(where).css(property) ?? 0);
+  const style = getComputedStyle(qs(where));
+  const value = style.getPropertyValue(property);
+  return parseInt(value || 0);
 }
 export function cssIntWH(stem, where = ':root') {
   const dims = ['width', 'height'];
