@@ -653,22 +653,6 @@ for (const species of Object.keys(pl)) {
 pl.trex[0][0] -= pl.trex.ps[0] / 2;
 pl.human.margin = cssInt('--board-border-width');
 
-// For reasons that I fail to understand,
-// the presence of the full-board SVGs causes
-// the document height (but not width!) to be
-// inflated by a small amount (specifically 7px)
-//
-// This issue can be fixed by simply chopping off
-// this amount from the bottom edge of each SVG,
-// which is fine as long as the amount chopped off
-// does not clip any of the actual SVG elements
-//
-const svgBottomChop = 0;
-$('svg:not(.icon)').attr({
-  width: zd.boardSize[0],
-  height: zd.boardSize[1] - svgBottomChop,
-});
-
 // Make human pieces
 for (const [p, s] of gs.humans.entries()) {
   const [l, t] = pl.human[s];

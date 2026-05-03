@@ -51,6 +51,10 @@ h1 {
   font: var(--font-large);
 }
 
+svg {
+  display: block;
+}
+
 #title-container {
   background: #5a5c5f;
 }
