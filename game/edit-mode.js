@@ -1,4 +1,4 @@
-import {qs, qsa} from './utility.js';
+import {qs, qsa, ael} from './utility.js';
 import {bd, dice} from './logic.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -62,11 +62,11 @@ const endEditMode = () => {
   ui.showButton('show-more');
   gp.checkGameOver(true);
 };
-$('#cancel-edits').click(() => {
+ael('#cancel-edits', 'mousedown', () => {
   editGame(edit.gsPrevious);
   endEditMode();
 });
-$('#confirm-edits').click(() => {
+ael('#confirm-edits', 'mousedown', () => {
   editGame(gs);
   endEditMode();
   autoSave.update(true);
@@ -88,7 +88,7 @@ const replaceDieValue = (species, type, value) => {
 };
 
 // Turn
-$('#change-turn').click(() => {
+ael('#change-turn', 'mousedown', () => {
   const species = gs.turn === 'trex' ? 'raptor' :
     gs.turn === 'raptor' ? 'human' :
     gp.nHumansOn(bd.humanStart) ? 'trex' :
@@ -123,7 +123,7 @@ $('#change-turn').click(() => {
 });
 
 // Dice
-$('#unroll-dice').click(() => {
+ael('#unroll-dice', 'mousedown', () => {
   gp.clearRoll();
   const idsToHide = [
     'decline-button', 'ok-no-move', 'ok-trex-move',
@@ -146,7 +146,7 @@ const changeDie = (species, type) => {
 };
 for (const s of Object.keys(dice)) {
   for (const t of Object.keys(dice[s])) {
-    $(`#die-button-${s}-${t}`).click(() => {
+    ael(`#die-button-${s}-${t}`, 'mousedown', () => {
       changeDie(s, t);
     });
   }

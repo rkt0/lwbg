@@ -1,5 +1,6 @@
 import {
-  qs, qsa, ce, deepCopy, isNull, rollDie, cssInt,
+  qs, qsa, ael, aelo, ce, click,
+  deepCopy, isNull, rollDie, cssInt,
 } from './utility.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
@@ -34,7 +35,7 @@ const aTime = anim.time.menuFade;
 const eTime = anim.time.editControlFade;
 
 // Title screen click handler
-$('#title-container').one('click', () => {
+aelo('#title-container', 'mousedown', () => {
   onbeforeunload = () => '';
   $('#title-container').fadeOut(aTime, () => {
     $('#start-container').fadeIn(aTime);
@@ -43,7 +44,8 @@ $('#title-container').one('click', () => {
 });
 
 // Needed for start screen click handlers
-async function loadOverwrite (fhLoad) {
+async function loadOverwrite() {
+  const {fhLoad} = autoSave;
   ui.disableMenu('load-choose-save');
   const okAlready = await fhLoad.queryPermission({
     mode: 'readwrite',
@@ -52,22 +54,21 @@ async function loadOverwrite (fhLoad) {
   ui.startMessage(`load-permission-${okAlready}`);
   $('#load-choose-save').fadeOut(aTime, () => {
     $('#start-message').fadeIn(aTime, () => {
-      $('#start-container').one('click', () => {
+      aelo('#start-container', 'mousedown', () => {
         autoSave.begin(fhLoad);
       });
     });
   });
 }
-function loadNew(fhLoad) {
+function loadNew() {
+  const {fhLoad} = autoSave;
   ui.disableMenu('load-choose-save');
   $('#load-choose-save').fadeOut(aTime, () => {
     autoSave.begin(fhLoad);
   });
 }
 async function selectFileToLoad() {
-  const $container = $('#start-container');
-  const $message = $('#start-message');
-  $message.fadeOut(aTime);
+  $('#start-message').fadeOut(aTime);
   let fh;
   try {
     [fh] = await showOpenFilePicker({
@@ -82,36 +83,42 @@ async function selectFileToLoad() {
   const lines = contents.split('\n');
   if (lines[0] !== 'LWBG' || lines[1] !== '0,0') {
     ui.startMessage('load-invalid-file');
-    $message.fadeIn(aTime, () => {
-      $container.one('click', ui.showStartOptions);
+    $('#start-message').fadeIn(aTime, () => {
+      aelo('#start-container', 'mousedown', () => {
+        ui.showStartOptions();
+      });
     });
     return;
   };
-  $('#load-overwrite').off().click(() => {
-    loadOverwrite(fh);
-  });
-  $('#load-new').off().click(() => {loadNew(fh);});
+  autoSave.fhLoad = fh;
   $('#load-choose-save').fadeIn(aTime, () => {
     ui.disableMenu('load-choose-save', false);
   });
 }
 
 // Start screen click handlers
-$('#start-new').click(() => {
+ael('#start-new', 'mousedown', () => {
   ui.disableMenu('start-options');
   $('#start-options').fadeOut(aTime, ui.showControl);
 });
-$('#load-saved').click(() => {
+ael('#load-saved', 'mousedown', () => {
   ui.disableMenu('start-options');
   $('#start-options').fadeOut(aTime, () => {
     ui.startMessage('load-introduction');
     $('#start-message').fadeIn(aTime);
-    $('#start-container')
-      .one('click', selectFileToLoad);
+    aelo('#start-container', 'mousedown', () => {
+      selectFileToLoad();
+    });
   });
 });
-$('#start-toggle-audio').click(() => {
-  $('#toggle-audio').click();
+ael('#load-overwrite', 'mousedown', () => {
+  loadOverwrite();
+});
+ael('#load-new', 'mousedown', () => {
+  loadNew();
+});
+ael('#start-toggle-audio', 'mousedown', () => {
+  click('#toggle-audio');
 });
 
 // Needed for player control screen click handlers
@@ -129,11 +136,11 @@ async function savePlayers() {
 }
 function continueInGame() {
   savePlayers();
-  $('#hide-more').click();
+  click('#hide-more');
   ui.hideMessage();
   $('#player-control').fadeOut(aTime);
   if (ai.control[gs.turn] && gs.phase !== 'roll') {
-    $('#cancel-button').click();
+    click('#cancel-button');
     ui.hideButton('ok-no-move');
     ui.hideButton('decline-button');
     ui.showButton('ok-ai-move');
@@ -163,18 +170,17 @@ function changeControl(species, level) {
 }
 
 // Player control screen click handlers
-$('#continue-from-control').click(() => {
+ael('#continue-from-control', 'mousedown', () => {
   ui.disableMenu('player-control');
   (gs.turn ? continueInGame : continueAtStart)();
 });
 for (const species of ['human', 'raptor']) {
   const area = `#${species}-control`;
-  $(`${area} .manual`).click(() => {
+  ael(`${area} .manual`, 'mousedown', () => {
     changeControl(species, -1);
   });
-  const nLevels = ai.level[species].length
-  for (let i = 0; i < nLevels; i++) {
-    $(`${area} .ai-${i}`).click(() => {
+  for (let i = 0; i < ai.level[species].length; i++) {
+    ael(`${area} .ai-${i}`, 'mousedown', () => {
       changeControl(species, i);
     });
   }
@@ -183,7 +189,7 @@ for (const species of ['human', 'raptor']) {
 // Needed for more menu click handlers
 async function manualSave() {
   if (debug.skipAutoSave) {
-    $('#hide-more').click();
+    click('#hide-more');
     return;
   }
   const file = await autoSave.fh.getFile();
@@ -198,7 +204,7 @@ async function manualSave() {
     await writable.close();
     ui.showMessage('manual-save-success');
   } finally {
-    $('#hide-more').click();
+    click('#hide-more');
   }
 }
 function dieCode(value, die) {
@@ -218,7 +224,7 @@ function enableDiceEdit() {
 };
 
 // More menu click handlers
-$('#hide-more').click(() => {
+ael('#hide-more', 'mousedown', () => {
   ui.disableMenu('more-menu');
   const moreMenu = qs('#more-menu');
   $(moreMenu).fadeOut(aTime, () => {
@@ -228,19 +234,21 @@ $('#hide-more').click(() => {
     document.body.style.overflow = 'visible';
   });
 });
-$('#new-save-point').click(() => {
+ael('#new-save-point', 'mousedown', () => {
   ui.disableMenu('more-options');
-  const $msh = $('#manual-save-help');
+  const help = qs('#manual-save-help');
   $('#more-options').fadeOut(aTime, () => {
-    $msh.fadeIn(aTime, () => {
-      $msh.one('click', manualSave);
+    $(help).fadeIn(aTime, () => {
+      aelo(help, 'mousedown', () => {
+        manualSave();
+      });
     });
   });
 });
-$('#begin-edit').click(() => {
-  $('#hide-more').click();
+ael('#begin-edit', 'mousedown', () => {
+  click('#hide-more');
   if (gs.turn !== 'trex' && gs.turn !== 'over') {
-    $('#cancel-button').click();
+    click('#cancel-button');
   }
   edit.on = true;
   edit.gsPrevious = deepCopy(gs);
@@ -263,11 +271,11 @@ $('#begin-edit').click(() => {
   qs('#cancel-edits').disabled = false;
   qs('#confirm-edits').disabled = false;
 });
-$('#change-control').click(() => {
+ael('#change-control', 'mousedown', () => {
   ui.disableMenu('more-options');
   $('#more-options').fadeOut(aTime, ui.showControl);
 });
-$('#show-quit-options').click(() => {
+ael('#show-quit-options', 'mousedown', () => {
   ui.disableMenu('more-options');
   $('#more-options').fadeOut(aTime, () => {
     $('#quit-options').fadeIn(aTime, () => {
@@ -277,11 +285,11 @@ $('#show-quit-options').click(() => {
 });
 
 // Confirm quit menu click handlers
-$('#abort-quit').click(() => {
-  $('#hide-more').click();
+ael('#abort-quit', 'mousedown', () => {
+  click('#hide-more');
 });
-$('#confirm-quit').click(() => {
-  $('#hide-more').click();
+ael('#confirm-quit', 'mousedown', () => {
+  click('#hide-more');
   $('#gameplay-container').fadeOut(aTime, () => {
     gp.initializeObjects();
     gp.initializeView();
@@ -295,20 +303,20 @@ $('#confirm-quit').click(() => {
 });
 
 // Simple gameplay menu click handlers
-$('#show-more').click(() => {
+ael('#show-more', 'mousedown', () => {
   document.body.style.overflow = 'hidden';
   qs('#more-options').style.display = 'flex';
   $('#more-menu').fadeIn(aTime, () => {
     ui.disableMenu('more-options', false);
   });
 });
-$('#ok-no-move').click(() => {
+ael('#ok-no-move', 'mousedown', () => {
   if (gs.phase === 'roll') return;
   ui.hideMessage();
   ui.hideButton('ok-no-move');
   gp.endTurn();
 });
-$('#ok-ai-move').click(() => {
+ael('#ok-ai-move', 'mousedown', () => {
   if (gs.phase !== 'select') return;
   gs.phase = 'think';
   ui.hideButton('ok-ai-move');
@@ -320,9 +328,9 @@ $('#ok-ai-move').click(() => {
   mv.selected = decision[0];
   mv.plan = decision[1];
   gs.phase = 'move';
-  $('#confirm-button').click();
+  click('#confirm-button');
 });
-$('#decline-button').click(() => {
+ael('#decline-button', 'mousedown', () => {
   if (gs.phase !== 'select' || !gs.je) return;
   ui.hideMessage();
   if (mv.toGo) {
@@ -335,7 +343,7 @@ $('#decline-button').click(() => {
     gp.endTurn();
   }
 });
-$('#roll-button').click(() => {
+ael('#roll-button', 'mousedown', () => {
   if (gs.phase !== 'roll') return;
   gs.phase = 'execute';
   ui.hideMessage();
@@ -387,7 +395,7 @@ function boundingBox(...regions) {
 }
 
 // Cancel button click handler
-$('#cancel-button').click(() => {
+ael('#cancel-button', 'mousedown', () => {
   if (gs.phase !== 'move') return;
   gs.phase = 'select';
   clearVisibleMove();
@@ -463,11 +471,11 @@ function bringIntoView(region, after) {
 }
 
 // Confirm button click handler
-$('#confirm-button').click(() => {
+ael('#confirm-button', 'mousedown', () => {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
   clearVisibleMove();
-  $('#zoom-default').click();
+  click('#zoom-default');
   const end = mv.plan[mv.plan.length - 1];
   bringIntoView(movePlanRegion(gs.turn), () => {
     for (const s of mv.plan.slice(1)) {
@@ -512,11 +520,11 @@ function trexMoveRegion() {
 };
 
 // T-rex button click handler
-$('#ok-trex-move').click(() => {
+ael('#ok-trex-move', 'mousedown', () => {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
   ui.hideButton('ok-trex-move');
-  $('#zoom-default').click();
+  click('#zoom-default');
   bringIntoView(trexMoveRegion(), () => {
     gp.moveTrex(gs.trex - 1, true);
   });
@@ -588,7 +596,7 @@ function zoomGeneral(factor) {
 };
 
 // Zoom button click handlers
-$('#zoom-out').click(() => {
+ael('#zoom-out', 'mousedown', () => {
   const factorFit = Math.max(
     $(window).width() / zd.boardSize[0],
     $(window).height() / zd.boardSize[1],
@@ -602,11 +610,11 @@ $('#zoom-out').click(() => {
   }
   if (gs.turn === 'over') $('#game-over').hide();
 });
-$('#zoom-default').click(() => {
+ael('#zoom-default', 'mousedown', () => {
   zoomGeneral(1);
   qs('#zoom-default').classList.add('current');
 });
-$('#zoom-in').click(() => {
+ael('#zoom-in', 'mousedown', () => {
   zoomGeneral(zd.factor.in);
   qs('#zoom-in').classList.add('current');
 });
@@ -663,12 +671,18 @@ function mouseover(inbound) {
   qs('.hider', container).style.display =
     inbound ? 'flex' : 'none';
 }
-$('#message-container').click(ui.hideMessage).hover(
-  () => {mouseover(true);}, () => {mouseover(false);}
-);
+ael('#message-container', 'mousedown', () => {
+  ui.hideMessage();
+});
+ael('#message-container', 'mouseenter', () => {
+  mouseover(true);
+});
+ael('#message-container', 'mouseleave', () => {
+  mouseover(false);
+});
 
 // Gameplay audio toggle button click handler
-$('#toggle-audio').click(() => {
+ael('#toggle-audio', 'mousedown', () => {
   if (music.audioOn) {
     $('.icon.audio-on').hide();
     $('.icon.audio-off').show();

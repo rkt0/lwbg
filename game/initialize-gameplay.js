@@ -287,7 +287,9 @@ for (const [i, a] of rSpaceCoords.entries()) {
   element.id = `raptor-space-${i}`;
   element.setAttribute('points', a.join(' '));
   element.classList.add('raptor-space');
-  $(element).click({space: i}, clickRaptorSpace);
+  ael(element, 'mousedown', () => {
+    clickRaptorSpace({data: {space: i}});
+  });
   svgRaptorMap.append(element);
 }
 if (debug.boardLabels.raptorPoint) {
@@ -368,7 +370,9 @@ for (const [bldg, hSpace] of bhs.entries()) {
   clickable.setAttribute('fill', '#0000');
   clickable.classList.add('human-space', 'building');
   svgBuildingsMap.append(background, clickable);
-  $(clickable).click({hSpace, rSpace}, clickBuilding);
+  ael(clickable, 'mousedown', () => {
+    clickBuilding({data: {hSpace, rSpace}});
+  });
   pl.human[hSpace] = [...pl.raptor[rSpace]];
 }
 

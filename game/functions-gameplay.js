@@ -1,4 +1,4 @@
-import {qs, qsa, isNull} from './utility.js';
+import {qs, qsa, click, isNull} from './utility.js';
 import {bd} from './logic.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -220,12 +220,12 @@ export const gp = {
     gs.raptors = [...bd.raptorStart];
   },
   initializeView(resetZoom = true) {
-    if (resetZoom) $('#zoom-default').click();
+    if (resetZoom) click('#zoom-default');
     zd.center.left = zd.initialViewCenter[0];
     zd.center.top = zd.initialViewCenter[1];
     zd.factor.current = null;
     // Click again to apply zoom center
-    if (resetZoom) $('#zoom-default').click();
+    if (resetZoom) click('#zoom-default');
   },
 };
 

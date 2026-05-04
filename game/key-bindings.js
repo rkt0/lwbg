@@ -1,4 +1,4 @@
-import {qs} from './utility.js';
+import {qs, click} from './utility.js';
 import {ai} from './ai.js';
 import {music} from './music.js';
 import {gs, mv, zd} from './game-objects.js';
@@ -7,7 +7,7 @@ import {edit} from './edit-mode.js';
 
 const clickIfOk = buttonId => {
   const button = qs(`#${buttonId}`);
-  if (!button.disabled) $(button).click();
+  if (!button.disabled) click(button);
 };
 
 function moreMenuActive() {
@@ -66,7 +66,7 @@ document.addEventListener('keydown', (e) => {
       break;
     case 'm':
       e.preventDefault();
-      $('#toggle-audio').click();
+      click('#toggle-audio');
       break;
     case 'K':
       e.preventDefault();
@@ -90,7 +90,7 @@ document.addEventListener('keydown', (e) => {
         if (e.key === '-') which = 'out';
         if (e.key === '=') which = 'in';
       }
-      $(`#zoom-${which}`).click();
+      click(`#zoom-${which}`);
       break;
     }
   }

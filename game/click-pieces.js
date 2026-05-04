@@ -1,4 +1,4 @@
-import {qs} from './utility.js';
+import {qs, click} from './utility.js';
 import {bd} from './logic.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -17,7 +17,7 @@ export function clickHumanPiece(e) {
   if (gs.turn !== 'human') return;
   if (ai.control.human) return;
   if (gs.phase === 'move') {
-    $(`#human-space-${space}`).click();
+    click(`#human-space-${space}`);
     return;
   }
   if (gs.phase === 'select') {
@@ -48,7 +48,7 @@ export function clickRaptorPiece(e) {
   if (gs.turn !== 'raptor') return;
   if (ai.control.raptor) return;
   if (gs.phase === 'move') {
-    $(`#raptor-space-${space}`).click();
+    click(`#raptor-space-${space}`);
     return;
   }
   if (gs.phase === 'select') {
@@ -117,7 +117,7 @@ function selectAppropriate(piece) {
 function clickHumanPieceEditMode(piece, space) {
   if (edit.selected.species === 'raptor') return;
   if (edit.selected.species === 'human') {
-    $(`#human-space-${space}`).click();
+    click(`#human-space-${space}`);
     return;
   }
   selectAppropriate(piece);
@@ -140,7 +140,7 @@ function checkNotEnterPosition(space) {
 function clickRaptorPieceEditMode(piece, space) {
   if (edit.selected.species === 'human') return;
   if (edit.selected.species === 'raptor') {
-    $(`#raptor-space-${space}`).click();
+    click(`#raptor-space-${space}`);
     return;
   }
   const element = qs(`#raptor-piece-${piece}`);

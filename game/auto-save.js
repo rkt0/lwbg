@@ -1,5 +1,5 @@
 import {
-  deepCopy, base64, base256,
+  aelo, click, deepCopy, base64, base256,
 } from './utility.js';
 import {debug} from './debug.js';
 import {ai} from './ai.js';
@@ -21,6 +21,7 @@ export const autoSave = {
 // Clear auto-save when starting new game
 autoSave.clear = () => {
   autoSave.fh = void 0;
+  autoSave.fhLoad = void 0;
   autoSave.gsPrevious = deepCopy(gs);
 };
 
@@ -34,7 +35,7 @@ const executeLoadFromFile = async fhLoad => {
       );
       // i is -1 if not found, i.e., manual
       const c = i < 0 ? 'manual' : `ai-${i}`;
-      $(`#${species}-control .${c}`).click();
+      click(`#${species}-control .${c}`);
       ai.control.changed = false;
     };
     findAndSetLevel('human', h);
@@ -196,8 +197,6 @@ autoSave.begin = fhLoad => {
     startGame(fhLoad);
     return;
   }
-  const $message = $('#start-message');
-  const $container = $('#start-container');
   const compressPieces = () => {
     if (autoSave.code.compression !== 0) return;
     let outputString = '';
@@ -223,7 +222,7 @@ autoSave.begin = fhLoad => {
   };
   const createAutoSaveFile = async fhl => {
     const aTime = anim.time.menuFade;
-    $message.fadeOut(aTime);
+    $('#start-message').fadeOut(aTime);
     try {
       autoSave.fh = await showSaveFilePicker({
         startIn: fhl ?? autoSave.defaultDirectory,
@@ -250,15 +249,15 @@ autoSave.begin = fhLoad => {
     }
     await writable.close();
     ui.startMessage('save-created');
-    $message.fadeIn(aTime, () => {
-      $container.one('click', () => {
+    $('#start-message').fadeIn(aTime, () => {
+      aelo('#start-container', 'mousedown', () => {
         startGame(fhl);
       });
     });
   };
   ui.startMessage('save-introduction');
-  $message.fadeIn(anim.time.menuFade);
-  $container.one('click', () => {
+  $('#start-message').fadeIn(anim.time.menuFade);
+  aelo('#start-container', 'mousedown', () => {
     createAutoSaveFile(fhLoad);
   });
 };
