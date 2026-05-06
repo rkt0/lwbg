@@ -57,8 +57,10 @@ const endEditMode = () => {
   }
   edit.clear();
   qs('.selected')?.classList.remove('selected');
-  $('.edit-control, .wrapper, .edit-kill-human')
-    .fadeOut(anim.time.editControlFade);
+  const toFade = '.edit-control, .edit-kill-human';
+  for (const element of qsa(toFade)) {
+    anim.fade(element, 0, anim.time.editControlFade);
+  }
   ui.showButton('show-more');
   gp.checkGameOver(true);
 };
@@ -130,7 +132,9 @@ ael('#unroll-dice', 'mousedown', () => {
     'roll-display',
   ];
   for (const id of idsToHide) ui.hideButton(id);
-  $('.edit-dice').fadeOut(anim.time.editControlFade);
+  for (const element of qsa('.edit-dice')) {
+    anim.fade(element, 0, anim.time.editControlFade);
+  }
 });
 const changeDie = (species, type) => {
   const die = dice[species][type];

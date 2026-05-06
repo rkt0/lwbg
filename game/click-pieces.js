@@ -71,8 +71,10 @@ export function clickRaptorPiece(e) {
 export function clickEditKill(e) {
   const {piece} = e.data;
   gp.moveHuman(piece, bd.humanDead, false);
-  $(`#human-piece-${piece} .edit-kill-human`)
-    .fadeOut(anim.time.editControlFade);
+  anim.fade(
+    `#human-piece-${piece} .edit-kill-human`,
+    0, anim.time.editControlFade,
+  );
   qs('.selected').classList.remove('selected');
   ui.raptorItemsClickable(true);
   edit.selected.species = null;
@@ -122,8 +124,10 @@ function clickHumanPieceEditMode(piece, space) {
   }
   selectAppropriate(piece);
   if (space !== bd.humanDead) {
-    $(`#human-piece-${piece} .edit-kill-human`)
-      .fadeIn(anim.time.editControlFade);
+    anim.fade(
+      `#human-piece-${piece} .edit-kill-human`,
+      1, anim.time.editControlFade,
+    );
   }
   ui.raptorItemsClickable(false);
   edit.selected.species = 'human';

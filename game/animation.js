@@ -1,4 +1,5 @@
-import { debug } from "./debug.js";
+import {qs} from "./utility.js";
+import {debug} from "./debug.js";
 
 export const anim = {
   // Base time in milliseconds
@@ -24,6 +25,14 @@ export const anim = {
     autoScrollDelay: 1,
     trexScreenBounce: 1,
     highlightBlink: 1,
+  },
+  async fade(x, to, duration, display = 'block') {
+    const element = typeof x === 'object' ? x : qs(x);
+    if (to) element.style.display = display;
+    await element.animate({
+      opacity: [1 - to, to], easing: 'ease-in-out',
+    }, {duration, fill: 'forwards'}).finished;
+    if (!to) element.style.display = 'none';
   },
 };
 anim.time = Object.fromEntries(

@@ -25,6 +25,9 @@ autoSave.clear = () => {
   autoSave.gsPrevious = deepCopy(gs);
 };
 
+// Animation time for menu fade
+const aTime = anim.time.menuFade;
+
 // Begin new auto-save file (or skip) and start game
 const executeLoadFromFile = async fhLoad => {
   const loadPlayers = playerCodeString => {
@@ -170,22 +173,21 @@ const startGame = async fhLoad => {
     return true;
   };
   const okToSave = await checkAutoSavePermission();
-  const aTime = anim.time.menuFade;
   if (okToSave) {
     if (fhLoad) await executeLoadFromFile(fhLoad);
-    $('#start-container').fadeOut(aTime, () => {
-      $('#gameplay-container').fadeIn(aTime);
-      gp.initializeView();
-      if (!gs.turn) gp.endTurn();
-      if (fhLoad) {
-        document.body.style.overflow = 'hidden';
-        $('#more-menu').fadeIn(aTime, ui.showControl);
-      }
-    });
+    await anim.fade('#start-container', 0, aTime);
+    anim.fade('#gameplay-container', 1, aTime);
+    gp.initializeView();
+    if (!gs.turn) gp.endTurn();
+    if (fhLoad) {
+      document.body.style.overflow = 'hidden';
+      await anim.fade('#more-menu', 1, aTime);
+      ui.showControl();
+    }
   } else {
     autoSave.fh = void 0;
-    $('#start-message')
-      .fadeOut(aTime, ui.showStartOptions);
+    await anim.fade('#start-message', 0, aTime);
+    ui.showStartOptions();
   }
 };
 autoSave.begin = fhLoad => {
@@ -221,8 +223,7 @@ autoSave.begin = fhLoad => {
     return outputString;
   };
   const createAutoSaveFile = async fhl => {
-    const aTime = anim.time.menuFade;
-    $('#start-message').fadeOut(aTime);
+    await anim.fade('#start-message', 0, aTime);
     try {
       autoSave.fh = await showSaveFilePicker({
         startIn: fhl ?? autoSave.defaultDirectory,
@@ -249,14 +250,13 @@ autoSave.begin = fhLoad => {
     }
     await writable.close();
     ui.startMessage('save-created');
-    $('#start-message').fadeIn(aTime, () => {
-      aelo('#start-container', 'mousedown', () => {
-        startGame(fhl);
-      });
+    await anim.fade('#start-message', 1, aTime);
+    aelo('#start-container', 'mousedown', () => {
+      startGame(fhl);
     });
   };
   ui.startMessage('save-introduction');
-  $('#start-message').fadeIn(anim.time.menuFade);
+  anim.fade('#start-message', 1, aTime);
   aelo('#start-container', 'mousedown', () => {
     createAutoSaveFile(fhLoad);
   });

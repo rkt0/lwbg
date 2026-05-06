@@ -28,17 +28,16 @@ export const ui = {
       ui.showButton(idNew);
     });
   },
-  displayTurn(species, skipFx) {
+  async displayTurn(species, skipFx) {
     const speciesText =
       species === 'human' ? 'Humans' :
       species === 'trex' ? 'T-Rex' : 'Raptors';
     const span = qs('#species-turn-text');
     if (span.innerHTML === speciesText) return;
     const aTime = skipFx ? 0 : anim.time.turnFade;
-    $(span).fadeOut(aTime, () => {
-      span.innerHTML = speciesText;
-      $(span).fadeIn(aTime);
-    });
+    await anim.fade(span, 0, aTime);
+    span.innerHTML = speciesText;
+    anim.fade(span, 1, aTime);
   },
   displayRollResult(rollState, skipFx) {
     for (const die of qsa('.die')) {
@@ -108,7 +107,7 @@ export const ui = {
     ui.hideButton('roll-display');
     ui.hideButton('turn-display');
     if (zd.factor.current >= 1) {
-      $('#game-over').fadeIn(anim.time.menuFade);
+      anim.fade('#game-over', 1, anim.time.menuFade);
     }
   },
   disableMenu(id, disable) {
@@ -134,18 +133,16 @@ export const ui = {
       element.style.pointerEvents = valuePieces;
     }
   },
-  showStartOptions(skipFx) {
+  async showStartOptions(skipFx) {
     const aTime = skipFx ? 0 : anim.time.menuFade;
-    $('#start-message').fadeOut(aTime, () => {
-      ui.disableMenu('start-options', false);
-      $('#start-options').fadeIn(aTime);
-    });
+    await anim.fade('#start-message', 0, aTime);
+    ui.disableMenu('start-options', false);
+    anim.fade('#start-options', 1, aTime, '');
   },
-  showControl() {
+  async showControl() {
     const aTime = anim.time.menuFade;
-    $('#player-control').fadeIn(aTime, () => {
-      ui.disableMenu('player-control', false);
-    });
+    await anim.fade('#player-control', 1, aTime, '');
+    ui.disableMenu('player-control', false);
   },
   toggleFullscreen() {
     const element = document.documentElement;
