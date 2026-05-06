@@ -86,7 +86,9 @@ async function selectFileToLoad() {
     return;
   };
   autoSave.fhLoad = fh;
-  await anim.fade('#load-choose-save', 1, aTime, '');
+  await anim.fade('#load-choose-save', 1, aTime, {
+    display: '',
+  });
   ui.disableMenu('load-choose-save', false);
 }
 
@@ -160,8 +162,9 @@ function changeControl(species, level) {
   if (gs.turn) ai.control.changed = true;
   if (isNull(ai.control.human)) return;
   if (isNull(ai.control.raptor)) return;
-  $('#continue-from-control')
-    .animate({opacity: 1}, aTime);
+  const button = qs('#continue-from-control');
+  anim.fade(button, 1, aTime);
+  button.style.pointerEvents = 'auto';
 }
 
 // Player control screen click handlers
@@ -238,7 +241,7 @@ ael('#new-save-point', 'mousedown', async () => {
   ui.disableMenu('more-options');
   const help = qs('#manual-save-help');
   await anim.fade('#more-options', 0, aTime);
-  await anim.fade(help, 1, aTime, '');
+  await anim.fade(help, 1, aTime, {display: ''});
   aelo(help, 'mousedown', () => {
     manualSave();
   });
@@ -283,7 +286,9 @@ ael('#change-control', 'mousedown', async () => {
 ael('#show-quit-options', 'mousedown', async () => {
   ui.disableMenu('more-options');
   await anim.fade('#more-options', 0, aTime);
-  await anim.fade('#quit-options', 1, aTime, '');
+  await anim.fade('#quit-options', 1, aTime, {
+    display: '',
+  });
   ui.disableMenu('quit-options', false);
 });
 
@@ -307,7 +312,7 @@ ael('#confirm-quit', 'mousedown', async () => {
 // Simple gameplay menu click handlers
 ael('#show-more', 'mousedown', async () => {
   document.body.style.overflow = 'hidden';
-  anim.fade('#more-options', 1, 0, '');
+  anim.fade('#more-options', 1, 0, {display: ''});
   await anim.fade('#more-menu', 1, aTime);
   ui.disableMenu('more-options', false);
 });
@@ -465,7 +470,7 @@ function bringIntoView(region, after) {
     Math.min(1, distance / taperDistance)
   );
   const duration = anim.time.autoScroll * taper;
-  const delay = anim.time.autoScrollDelay * taper
+  const delay = anim.time.autoScrollDelay * taper;
   $('html').animate(scrollObj, duration, () => {
     setTimeout(after, delay);
   });
@@ -478,11 +483,14 @@ ael('#confirm-button', 'mousedown', () => {
   clearVisibleMove();
   click('#zoom-default');
   const end = mv.plan[mv.plan.length - 1];
-  bringIntoView(movePlanRegion(gs.turn), () => {
+  bringIntoView(movePlanRegion(gs.turn), async () => {
     for (const s of mv.plan.slice(1)) {
+      const isLast = s === end;
       if (gs.turn === 'human') {
-        gp.moveHuman(mv.selected, s, s === end);
-      } else gp.moveRaptor(mv.selected, s, s === end);
+        await gp.moveHuman(mv.selected, s, isLast);
+      } else {
+        await gp.moveRaptor(mv.selected, s, isLast);
+      }
     }
   });
 });

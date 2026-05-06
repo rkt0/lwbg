@@ -299,4 +299,5 @@ button[id^="edit-trex"] {
   height: var(--start-button-height);
   font: var(--font-large);
   opacity: 0;
+  pointer-events: none;
 }

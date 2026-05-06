@@ -21,18 +21,31 @@ export const anim = {
     adjustHuman: 1,
     jumpHuman: 2,
     killHuman: 6,
+    pauseMidMove: 0.25,
     autoScroll: 2,
     autoScrollDelay: 1,
     trexScreenBounce: 1,
     highlightBlink: 1,
   },
-  async fade(x, to, duration, display = 'block') {
+  async fade(x, to, duration, options) {
     const element = typeof x === 'object' ? x : qs(x);
+    const {
+      display = 'block', easing = 'linear',
+    } = options ?? {};
     if (to) element.style.display = display;
     await element.animate({
-      opacity: [1 - to, to], easing: 'ease-in-out',
+      opacity: [1 - to, to], easing,
     }, {duration, fill: 'forwards'}).finished;
     if (!to) element.style.display = 'none';
+  },
+  async move(x, location, duration, options) {
+    const element = typeof x === 'object' ? x : qs(x);
+    const {
+      endDelay = 0, easing = 'ease-in-out',
+    } = options ?? {};
+    await element.animate({...location, easing}, {
+      duration, endDelay, fill: 'forwards',
+    }).finished;
   },
 };
 anim.time = Object.fromEntries(

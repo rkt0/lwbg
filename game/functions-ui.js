@@ -3,30 +3,26 @@ import {anim} from './animation.js';
 import {zd} from './game-objects.js';
 
 export const ui = {
-  showButton(id) {
+  async showButton(id) {
     const element = qs(`#${id}`);
     element.style.display = 'inline';
-    const l0 = {left: '0px'};
     const aTime = anim.time.buttonSlide;
-    $(element).animate(l0, aTime, 'linear', () => {
-      element.disabled = false;
+    await anim.move(element, {left: '0px'}, aTime, {
+      easing: 'linear',
     });
+    element.disabled = false;
   },
-  hideButton(id, after) {
+  async hideButton(id) {
     const element = qs(`#${id}`);
     element.disabled = true;
-    const width = cssInt('--button-width');
-    const lHide = {left: `-${width}px`};
-    const aTime = anim.time.buttonSlide;
-    $(element).animate(lHide, aTime, 'linear', () => {
-      element.style.display = 'none';
-      if (after) after();
-    });
+    await anim.move(element, {
+      left: `-${cssInt('--button-width')}px`,
+    }, anim.time.buttonSlide, {easing: 'linear'});
+    element.style.display = 'none';
   },
-  replaceButton(idOld, idNew) {
-    ui.hideButton(idOld, () => {
-      ui.showButton(idNew);
-    });
+  async replaceButton(idOld, idNew) {
+    await ui.hideButton(idOld);
+    ui.showButton(idNew);
   },
   async displayTurn(species, skipFx) {
     const speciesText =
@@ -137,11 +133,15 @@ export const ui = {
     const aTime = skipFx ? 0 : anim.time.menuFade;
     await anim.fade('#start-message', 0, aTime);
     ui.disableMenu('start-options', false);
-    anim.fade('#start-options', 1, aTime, '');
+    anim.fade('#start-options', 1, aTime, {
+      display: '',
+    });
   },
   async showControl() {
     const aTime = anim.time.menuFade;
-    await anim.fade('#player-control', 1, aTime, '');
+    await anim.fade('#player-control', 1, aTime, {
+      display: '',
+    });
     ui.disableMenu('player-control', false);
   },
   toggleFullscreen() {
