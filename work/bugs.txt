@@ -1,3 +1,4 @@
 backdrop filter fails sometimes after fade in
 die buttons for multiple species appear
 music frequency distribution seems suspicious
+kill button remains when moving to building
