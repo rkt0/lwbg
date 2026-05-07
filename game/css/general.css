@@ -55,6 +55,10 @@ svg {
   display: block;
 }
 
+.inactive {
+  display: none;
+}
+
 #title-container {
   background: #5a5c5f;
 }

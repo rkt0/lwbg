@@ -102,9 +102,10 @@ export const ui = {
     ui.hideMessage();
     ui.hideButton('roll-display');
     ui.hideButton('turn-display');
-    if (zd.factor.current >= 1) {
-      anim.fade('#game-over', 1, anim.time.menuFade);
-    }
+    if (zd.factor.current < 1) return;
+    anim.fade('#game-over', 1, anim.time.menuFade, {
+      display: '',
+    });
   },
   disableMenu(id, disable) {
     for (const button of qsa(`#${id} button`)) {

@@ -601,7 +601,7 @@ function zoomGeneral(factor) {
   for (const element of qsa('.obstructive')) {
     element.classList.remove('slim');
   }
-  if (gs.turn === 'over') $('#game-over').show();
+  qs('#game-over').classList.remove('inactive');
 };
 
 // Zoom button click handlers
@@ -617,7 +617,7 @@ ael('#zoom-out', 'mousedown', () => {
   for (const element of qsa('.obstructive')) {
     element.classList.add('slim');
   }
-  if (gs.turn === 'over') $('#game-over').hide();
+  qs('#game-over').classList.add('inactive');
 });
 ael('#zoom-default', 'mousedown', () => {
   zoomGeneral(1);
@@ -692,14 +692,11 @@ ael('#message-container', 'mouseleave', () => {
 
 // Gameplay audio toggle button click handler
 ael('#toggle-audio', 'mousedown', () => {
-  if (music.audioOn) {
-    $('.icon.audio-on').hide();
-    $('.icon.audio-off').show();
-    music.element.pause();
-  } else {
-    $('.icon.audio-off').hide();
-    $('.icon.audio-on').show();
-    music.element.play();
-  }
+  if (music.audioOn) music.element.pause();
+  else music.element.play();
   music.audioOn = !music.audioOn;
+  const elements = qsa('.audio-on, .audio-off');
+  for (const element of elements) {
+    element.classList.toggle('inactive');
+  }
 });

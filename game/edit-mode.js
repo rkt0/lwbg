@@ -31,7 +31,7 @@ const editGame = gsNew => {
   // otherwise piece moves are skipped due to
   // guard clause in functions above
   Object.assign(gs, gsNew);
-  gp.checkGameOver();
+  gp.checkGameOver(true);
   if (gs.turn === 'over') return;
   ui.displayTurn(gs.turn);
   if (gs.phase === 'roll') {
@@ -62,7 +62,6 @@ const endEditMode = () => {
     anim.fade(element, 0, anim.time.editControlFade);
   }
   ui.showButton('show-more');
-  gp.checkGameOver(true);
 };
 ael('#cancel-edits', 'mousedown', () => {
   editGame(edit.gsPrevious);
