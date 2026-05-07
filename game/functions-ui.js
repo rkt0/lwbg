@@ -87,7 +87,7 @@ export const ui = {
   },
   hideMessage() {
     const container = qs('#message-container');
-    if (!$(container).is(':visible')) return;
+    if (container.style.display === 'none') return;
     if (anim.isAnimated(container)) return;
     const content = qs('.content', container);
     content.style.visibility = 'hidden';
