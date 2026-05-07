@@ -137,12 +137,15 @@ button {
 #message-container {
   position: fixed;
   top: var(--matte-top, 0);
-  left: calc(50% + var(--matte-center-shift-lr, 0px));
-  transform: translateX(-50%);
-  width: auto;
+  left: var(--matte-left, 0);
+  right: var(--matte-right, 0);
+  margin-left: auto;
+  margin-right: auto;
+  width: 540px;
   height: auto;
   padding: 12px;
   border-top-style: none;
+  text-wrap: pretty;
 }
 
 #message-container .hider {
