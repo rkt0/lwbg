@@ -674,7 +674,7 @@ for (const species of Object.keys(dice)) {
 // Message hover handler
 function mouseover(inbound) {
   const container = qs('#message-container');
-  if ($(container).is(':animated')) return;
+  if (anim.isAnimated(container)) return;
   qs('.content', container).style.visibility =
     inbound ? 'hidden' : 'visible';
   qs('.hider', container).style.display =

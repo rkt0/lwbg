@@ -47,6 +47,26 @@ export const anim = {
       duration, endDelay, fill: 'forwards',
     }).finished;
   },
+  async slide(x, to, duration, options) {
+    const element = typeof x === 'object' ? x : qs(x);
+    const {
+      display = '', easing = 'linear',
+    } = options ?? {};
+    const xf = ['translateY(-100%)', 'translateY(0)'];
+    if (to) element.style.display = display;
+    else xf.reverse();
+    await element.animate({
+      transform: xf, easing,
+    }, {duration, fill: 'forwards'}).finished;
+    if (!to) element.style.display = 'none';
+  },
+  isAnimated(x) {
+    const element = typeof x === 'object' ? x : qs(x);
+    const animations = element.getAnimations();
+    return animations.some((animation) => {
+      return animation.playState === 'running';
+    });
+  },
 };
 anim.time = Object.fromEntries(
   Object.entries(anim.multiplier).map(

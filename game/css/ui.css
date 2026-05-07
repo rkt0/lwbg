@@ -145,7 +145,7 @@ button {
   height: auto;
   padding: 12px;
   border-top-style: none;
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 
 #message-container .hider {

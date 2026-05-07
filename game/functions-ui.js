@@ -83,18 +83,18 @@ export const ui = {
     } else content.replaceChildren(node);
     if (append) container.classList.add('appendable');
     content.style.visibility = 'visible';
-    $(container).slideDown(anim.time.messageSlide);
+    anim.slide(container, 1, anim.time.messageSlide);
   },
   hideMessage() {
     const container = qs('#message-container');
     if (!$(container).is(':visible')) return;
-    if ($(container).is(':animated')) return;
+    if (anim.isAnimated(container)) return;
     const content = qs('.content', container);
     content.style.visibility = 'hidden';
     const hider = qs('.hider', container);
     hider.style.display = 'none';
     container.classList.remove('appendable');
-    $(container).slideUp(anim.time.messageSlide);
+    anim.slide(container, 0, anim.time.messageSlide);
   },
   showGameOver(nSaved, nTotal) {
     qs('#humans-saved').innerHTML = nSaved;
