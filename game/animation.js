@@ -24,7 +24,6 @@ export const anim = {
     pauseMidMove: 0.25,
     autoScroll: 2,
     autoScrollDelay: 1,
-    // trexScreenBounce: 1,
     highlightBlink: 1,
   },
   trexScreenBounce: {
