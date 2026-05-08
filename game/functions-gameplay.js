@@ -158,10 +158,8 @@ export const gp = {
     const aTime = anim.time.moveTrex;
     await anim.move(element, location, aTime);
     if (!skipFx) {
-      $('#gameplay-container').effect('bounce', {
-        duration: anim.time.trexScreenBounce,
-        distance: 36, times: 6,
-      });
+      const settings = anim.trexScreenBounce;
+      anim.bounce('#gameplay-container', settings);
     }
     gs.trex = space;
     if (gs.trex === 0) {

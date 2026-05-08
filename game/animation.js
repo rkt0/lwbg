@@ -3,7 +3,7 @@ import {debug} from "./debug.js";
 
 export const anim = {
   // Base time in milliseconds
-  baseTime: 309 / (debug.animationSpeed || 1),
+  baseTime: 300 / (debug.animationSpeed || 1),
   // Animation times in multiples of baseTime
   multiplier: {
     menuFade: 1,
@@ -24,8 +24,13 @@ export const anim = {
     pauseMidMove: 0.25,
     autoScroll: 2,
     autoScrollDelay: 1,
-    trexScreenBounce: 1,
+    // trexScreenBounce: 1,
     highlightBlink: 1,
+  },
+  trexScreenBounce: {
+    maxDistance: 64,
+    decayRate: 0.5,
+    timePerBounce: 4 * 1000 / 60,
   },
   async fade(x, to, duration, options) {
     const element = typeof x === 'object' ? x : qs(x);
@@ -66,6 +71,23 @@ export const anim = {
     return animations.some((animation) => {
       return animation.playState === 'running';
     });
+  },
+  async bounce(x, settings) {
+    const element = typeof x === 'object' ? x : qs(x);
+    const {
+      maxDistance, decayRate, timePerBounce,
+    } = settings;
+    const distances = [0];
+    let d = maxDistance;
+    let duration = 0;
+    while (d >= 1) {
+      const halfway = d * Math.SQRT1_2;
+      distances.push(halfway, d, halfway, 0);
+      d *= decayRate;
+      duration += timePerBounce;
+    }
+    const top = distances.map((d) => `-${d}px`);
+    await element.animate({top}, {duration}).finished;
   },
 };
 anim.time = Object.fromEntries(
