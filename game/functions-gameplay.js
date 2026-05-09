@@ -40,9 +40,10 @@ export const gp = {
       for (const [i, p] of occupants.entries()) {
         const adj = sep * i - offset;
         const l = pl.human[space][0] + adj;
-        $(`#human-piece-${p}`).animate(
-          {left: `${l}px`}, anim.time.adjustHuman
-        );
+        const element = qs(`#human-piece-${p}`);
+        const location = {left: `${l}px`};
+        const aTime = anim.time.adjustHuman;
+        anim.move(element, location, aTime);
       }
     }
   },
@@ -97,7 +98,7 @@ export const gp = {
       ui.showButton('ok-no-move');
     }
   },
-  moveHuman(piece, space, isLast) {
+  async moveHuman(piece, space, isLast) {
     if (gs.humans[piece] === space) return;
     const element = qs(`#human-piece-${piece}`);
     const isNowDead = space === bd.humanDead;
@@ -106,16 +107,17 @@ export const gp = {
     // here for checkGameOver() to work right
     gs.humans[piece] = space;
     const [l, t] = pl.human[space];
+    const location = {top: `${t}px`, left: `${l}px`};
     let aTime = anim.time.moveHuman;
     if (isNowDead) aTime = anim.time.killHuman;
     else if (gs.je) aTime = anim.time.jumpHuman;
-    const location = {top: `${t}px`, left: `${l}px`};
-    $(element).animate(location, aTime, () => {
-      gp.adjustHumanPositions();
-      if (isLast) gp.endTurn();
+    await anim.move(element, location, aTime, {
+      endDelay: isLast ? 0 : anim.time.pauseMidMove,
     });
+    gp.adjustHumanPositions();
+    if (isLast) gp.endTurn();
   },
-  moveRaptor(piece, space, isLast, silent) {
+  async moveRaptor(piece, space, isLast, silent) {
     const [l, t] = pl.raptor[space];
     if (!sfx.raptorAlreadyPlayed && !silent) {
       // Sound effect should play only if raptor is
@@ -132,19 +134,20 @@ export const gp = {
     const element = qs(`#raptor-piece-${piece}`);
     const location = {top: `${t}px`, left: `${l}px`};
     const aTime = anim.time.moveRaptor;
-    $(element).animate(location, aTime, () =>  {
-      // Piece location update needs to occur
-      // here for checkEatenByRaptor(piece)
-      // to work right
-      gs.raptors[piece] = space;
-      checkEatenByRaptor(piece);
-      if (isLast || silent) {
-        sfx.raptorAlreadyPlayed = false;
-      }
-      if (isLast) gp.endTurn();
+    await anim.move(element, location, aTime, {
+      endDelay: isLast ? 0 : anim.time.pauseMidMove,
     });
+    // Piece location update needs to occur
+    // here for checkEatenByRaptor(piece)
+    // to work right
+    gs.raptors[piece] = space;
+    checkEatenByRaptor(piece);
+    if (isLast || silent) {
+      sfx.raptorAlreadyPlayed = false;
+    }
+    if (isLast) gp.endTurn();
   },
-  moveTrex(space, isLast, skipFx) {
+  async moveTrex(space, isLast, skipFx) {
     const [l, t] = pl.trex[space];
     if (! skipFx) {
       const sound = gs.trex === 1 ? 'Roar' : 'Stomp';
@@ -153,25 +156,21 @@ export const gp = {
     const element = qs('#trex-piece');
     const location = {top: `${t}px`, left: `${l}px`};
     const aTime = anim.time.moveTrex;
-    $(element).animate(location, aTime, () => {
-      if (!skipFx) {
-        $('#gameplay-container').effect('bounce', {
-          duration: anim.time.trexScreenBounce,
-          distance: 36,
-          times: 6,
-        });
+    await anim.move(element, location, aTime);
+    if (!skipFx) {
+      const settings = anim.trexScreenBounce;
+      anim.bounce('#gameplay-container', settings);
+    }
+    gs.trex = space;
+    if (gs.trex === 0) {
+      for (const h of hPiecesOn(bd.humanStart)) {
+        gp.moveHuman(h, bd.humanDead, false);
+        ui.showMessage('eaten-trex', true);
       }
-      gs.trex = space;
-      if (gs.trex === 0) {
-        for (const h of hPiecesOn(bd.humanStart)) {
-          gp.moveHuman(h, bd.humanDead, false);
-          ui.showMessage('eaten-trex', true);
-        }
-      }
-      // Using isLast here too enables reuse of this
-      // function for edit/load purposes
-      if (isLast) gp.endTurn();
-    });
+    }
+    // Using isLast here too enables reuse of this
+    // function for edit/load purposes
+    if (isLast) gp.endTurn();
   },
   relocatePiece(species, piece, space) {
     let element;

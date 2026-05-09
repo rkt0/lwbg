@@ -187,11 +187,11 @@ function clickHumanSpaceEditMode(space, isBldg) {
       gs.phase = 'roll';
       ui.showButton('turn-display');
       ui.displayTurn('human');
-      $('.edit-turn').fadeIn(aTime);
+      anim.fade('.edit-turn', 1, aTime);
     }
   }
-  $(`#human-piece-${piece} .edit-kill-human`)
-    .fadeOut(aTime);
+  const killButton = qs('.selected .edit-kill-human');
+  if (killButton) anim.fade(killButton, 0, aTime);
   qs('.selected').classList.remove('selected');
   ui.raptorItemsClickable(true);
   // If edit.selected were reset immediately,
