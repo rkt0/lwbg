@@ -91,8 +91,8 @@ export function shuffle(arr, prngFn) {
 }
 
 export function windowWH() {
-  const {innerWidth: ww, innerHeight: wh} = window;
-  return [ww, wh];
+  const {innerWidth, innerHeight} = window;
+  return [innerWidth, innerHeight];
 }
 
 export function cssInt(property, where = ':root') {
