@@ -90,6 +90,11 @@ export function shuffle(arr, prngFn) {
   return output;
 }
 
+export function windowWH() {
+  const {innerWidth: ww, innerHeight: wh} = window;
+  return [ww, wh];
+}
+
 export function cssInt(property, where = ':root') {
   const style = getComputedStyle(qs(where));
   const value = style.getPropertyValue(property);

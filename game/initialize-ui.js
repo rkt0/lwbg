@@ -1,6 +1,6 @@
 import {
-  qs, qsa, ael, aelo, ce, click, sleep,
-  deepCopy, isNull, sqrtStep, rollDie, cssInt,
+  qs, qsa, ael, aelo, ce, click, sleep, deepCopy, 
+  isNull, sqrtStep, rollDie, windowWH, cssInt,
 } from './utility.js';
 import {scrollBetter} from './scroll.js';
 import {debug} from './debug.js';
@@ -423,8 +423,7 @@ function movePlanRegion() {
 };
 async function bringIntoView(region) {
   const padding = [216, 108];
-  const ww = $(window).width();
-  const wh = $(window).height();
+  const [ww, wh] = windowWH();
   const [ph, pv] = padding;
   const current = {
     left: $(document).scrollLeft(),
@@ -552,11 +551,8 @@ function highlightPieces(setting) {
 function applyZoomCenter() {
   const {left: cl, top: ct} = zd.center;
   const fc = zd.factor.current;
-  const $w = $(window);
-  scroll(
-    cl * fc - $w.width() / 2,
-    ct * fc - $w.height() / 2,
-  );
+  const [ww, wh] = windowWH();
+  scroll(cl * fc - ww / 2, ct * fc - wh / 2);
 }
 function zoomGeneral(factor) {
   if (!zd.factor.current) {
@@ -567,9 +563,9 @@ function zoomGeneral(factor) {
   if (zd.factor.current === factor) return;
   if (zd.factor.current >= 1) {
     const $d = $(document);
-    const $w = $(window);
-    const left = $d.scrollLeft() + $w.width() / 2;
-    const top = $d.scrollTop() + $w.height() / 2;
+    const [ww, wh] = windowWH();
+    const left = $d.scrollLeft() + ww / 2;
+    const top = $d.scrollTop() + wh / 2;
     zd.center.left = left / zd.factor.current;
     zd.center.top = top / zd.factor.current;
   }
@@ -595,13 +591,12 @@ function zoomGeneral(factor) {
 
 // Zoom button click handlers
 ael('#zoom-out', 'mousedown', () => {
-  const factorFit = Math.max(
-    $(window).width() / zd.boardSize[0],
-    $(window).height() / zd.boardSize[1],
+  const w = windowWH();
+  const factor = Math.max(
+    ...[0, 1].map(i => w[i] / zd.boardSize[i]),
+    zd.factor.outMax,
   );
-  const factorLimited =
-    Math.max(factorFit, zd.factor.outMax);
-  zoomGeneral(factorLimited);
+  zoomGeneral(factor);
   qs('#zoom-out').classList.add('current');
   for (const element of qsa('.obstructive')) {
     element.classList.add('slim');
