@@ -1,7 +1,8 @@
 import {
-  qs, qsa, ael, aelo, ce, click,
-  deepCopy, isNull, rollDie, cssInt,
+  qs, qsa, ael, aelo, ce, click, sleep,
+  deepCopy, isNull, sqrtStep, rollDie, cssInt,
 } from './utility.js';
+import {scrollBetter} from './scroll.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
 import {bd, dice} from './logic.js';
@@ -420,19 +421,8 @@ function movePlanRegion() {
   }));
   return boundingBox(...planRegions);
 };
-function bringIntoView(region, after) {
+async function bringIntoView(region) {
   const padding = [216, 108];
-  // Auto-scroll animation and delay times will
-  // taper to zero nonlinearly according
-  // to the taperTransform function
-  // if the (Euclidean) distance to be scrolled
-  // is less than taperDistance
-  const taperDistance = 648;
-  const taperTransform = x => {
-    if (x < 0) return 0;
-    if (x > 1) return 1;
-    return Math.sqrt(x);
-  };
   const ww = $(window).width();
   const wh = $(window).height();
   const [ph, pv] = padding;
@@ -452,47 +442,45 @@ function bringIntoView(region, after) {
     top: region.top - pv + excess[1] / 2,
     bottom: region.bottom + pv - excess[1] / 2,
   };
-  const scrollObj = {
-    scrollLeft: Math.min(target.left, current.left),
-    scrollTop: Math.min(target.top, current.top),
+  const location = {
+    left: Math.min(target.left, current.left),
+    top: Math.min(target.top, current.top),
   };
   if (target.right > current.right) {
-    scrollObj.scrollLeft = target.right - ww;
+    location.left = target.right - ww;
   }
   if (target.bottom > current.bottom) {
-    scrollObj.scrollTop = target.bottom - wh;
+    location.top = target.bottom - wh;
   }
   const distance = Math.hypot(
-    scrollObj.scrollLeft - current.left,
-    scrollObj.scrollTop - current.top,
+    location.left - current.left,
+    location.top - current.top,
   );
-  const taper = taperTransform(
-    Math.min(1, distance / taperDistance)
-  );
+  // Times will be reduced if distance to be scrolled 
+  // is less than taperDistance
+  const taperDistance = 648;
+  const taper = sqrtStep(distance / taperDistance);
   const duration = anim.time.autoScroll * taper;
-  const delay = anim.time.autoScrollDelay * taper;
-  $('html').animate(scrollObj, duration, () => {
-    setTimeout(after, delay);
-  });
+  await scrollBetter(location, duration);
+  await sleep(anim.time.autoScrollDelay * taper);
 }
 
 // Confirm button click handler
-ael('#confirm-button', 'mousedown', () => {
+ael('#confirm-button', 'mousedown', async () => {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
   clearVisibleMove();
   click('#zoom-default');
   const end = mv.plan[mv.plan.length - 1];
-  bringIntoView(movePlanRegion(gs.turn), async () => {
-    for (const s of mv.plan.slice(1)) {
-      const isLast = s === end;
-      if (gs.turn === 'human') {
-        await gp.moveHuman(mv.selected, s, isLast);
-      } else {
-        await gp.moveRaptor(mv.selected, s, isLast);
-      }
+  await bringIntoView(movePlanRegion(gs.turn));
+  for (const s of mv.plan.slice(1)) {
+    const isLast = s === end;
+    if (gs.turn === 'human') {
+      await gp.moveHuman(mv.selected, s, isLast);
+    } else {
+      await gp.moveRaptor(mv.selected, s, isLast);
     }
-  });
+  }
 });
 
 // Needed for T-rex button click handler
@@ -529,14 +517,13 @@ function trexMoveRegion() {
 };
 
 // T-rex button click handler
-ael('#ok-trex-move', 'mousedown', () => {
+ael('#ok-trex-move', 'mousedown', async () => {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
   ui.hideButton('ok-trex-move');
   click('#zoom-default');
-  bringIntoView(trexMoveRegion(), () => {
-    gp.moveTrex(gs.trex - 1, true);
-  });
+  await bringIntoView(trexMoveRegion());
+  gp.moveTrex(gs.trex - 1, true);
 });
 
 // Needed for zoom button click handlers

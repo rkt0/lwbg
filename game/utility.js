@@ -32,6 +32,12 @@ export function click(x, type = 'mousedown') {
   element.dispatchEvent(new MouseEvent(type));
 }
 
+export function sleep(delay) {
+  return new Promise((resolve) => {
+    setTimeout(() => {resolve();}, delay);
+  });
+}
+
 export function deepCopy(x) {
   return JSON.parse(JSON.stringify(x));
 }
@@ -55,10 +61,15 @@ export function arrayCumSum(arr) {
   });
 }
 
+export function sqrtStep(t) {
+  if (t < 0) return 0;
+  if (t > 1) return 1;
+  return Math.sqrt(t);
+}
 export function smoothStep(t) {
   if (t < 0) return 0;
-  else if (t > 1) return 1;
-  else return t * t * (3 - 2 * t);
+  if (t > 1) return 1;
+  return t * t * (3 - 2 * t);
 }
 export function lerp(v0, v1, progress) {
   return v0.map((e, i) => e + progress * (v1[i] - e));
