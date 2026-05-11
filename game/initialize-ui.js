@@ -553,8 +553,10 @@ function applyZoomCenter() {
   const {left: cl, top: ct} = zd.center;
   const fc = zd.factor.current;
   const $w = $(window);
-  $(document).scrollLeft(cl * fc - $w.width() / 2);
-  $(document).scrollTop(ct * fc - $w.height() / 2);
+  scroll(
+    cl * fc - $w.width() / 2,
+    ct * fc - $w.height() / 2,
+  );
 }
 function zoomGeneral(factor) {
   if (!zd.factor.current) {
