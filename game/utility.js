@@ -55,6 +55,15 @@ export function arrayCumSum(arr) {
   });
 }
 
+export function smoothStep(t) {
+  if (t < 0) return 0;
+  else if (t > 1) return 1;
+  else return t * t * (3 - 2 * t);
+}
+export function lerp(v0, v1, progress) {
+  return v0.map((e, i) => e + progress * (v1[i] - e));
+}
+
 export function rollDie(die, prngFn) {
   return die[Math.floor(prngFn() * die.length)];
 }
