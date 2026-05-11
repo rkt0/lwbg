@@ -94,6 +94,24 @@ export function windowWH() {
   const {innerWidth, innerHeight} = window;
   return [innerWidth, innerHeight];
 }
+export function absoluteBoundingRect(x) {
+  const element = typeof x === 'object' ? x : qs(x);
+  const rect = element.getBoundingClientRect();
+  return {
+    left: rect.left + scrollX,
+    right: rect.right + scrollX,
+    top: rect.top + scrollY,
+    bottom: rect.bottom + scrollY,
+  };
+}
+export function boundingBox(...rects) {
+  return {
+    left: Math.min(...rects.map(x => x.left)),
+    right: Math.max(...rects.map(x => x.right)),
+    top: Math.min(...rects.map(x => x.top)),
+    bottom: Math.max(...rects.map(x => x.bottom)),
+  };
+}
 
 export function cssInt(property, where = ':root') {
   const style = getComputedStyle(qs(where));

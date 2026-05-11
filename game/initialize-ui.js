@@ -1,6 +1,7 @@
 import {
-  qs, qsa, ael, aelo, ce, click, sleep, deepCopy, 
-  isNull, sqrtStep, rollDie, windowWH, cssInt,
+  qs, qsa, ael, aelo, ce, click, sleep,
+  deepCopy, isNull, sqrtStep, rollDie,
+  windowWH, absoluteBoundingRect, boundingBox, cssInt,
 } from './utility.js';
 import {scrollBetter} from './scroll.js';
 import {debug} from './debug.js';
@@ -392,14 +393,6 @@ function clearVisibleMove() {
     }
   }
 }
-function boundingBox(...regions) {
-  return {
-    left: Math.min(...regions.map(x => x.left)),
-    right: Math.max(...regions.map(x => x.right)),
-    top: Math.min(...regions.map(x => x.top)),
-    bottom: Math.max(...regions.map(x => x.bottom)),
-  };
-}
 
 // Cancel button click handler
 ael('#cancel-button', 'mousedown', () => {
@@ -426,10 +419,8 @@ async function bringIntoView(region) {
   const [ww, wh] = windowWH();
   const [ph, pv] = padding;
   const current = {
-    left: $(document).scrollLeft(),
-    right: $(document).scrollLeft() + ww,
-    top: $(document).scrollTop(),
-    bottom: $(document).scrollTop() + wh,
+    left: scrollX, right: scrollX + ww,
+    top: scrollY, bottom: scrollY + wh,
   };
   const excess = [
     (region.right - region.left) - ww + ph * 2,
@@ -483,35 +474,26 @@ ael('#confirm-button', 'mousedown', async () => {
 });
 
 // Needed for T-rex button click handler
-function spaceRegion(id) {
-  const $obj = $(`#${id}`);
-  return {
-    left: $obj.offset().left,
-    right: $obj.offset().left + $obj.width(),
-    top: $obj.offset().top,
-    bottom: $obj.offset().top + $obj.height(),
-  };
-};
 function trexMoveRegion() {
   const [oldL, oldT] = pl.trex[gs.trex];
   const [newL, newT] = pl.trex[gs.trex - 1];
   const [pw, ph] = pl.trex.ps;
-  const oldPieceRegion = {
+  const pieceRegionOld = {
     left: oldL, right: oldL + pw,
     top: oldT, bottom: oldT + ph,
   };
-  const newPieceRegion = {
+  const pieceRegionNew = {
     left: newL, right: newL + pw,
     top: newT, bottom: newT + ph,
   };
-  const oldSpaceRegion =
-    spaceRegion('trex-space-' + gs.trex);
-  const newSpaceRegion = gs.trex === 1 ?
-    spaceRegion('human-space-' + bd.humanStart) :
-    spaceRegion('trex-space-' + (gs.trex - 1));
+  const spaceOld = `#trex-space-${gs.trex}`;
+  const spaceNew = gs.trex === 1 ?
+    `#human-space-${bd.humanStart}` :
+    `#trex-space-${gs.trex - 1}`;
   return boundingBox(
-    oldPieceRegion, newPieceRegion,
-    oldSpaceRegion, newSpaceRegion,
+    pieceRegionOld, pieceRegionNew,
+    absoluteBoundingRect(spaceOld),
+    absoluteBoundingRect(spaceNew),
   );
 };
 
@@ -562,10 +544,9 @@ function zoomGeneral(factor) {
   }
   if (zd.factor.current === factor) return;
   if (zd.factor.current >= 1) {
-    const $d = $(document);
     const [ww, wh] = windowWH();
-    const left = $d.scrollLeft() + ww / 2;
-    const top = $d.scrollTop() + wh / 2;
+    const left = scrollX + ww / 2;
+    const top = scrollY + wh / 2;
     zd.center.left = left / zd.factor.current;
     zd.center.top = top / zd.factor.current;
   }
