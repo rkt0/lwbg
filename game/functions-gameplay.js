@@ -172,7 +172,7 @@ export const gp = {
     // function for edit/load purposes
     if (isLast) gp.endTurn();
   },
-  relocatePiece(species, piece, space) {
+  async relocatePiece(species, piece, space) {
     let element;
     if (species === 'trex') {
       if (gs.trex === space) return;
@@ -188,35 +188,38 @@ export const gp = {
       element.classList.toggle('dead', isNowDead);
     }
     const [l, t] = pl[species][space];
-    element.style.left = `${l}px`;
-    element.style.top = `${t}px`;
+    const location = {top: `${t}px`, left: `${l}px`};
+    await anim.move(element, location, 0);
   },
   setSaveFunction(fn) {
     gp.save = fn;
   },
-  initializeObjects() {
+  async initializeObjects() {
     gp.clearMoveObject();
     gs.turn = null;
     gs.phase = 'roll';
     gs.je = false;
     gs.rollN = null;
     gs.rollGo = 0;
-    // If playing again, relocate pieces instead
-    if (gs.humans) {
-      for (let h = 0; h < bd.nHumanPieces; h++) {
-        gp.relocatePiece('human', h, bd.humanStart);
-      }
-      gp.adjustHumanPositions();
-      gp.relocatePiece('trex', null, bd.trexStart);
-      for (const [r, s] of bd.raptorStart.entries()) {
-        gp.relocatePiece('raptor', r, s);
-      }
+    const {
+      humanStart, trexStart, raptorStart,
+      nHumanPieces: nHumans,
+    } = bd;
+    if (!gs.humans) {
+      gs.humans = new Array(nHumans).fill(humanStart);
+      gs.trex = trexStart;
+      gs.raptors = [...raptorStart];
       return;
     }
-    gs.humans =
-      new Array(bd.nHumanPieces).fill(bd.humanStart);
-    gs.trex = bd.trexStart;
-    gs.raptors = [...bd.raptorStart];
+    // If playing again, relocate pieces instead
+    for (let h = 0; h < nHumans; h++) {
+      await gp.relocatePiece('human', h, humanStart);
+    }
+    gp.adjustHumanPositions();
+    await gp.relocatePiece('trex', null, trexStart);
+    for (const [r, s] of raptorStart.entries()) {
+      await gp.relocatePiece('raptor', r, s);
+    }
   },
   initializeView(resetZoom = true) {
     if (resetZoom) click('#zoom-default');

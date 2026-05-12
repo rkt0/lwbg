@@ -17,16 +17,16 @@ edit.clear = () => {
 };
 
 // Banner
-const editGame = gsNew => {
+const editGame = async (gsNew) => {
   gp.clearMoveObject();
   for (const [p, s] of gsNew.humans.entries()) {
-    gp.relocatePiece('human', p, s);
+    await gp.relocatePiece('human', p, s);
   }
   gp.adjustHumanPositions();
   for (const [p, s] of gsNew.raptors.entries()) {
-    gp.relocatePiece('raptor', p, s);
+    await gp.relocatePiece('raptor', p, s);
   }
-  gp.relocatePiece('trex', null, gsNew.trex);
+  await gp.relocatePiece('trex', null, gsNew.trex);
   // Must assign object after piece moves since
   // otherwise piece moves are skipped due to
   // guard clause in functions above
@@ -63,12 +63,12 @@ const endEditMode = () => {
   }
   ui.showButton('show-more');
 };
-ael('#cancel-edits', 'mousedown', () => {
-  editGame(edit.gsPrevious);
+ael('#cancel-edits', 'mousedown', async () => {
+  await editGame(edit.gsPrevious);
   endEditMode();
 });
-ael('#confirm-edits', 'mousedown', () => {
-  editGame(gs);
+ael('#confirm-edits', 'mousedown', async () => {
+  await editGame(gs);
   endEditMode();
   autoSave.update(true);
 });
