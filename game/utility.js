@@ -32,6 +32,11 @@ export function click(x, type = 'mousedown') {
   element.dispatchEvent(new MouseEvent(type));
 }
 
+export async function loadJSON(resource) {
+  const response = await fetch(resource);
+  return response.json();
+}
+
 export function sleep(delay) {
   return new Promise((resolve) => {
     setTimeout(() => {resolve();}, delay);
