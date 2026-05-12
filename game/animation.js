@@ -1,36 +1,36 @@
-import {qs} from "./utility.js";
+import {qs, loadJSON} from "./utility.js";
 import {debug} from "./debug.js";
 
 export const anim = {
-  // Base time in milliseconds
-  baseTime: 300 / (debug.animationSpeed || 1),
-  // Animation times in multiples of baseTime
-  multiplier: {
-    menuFade: 1,
-    buttonSlide: 0.5,
-    turnFade: 1,
-    messageSlide: 1,
-    gameOverDelay: 6,
-    editControlFade: 0.5,
-    dieRollDelay: 1,
-    dieRoll: 3,
-    dieResultDelay: 1.5,
-    moveHuman: 1,
-    moveRaptor: 1.5,
-    moveTrex: 1,
-    adjustHuman: 1,
-    jumpHuman: 2,
-    killHuman: 6,
-    pauseMidMove: 0.25,
-    autoScroll: 2,
-    autoScrollDelay: 1,
-    highlightBlink: 1,
-  },
-  trexScreenBounce: {
-    maxDistance: 64,
-    decayRate: 0.5,
-    timePerBounce: 4 * 1000 / 60,
-  },
+  // // Base time in milliseconds
+  // baseTime: 300 / (debug.animationSpeed || 1),
+  // // Animation times in multiples of baseTime
+  // multiplier: {
+  //   menuFade: 1,
+  //   buttonSlide: 0.5,
+  //   turnFade: 1,
+  //   messageSlide: 1,
+  //   gameOverDelay: 6,
+  //   editControlFade: 0.5,
+  //   dieRollDelay: 1,
+  //   dieRoll: 3,
+  //   dieResultDelay: 1.5,
+  //   moveHuman: 1,
+  //   moveRaptor: 1.5,
+  //   moveTrex: 1,
+  //   adjustHuman: 1,
+  //   jumpHuman: 2,
+  //   killHuman: 6,
+  //   pauseMidMove: 0.25,
+  //   autoScroll: 2,
+  //   autoScrollDelay: 1,
+  //   highlightBlink: 1,
+  // },
+  // trexScreenBounce: {
+  //   maxDistance: 64,
+  //   decayRate: 0.5,
+  //   timePerBounce: 4 * 1000 / 60,
+  // },
   async fade(x, to, duration, options) {
     const element = typeof x === 'object' ? x : qs(x);
     const {
@@ -89,11 +89,18 @@ export const anim = {
     await element.animate({top}, {duration}).finished;
   },
 };
-anim.time = Object.fromEntries(
-  Object.entries(anim.multiplier).map(
-    (x) => [x[0], x[1] * anim.baseTime],
-  ),
-);
+
+const {
+  baseTime, multiplier, fps, trexScreenBounce,
+} = await loadJSON('./config/animation.json');
+const t = baseTime / (debug.animationSpeed || 1);
+anim.time = {};
+for (const [k, v] of Object.entries(multiplier)) {
+  anim.time[k] = t * v;
+}
+trexScreenBounce.timePerBounce =
+  trexScreenBounce.framesPerBounce * 1000 / fps;
+Object.assign(anim, {trexScreenBounce});
 
 const html = document.documentElement;
 const toCss = {
