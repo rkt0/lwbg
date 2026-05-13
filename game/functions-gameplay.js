@@ -136,7 +136,7 @@ export const gp = {
   },
   async moveRaptor(piece, space, isLast, silent) {
     const [l, t] = pl.raptor[space];
-    if (!sfx.raptorAlreadyPlayed && !silent) {
+    if (!silent) {
       // Sound effect should play only if raptor is
       // eating a human on this move or is moving
       // close enough to do so on its next move
@@ -159,16 +159,13 @@ export const gp = {
     // to work right
     gs.raptors[piece] = space;
     checkEatenByRaptor(piece);
-    if (isLast || silent) {
-      sfx.raptorAlreadyPlayed = false;
-    }
     if (isLast) this.endTurn();
   },
   async moveTrex(space, isLast, skipFx) {
     const [l, t] = pl.trex[space];
-    if (! skipFx) {
-      const sound = gs.trex === 1 ? 'Roar' : 'Stomp';
-      sfx[`trex${sound}`]();
+    if (!skipFx) {
+      if (gs.trex === 1) sfx.trexRoar();
+      else sfx.trexStomp();
     }
     const element = qs('#trex-piece');
     const location = {top: `${t}px`, left: `${l}px`};
