@@ -1,4 +1,4 @@
-import {qs, qsa, click, isNull} from './utility.js';
+import {qs, qsa, click} from './utility.js';
 import {bd} from './logic.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -14,19 +14,26 @@ export const gp = {
     return gs.raptors.filter(x => x === space).length;
   },
   checkGameOver(immediate) {
-    const nSaved = gp.nHumansOn(bd.humanGoal);
-    const nDead = gp.nHumansOn(bd.humanDead);
+    const nSaved = this.nHumansOn(bd.humanGoal);
+    const nDead = this.nHumansOn(bd.humanDead);
     const nTotal = gs.humans.length;
     if (nSaved + nDead < nTotal) return;
     gs.turn = 'over';
     // Set gs.phase to 'roll' so that 'over' state
     // is treated as state with nothing rolled
     gs.phase = 'roll';
-    gp.save();
-    setTimeout(
-      () => {ui.showGameOver(nSaved, nTotal);},
-      immediate ? 0 : anim.time.gameOverDelay
-    );
+    this.save();
+    setTimeout(() => {
+      qs('#humans-saved').innerHTML = nSaved;
+      qs('#humans-total').innerHTML = nTotal;
+      ui.hideMessage();
+      ui.hideButton('roll-display');
+      ui.hideButton('turn-display');
+      if (zd.factor.current < 1) return;
+      anim.fade('#game-over', 1, anim.time.menuFade, {
+        display: '',
+      });
+    }, immediate ? 0 : anim.time.gameOverDelay);
   },
   adjustHumanPositions() {
     const bldgs = [...bd.bldgHumanSpaces];
@@ -61,39 +68,49 @@ export const gp = {
       face.style.display = 'none';
     }
   },
-  endTurn() {
-    gp.clearMoveObject();
+  nextTurnSpecies(forceStop) {
+    if (!gs.turn) return bd.firstTurn;
+    if (gs.turn === 'trex') return 'raptor';
+    const stop = forceStop ?? !gs.rollGo;
+    const nOnStart = this.nHumansOn(bd.humanStart);
     if (gs.turn === 'human') {
-      gp.adjustHumanPositions();
+      if (stop) return nOnStart ? 'trex' : 'raptor';
+      return 'human';
+    }
+    if (stop) return 'human';
+    return nOnStart ? 'trex' : 'raptor';
+  },
+  endTurn() {
+    this.clearMoveObject();
+    if (gs.turn === 'human') {
+      this.adjustHumanPositions();
       if (!gs.rollGo) {
         for (let r = 0; r < gs.raptors.length; r++) {
           checkEatenByRaptor(r);
         }
       }
     }
-    const isHumanNextish = gs.turn === 'human' ?
-      gs.rollGo : ! gs.rollGo;
-    const nextSpecies =
-      isNull(gs.turn) ? bd.firstTurn :
-      gs.turn === 'trex' ? 'raptor' :
-      isHumanNextish ? 'human' :
-      gp.nHumansOn(bd.humanStart) ? 'trex' : 'raptor';
-    gp.checkGameOver();
-    startTurn(nextSpecies);
+    this.checkGameOver();
+    startNextTurn();
   },
   startJumpEnter() {
-    const [jeArr, nOnFn] = gs.turn === 'human' ?
-      [bd.humanJumps, gp.nHumansOn] :
-      [bd.raptorEntrances, gp.nRaptorsOn];
     let nChoices = 0;
-    for (const s of jeArr) nChoices += nOnFn(s[0]);
+    let which = 'jump';
+    if (gs.turn === 'human') {
+      for (const jump of bd.humanJumps) {
+        nChoices += this.nHumansOn(jump[0]);
+      }
+    } else {
+      for (const entrance of bd.raptorEntrances) {
+        nChoices += this.nRaptorsOn(entrance[0]);
+      }
+      which = 'enter';
+    }
     if (nChoices) {
       mv.toGo = 1;
       ui.showButton('decline-button');
     } else {
-      ui.showMessage(`no-${
-        gs.turn === 'human' ? 'jump' : 'enter'
-      }-available`, true);
+      ui.showMessage(`no-${which}-available`, true);
       mv.toGo = -1;
       ui.showButton('ok-no-move');
     }
@@ -114,8 +131,8 @@ export const gp = {
     await anim.move(element, location, aTime, {
       endDelay: isLast ? 0 : anim.time.pauseMidMove,
     });
-    gp.adjustHumanPositions();
-    if (isLast) gp.endTurn();
+    this.adjustHumanPositions();
+    if (isLast) this.endTurn();
   },
   async moveRaptor(piece, space, isLast, silent) {
     const [l, t] = pl.raptor[space];
@@ -145,7 +162,7 @@ export const gp = {
     if (isLast || silent) {
       sfx.raptorAlreadyPlayed = false;
     }
-    if (isLast) gp.endTurn();
+    if (isLast) this.endTurn();
   },
   async moveTrex(space, isLast, skipFx) {
     const [l, t] = pl.trex[space];
@@ -164,13 +181,13 @@ export const gp = {
     gs.trex = space;
     if (gs.trex === 0) {
       for (const h of hPiecesOn(bd.humanStart)) {
-        gp.moveHuman(h, bd.humanDead, false);
+        this.moveHuman(h, bd.humanDead, false);
         ui.showMessage('eaten-trex', true);
       }
     }
     // Using isLast here too enables reuse of this
     // function for edit/load purposes
-    if (isLast) gp.endTurn();
+    if (isLast) this.endTurn();
   },
   async relocatePiece(species, piece, space) {
     let element;
@@ -192,34 +209,24 @@ export const gp = {
     await anim.move(element, location, 0);
   },
   setSaveFunction(fn) {
-    gp.save = fn;
+    this.save = fn;
   },
   async initializeObjects() {
-    gp.clearMoveObject();
+    this.clearMoveObject();
     gs.turn = null;
     gs.phase = 'roll';
     gs.je = false;
     gs.rollN = null;
     gs.rollGo = 0;
-    const {
-      humanStart, trexStart, raptorStart,
-      nHumanPieces: nHumans,
-    } = bd;
     if (!gs.humans) {
-      gs.humans = new Array(nHumans).fill(humanStart);
-      gs.trex = trexStart;
-      gs.raptors = [...raptorStart];
+      const hStart = bd.humanStart;
+      gs.humans = Array(bd.nHumanPieces).fill(hStart);
+      gs.trex = bd.trexStart;
+      gs.raptors = [...bd.raptorStart];
       return;
     }
     // If playing again, relocate pieces instead
-    for (let h = 0; h < nHumans; h++) {
-      await gp.relocatePiece('human', h, humanStart);
-    }
-    gp.adjustHumanPositions();
-    await gp.relocatePiece('trex', null, trexStart);
-    for (const [r, s] of raptorStart.entries()) {
-      await gp.relocatePiece('raptor', r, s);
-    }
+    await resetPieces();
   },
   initializeView(resetZoom = true) {
     if (resetZoom) click('#zoom-default');
@@ -245,7 +252,8 @@ function checkEatenByRaptor(rPiece) {
     ui.showMessage('eaten-raptor', true);
   }
 }
-function startTurn(species) {
+function startNextTurn() {
+  const species = gp.nextTurnSpecies();
   if (gs.turn === 'over') return;
   gs.turn = species;
   gp.clearRoll();
@@ -254,4 +262,14 @@ function startTurn(species) {
   ui.humanItemsClickable(species === 'human');
   ui.raptorItemsClickable(species === 'raptor');
   gp.save();
+}
+async function resetPieces() {
+  for (let h = 0; h < nHumanPieces; h++) {
+    await gp.relocatePiece('human', h, bd.humanStart);
+  }
+  gp.adjustHumanPositions();
+  await gp.relocatePiece('trex', null, bd.trexStart);
+  for (const [r, s] of bd.raptorStart.entries()) {
+    await gp.relocatePiece('raptor', r, s);
+  }
 }

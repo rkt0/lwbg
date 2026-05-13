@@ -657,11 +657,5 @@ ael('#message-container', 'mouseleave', () => {
 
 // Gameplay audio toggle button click handler
 ael('#toggle-audio', 'mousedown', () => {
-  if (music.audioOn) music.element.pause();
-  else music.element.play();
-  music.audioOn = !music.audioOn;
-  const elements = qsa('.audio-on, .audio-off');
-  for (const element of elements) {
-    element.classList.toggle('inactive');
-  }
+  music.toggle();
 });

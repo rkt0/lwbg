@@ -1,5 +1,5 @@
 import {qs, qsa, ael} from './utility.js';
-import {bd, dice} from './logic.js';
+import {dice} from './logic.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {gs} from './game-objects.js';
@@ -7,17 +7,17 @@ import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 
-export const edit = {};
-
-edit.clear = () => {
-  edit.on = false;
-  edit.gsPrevious = {};
-  edit.selected = {species: null, piece: null};
-  edit.dieCodes = {movement: 0, continue: 0};
+export const edit = {
+  clear() {
+    this.on = false;
+    this.gsPrevious = {};
+    this.selected = {species: null, piece: null};
+    this.dieCodes = {movement: 0, continue: 0};
+  },
 };
 
 // Banner
-const editGame = async (gsNew) => {
+async function editGame(gsNew) {
   gp.clearMoveObject();
   for (const [p, s] of gsNew.humans.entries()) {
     await gp.relocatePiece('human', p, s);
@@ -49,8 +49,8 @@ const editGame = async (gsNew) => {
   }
   ui.humanItemsClickable(gs.turn === 'human');
   ui.raptorItemsClickable(gs.turn === 'raptor');
-};
-const endEditMode = () => {
+}
+function endEditMode() {
   const toDisable = '#cancel-edits, #confirm-edits';
   for (const button of qsa(toDisable)) {
     button.disabled = true;
@@ -62,7 +62,7 @@ const endEditMode = () => {
     anim.fade(element, 0, anim.time.editControlFade);
   }
   ui.showButton('show-more');
-};
+}
 ael('#cancel-edits', 'mousedown', async () => {
   await editGame(edit.gsPrevious);
   endEditMode();
@@ -74,26 +74,23 @@ ael('#confirm-edits', 'mousedown', async () => {
 });
 
 // Used for editing both turn and dice
-const replaceDieValue = (species, type, value) => {
+function replaceDieValue(species, type, value) {
   const die = qs(`#die-${species}-${type}`);
   for (const face of qsa('.face', die)) {
     face.style.display = 'none';
   }
-  const x = type === 'movement' ? 'N' : 'Go';
-  gs[`roll${x}`] = value;
+  if (type === 'movement') gs.rollN = value;
+  else gs.rollGo = value;
   const face = qs(`[data-roll="${value}"]`, die);
   face.style.display = 'block';
   if (type === 'movement') {
     gs.je = value === 'Jump' || value === 'Enter';
   }
-};
+}
 
 // Turn
 ael('#change-turn', 'mousedown', () => {
-  const species = gs.turn === 'trex' ? 'raptor' :
-    gs.turn === 'raptor' ? 'human' :
-    gp.nHumansOn(bd.humanStart) ? 'trex' :
-    'raptor';
+  const species = gp.nextTurnSpecies(true);
   gs.turn = species;
   ui.displayTurn(species, true);
   if (gs.phase === 'roll') return;

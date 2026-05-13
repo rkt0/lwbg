@@ -2,13 +2,26 @@ import {qs, click} from './utility.js';
 import {ai} from './ai.js';
 import {music} from './music.js';
 import {gs, mv, zd} from './game-objects.js';
-import {ui} from './functions-ui.js';
 import {edit} from './edit-mode.js';
 
-const clickIfOk = buttonId => {
+function clickIfOk(buttonId) {
   const button = qs(`#${buttonId}`);
   if (!button.disabled) click(button);
-};
+}
+
+function toggleFullscreen() {
+  const element = document.documentElement;
+  if (!document.fullscreenElement) {
+    element?.requestFullscreen();
+  } else document.exitFullscreen();
+}
+function cycleDisplayMode() {
+  const modes = ['', 'tv'];
+  const valueOld = document.body.dataset.display;
+  const indexOld = modes.indexOf(valueOld ?? '');
+  const indexNew = (indexOld + 1) % modes.length;
+  document.body.dataset.display = modes[indexNew];
+}
 
 function moreMenuActive() {
   return !qs('#more-menu').style.display;
@@ -74,11 +87,11 @@ document.addEventListener('keydown', (e) => {
       break;
     case 'f':
       e.preventDefault();
-      ui.toggleFullscreen();
+      toggleFullscreen();
       break;
     case 't':
       e.preventDefault();
-      ui.cycleDisplayMode();
+      cycleDisplayMode();
       break;
     case '-':
     case '=':

@@ -1,6 +1,5 @@
 import {qs, qsa, ce, cssInt} from './utility.js';
 import {anim} from './animation.js';
-import {zd} from './game-objects.js';
 
 export const ui = {
   async showButton(id) {
@@ -21,8 +20,8 @@ export const ui = {
     element.style.display = 'none';
   },
   async replaceButton(idOld, idNew) {
-    await ui.hideButton(idOld);
-    ui.showButton(idNew);
+    await this.hideButton(idOld);
+    this.showButton(idNew);
   },
   async displayTurn(species, skipFx) {
     const speciesText =
@@ -55,7 +54,7 @@ export const ui = {
       const face = qs(`[data-roll="${value}"]`, die);
       face.style.display = 'block';
     }
-    ui.replaceButton('roll-button', 'roll-display');
+    this.replaceButton('roll-button', 'roll-display');
     const delay = skipFx ? 0 :
       anim.time.buttonSlide * 2 +
       anim.time.dieRollDelay;
@@ -96,17 +95,6 @@ export const ui = {
     container.classList.remove('appendable');
     anim.slide(container, 0, anim.time.messageSlide);
   },
-  showGameOver(nSaved, nTotal) {
-    qs('#humans-saved').innerHTML = nSaved;
-    qs('#humans-total').innerHTML = nTotal;
-    ui.hideMessage();
-    ui.hideButton('roll-display');
-    ui.hideButton('turn-display');
-    if (zd.factor.current < 1) return;
-    anim.fade('#game-over', 1, anim.time.menuFade, {
-      display: '',
-    });
-  },
   disableMenu(id, disable) {
     for (const button of qsa(`#${id} button`)) {
       button.disabled = disable ?? true;
@@ -133,7 +121,7 @@ export const ui = {
   async showStartOptions(skipFx) {
     const aTime = skipFx ? 0 : anim.time.menuFade;
     await anim.fade('#start-message', 0, aTime);
-    ui.disableMenu('start-options', false);
+    this.disableMenu('start-options', false);
     anim.fade('#start-options', 1, aTime, {
       display: '',
     });
@@ -143,19 +131,6 @@ export const ui = {
     await anim.fade('#player-control', 1, aTime, {
       display: '',
     });
-    ui.disableMenu('player-control', false);
-  },
-  toggleFullscreen() {
-    const element = document.documentElement;
-    if (!document.fullscreenElement) {
-      element?.requestFullscreen();
-    } else document.exitFullscreen();
-  },
-  cycleDisplayMode () {
-    const modes = ['', 'tv'];
-    const valueOld = document.body.dataset.display;
-    const indexOld = modes.indexOf(valueOld ?? '');
-    const indexNew = (indexOld + 1) % modes.length;
-    document.body.dataset.display = modes[indexNew];
+    this.disableMenu('player-control', false);
   },
 };
