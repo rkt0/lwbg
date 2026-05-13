@@ -1,4 +1,6 @@
-import {qs, qsa, ce, cssInt} from './utility.js';
+import {
+  qs, qsa, ce, fromTemplate, cssInt,
+} from './utility.js';
 import {anim} from './animation.js';
 
 export const ui = {
@@ -66,13 +68,11 @@ export const ui = {
     }, delay);
   },
   startMessage(templateId) {
-    const message = qs(`#${templateId}`).content;
-    const node = message.cloneNode(true);
+    const node = fromTemplate(templateId);
     qs('#start-message').replaceChildren(node);
   },
   showMessage(templateId, append) {
-    const message = qs(`#${templateId}`).content;
-    const node = message.cloneNode(true);
+    const node = fromTemplate(templateId);
     const container = qs('#message-container');
     const content = qs('.content', container);
     const previousWasAppendable =
