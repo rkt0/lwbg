@@ -8,7 +8,6 @@ export const bd = {
   humanJumps: [[4, 86], [20, 29]],
   trexStart: 11,
   nRaptorSpaces: 57,
-  nRaptorPieces: 4,
   raptorStart: [47, 49, 52, 53],
   raptorEntrances: [
     [3, 2], [8, 6], [12, 9], [14, 13],

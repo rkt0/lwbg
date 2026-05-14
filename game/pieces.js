@@ -9,21 +9,24 @@ import {
   clickEditKill, clickEditTrex,
 } from './click-pieces.js';
 
+const {nHumanPieces, raptorStart} = bd;
+const nRaptorPieces = raptorStart.length;
+
 export const pieces = {
   human: {
     feature: {
-      shoes: sequence(bd.nHumanPieces),
-      pants: sequence(bd.nHumanPieces),
-      skin: sequence(bd.nHumanPieces),
-      shirt: sequence(bd.nHumanPieces),
-      hat: sequence(bd.nHumanPieces),
+      shoes: sequence(nHumanPieces),
+      pants: sequence(nHumanPieces),
+      skin: sequence(nHumanPieces),
+      shirt: sequence(nHumanPieces),
+      hat: sequence(nHumanPieces),
       under: [0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 3, 4],
     },
   },
   raptor: {
     feature: {
-      shape: sequence(bd.nRaptorPieces),
-      color: sequence(bd.nRaptorPieces),
+      shape: sequence(nRaptorPieces),
+      color: sequence(nRaptorPieces),
     },
   },
   shuffleFeatures() {
@@ -49,10 +52,10 @@ export const pieces = {
     addTrexImgs();
   },
   makeAll() {
-    for (let p = 0; p < bd.nHumanPieces; p++) {
+    for (let p = 0; p < nHumanPieces; p++) {
       makeHumanPiece(p);
     }
-    for (let p = 0; p < bd.nRaptorPieces; p++) {
+    for (let p = 0; p < nRaptorPieces; p++) {
       makeRaptorPiece(p);
     }
     makeTrexPiece();
