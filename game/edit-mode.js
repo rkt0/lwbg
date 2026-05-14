@@ -1,5 +1,5 @@
 import {qs, qsa, ael} from './utility.js';
-import {dice} from './logic.js';
+import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {gs} from './game-objects.js';
