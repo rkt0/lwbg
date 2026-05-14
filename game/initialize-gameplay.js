@@ -3,7 +3,7 @@ import {
   cssInt, cssIntWH,
 } from './utility.js';
 import {debug} from './debug.js';
-import {bd} from './logic.js';
+import {bd} from './board-topology.js';
 import {pieces} from './pieces.js';
 import {zd, pl} from './game-objects.js';
 import {gp} from './functions-gameplay.js';

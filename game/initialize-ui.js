@@ -6,7 +6,7 @@ import {
 import {scrollBetter} from './scroll.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
-import {bd} from './logic.js';
+import {bd} from './board-topology.js';
 import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';

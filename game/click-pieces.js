@@ -1,5 +1,5 @@
 import {qs, click} from './utility.js';
-import {bd} from './logic.js';
+import {bd} from './board-topology.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {gs, mv} from './game-objects.js';

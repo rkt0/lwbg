@@ -3,7 +3,7 @@ import {
   arrayMinus, arraySum, arrayCumSum,
   rollDie,
 } from './utility.js';
-import {bd} from './logic.js';
+import {bd} from './board-topology.js';
 import {dice} from './dice.js';
 
 export const ai = {
