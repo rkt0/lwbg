@@ -59,8 +59,8 @@ export const pieces = {
       makeRaptorPiece(p);
     }
     makeTrexPiece();
-    shuffleFeatures();
-    addImgs();
+    this.shuffleFeatures();
+    this.addImgs();
   },
 };
 
