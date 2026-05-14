@@ -215,14 +215,6 @@ export const gp = {
     gs.je = false;
     gs.rollN = null;
     gs.rollGo = 0;
-    if (!gs.humans) {
-      const hStart = bd.humanStart;
-      gs.humans = Array(bd.nHumanPieces).fill(hStart);
-      gs.trex = bd.trexStart;
-      gs.raptors = [...bd.raptorStart];
-      return;
-    }
-    // If playing again, relocate pieces instead
     await resetPieces();
   },
   initializeView(resetZoom = true) {
@@ -261,12 +253,15 @@ function startNextTurn() {
   gp.save();
 }
 async function resetPieces() {
-  for (let h = 0; h < nHumanPieces; h++) {
+  for (let h = 0; h < bd.nHumanPieces; h++) {
+    gs.humans[h] = null;
     await gp.relocatePiece('human', h, bd.humanStart);
   }
   gp.adjustHumanPositions();
+  gs.trex = null;
   await gp.relocatePiece('trex', null, bd.trexStart);
   for (const [r, s] of bd.raptorStart.entries()) {
+    gs.raptors[r] = null;
     await gp.relocatePiece('raptor', r, s);
   }
 }

@@ -92,7 +92,6 @@ function loadPieces(pieceCodeString) {
     pieces.raptor.feature.shape[r] = rInt >> 2;
     pieces.raptor.feature.color[r] = rInt & 3;
   }
-  pieces.removeImgs();
   pieces.addImgs();
 }
 async function expandAndExecute(changeCodeString) {

@@ -188,21 +188,14 @@ button[id^="edit-trex"] {
   left: 84px;
 }
 
-#edit-trex-advance::before {
-  content: "⬆︎";
-}
-
 #edit-trex-retreat {
   left: 132px;
-}
-
-#edit-trex-retreat::before {
-  content: "⬇";
 }
 
 .edit-kill-human {
   display: none;
   position: absolute;
+  line-height: 1.58;
   top: calc(
     var(--human-piece-height) +
     var(--board-border-width) + 6px
@@ -213,10 +206,6 @@ button[id^="edit-trex"] {
       var(--small-button-size)
     ) / 2 - var(--button-border-width)
   );
-}
-
-.edit-kill-human::before {
-  content: "✖︎";
 }
 
 

@@ -206,10 +206,6 @@
   font: var(--font-large);
 }
 
-.dead-marker::before {
-  content: "X";
-}
-
 .dead .dead-marker {
   display: block;
 }

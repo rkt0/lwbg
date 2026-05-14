@@ -5,23 +5,13 @@ import {
 import {debug} from './debug.js';
 import {bd} from './logic.js';
 import {pieces} from './pieces.js';
-import {gs, zd, pl} from './game-objects.js';
+import {zd, pl} from './game-objects.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 import {edit} from './edit-mode.js';
 import {
   clickHumanSpace, clickRaptorSpace, clickBuilding,
 } from './click-board.js';
-import {
-  clickHumanPiece, clickRaptorPiece,
-  clickEditKill, clickEditTrex,
-} from './click-pieces.js';
-
-// Initialize objects
-gp.initializeObjects();
-gp.setSaveFunction(() => {autoSave.update();});
-autoSave.clear();
-edit.clear();
 
 // Extra space at edges of board
 function addExtraSpace(arr, full = false) {
@@ -696,85 +686,11 @@ for (const svg of qsa('svg:not(.icon)')) {
   svg.setAttribute('height', zd.boardSize[1]);
 }
 
-// Make human pieces
-for (const [p, s] of gs.humans.entries()) {
-  const [l, t] = pl.human[s];
-  const div = ce('div');
-  div.id = `human-piece-${p}`;
-  div.classList.add('human-piece');
-  div.style.left = `${l}px`;
-  div.style.top = `${t}px`;
-  ael(div, 'mousedown', (e) => {
-    e.data = {piece: p};
-    clickHumanPiece(e);
-  });
-  const dm = ce('div');
-  dm.classList.add('human-component', 'dead-marker');
-  const ek = ce('button');
-  ek.type = 'button';
-  ek.classList.add('edit-kill-human', 'small-button');
-  ael(ek, 'mousedown', (e) => {
-    e.stopPropagation();
-    e.data = {piece: p};
-    clickEditKill(e);
-  });
-  div.append(dm, ek);
-  gameplayContainer.append(div);
-}
+pieces.makeAll();
 gp.adjustHumanPositions();
 
-// Make T-rex piece
-{
-  const [l, t] = pl.trex[gs.trex];
-  const div = ce('div');
-  div.id = 'trex-piece';
-  div.classList.add('trex-piece');
-  div.style.left = `${l}px`;
-  div.style.top = `${t}px`;
-  const ea = ce('button');
-  ea.type = 'button';
-  ea.id = 'edit-trex-advance';
-  ea.classList.add('edit-control', 'small-button');
-  ael(ea, 'mousedown', (e) => {
-    e.data = {change: 1};
-    clickEditTrex(e);
-  });
-  const er = ce('button');
-  er.type = 'button';
-  er.id = 'edit-trex-retreat';
-  er.classList.add('edit-control', 'small-button');
-  ael(er, 'mousedown', (e) => {
-    e.data = {change: -1};
-    clickEditTrex(e);
-  });
-  div.append(ea, er);
-  gameplayContainer.append(div);
-}
-
-// Make raptor pieces
-function makeRaptorPiece(piece, location) {
-  const div = ce('div');
-  div.id = `raptor-piece-${piece}`;
-  div.classList.add('raptor-piece');
-  div.style.left = `${location[0]}px`;
-  div.style.top = `${location[1]}px`;
-  ael(div, 'mousedown', (e) => {
-    e.data = {piece};
-    clickRaptorPiece(e);
-  });
-  gameplayContainer.append(div);
-}
-for (const [p, s] of gs.raptors.entries()) {
-  makeRaptorPiece(p, pl.raptor[s]);
-}
-if (debug.raptorPlacement.on) {
-  const pieces = qsa('.raptor-piece');
-  for (const piece of pieces) piece.remove();
-  for (const [s, location] of pl.raptor.entries()) {
-    makeRaptorPiece(s, location);
-  }
-}
-
-// Add all piece images
-pieces.shuffleFeatures();
-pieces.addImgs();
+// Initialize objects
+await gp.initializeObjects();
+gp.setSaveFunction(() => {autoSave.update();});
+autoSave.clear();
+edit.clear();

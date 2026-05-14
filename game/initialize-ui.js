@@ -304,7 +304,6 @@ ael('#confirm-quit', 'mousedown', async () => {
   gp.initializeObjects();
   gp.initializeView();
   pieces.shuffleFeatures();
-  pieces.removeImgs();
   pieces.addImgs();
   autoSave.clear();
   ui.showStartOptions(true);

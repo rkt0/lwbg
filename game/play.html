@@ -25,6 +25,14 @@
     class="full-board debug-labels">
   </div>
   <div id="trex-edges" class="full-board"></div>
+  <div id="trex-piece" class="trex-piece">
+    <button type="button" id="edit-trex-advance"
+      class="edit-control small-button">&#x2b06;
+    </button>
+    <button type="button" id="edit-trex-retreat"
+      class="edit-control small-button">&#x2b07;
+    </button>
+  </div>
   <div id="gameplay-menu" class="non-zoom">
     <div id="zoom-display" class="info">
       <div class="flex-container">Zoom<br>&nbsp;</div>
@@ -336,6 +344,17 @@
 <div class="display-matte bottom"></div>
 <div class="display-matte left"></div>
 <div class="display-matte right"></div>
+<template id="human-piece">
+  <div class="human-piece">
+    <div class="human-component dead-marker">X</div>
+    <button type="button"
+      class="edit-kill-human small-button">&#x2716;
+    </button>
+  </div>
+</template>
+<template id="raptor-piece">
+  <div class="raptor-piece"> </div>
+</template>
 <template id="save-introduction">
   <p>You will now be asked to create a file.
   Your progress will automatically be saved
