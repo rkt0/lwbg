@@ -83,7 +83,7 @@ const multiplier = {
   moveTrex: 1,
   adjustHuman: 1,
   jumpHuman: 2,
-  killHuman: 6,
+  killHuman: 12,
   pauseMidMove: 0.25,
   autoScroll: 2,
   autoScrollDelay: 1,
