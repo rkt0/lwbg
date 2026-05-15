@@ -7,6 +7,10 @@ import {edit} from './edit-mode.js';
 import {
   clickHumanSpace, clickRaptorSpace, clickBuilding,
 } from './click-board.js';
+import {
+  clickHumanPiece, clickRaptorPiece,
+  clickEditKill, clickEditTrex,
+} from './click-pieces.js';
 import './initialize-board.js';
 
 // Make pieces
@@ -46,3 +50,35 @@ for (let i = 0; i < bd.bldgHumanSpaces.length; i++) {
     clickBuilding(e);
   });
 }
+
+// Add human piece click handlers
+for (let i = 0; i < bd.nHumanPieces; i++) {
+  const id = `human-piece-${i}`;
+  ael(`#${id}`, 'mousedown', (e) => {
+    e.data = {piece: i};
+    clickHumanPiece(e);
+  });
+  ael(`#${id} .edit-kill-human`, 'mousedown', (e) => {
+    e.stopPropagation();
+    e.data = {piece: i};
+    clickEditKill(e);
+  });
+}
+
+// Add raptor piece click handlers
+for (let i = 0; i < bd.raptorStart.length; i++) {
+  ael(`#raptor-piece-${i}`, 'mousedown', (e) => {
+    e.data = {piece: i};
+    clickRaptorPiece(e);
+  });
+}
+
+// Add T-rex piece click handlers (for edit buttons)
+ael('#edit-trex-advance', 'mousedown', (e) => {
+  e.data = {change: 1};
+  clickEditTrex(e);
+});
+ael('#edit-trex-retreat', 'mousedown', (e) => {
+  e.data = {change: -1};
+  clickEditTrex(e);
+});

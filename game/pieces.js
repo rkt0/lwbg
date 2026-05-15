@@ -1,13 +1,9 @@
 import {
-  qs, qsa, ael, ce, fromTemplate, sequence, shuffle,
+  qs, qsa, ce, fromTemplate, sequence, shuffle,
 } from './utility.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
 import {bd} from './board-topology.js';
-import {
-  clickHumanPiece, clickRaptorPiece,
-  clickEditKill, clickEditTrex,
-} from './click-pieces.js';
 
 const {nHumanPieces, raptorStart} = bd;
 const nRaptorPieces = raptorStart.length;
@@ -58,7 +54,6 @@ export const pieces = {
     for (let p = 0; p < nRaptorPieces; p++) {
       makeRaptorPiece(p);
     }
-    makeTrexPiece();
     this.shuffleFeatures();
     this.addImgs();
   },
@@ -117,33 +112,9 @@ function makeHumanPiece(piece) {
   const element = fromTemplate('human-piece', true);
   element.id = `human-piece-${piece}`;
   gameplayContainer.append(element);
-  ael(element, 'mousedown', (e) => {
-    e.data = {piece};
-    clickHumanPiece(e);
-  });
-  const killButton = qs('.edit-kill-human', element);
-  ael(killButton, 'mousedown', (e) => {
-    e.stopPropagation();
-    e.data = {piece};
-    clickEditKill(e);
-  });
 }
 function makeRaptorPiece(piece) {
   const element = fromTemplate('raptor-piece', true);
   element.id = `raptor-piece-${piece}`;
   gameplayContainer.append(element);
-  ael(element, 'mousedown', (e) => {
-    e.data = {piece};
-    clickRaptorPiece(e);
-  });
-}
-function makeTrexPiece() {
-  ael('#edit-trex-advance', 'mousedown', (e) => {
-    e.data = {change: 1};
-    clickEditTrex(e);
-  });
-  ael('#edit-trex-retreat', 'mousedown', (e) => {
-    e.data = {change: -1};
-    clickEditTrex(e);
-  });
 }
