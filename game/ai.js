@@ -1,10 +1,10 @@
 import {
   deepCopy, isNull, sequence,
-  arrayMinus, arraySum, arrayCumSum,
-  rollDie,
+  arrayMinus, arraySum, arrayCumSum, rollDie,
 } from './utility.js';
 import {bd} from './board-topology.js';
 import {dice} from './dice.js';
+import './initialize-board.js';
 
 export const ai = {
 

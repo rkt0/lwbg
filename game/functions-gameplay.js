@@ -1,5 +1,6 @@
 import {qs, qsa, click} from './utility.js';
 import {bd} from './board-topology.js';
+import {geom} from './board-geometry.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {sfx} from './sfx.js';
@@ -217,13 +218,13 @@ export const gp = {
     gs.rollGo = 0;
     await resetPieces();
   },
-  initializeView(resetZoom = true) {
-    if (resetZoom) click('#zoom-default');
-    zd.center.left = zd.initialViewCenter[0];
-    zd.center.top = zd.initialViewCenter[1];
+  initializeView() {
+    click('#zoom-default');
+    zd.center.left = geom.initialViewCenter[0];
+    zd.center.top = geom.initialViewCenter[1];
     zd.factor.current = null;
     // Click again to apply zoom center
-    if (resetZoom) click('#zoom-default');
+    click('#zoom-default');
   },
 };
 
