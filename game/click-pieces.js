@@ -7,8 +7,7 @@ import {gp} from './functions-gameplay.js';
 import {ui} from './functions-ui.js';
 import {edit} from './edit-mode.js';
 
-export function clickHumanPiece(e) {
-  const {piece} = e.data;
+export function clickHumanPiece(piece) {
   const space = gs.humans[piece];
   if (edit.on) {
     clickHumanPieceEditMode(piece, space)
@@ -38,8 +37,7 @@ export function clickHumanPiece(e) {
   }
 }
 
-export function clickRaptorPiece(e) {
-  const {piece} = e.data;
+export function clickRaptorPiece(piece) {
   const space = gs.raptors[piece];
   if (edit.on) {
     clickRaptorPieceEditMode(piece, space);

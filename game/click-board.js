@@ -7,9 +7,8 @@ import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {edit} from './edit-mode.js';
 
-export function clickHumanSpace(e) {
-  const space = +e.data.space;
-  const isBldg = !!e.data.isBldg;
+export function clickHumanSpace(space) {
+  const isBldg = bd.bldgHumanSpaces.includes(space);
   if (edit.on) {
     clickHumanSpaceEditMode(space, isBldg);
     return;
@@ -55,9 +54,8 @@ export function clickHumanSpace(e) {
   }
 }
 
-export function clickRaptorSpace(e) {
-  const space =  +e.data.space;
-  const isBldg = !!e.data.isBldg;
+export function clickRaptorSpace(space) {
+  const isBldg = bd.bldgRaptorSpaces.includes(space);
   if (edit.on) {
     clickRaptorSpaceEditMode(space);
     return;
