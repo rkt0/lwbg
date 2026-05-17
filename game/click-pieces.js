@@ -79,13 +79,16 @@ export function clickEditKill(e) {
   edit.selected.piece = null;
 }
 
-export function clickEditTrex(e) {
-  const {change} = e.data;
-  let intended = gs.trex - change;
-  intended = Math.max(intended, 0);
-  intended = Math.min(intended, bd.trexStart);
-  if (intended === gs.trex) return;
-  gp.moveTrex(intended, false, true);
+export function clickEditTrex(change) {
+  if (!edit.on) return;
+  const {absolute, relative} = change;
+  let space = gs.trex;
+  if (relative) space += relative;
+  if (absolute) space = absolute;
+  space = Math.max(space, 0);
+  space = Math.min(space, bd.trexStart);
+  if (space === gs.trex) return;
+  gp.moveTrex(space, false, true);
 }
 
 // Needed for human piece click handler

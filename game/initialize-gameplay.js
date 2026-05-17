@@ -33,16 +33,7 @@ for (let i = 0; i < bd.nHumanPieces; i++) {
   });
 }
 
-// Add T-rex piece click handlers (for edit buttons)
-ael('#edit-trex-advance', 'mousedown', (e) => {
-  e.data = {change: 1};
-  clickEditTrex(e);
-});
-ael('#edit-trex-retreat', 'mousedown', (e) => {
-  e.data = {change: -1};
-  clickEditTrex(e);
-});
-
+// Add piece and space click handlers
 function targetItem(event, selector) {
   const id = event.target.closest(selector)?.id;
   if (!id) return -1;
@@ -59,4 +50,14 @@ ael('#gameplay-container', 'mousedown', (e) => {
   let rSpace = bd.bldgRaptorSpaces[bldg];
   rSpace ??= targetItem(e, '.raptor-space');
   if (rSpace > -1) clickRaptorSpace(rSpace);
+  const tSpace = targetItem(e, '.trex-space');
+  if (tSpace > -1) clickEditTrex({absolute: tSpace});
+});
+
+// Add edit button click handlers
+ael('#edit-trex-advance', 'mousedown', () => {
+  clickEditTrex({relative: -1});
+});
+ael('#edit-trex-retreat', 'mousedown', () => {
+  clickEditTrex({relative: 1});
 });
