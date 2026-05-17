@@ -102,17 +102,6 @@ export function clickRaptorSpace(space) {
   }
 }
 
-export function clickBuilding(e) {
-  const hSpace = +e.data.hSpace;
-  const rSpace = +e.data.rSpace;
-  clickHumanSpace({
-    data: {space: hSpace, isBldg: true},
-  });
-  clickRaptorSpace({
-    data: {space: rSpace, isBldg: true},
-  });
-}
-
 // Needed for human/raptor space click handlers
 function checkNotAdjacent(from, space) {
   const moveChoices = gs.turn === 'human' ?
