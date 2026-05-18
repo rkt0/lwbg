@@ -1,4 +1,4 @@
-import {ael, aelo, click} from './utility.js';
+import {ael, aelo} from './utility.js';
 import {anim} from './animation.js';
 import {music} from './music.js';
 import {ui} from './functions-ui.js';
@@ -82,7 +82,6 @@ async function selectFileToLoad() {
 // Add start screen click handler
 ael('#start-container', 'mousedown', (e) => {
   const id = e.target.closest('button')?.id;
-  console.log(id);
   if (id === 'start-new') startNew();
   else if (id === 'load-saved') loadSaved();
   else if (id === 'load-overwrite') loadOverwrite();
