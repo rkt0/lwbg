@@ -57,8 +57,7 @@ function endEditMode() {
   }
   edit.clear();
   qs('.selected')?.classList.remove('selected');
-  const toFade = '.edit-control, .edit-kill-human';
-  for (const element of qsa(toFade)) {
+  for (const element of qsa('.edit-control, .kill')) {
     anim.fade(element, 0, anim.time.editControlFade);
   }
   ui.showButton('show-more');

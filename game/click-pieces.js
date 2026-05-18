@@ -7,8 +7,7 @@ import {gp} from './functions-gameplay.js';
 import {ui} from './functions-ui.js';
 import {edit} from './edit-mode.js';
 
-export function clickHumanPiece(e) {
-  const {piece} = e.data;
+export function clickHumanPiece(piece) {
   const space = gs.humans[piece];
   if (edit.on) {
     clickHumanPieceEditMode(piece, space)
@@ -38,8 +37,7 @@ export function clickHumanPiece(e) {
   }
 }
 
-export function clickRaptorPiece(e) {
-  const {piece} = e.data;
+export function clickRaptorPiece(piece) {
   const space = gs.raptors[piece];
   if (edit.on) {
     clickRaptorPieceEditMode(piece, space);
@@ -68,26 +66,26 @@ export function clickRaptorPiece(e) {
   }
 }
 
-export function clickEditKill(e) {
-  const {piece} = e.data;
+export function clickEditKill(piece) {
   gp.moveHuman(piece, bd.humanDead, false);
-  anim.fade(
-    `#human-piece-${piece} .edit-kill-human`,
-    0, anim.time.editControlFade,
-  );
+  const time = anim.time.editControlFade;
+  anim.fade(`#human-piece-${piece} .kill`, 0, time);
   qs('.selected').classList.remove('selected');
   ui.raptorItemsClickable(true);
   edit.selected.species = null;
   edit.selected.piece = null;
 }
 
-export function clickEditTrex(e) {
-  const {change} = e.data;
-  let intended = gs.trex - change;
-  intended = Math.max(intended, 0);
-  intended = Math.min(intended, bd.trexStart);
-  if (intended === gs.trex) return;
-  gp.moveTrex(intended, false, true);
+export function clickEditTrex(change) {
+  if (!edit.on) return;
+  const {absolute, relative} = change;
+  let space = gs.trex;
+  if (relative) space += relative;
+  if (absolute) space = absolute;
+  space = Math.max(space, 0);
+  space = Math.min(space, bd.trexStart);
+  if (space === gs.trex) return;
+  gp.moveTrex(space, false, true);
 }
 
 // Needed for human piece click handler
@@ -124,10 +122,8 @@ function clickHumanPieceEditMode(piece, space) {
   }
   selectAppropriate(piece);
   if (space !== bd.humanDead) {
-    anim.fade(
-      `#human-piece-${piece} .edit-kill-human`,
-      1, anim.time.editControlFade,
-    );
+    const time = anim.time.editControlFade;
+    anim.fade(`#human-piece-${piece} .kill`, 1, time);
   }
   ui.raptorItemsClickable(false);
   edit.selected.species = 'human';

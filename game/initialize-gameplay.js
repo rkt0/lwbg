@@ -5,7 +5,7 @@ import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 import {edit} from './edit-mode.js';
 import {
-  clickHumanSpace, clickRaptorSpace, clickBuilding,
+  clickHumanSpace, clickRaptorSpace,
 } from './click-board.js';
 import {
   clickHumanPiece, clickRaptorPiece,
@@ -23,62 +23,39 @@ gp.setSaveFunction(() => {autoSave.update();});
 autoSave.clear();
 edit.clear();
 
-// Add human space click handlers
-for (let i = 0; i < bd.nHumanSpaces; i++) {
-  if (bd.bldgHumanSpaces.includes(i)) continue;
-  ael(`#human-space-${i}`, 'mousedown', (e) => {
-    e.data = {space: i};
-    clickHumanSpace(e);
-  });
+// Helper function to get item index for click target
+function targetItem(event, selector) {
+  const id = event.target.closest(selector)?.id;
+  if (!id) return -1;
+  return +id.slice(id.lastIndexOf('-') + 1);
 }
 
-// Add raptor space click handlers
-for (let i = 0; i < bd.nRaptorSpaces; i++) {
-  const id = `raptor-space-${i}`;
-  ael(`#${id}`, 'mousedown', (e) => {
-    e.data = {space: i};
-    clickRaptorSpace(e);
-  });
-}
-
-// Add building click handlers
-for (let i = 0; i < bd.bldgHumanSpaces.length; i++) {
-  const hSpace = bd.bldgHumanSpaces[i];
-  const rSpace = bd.bldgRaptorSpaces[i];
-  ael(`#human-space-${hSpace}`, 'mousedown', (e) => {
-    e.data = {hSpace, rSpace};
-    clickBuilding(e);
-  });
-}
-
-// Add human piece click handlers
-for (let i = 0; i < bd.nHumanPieces; i++) {
-  const id = `human-piece-${i}`;
-  ael(`#${id}`, 'mousedown', (e) => {
-    e.data = {piece: i};
-    clickHumanPiece(e);
-  });
-  ael(`#${id} .edit-kill-human`, 'mousedown', (e) => {
-    e.stopPropagation();
-    e.data = {piece: i};
-    clickEditKill(e);
-  });
-}
-
-// Add raptor piece click handlers
-for (let i = 0; i < bd.raptorStart.length; i++) {
-  ael(`#raptor-piece-${i}`, 'mousedown', (e) => {
-    e.data = {piece: i};
-    clickRaptorPiece(e);
-  });
-}
-
-// Add T-rex piece click handlers (for edit buttons)
-ael('#edit-trex-advance', 'mousedown', (e) => {
-  e.data = {change: 1};
-  clickEditTrex(e);
-});
-ael('#edit-trex-retreat', 'mousedown', (e) => {
-  e.data = {change: -1};
-  clickEditTrex(e);
+// Add gameplay click handlers
+ael('#gameplay-container', 'mousedown', (e) => {
+  const rPiece = targetItem(e, '.raptor-piece');
+  if (rPiece > -1) return clickRaptorPiece(rPiece);
+  const hPiece = targetItem(e, '.human-piece');
+  if (hPiece > -1) {
+    if (e.target.closest('.kill')) {
+      return clickEditKill(hPiece);
+    } else return clickHumanPiece(hPiece);
+  }
+  const tSpace = targetItem(e, '.trex-space');
+  if (tSpace > -1) {
+    return clickEditTrex({absolute: tSpace});
+  }
+  const trexButton = e.target.closest('.trex-edit');
+  if (trexButton) {
+    const relative = +trexButton.dataset.change;
+    return clickEditTrex({relative});
+  }
+  const hSpace = targetItem(e, '.human-space');
+  let rSpace;
+  if (hSpace > -1) {
+    clickHumanSpace(hSpace);
+    const bldg = bd.bldgHumanSpaces.indexOf(hSpace);
+    rSpace = bd.bldgRaptorSpaces[bldg];
+  }
+  rSpace ??= targetItem(e, '.raptor-space');
+  if (rSpace > -1) clickRaptorSpace(rSpace);
 });

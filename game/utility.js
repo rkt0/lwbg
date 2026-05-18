@@ -35,7 +35,9 @@ export function fromTemplate(templateId, oneElement) {
 }
 export function click(x, type = 'mousedown') {
   const element = typeof x === 'object' ? x : qs(x);
-  element.dispatchEvent(new MouseEvent(type));
+  element.dispatchEvent(new MouseEvent(type, {
+    bubbles: true, cancelable: true,
+  }));
 }
 
 export function sleep(delay) {

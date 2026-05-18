@@ -174,7 +174,7 @@ button {
   height: var(--small-button-size);
 }
 
-button[id^="edit-trex"] {
+.trex-edit {
   position: absolute;
   top: calc(
     (
@@ -184,15 +184,15 @@ button[id^="edit-trex"] {
   );
 }
 
-#edit-trex-advance {
+.trex-edit[data-change="-1"] {
   left: 84px;
 }
 
-#edit-trex-retreat {
+.trex-edit[data-change="+1"] {
   left: 132px;
 }
 
-.edit-kill-human {
+.kill {
   display: none;
   position: absolute;
   line-height: 1.58;

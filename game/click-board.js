@@ -7,9 +7,8 @@ import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {edit} from './edit-mode.js';
 
-export function clickHumanSpace(e) {
-  const space = +e.data.space;
-  const isBldg = !!e.data.isBldg;
+export function clickHumanSpace(space) {
+  const isBldg = bd.bldgHumanSpaces.includes(space);
   if (edit.on) {
     clickHumanSpaceEditMode(space, isBldg);
     return;
@@ -55,9 +54,8 @@ export function clickHumanSpace(e) {
   }
 }
 
-export function clickRaptorSpace(e) {
-  const space =  +e.data.space;
-  const isBldg = !!e.data.isBldg;
+export function clickRaptorSpace(space) {
+  const isBldg = bd.bldgRaptorSpaces.includes(space);
   if (edit.on) {
     clickRaptorSpaceEditMode(space);
     return;
@@ -102,17 +100,6 @@ export function clickRaptorSpace(e) {
     mv.toGo--;
     if (!mv.toGo) ui.showButton('confirm-button');
   }
-}
-
-export function clickBuilding(e) {
-  const hSpace = +e.data.hSpace;
-  const rSpace = +e.data.rSpace;
-  clickHumanSpace({
-    data: {space: hSpace, isBldg: true},
-  });
-  clickRaptorSpace({
-    data: {space: rSpace, isBldg: true},
-  });
 }
 
 // Needed for human/raptor space click handlers
@@ -190,7 +177,7 @@ function clickHumanSpaceEditMode(space, isBldg) {
       anim.fade('.edit-turn', 1, aTime);
     }
   }
-  const killButton = qs('.selected .edit-kill-human');
+  const killButton = qs('.selected .kill');
   if (killButton) anim.fade(killButton, 0, aTime);
   qs('.selected').classList.remove('selected');
   ui.raptorItemsClickable(true);
