@@ -30,7 +30,7 @@ function targetItem(event, selector) {
   return +id.slice(id.lastIndexOf('-') + 1);
 }
 
-// Add piece and space click handlers
+// Add gameplay click handlers
 ael('#gameplay-container', 'mousedown', (e) => {
   const rPiece = targetItem(e, '.raptor-piece');
   if (rPiece > -1) return clickRaptorPiece(rPiece);
@@ -44,6 +44,11 @@ ael('#gameplay-container', 'mousedown', (e) => {
   if (tSpace > -1) {
     return clickEditTrex({absolute: tSpace});
   }
+  const trexButton = e.target.closest('.trex-edit');
+  if (trexButton) {
+    const relative = +trexButton.dataset.change;
+    return clickEditTrex({relative});
+  }
   const hSpace = targetItem(e, '.human-space');
   let rSpace;
   if (hSpace > -1) {
@@ -53,12 +58,4 @@ ael('#gameplay-container', 'mousedown', (e) => {
   }
   rSpace ??= targetItem(e, '.raptor-space');
   if (rSpace > -1) clickRaptorSpace(rSpace);
-});
-
-// Add edit button click handlers
-ael('#edit-trex-advance', 'mousedown', () => {
-  clickEditTrex({relative: -1});
-});
-ael('#edit-trex-retreat', 'mousedown', () => {
-  clickEditTrex({relative: 1});
 });

@@ -57,7 +57,7 @@ function endEditMode() {
   }
   edit.clear();
   qs('.selected')?.classList.remove('selected');
-  for (const element of qsa('.edit-control')) {
+  for (const element of qsa('.edit-control, .kill')) {
     anim.fade(element, 0, anim.time.editControlFade);
   }
   ui.showButton('show-more');

@@ -26,11 +26,13 @@
   </div>
   <div id="trex-edges" class="full-board"></div>
   <div id="trex-piece" class="trex-piece">
-    <button type="button" id="edit-trex-advance"
-      class="edit-control small-button">&#x2b06;
+    <button type="button" data-change="-1"
+      class="trex-edit small-button edit-control">
+      &#x2b06;
     </button>
-    <button type="button" id="edit-trex-retreat"
-      class="edit-control small-button">&#x2b07;
+    <button type="button" data-change="+1"
+      class="trex-edit small-button edit-control">
+      &#x2b07;
     </button>
   </div>
   <div id="gameplay-menu" class="non-zoom">
@@ -347,8 +349,8 @@
 <template id="human-piece">
   <div class="human-piece">
     <div class="human-component dead-marker">X</div>
-    <button type="button"
-      class="kill small-button edit-control">&#x2716;
+    <button type="button" class="kill small-button">
+      &#x2716;
     </button>
   </div>
 </template>
