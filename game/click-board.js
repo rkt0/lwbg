@@ -177,7 +177,7 @@ function clickHumanSpaceEditMode(space, isBldg) {
       anim.fade('.edit-turn', 1, aTime);
     }
   }
-  const killButton = qs('.selected .edit-kill-human');
+  const killButton = qs('.selected .kill');
   if (killButton) anim.fade(killButton, 0, aTime);
   qs('.selected').classList.remove('selected');
   ui.raptorItemsClickable(true);

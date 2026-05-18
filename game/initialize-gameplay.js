@@ -23,35 +23,36 @@ gp.setSaveFunction(() => {autoSave.update();});
 autoSave.clear();
 edit.clear();
 
-// Add human piece click handlers
-for (let i = 0; i < bd.nHumanPieces; i++) {
-  const id = `human-piece-${i}`;
-  ael(`#${id} .edit-kill-human`, 'mousedown', (e) => {
-    e.stopPropagation();
-    e.data = {piece: i};
-    clickEditKill(e);
-  });
-}
-
-// Add piece and space click handlers
+// Helper function to get item index for click target
 function targetItem(event, selector) {
   const id = event.target.closest(selector)?.id;
   if (!id) return -1;
   return +id.slice(id.lastIndexOf('-') + 1);
 }
+
+// Add piece and space click handlers
 ael('#gameplay-container', 'mousedown', (e) => {
   const rPiece = targetItem(e, '.raptor-piece');
-  if (rPiece > -1) clickRaptorPiece(rPiece);
+  if (rPiece > -1) return clickRaptorPiece(rPiece);
   const hPiece = targetItem(e, '.human-piece');
-  if (hPiece > -1) clickHumanPiece(hPiece);
+  if (hPiece > -1) {
+    if (e.target.closest('.kill')) {
+      return clickEditKill(hPiece);
+    } else return clickHumanPiece(hPiece);
+  }
+  const tSpace = targetItem(e, '.trex-space');
+  if (tSpace > -1) {
+    return clickEditTrex({absolute: tSpace});
+  }
   const hSpace = targetItem(e, '.human-space');
-  if (hSpace > -1) clickHumanSpace(hSpace);
-  const bldg = bd.bldgHumanSpaces.indexOf(hSpace);
-  let rSpace = bd.bldgRaptorSpaces[bldg];
+  let rSpace;
+  if (hSpace > -1) {
+    clickHumanSpace(hSpace);
+    const bldg = bd.bldgHumanSpaces.indexOf(hSpace);
+    rSpace = bd.bldgRaptorSpaces[bldg];
+  }
   rSpace ??= targetItem(e, '.raptor-space');
   if (rSpace > -1) clickRaptorSpace(rSpace);
-  const tSpace = targetItem(e, '.trex-space');
-  if (tSpace > -1) clickEditTrex({absolute: tSpace});
 });
 
 // Add edit button click handlers
