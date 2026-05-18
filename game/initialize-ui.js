@@ -11,7 +11,6 @@ import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {pieces} from './pieces.js';
-import {music} from './music.js';
 import {gs, mv, zd, pl} from './game-objects.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
