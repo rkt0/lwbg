@@ -528,8 +528,3 @@ ael('#message-container', 'mouseenter', () => {
 ael('#message-container', 'mouseleave', () => {
   mouseover(false);
 });
-
-// Gameplay audio toggle button click handler
-ael('#toggle-audio', 'mousedown', () => {
-  music.toggle();
-});

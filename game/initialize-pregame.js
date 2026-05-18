@@ -86,7 +86,4 @@ ael('#start-container', 'mousedown', (e) => {
   else if (id === 'load-saved') loadSaved();
   else if (id === 'load-overwrite') loadOverwrite();
   else if (id === 'load-new') loadNew();
-  else if (id === 'start-toggle-audio') {
-    music.toggle();
-  }
 });

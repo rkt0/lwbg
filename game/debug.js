@@ -1,7 +1,7 @@
 import {qs, cesvg} from './utility.js';
 
 export const debug = {
-  skipAutoSave: false,
+  skipAutoSave: true,
   boardLabels: {
     humanSpace: false,
     raptorPoint: false,

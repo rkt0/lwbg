@@ -211,14 +211,14 @@ button {
 
 /* Audio toggle */
 
-#toggle-audio {
+#gameplay-container .toggle-audio {
   position: fixed;
   top: var(--matte-top, 0);
   right: var(--matte-right, 0);
   border-style: none none solid solid;
 }
 
-#toggle-audio .icon {
+#gameplay-container .toggle-audio .icon {
   --size: 24px;
   width: var(--size);
   height: var(--size);
@@ -227,11 +227,11 @@ button {
   );
 }
 
-#start-toggle-audio {
+#start-container .toggle-audio {
   text-align: left;
 }
 
-#start-toggle-audio .icon {
+#start-container .toggle-audio .icon {
   --size: 36px;
   position: absolute;
   right: 0;
@@ -244,7 +244,7 @@ button {
   margin-right: 36px;
 }
 
-#start-toggle-audio span {
+.toggle-audio span {
   padding-left: 36px;
 }
 

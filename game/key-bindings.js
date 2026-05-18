@@ -79,7 +79,7 @@ document.addEventListener('keydown', (e) => {
       break;
     case 'm':
       e.preventDefault();
-      click('#toggle-audio');
+      music.toggle();
       break;
     case 'K':
       e.preventDefault();
