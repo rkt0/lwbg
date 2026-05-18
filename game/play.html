@@ -54,14 +54,20 @@
         <div class="die die-human die-movement">
         </div>
         <div class="die die-human die-continue">
+          <div class="face" data-roll="0">Stop</div>
+          <div class="face" data-roll="1">Go</div>
         </div>
         <div class="die die-raptor die-movement">
         </div>
         <div class="die die-raptor die-continue">
+          <div class="face" data-roll="0">Stop</div>
+          <div class="face" data-roll="1">Go</div>
         </div>
         <div class="die die-trex die-movement">
-          <!-- <div class="face">&#x2716;</div> -->
-          <!-- <div class="face">&#x2b06;</div> -->
+          <div class="face" data-roll="0">&#x2716;
+          </div>
+          <div class="face" data-roll="1">&#x2b06;
+          </div>
         </div>
       </div>
     </div>
@@ -353,18 +359,6 @@
 </template>
 <template id="raptor-piece">
   <div class="raptor-piece"></div>
-</template>
-<template id="face-continue-0">
-  <div class="face face-continue">Stop</div>
-</template>
-<template id="face-continue-1">
-  <div class="face face-continue">Go</div>
-</template>
-<template id="face-trex-0">
-  <div class="face face-trex">&#x2716;</div>
-</template>
-<template id="face-trex-1">
-  <div class="face face-trex">&#x2b06;</div>
 </template>
 <template id="save-introduction">
   <p>You will now be asked to create a file.

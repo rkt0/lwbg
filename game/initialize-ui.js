@@ -593,49 +593,6 @@ ael('#zoom-in', 'mousedown', () => {
   qs('#zoom-in').classList.add('current');
 });
 
-// Make die faces
-const dieWidth = cssInt('--die-content-width');
-function squeezeFace(element) {
-  const copy = element.cloneNode(true);
-  copy.classList.add('copy');
-  document.body.append(copy);
-  // Calculation of squeeze transform must be delayed
-  // to give browser enough time to render copy
-  setTimeout(() => {
-    const {width} = copy.getBoundingClientRect();
-    copy.remove();
-    if (width <= dieWidth) return;
-    const s = dieWidth / width;
-    const t = dieWidth * (s - 1) / 2;
-    const scale = `scaleX(${s})`;
-    const translate = `translateX(${t}px)`;
-    element.style.transform = `${translate} ${scale}`;
-  }, aTime * 3);
-}
-for (const species of Object.keys(dice)) {
-  for (const type of Object.keys(dice[species])) {
-    const divDie = qs(`.die-${species}.die-${type}`);
-    const values = [...new Set(dice[species][type])];
-    for (const v of values) {
-      const divFace = ce('div');
-      divFace.classList.add(
-        'face', `face-${species}`, `face-${type}`,
-      );
-      divFace.dataset.roll = v;
-      let rollText = v;
-      if (type === 'continue') {
-        rollText = v ? 'Go' : 'Stop';
-      } else if (species === 'trex') {
-        rollText = v ? '\u2b06' : '\u2716';
-      }
-      divFace.append(rollText);
-      divDie.append(divFace);
-      squeezeFace(divFace);
-      divFace.style.display = 'none';
-    }
-  }
-}
-
 // Message hover handler
 function mouseover(inbound) {
   const container = qs('#message-container');
