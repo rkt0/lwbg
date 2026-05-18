@@ -1,7 +1,7 @@
 import {
-  qs, qsa, ael, aelo, ce, click, sleep,
+  qs, qsa, ael, aelo, click, sleep,
   deepCopy, isNull, sqrtStep, rollDie,
-  windowWH, absoluteBoundingRect, boundingBox, cssInt,
+  windowWH, absoluteBoundingRect, boundingBox,
 } from './utility.js';
 import {scrollBetter} from './scroll.js';
 import {debug} from './debug.js';
