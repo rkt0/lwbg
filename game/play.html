@@ -51,20 +51,17 @@
     <div id="roll-display"
       class="info dormant slot-roll">
       <div class="flex-container">
-        <div id="die-human-movement"
-          class="die die-human die-movement">
+        <div class="die die-human die-movement">
         </div>
-        <div id="die-human-continue"
-          class="die die-human die-continue">
+        <div class="die die-human die-continue">
         </div>
-        <div id="die-raptor-movement"
-          class="die die-raptor die-movement">
+        <div class="die die-raptor die-movement">
         </div>
-        <div id="die-raptor-continue"
-          class="die die-raptor die-continue">
+        <div class="die die-raptor die-continue">
         </div>
-        <div id="die-trex-movement"
-          class="die die-trex die-movement">
+        <div class="die die-trex die-movement">
+          <!-- <div class="face">&#x2716;</div> -->
+          <!-- <div class="face">&#x2b06;</div> -->
         </div>
       </div>
     </div>
@@ -355,7 +352,19 @@
   </div>
 </template>
 <template id="raptor-piece">
-  <div class="raptor-piece"> </div>
+  <div class="raptor-piece"></div>
+</template>
+<template id="face-continue-0">
+  <div class="face face-continue">Stop</div>
+</template>
+<template id="face-continue-1">
+  <div class="face face-continue">Go</div>
+</template>
+<template id="face-trex-0">
+  <div class="face face-trex">&#x2716;</div>
+</template>
+<template id="face-trex-1">
+  <div class="face face-trex">&#x2b06;</div>
 </template>
 <template id="save-introduction">
   <p>You will now be asked to create a file.

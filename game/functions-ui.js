@@ -44,7 +44,7 @@ export const ui = {
     const {turn, rollN, rollGo} = rollState;
     const diceToRoll = [];
     for (const type of ['movement', 'continue']) {
-      const die = qs(`#die-${turn}-${type}`);
+      const die = qs(`.die-${turn}.die-${type}`);
       if (!die) continue;
       diceToRoll.push(die);
       die.style.display = 'inline';

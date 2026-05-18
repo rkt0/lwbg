@@ -614,8 +614,8 @@ function squeezeFace(element) {
 }
 for (const species of Object.keys(dice)) {
   for (const type of Object.keys(dice[species])) {
-    const divDie = qs(`#die-${species}-${type}`);
-    const values = [... new Set(dice[species][type])];
+    const divDie = qs(`.die-${species}.die-${type}`);
+    const values = [...new Set(dice[species][type])];
     for (const v of values) {
       const divFace = ce('div');
       divFace.classList.add(

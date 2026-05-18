@@ -74,7 +74,7 @@ ael('#confirm-edits', 'mousedown', async () => {
 
 // Used for editing both turn and dice
 function replaceDieValue(species, type, value) {
-  const die = qs(`#die-${species}-${type}`);
+  const die = qs(`.die-${species}.die-${type}`);
   for (const face of qsa('.face', die)) {
     face.style.display = 'none';
   }
