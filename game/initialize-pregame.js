@@ -79,7 +79,7 @@ async function selectFileToLoad() {
   ui.disableMenu('load-choose-save', false);
 }
 
-// Add start screen click handler
+// Add start screen click handlers
 ael('#start-container', 'mousedown', (e) => {
   const id = e.target.closest('button')?.id;
   if (id === 'start-new') startNew();

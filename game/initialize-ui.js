@@ -1,20 +1,17 @@
 import {
-  qs, qsa, ael, aelo, click, sleep, sqrtStep, rollDie,
+  qs, qsa, ael, click, sleep, sqrtStep, rollDie,
   windowWH, absoluteBoundingRect, boundingBox,
 } from './utility.js';
 import {scrollBetter} from './scroll.js';
-import {debug} from './debug.js';
 import {prng} from './prngs.js';
 import {bd} from './board-topology.js';
 import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
-import {pieces} from './pieces.js';
 import {gs, mv, zd, pl} from './game-objects.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
-import {edit} from './edit-mode.js';
 
 // Set display to none on dormant elements
 for (const element of qsa('.dormant')) {
@@ -31,76 +28,8 @@ ui.disableMenu('player-control');
 ui.disableMenu('more-options');
 ui.disableMenu('quit-options');
 
-// Animation times for menu fade and edit control fade
+// Animation time for menu fade
 const aTime = anim.time.menuFade;
-
-// Needed for more menu click handlers
-async function manualSave() {
-  if (debug.skipAutoSave) {
-    ui.hideMore();
-    return;
-  }
-  const file = await autoSave.fh.getFile();
-  const contents = await file.text();
-  try {
-    const fh = await showSaveFilePicker({
-      startIn: autoSave.fh,
-      types: [autoSave.fileType],
-    });
-    const writable = await fh.createWritable();
-    await writable.write(contents);
-    await writable.close();
-    ui.showMessage('manual-save-success');
-  } finally {
-    ui.hideMore();
-  }
-}
-
-// More menu click handlers
-ael('#hide-more', 'mousedown', async () => {
-  await ui.hideMore();
-});
-ael('#new-save-point', 'mousedown', async () => {
-  ui.disableMenu('more-options');
-  const help = qs('#manual-save-help');
-  await anim.fade('#more-options', 0, aTime);
-  await anim.fade(help, 1, aTime, {display: ''});
-  aelo(help, 'mousedown', () => {
-    manualSave();
-  });
-});
-ael('#begin-edit', 'mousedown', () => {
-  edit.begin();
-});
-ael('#change-control', 'mousedown', async () => {
-  ui.disableMenu('more-options');
-  await anim.fade('#more-options', 0, aTime);
-  ui.showControl();
-});
-ael('#show-quit-options', 'mousedown', async () => {
-  ui.disableMenu('more-options');
-  await anim.fade('#more-options', 0, aTime);
-  await anim.fade('#quit-options', 1, aTime, {
-    display: '',
-  });
-  ui.disableMenu('quit-options', false);
-});
-
-// Confirm quit menu click handlers
-ael('#abort-quit', 'mousedown', () => {
-  ui.hideMore();
-});
-ael('#confirm-quit', 'mousedown', async () => {
-  await ui.hideMore();
-  await anim.fade('#gameplay-container', 0, aTime);
-  gp.initializeObjects();
-  gp.initializeView();
-  pieces.shuffleFeatures();
-  pieces.addImgs();
-  autoSave.clear();
-  ui.showStartOptions(true);
-  anim.fade('#start-container', 1, aTime);
-});
 
 // Simple gameplay menu click handlers
 ael('#show-more', 'mousedown', async () => {
