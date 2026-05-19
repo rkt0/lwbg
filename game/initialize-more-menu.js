@@ -38,7 +38,7 @@ async function savePoint() {
   await anim.fade(help, 1, aTime, {display: ''});
   aelo(help, 'mousedown', () => {manualSave();});
 }
-async function beginChangeControlInGame() {
+async function controlInGame() {
   ui.disableMenu('more-options');
   await anim.fade('#more-options', 0, aTime);
   ui.showControl();
@@ -64,24 +64,13 @@ async function confirmQuit() {
 }
 
 // Add more menu click handlers
-ael('#hide-more', 'mousedown', () => {
-  ui.hideMore();
-});
-ael('#save-point', 'mousedown', () => {
-  savePoint();
-});
-ael('#begin-edit', 'mousedown', () => {
-  edit.begin();
-});
-ael('#change-control', 'mousedown', () => {
-  beginChangeControlInGame();
-});
-ael('#show-quit-options', 'mousedown', () => {
-  showQuitOptions();
-});
-ael('#abort-quit', 'mousedown', () => {
-  ui.hideMore();
-});
-ael('#confirm-quit', 'mousedown', () => {
-  confirmQuit();
-});
+export function clickMoreMenu(e) {
+  const id = e.target.closest('button')?.id;
+  if (id === 'show-quit-options') showQuitOptions();
+  else if (id === 'hide-more') ui.hideMore();
+  else if (id === 'save-point') savePoint();
+  else if (id === 'begin-edit') edit.begin();
+  else if (id === 'change-control') controlInGame();
+  else if (id === 'abort-quit') ui.hideMore();
+  else if (id === 'confirm-quit') confirmQuit();
+}
