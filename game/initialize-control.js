@@ -7,6 +7,9 @@ import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 
+// Temporary import during refactor
+import {moreMenu} from './more-menu.js';
+
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
 
@@ -25,7 +28,7 @@ async function savePlayers() {
 }
 function continueInGame() {
   savePlayers();
-  ui.hideMore();
+  moreMenu.hide();
   ui.hideMessage();
   anim.fade('#player-control', 0, aTime);
   if (ai.control[gs.turn] && gs.phase !== 'roll') {

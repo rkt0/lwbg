@@ -11,7 +11,7 @@ import {
   clickHumanPiece, clickRaptorPiece,
   clickEditKill, clickEditTrex,
 } from './click-pieces.js';
-import {clickMoreMenu} from './initialize-more-menu.js';
+import {moreMenu} from './more-menu.js';
 import './initialize-board.js';
 
 // Make pieces
@@ -34,7 +34,7 @@ function targetItem(event, selector) {
 // Add gameplay click handlers
 ael('#gameplay-container', 'mousedown', (e) => {
   if (e.target.closest('#more-menu')) {
-    return clickMoreMenu(e);
+    return moreMenu.handleClick(e);
   }
   const rPiece = targetItem(e, '.raptor-piece');
   if (rPiece > -1) return clickRaptorPiece(rPiece);

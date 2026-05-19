@@ -133,13 +133,4 @@ export const ui = {
     });
     this.disableMenu('player-control', false);
   },
-  async hideMore() {
-    this.disableMenu('more-menu');
-    const moreMenu = qs('#more-menu');
-    await anim.fade(moreMenu, 0, anim.time.menuFade);
-    for (const child of moreMenu.children) {
-      child.style.display = 'none';
-    }
-    document.body.style.overflow = 'visible';
-  },
 };

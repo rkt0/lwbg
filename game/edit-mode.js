@@ -17,7 +17,6 @@ export const edit = {
     this.dieCodes = {movement: 0, continue: 0};
   },
   begin() {
-    ui.hideMore();
     if (gs.turn !== 'trex' && gs.turn !== 'over') {
       click('#cancel-button');
     }

@@ -1,4 +1,4 @@
-import {qs, ael, aelo} from './utility.js';
+import {qs, aelo} from './utility.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
 import {pieces} from './pieces.js';
@@ -7,13 +7,39 @@ import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 import {edit} from './edit-mode.js';
 
+export const moreMenu = {
+  element: qs('#more-menu'),
+  async hide() {
+    ui.disableMenu('more-menu');
+    await anim.fade(this.element, 0, aTime);
+    for (const child of this.element.children) {
+      child.style.display = 'none';
+    }
+    document.body.style.overflow = 'visible';
+  },
+  handleClick(e) {
+    const id = e.target.closest('button')?.id;
+    if (id === 'show-quit-options') showQuitOptions();
+    else if (id === 'abort-quit') this.hide();
+    else if (id === 'confirm-quit') confirmQuit();
+    else if (id === 'hide-more') this.hide();
+    else if (id === 'save-point') savePoint();
+    else if (id === 'change-control') controlInGame();
+    else if (id === 'begin-edit') {
+      this.hide();
+      edit.begin();
+    }
+  },
+};
+
+
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
 
 // More menu click handlers
 async function manualSave() {
   if (debug.skipAutoSave) {
-    ui.hideMore();
+    moreMenu.hide();
     return;
   }
   const file = await autoSave.fh.getFile();
@@ -28,7 +54,7 @@ async function manualSave() {
     await writable.close();
     ui.showMessage('manual-save-success');
   } finally {
-    ui.hideMore();
+    moreMenu.hide();
   }
 }
 async function savePoint() {
@@ -52,7 +78,7 @@ async function showQuitOptions() {
   ui.disableMenu('quit-options', false);
 }
 async function confirmQuit() {
-  await ui.hideMore();
+  await moreMenu.hide();
   await anim.fade('#gameplay-container', 0, aTime);
   gp.initializeObjects();
   gp.initializeView();
@@ -61,16 +87,4 @@ async function confirmQuit() {
   autoSave.clear();
   ui.showStartOptions(true);
   anim.fade('#start-container', 1, aTime);
-}
-
-// Add more menu click handlers
-export function clickMoreMenu(e) {
-  const id = e.target.closest('button')?.id;
-  if (id === 'show-quit-options') showQuitOptions();
-  else if (id === 'hide-more') ui.hideMore();
-  else if (id === 'save-point') savePoint();
-  else if (id === 'begin-edit') edit.begin();
-  else if (id === 'change-control') controlInGame();
-  else if (id === 'abort-quit') ui.hideMore();
-  else if (id === 'confirm-quit') confirmQuit();
 }
