@@ -1,6 +1,5 @@
 import {
-  qs, qsa, ael, aelo, click, sleep,
-  deepCopy, sqrtStep, rollDie,
+  qs, qsa, ael, aelo, click, sleep, sqrtStep, rollDie,
   windowWH, absoluteBoundingRect, boundingBox,
 } from './utility.js';
 import {scrollBetter} from './scroll.js';
@@ -34,8 +33,8 @@ ui.disableMenu('quit-options');
 
 // Animation times for menu fade and edit control fade
 const aTime = anim.time.menuFade;
-const eTime = anim.time.editControlFade;
 
+// Needed for more menu click handlers
 async function manualSave() {
   if (debug.skipAutoSave) {
     ui.hideMore();
@@ -56,23 +55,6 @@ async function manualSave() {
     ui.hideMore();
   }
 }
-function dieCode(value, die) {
-  if (value === null || !die) return 0;
-  // Max to return 0 instead of -1 if not found
-  return Math.max(die.lastIndexOf(value), 0);
-}
-function enableDiceEdit() {
-  for (const element of qsa('.edit-dice')) {
-    anim.fade(element, 1, eTime);
-  }
-  for (const wrapper of qsa(`.wrapper-${gs.turn}`)) {
-    wrapper.style.display = 'block';
-  }
-  edit.dieCodes.movement =
-    dieCode(gs.rollN, dice[gs.turn].movement);
-  edit.dieCodes.continue =
-    dieCode(gs.rollGo, dice[gs.turn].continue);
-};
 
 // More menu click handlers
 ael('#hide-more', 'mousedown', async () => {
@@ -88,36 +70,7 @@ ael('#new-save-point', 'mousedown', async () => {
   });
 });
 ael('#begin-edit', 'mousedown', () => {
-  ui.hideMore();
-  if (gs.turn !== 'trex' && gs.turn !== 'over') {
-    click('#cancel-button');
-  }
-  edit.on = true;
-  edit.gsPrevious = deepCopy(gs);
-  ui.hideMessage();
-  const hidden = [
-    'show-more', 'roll-button', 'decline-button',
-    'ok-trex-move', 'ok-no-move', 'ok-ai-move',
-  ];
-  for (const x of hidden) ui.hideButton(x);
-  for (const element of qsa('.edit-control')) {
-    if (element.classList.contains('.edit-dice')) {
-      return;
-    }
-  }
-  const universalControls =
-    '.edit-control:not(.edit-dice):not(.edit-turn)';
-  for (const element of qsa(universalControls)) {
-    anim.fade(element, 1, eTime);
-  }
-  if (gs.turn === 'over') {
-    anim.fade('#game-over', 0, eTime);
-  } else anim.fade('.edit-turn', 1, eTime);
-  if (gs.phase !== 'roll') enableDiceEdit();
-  ui.humanItemsClickable(true);
-  ui.raptorItemsClickable(true);
-  qs('#cancel-edits').disabled = false;
-  qs('#confirm-edits').disabled = false;
+  edit.begin();
 });
 ael('#change-control', 'mousedown', async () => {
   ui.disableMenu('more-options');

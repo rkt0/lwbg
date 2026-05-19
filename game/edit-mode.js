@@ -1,4 +1,6 @@
-import {qs, qsa, ael} from './utility.js';
+import {
+  qs, qsa, ael, click, deepCopy,
+} from './utility.js';
 import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -13,6 +15,39 @@ export const edit = {
     this.gsPrevious = {};
     this.selected = {species: null, piece: null};
     this.dieCodes = {movement: 0, continue: 0};
+  },
+  begin() {
+    ui.hideMore();
+    if (gs.turn !== 'trex' && gs.turn !== 'over') {
+      click('#cancel-button');
+    }
+    this.on = true;
+    this.gsPrevious = deepCopy(gs);
+    ui.hideMessage();
+    const hidden = [
+      'show-more', 'roll-button', 'decline-button',
+      'ok-trex-move', 'ok-no-move', 'ok-ai-move',
+    ];
+    for (const x of hidden) ui.hideButton(x);
+    for (const element of qsa('.edit-control')) {
+      if (element.classList.contains('.edit-dice')) {
+        return;
+      }
+    }
+    const universalControls =
+      '.edit-control:not(.edit-dice):not(.edit-turn)';
+    const eTime = anim.time.editControlFade;
+    for (const element of qsa(universalControls)) {
+      anim.fade(element, 1, eTime);
+    }
+    if (gs.turn === 'over') {
+      anim.fade('#game-over', 0, eTime);
+    } else anim.fade('.edit-turn', 1, eTime);
+    if (gs.phase !== 'roll') enableDiceEdit();
+    ui.humanItemsClickable(true);
+    ui.raptorItemsClickable(true);
+    qs('#cancel-edits').disabled = false;
+    qs('#confirm-edits').disabled = false;
   },
 };
 
@@ -150,3 +185,20 @@ for (const s of Object.keys(dice)) {
     });
   }
 }
+function dieCode(value, die) {
+  if (value === null || !die) return 0;
+  // Max to return 0 instead of -1 if not found
+  return Math.max(die.lastIndexOf(value), 0);
+}
+function enableDiceEdit() {
+  for (const element of qsa('.edit-dice')) {
+    anim.fade(element, 1, eTime);
+  }
+  for (const wrapper of qsa(`.wrapper-${gs.turn}`)) {
+    wrapper.style.display = 'block';
+  }
+  edit.dieCodes.movement =
+    dieCode(gs.rollN, dice[gs.turn].movement);
+  edit.dieCodes.continue =
+    dieCode(gs.rollGo, dice[gs.turn].continue);
+};
