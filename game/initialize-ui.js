@@ -1,6 +1,6 @@
 import {
   qs, qsa, ael, aelo, click, sleep,
-  deepCopy, isNull, sqrtStep, rollDie,
+  deepCopy, sqrtStep, rollDie,
   windowWH, absoluteBoundingRect, boundingBox,
 } from './utility.js';
 import {scrollBetter} from './scroll.js';
@@ -36,87 +36,9 @@ ui.disableMenu('quit-options');
 const aTime = anim.time.menuFade;
 const eTime = anim.time.editControlFade;
 
-// Needed for player control screen click handlers
-async function savePlayers() {
-  if (!ai.control.changed) return;
-  ai.control.changed = false;
-  if (debug.skipAutoSave) return;
-  const file = await autoSave.fh.getFile();
-  const contents = await file.text();
-  const writable = await autoSave.fh.createWritable();
-  await writable.write(contents);
-  const playerCode = ai.control.fullSaveCode();
-  await writable.write(playerCode + ';');
-  await writable.close();
-}
-function continueInGame() {
-  savePlayers();
-  hideMore();
-  ui.hideMessage();
-  anim.fade('#player-control', 0, aTime);
-  if (ai.control[gs.turn] && gs.phase !== 'roll') {
-    click('#cancel-button');
-    ui.hideButton('ok-no-move');
-    ui.hideButton('decline-button');
-    ui.showButton('ok-ai-move');
-  } else {
-    ui.hideButton('ok-ai-move');
-    if (gs.je) gp.startJumpEnter();
-  }
-}
-async function continueAtStart() {
-  await anim.fade('#player-control', 0, aTime);
-  autoSave.begin();
-};
-function changeControl(species, level) {
-  const area = qs(`#${species}-control`);
-  qs('.current', area)?.classList.remove('current');
-  if (level === -1) {
-    qs('.manual', area).classList.add('current');
-    ai.control[species] = false;
-  } else {
-    qs(`.ai-${level}`, area).classList.add('current');
-    ai.control[species] = ai.level[species][level];
-  }
-  if (gs.turn) ai.control.changed = true;
-  if (isNull(ai.control.human)) return;
-  if (isNull(ai.control.raptor)) return;
-  const button = qs('#continue-from-control');
-  anim.fade(button, 1, aTime);
-  button.style.pointerEvents = 'auto';
-}
-
-// Player control screen click handlers
-ael('#continue-from-control', 'mousedown', () => {
-  ui.disableMenu('player-control');
-  if (gs.turn) continueInGame();
-  else continueAtStart();
-});
-for (const species of ['human', 'raptor']) {
-  const area = `#${species}-control`;
-  ael(`${area} .manual`, 'mousedown', () => {
-    changeControl(species, -1);
-  });
-  for (let i = 0; i < ai.level[species].length; i++) {
-    ael(`${area} .ai-${i}`, 'mousedown', () => {
-      changeControl(species, i);
-    });
-  }
-}
-
-// Needed for more menu click handlers
-async function hideMore() {
-  ui.disableMenu('more-menu');
-  const moreMenu = qs('#more-menu');
-  await anim.fade(moreMenu, 0, aTime);
-  for (const child of moreMenu.children) {
-    child.style.display = 'none';
-  }
-  document.body.style.overflow = 'visible';
-}
 async function manualSave() {
   if (debug.skipAutoSave) {
-    hideMore();
+    ui.hideMore();
     return;
   }
   const file = await autoSave.fh.getFile();
@@ -131,7 +53,7 @@ async function manualSave() {
     await writable.close();
     ui.showMessage('manual-save-success');
   } finally {
-    hideMore();
+    ui.hideMore();
   }
 }
 function dieCode(value, die) {
@@ -154,7 +76,7 @@ function enableDiceEdit() {
 
 // More menu click handlers
 ael('#hide-more', 'mousedown', async () => {
-  await hideMore();
+  await ui.hideMore();
 });
 ael('#new-save-point', 'mousedown', async () => {
   ui.disableMenu('more-options');
@@ -166,7 +88,7 @@ ael('#new-save-point', 'mousedown', async () => {
   });
 });
 ael('#begin-edit', 'mousedown', () => {
-  hideMore();
+  ui.hideMore();
   if (gs.turn !== 'trex' && gs.turn !== 'over') {
     click('#cancel-button');
   }
@@ -213,10 +135,10 @@ ael('#show-quit-options', 'mousedown', async () => {
 
 // Confirm quit menu click handlers
 ael('#abort-quit', 'mousedown', () => {
-  hideMore();
+  ui.hideMore();
 });
 ael('#confirm-quit', 'mousedown', async () => {
-  await hideMore();
+  await ui.hideMore();
   await anim.fade('#gameplay-container', 0, aTime);
   gp.initializeObjects();
   gp.initializeView();

@@ -4,7 +4,7 @@ import {music} from './music.js';
 import {ui} from './functions-ui.js';
 import {autoSave} from './auto-save.js';
 
-// Animation times for menu fade
+// Animation time for menu fade
 const aTime = anim.time.menuFade;
 
 // Add title screen click handler
