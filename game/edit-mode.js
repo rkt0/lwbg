@@ -36,7 +36,6 @@ export const edit = {
     }
     const universalControls =
       '.edit-control:not(.edit-dice):not(.edit-turn)';
-    const eTime = anim.time.editControlFade;
     for (const element of qsa(universalControls)) {
       anim.fade(element, 1, eTime);
     }
@@ -50,6 +49,9 @@ export const edit = {
     qs('#confirm-edits').disabled = false;
   },
 };
+
+// Animation time for edit control fade
+const eTime = anim.time.editControlFade;
 
 // Banner
 async function editGame(gsNew) {
