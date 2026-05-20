@@ -210,8 +210,7 @@ async function startGame(fhLoad) {
     gp.initializeView();
     if (!gs.turn) gp.endTurn();
     if (fhLoad) {
-      document.body.style.overflow = 'hidden';
-      await anim.fade('#more-menu', 1, aTime);
+      gp.interrupt(0);
       ui.showControl();
     }
   } else {

@@ -9,13 +9,13 @@ import {edit} from './edit-mode.js';
 
 export const moreMenu = {
   element: qs('#more-menu'),
-  async hide() {
+  async hide(resumeGameplay = true) {
     ui.disableMenu('more-menu');
+    if (resumeGameplay) gp.resume();
     await anim.fade(this.element, 0, aTime);
     for (const child of this.element.children) {
       child.style.display = 'none';
     }
-    document.body.style.overflow = 'visible';
   },
   handleClick(e) {
     const id = e.target.closest('button')?.id;
@@ -65,8 +65,7 @@ async function savePoint() {
   aelo(help, 'mousedown', () => {manualSave();});
 }
 async function controlInGame() {
-  ui.disableMenu('more-options');
-  await anim.fade('#more-options', 0, aTime);
+  await moreMenu.hide(false);
   ui.showControl();
 }
 async function showQuitOptions() {

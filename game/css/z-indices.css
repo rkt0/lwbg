@@ -55,8 +55,12 @@
   z-index: 11;
 }
 
-#more-menu {
+#gameplay-container .scrim {
   z-index: 12;
+}
+
+#more-menu {
+  z-index: 13;
 }
 
 

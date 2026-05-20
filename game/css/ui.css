@@ -9,8 +9,14 @@
 /* General */
 
 button,
-.info,
-#more-menu {
+.info {
+  backdrop-filter: blur(5px);
+  border: solid var(--button-border-width)
+    var(--color-border);
+}
+
+.scrim {
+  background: #5a5b5faa;
   backdrop-filter: blur(5px);
 }
 
@@ -19,12 +25,6 @@ button:hover,
   box-shadow: inset 0px 0px 0px 999px #0003;
   cursor: pointer;
   color: #000;
-}
-
-button,
-.info {
-  border: solid var(--button-border-width)
-    var(--color-border);
 }
 
 button {
@@ -120,11 +120,6 @@ button {
 
 
 /* More menu */
-
-#more-menu {
-  background: #5a5b5faa;
-  width: stretch;
-}
 
 #more-menu button {
   width: 288px;

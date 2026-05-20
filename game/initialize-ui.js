@@ -33,7 +33,7 @@ const aTime = anim.time.menuFade;
 
 // Simple gameplay menu click handlers
 ael('#show-more', 'mousedown', async () => {
-  document.body.style.overflow = 'hidden';
+  gp.interrupt();
   anim.fade('#more-options', 1, 0, {display: ''});
   await anim.fade('#more-menu', 1, aTime);
   ui.disableMenu('more-options', false);

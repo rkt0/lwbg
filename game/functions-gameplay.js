@@ -226,6 +226,14 @@ export const gp = {
     // Click again to apply zoom center
     click('#zoom-default');
   },
+  interrupt(time = anim.time.menuFade) {
+    document.body.style.overflow = 'hidden';
+    anim.fade(scrim, 1, time);
+  },
+  resume(time = anim.time.menuFade) {
+    anim.fade(scrim, 0, time);
+    document.body.style.overflow = 'visible';
+  },
 };
 
 function hPiecesOn(space) {
@@ -266,3 +274,4 @@ async function resetPieces() {
     await gp.relocatePiece('raptor', r, s);
   }
 }
+const scrim = qs('#gameplay-container .scrim');
