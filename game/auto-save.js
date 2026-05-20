@@ -48,7 +48,11 @@ export const autoSave = {
       createAutoSaveFile(fhLoad);
     });
   },
+  // startGameFromLoad() injected by player-control.js
 };
+
+// Inject into gameplay object
+gp.save = () => {autoSave.update();};
 
 // Allow for future changes to save file format
 const formatCode = {gameLogic: 0, compression: 0};

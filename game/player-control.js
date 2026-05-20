@@ -14,6 +14,7 @@ export async function showControl() {
   ui.disableMenu('player-control', false);
 }
 
+// Inject into auto-save object
 autoSave.startGameFromLoad = () => {
   gp.interrupt(0);
   showControl();

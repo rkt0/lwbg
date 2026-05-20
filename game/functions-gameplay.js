@@ -231,6 +231,7 @@ export const gp = {
     anim.fade(scrim, 0, time);
     document.body.style.overflow = 'visible';
   },
+  // save() injected by auto-save.js
 };
 
 function hPiecesOn(space) {
