@@ -20,7 +20,7 @@ gp.adjustHumanPositions();
 
 // Initialize objects
 await gp.initializeObjects();
-gp.setSaveFunction(() => {autoSave.update();});
+gp.save = () => {autoSave.update();};
 autoSave.clear();
 edit.clear();
 

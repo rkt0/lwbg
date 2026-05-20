@@ -206,9 +206,6 @@ export const gp = {
     const location = {top: `${t}px`, left: `${l}px`};
     await anim.move(element, location, 0);
   },
-  setSaveFunction(fn) {
-    this.save = fn;
-  },
   async initializeObjects() {
     this.clearMoveObject();
     gs.turn = null;
