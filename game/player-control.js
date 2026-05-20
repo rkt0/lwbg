@@ -7,6 +7,18 @@ import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 
+export async function showControl() {
+  await anim.fade('#player-control', 1, aTime, {
+    display: '',
+  });
+  ui.disableMenu('player-control', false);
+}
+
+autoSave.startGameFromLoad = () => {
+  gp.interrupt(0);
+  showControl();
+};
+
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
 

@@ -209,10 +209,7 @@ async function startGame(fhLoad) {
     anim.fade('#gameplay-container', 1, aTime);
     gp.initializeView();
     if (!gs.turn) gp.endTurn();
-    if (fhLoad) {
-      gp.interrupt(0);
-      ui.showControl();
-    }
+    if (fhLoad) autoSave.startGameFromLoad();
   } else {
     autoSave.fh = void 0;
     await anim.fade('#start-message', 0, aTime);

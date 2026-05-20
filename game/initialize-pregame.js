@@ -3,6 +3,7 @@ import {anim} from './animation.js';
 import {music} from './music.js';
 import {ui} from './functions-ui.js';
 import {autoSave} from './auto-save.js';
+import {showControl} from './player-control.js';
 
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
@@ -19,7 +20,7 @@ aelo('#title-container', 'mousedown', async () => {
 async function startNew() {
   ui.disableMenu('start-options');
   await anim.fade('#start-options', 0, aTime);
-  ui.showControl();
+  showControl();
 }
 async function loadSaved() {
   ui.disableMenu('start-options');

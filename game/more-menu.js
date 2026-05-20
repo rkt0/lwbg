@@ -6,6 +6,7 @@ import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 import {edit} from './edit-mode.js';
+import {showControl} from './player-control.js';
 
 export const moreMenu = {
   element: qs('#more-menu'),
@@ -66,7 +67,7 @@ async function savePoint() {
 }
 async function controlInGame() {
   await moreMenu.hide(false);
-  ui.showControl();
+  showControl();
 }
 async function showQuitOptions() {
   ui.disableMenu('more-options');

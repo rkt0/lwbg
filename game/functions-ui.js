@@ -126,11 +126,4 @@ export const ui = {
       display: '',
     });
   },
-  async showControl() {
-    const aTime = anim.time.menuFade;
-    await anim.fade('#player-control', 1, aTime, {
-      display: '',
-    });
-    this.disableMenu('player-control', false);
-  },
 };
