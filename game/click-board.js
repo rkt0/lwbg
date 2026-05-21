@@ -5,6 +5,7 @@ import {anim} from './animation.js';
 import {gs, mv} from './game-objects.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
+import {message} from './message.js';
 import {edit} from './edit-mode.js';
 
 export function clickHumanSpace(space) {
@@ -35,7 +36,7 @@ export function clickHumanSpace(space) {
       if (checkNoReturnStart(space)) return;
     }
     if (checkHumanOccupied(space, isBldg)) return;
-    ui.hideMessage();
+    message.hide();
     const moveToPath = qs('.human-space.move');
     if (moveToPath) {
       moveToPath.classList.remove('move');
@@ -78,7 +79,7 @@ export function clickRaptorSpace(space) {
       if (checkNoDoubleBack(space)) return;
     }
     if (checkRaptorOccupied(space)) return;
-    ui.hideMessage();
+    message.hide();
     const moveToPath = qs('.raptor-space.move');
     if (moveToPath) {
       moveToPath.classList.remove('move');
@@ -107,12 +108,12 @@ function checkNotAdjacent(from, space) {
   const moveChoices = gs.turn === 'human' ?
     bd.humanChoices.move : bd.raptorChoices.move;
   const result = !moveChoices[from].has(space);
-  if (result) ui.showMessage('not-adjacent');
+  if (result) message.show('not-adjacent');
   return result;
 }
 function checkNoDoubleBack(space) {
   const result = mv.plan.includes(space);
-  if (result) ui.showMessage('no-double-back');
+  if (result) message.show('no-double-back');
   return result;
 }
 
@@ -120,7 +121,7 @@ function checkNoDoubleBack(space) {
 function checkBuildingEndsMove(from) {
   const result =
     bd.bldgHumanSpaces.includes(from) && !gs.je;
-  if (result) ui.showMessage('building-ends-move');
+  if (result) message.show('building-ends-move');
   return result;
 }
 function checkJump(from, space) {
@@ -129,25 +130,25 @@ function checkJump(from, space) {
   if (result) {
     const id = bd.bldgHumanSpaces.includes(space) ?
       'wrong-landing' : 'jump-only-jump';
-    ui.showMessage(id);
+    message.show(id);
   }
   return result;
 }
 function checkMustRollJump(from, space) {
   const result =
     bd.humanChoices.jump[from].has(space);
-  if (result) ui.showMessage('must-roll-jump');
+  if (result) message.show('must-roll-jump');
   return result;
 }
 function checkNoReturnStart(space) {
   const result = space === bd.humanStart;
-  if (result) ui.showMessage('no-return-start');
+  if (result) message.show('no-return-start');
   return result;
 }
 function checkHumanOccupied(space, isBldg) {
   const result = mv.toGo === 1 &&
     gp.nHumansOn(space) && !isBldg;
-  if (result) ui.showMessage('human-occupied');
+  if (result) message.show('human-occupied');
   return result;
 }
 function clickHumanPieceOnClickedSpace(space) {
@@ -198,19 +199,19 @@ function checkEnter(from, space) {
   if (result) {
     const id = bd.bldgRaptorSpaces.includes(space) ?
       'wrong-entry' : 'enter-only-enter';
-    ui.showMessage(id);
+    message.show(id);
   }
   return result;
 }
 function checkMustRollEnter(from, space) {
   const result =
     bd.raptorChoices.enter[from].has(space);
-  if (result) ui.showMessage('must-roll-enter');
+  if (result) message.show('must-roll-enter');
   return result;
 }
 function checkRaptorOccupied(space) {
   const result = gp.nRaptorsOn(space) > 0;
-  if (result) ui.showMessage('raptor-occupied');
+  if (result) message.show('raptor-occupied');
   return result;
 }
 function clickRaptorPieceOnClickedSpace(space) {

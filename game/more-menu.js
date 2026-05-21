@@ -5,6 +5,7 @@ import {pieces} from './pieces.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
+import {message} from './message.js';
 import {edit} from './edit-mode.js';
 import {showControl} from './player-control.js';
 
@@ -53,7 +54,7 @@ async function manualSave() {
     const writable = await fh.createWritable();
     await writable.write(contents);
     await writable.close();
-    ui.showMessage('manual-save-success');
+    message.show('manual-save-success');
   } finally {
     moreMenu.hide();
   }

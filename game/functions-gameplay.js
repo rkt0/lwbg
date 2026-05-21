@@ -6,6 +6,7 @@ import {anim} from './animation.js';
 import {sfx} from './sfx.js';
 import {ui} from './functions-ui.js';
 import {gs, mv, zd, pl} from './game-objects.js';
+import {message} from './message.js';
 
 export const gp = {
   nHumansOn(space) {
@@ -27,7 +28,7 @@ export const gp = {
     setTimeout(() => {
       qs('#humans-saved').innerHTML = nSaved;
       qs('#humans-total').innerHTML = nTotal;
-      ui.hideMessage();
+      message.hide();
       ui.hideButton('roll-display');
       ui.hideButton('turn-display');
       if (zd.factor.current < 1) return;
@@ -111,7 +112,7 @@ export const gp = {
       mv.toGo = 1;
       ui.showButton('decline-button');
     } else {
-      ui.showMessage(`no-${which}-available`, true);
+      message.show(`no-${which}-available`, true);
       mv.toGo = -1;
       ui.showButton('ok-no-move');
     }
@@ -180,7 +181,7 @@ export const gp = {
     if (gs.trex === 0) {
       for (const h of hPiecesOn(bd.humanStart)) {
         this.moveHuman(h, bd.humanDead, false);
-        ui.showMessage('eaten-trex', true);
+        message.show('eaten-trex', true);
       }
     }
     // Using isLast here too enables reuse of this
@@ -245,7 +246,7 @@ function checkEatenByRaptor(rPiece) {
   for (const [hp, hs] of gs.humans.entries()) {
     if (!hsIn.includes(hs)) continue;
     gp.moveHuman(hp, bd.humanDead, false);
-    ui.showMessage('eaten-raptor', true);
+    message.show('eaten-raptor', true);
   }
 }
 function startNextTurn() {

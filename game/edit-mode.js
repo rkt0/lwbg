@@ -8,6 +8,7 @@ import {gs} from './game-objects.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
+import {message} from './message.js';
 
 export const edit = {
   clear() {
@@ -22,7 +23,7 @@ export const edit = {
     }
     this.on = true;
     this.gsPrevious = deepCopy(gs);
-    ui.hideMessage();
+    message.hide();
     const hidden = [
       'show-more', 'roll-button', 'decline-button',
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',

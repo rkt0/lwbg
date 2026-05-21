@@ -5,6 +5,7 @@ import {anim} from './animation.js';
 import {gs, mv} from './game-objects.js';
 import {gp} from './functions-gameplay.js';
 import {ui} from './functions-ui.js';
+import {message} from './message.js';
 import {edit} from './edit-mode.js';
 
 export function clickHumanPiece(piece) {
@@ -25,7 +26,7 @@ export function clickHumanPiece(piece) {
     if (gs.je) {
       if (checkNotJumpPosition(space)) return;
     }
-    ui.hideMessage();
+    message.hide();
     selectAppropriate(piece);
     mv.selected = piece;
     mv.plan = [space];
@@ -53,7 +54,7 @@ export function clickRaptorPiece(piece) {
     if (gs.je) {
       if (checkNotEnterPosition(space)) return;
     }
-    ui.hideMessage();
+    message.hide();
     const element = qs(`#raptor-piece-${piece}`);
     element.classList.add('selected');
     mv.selected = piece;
@@ -91,18 +92,18 @@ export function clickEditTrex(change) {
 // Needed for human piece click handler
 function checkNoLeaveEnd(space) {
   const result = space === bd.humanGoal;
-  if (result) ui.showMessage('no-leave-end');
+  if (result) message.show('no-leave-end');
   return result;
 }
 function checkNoSelectDead(space) {
   const result = space === bd.humanDead;
-  if (result) ui.showMessage('no-select-dead');
+  if (result) message.show('no-select-dead');
   return result;
 }
 function checkNotJumpPosition(space) {
   const okSpaces = bd.humanJumps.map(s => s[0]);
   const result = !okSpaces.includes(space);
-  if (result) ui.showMessage('not-jump-position');
+  if (result) message.show('not-jump-position');
   return result;
 }
 function selectAppropriate(piece) {
@@ -134,7 +135,7 @@ function clickHumanPieceEditMode(piece, space) {
 function checkNotEnterPosition(space) {
   const ep = bd.raptorEntrances.map(s => s[0]);
   const result = !ep.includes(space);
-  if (result) ui.showMessage('not-enter-position');
+  if (result) message.show('not-enter-position');
   return result;
 }
 function clickRaptorPieceEditMode(piece, space) {

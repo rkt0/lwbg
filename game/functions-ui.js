@@ -1,5 +1,5 @@
 import {
-  qs, qsa, ce, fromTemplate, cssInt,
+  qs, qsa, fromTemplate, cssInt,
 } from './utility.js';
 import {anim} from './animation.js';
 
@@ -70,30 +70,6 @@ export const ui = {
   startMessage(templateId) {
     const node = fromTemplate(templateId);
     qs('#start-message').replaceChildren(node);
-  },
-  showMessage(templateId, append) {
-    const node = fromTemplate(templateId);
-    const container = qs('#message-container');
-    const content = qs('.content', container);
-    const previousWasAppendable =
-      container.classList.contains('appendable');
-    if (append && previousWasAppendable) {
-      content.append(ce('br'), node);
-    } else content.replaceChildren(node);
-    if (append) container.classList.add('appendable');
-    content.style.visibility = 'visible';
-    anim.slide(container, 1, anim.time.messageSlide);
-  },
-  hideMessage() {
-    const container = qs('#message-container');
-    if (container.style.display === 'none') return;
-    if (anim.isAnimated(container)) return;
-    const content = qs('.content', container);
-    content.style.visibility = 'hidden';
-    const hider = qs('.hider', container);
-    hider.style.display = 'none';
-    container.classList.remove('appendable');
-    anim.slide(container, 0, anim.time.messageSlide);
   },
   disableMenu(id, disable) {
     for (const button of qsa(`#${id} button`)) {

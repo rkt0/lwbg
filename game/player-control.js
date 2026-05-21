@@ -38,7 +38,7 @@ async function savePlayers() {
 }
 function continueInGame() {
   savePlayers();
-  ui.hideMessage();
+  message.hide();
   gp.resume();
   anim.fade('#player-control', 0, aTime);
   if (ai.control[gs.turn] && gs.phase !== 'roll') {

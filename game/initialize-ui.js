@@ -12,6 +12,7 @@ import {gs, mv, zd, pl} from './game-objects.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
+import {message} from './message.js';
 
 // Set display to none on dormant elements
 for (const element of qsa('.dormant')) {
@@ -40,7 +41,7 @@ ael('#show-more', 'mousedown', async () => {
 });
 ael('#ok-no-move', 'mousedown', () => {
   if (gs.phase === 'roll') return;
-  ui.hideMessage();
+  message.hide();
   ui.hideButton('ok-no-move');
   gp.endTurn();
 });
@@ -60,9 +61,9 @@ ael('#ok-ai-move', 'mousedown', () => {
 });
 ael('#decline-button', 'mousedown', () => {
   if (gs.phase !== 'select' || !gs.je) return;
-  ui.hideMessage();
+  message.hide();
   if (mv.toGo) {
-    ui.showMessage(`confirm-decline-${
+    message.show(`confirm-decline-${
       gs.turn === 'human' ? 'jump' : 'enter'
     }`);
     mv.toGo--;
@@ -74,7 +75,7 @@ ael('#decline-button', 'mousedown', () => {
 ael('#roll-button', 'mousedown', () => {
   if (gs.phase !== 'roll') return;
   gs.phase = 'execute';
-  ui.hideMessage();
+  message.hide();
   gs.rollN = rollDie(
     dice[gs.turn].movement, prng.dice[gs.turn]
   );
@@ -104,7 +105,7 @@ ael('#roll-button', 'mousedown', () => {
 
 // Needed for multiple click handlers
 function clearVisibleMove() {
-  ui.hideMessage();
+  message.hide();
   ui.hideButton('cancel-button');
   ui.hideButton('confirm-button');
   for (const c of ['selected', 'move', 'path'] ) {
@@ -313,21 +314,21 @@ ael('#zoom-in', 'mousedown', () => {
   qs('#zoom-in').classList.add('current');
 });
 
-// Message hover handler
-function mouseover(inbound) {
-  const container = qs('#message-container');
-  if (anim.isAnimated(container)) return;
-  qs('.content', container).style.visibility =
-    inbound ? 'hidden' : 'visible';
-  qs('.hider', container).style.display =
-    inbound ? 'flex' : 'none';
-}
-ael('#message-container', 'mousedown', () => {
-  ui.hideMessage();
-});
-ael('#message-container', 'mouseenter', () => {
-  mouseover(true);
-});
-ael('#message-container', 'mouseleave', () => {
-  mouseover(false);
-});
+// // Message hover handler
+// function mouseover(inbound) {
+//   const container = qs('#message-container');
+//   if (anim.isAnimated(container)) return;
+//   qs('.content', container).style.visibility =
+//     inbound ? 'hidden' : 'visible';
+//   qs('.hider', container).style.display =
+//     inbound ? 'flex' : 'none';
+// }
+// ael('#message-container', 'mousedown', () => {
+//   ui.hideMessage();
+// });
+// ael('#message-container', 'mouseenter', () => {
+//   mouseover(true);
+// });
+// ael('#message-container', 'mouseleave', () => {
+//   mouseover(false);
+// });
