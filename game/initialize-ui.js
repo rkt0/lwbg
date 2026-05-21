@@ -1,11 +1,9 @@
-import {
-  qs, qsa, ael, click, rollDie,
-} from './utility.js';
+import {qsa, ael, click, rollDie} from './utility.js';
 import {prng} from './prngs.js';
 import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
-import {gs, mv, zd} from './game-objects.js';
+import {gs, mv} from './game-objects.js';
 import {zoom} from './zoom.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
@@ -151,6 +149,7 @@ ael('#ok-trex-move', 'mousedown', async () => {
   gp.moveTrex(gs.trex - 1, true);
 });
 
+// Zoom button click handlers
 ael('#zoom-out', 'mousedown', () => {
   zoom.zoomOut();
 });

@@ -1,7 +1,8 @@
 import {qs, click} from './utility.js';
 import {ai} from './ai.js';
 import {music} from './music.js';
-import {gs, mv, zd} from './game-objects.js';
+import {gs, mv} from './game-objects.js';
+import {zoom} from './zoom.js';
 import {edit} from './edit-mode.js';
 
 function clickIfOk(buttonId) {
@@ -99,7 +100,7 @@ document.addEventListener('keydown', (e) => {
       if (!gameplayActive()) return;
       e.preventDefault();
       let which = 'default';
-      if (zd.factor.current === 1) {
+      if (zoom.factor.current === 1) {
         if (e.key === '-') which = 'out';
         if (e.key === '=') which = 'in';
       }

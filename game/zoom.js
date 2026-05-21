@@ -1,13 +1,16 @@
 import {qs, qsa, windowWH} from './utility.js';
 import {anim} from './animation.js';
-import {zd} from './game-objects.js';
 
 export const zoom = {
+  factor: {current: null, in: 2, outMax: 0.125},
+  center: {},
+  highlightBlinkIds: [],
   zoomOut() {
-    const w = windowWH();
+    const windowSize = windowWH();
     const factor = Math.max(
-      w[0] / zd.boardSize[0], w[1] / zd.boardSize[1],
-      zd.factor.outMax
+      windowSize[0] / this.boardSize[0],
+      windowSize[1] / this.boardSize[1],
+      this.factor.outMax
     );
     zoomGeneral(factor);
     buttonZoomOut.classList.add('current');
@@ -21,7 +24,7 @@ export const zoom = {
     buttonZoomDefault.classList.add('current');
   },
   zoomIn() {
-    zoomGeneral(zd.factor.in);
+    zoomGeneral(this.factor.in);
     buttonZoomIn.classList.add('current');
   },
 };
@@ -41,7 +44,7 @@ const gameOverElement = qs('#game-over');
 
 // Needed for zoom button click handlers
 function highlightPieces(setting) {
-  const ids = zd.highlightBlinkIds;
+  const ids = zoom.highlightBlinkIds;
   if (setting) {
     for (const piece of allPieces) {
       piece.classList.add('highlighted');
@@ -60,30 +63,30 @@ function highlightPieces(setting) {
   }
 }
 function applyZoomCenter() {
-  const {left: cl, top: ct} = zd.center;
-  const fc = zd.factor.current;
+  const {left: cl, top: ct} = zoom.center;
+  const fc = zoom.factor.current;
   const [ww, wh] = windowWH();
   scroll(cl * fc - ww / 2, ct * fc - wh / 2);
 }
 function zoomGeneral(factor) {
-  if (!zd.factor.current) {
-    zd.factor.current = 1;
+  if (!zoom.factor.current) {
+    zoom.factor.current = 1;
     applyZoomCenter();
     return;
   }
-  if (zd.factor.current === factor) return;
-  if (zd.factor.current >= 1) {
+  if (zoom.factor.current === factor) return;
+  if (zoom.factor.current >= 1) {
     const [ww, wh] = windowWH();
     const left = scrollX + ww / 2;
     const top = scrollY + wh / 2;
-    zd.center.left = left / zd.factor.current;
-    zd.center.top = top / zd.factor.current;
+    zoom.center.left = left / zoom.factor.current;
+    zoom.center.top = top / zoom.factor.current;
   }
   container.style.zoom = factor;
-  zd.factor.current = factor;
+  zoom.factor.current = factor;
   applyZoomCenter();
   for (const element of nonZoomElements) {
-    element.style.zoom = 1 / zd.factor.current;
+    element.style.zoom = 1 / zoom.factor.current;
   }
   const isOut = factor < 1;
   highlightPieces(isOut);

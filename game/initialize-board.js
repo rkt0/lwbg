@@ -7,7 +7,8 @@ import {geom} from './board-geometry.js';
 import {
   addBldgBgs, addEntrances, addJumps, addHelos,
 } from './building-appearance.js';
-import {zd, pl} from './game-objects.js';
+import {pl} from './game-objects.js';
+import {zoom} from './zoom.js';
 
 // Get human edges from human paths
 bd.humanEdges = [];
@@ -237,11 +238,11 @@ pl.trex[0][0] -= pl.trex.ps[0] / 2;
 pl.human.margin = cssInt('--board-border-width');
 
 // Set dimensions of board and svgs
-zd.boardSize = cssIntWH('--raw-board');
-addExtraSpace([zd.boardSize], true);
+zoom.boardSize = cssIntWH('--raw-board');
+addExtraSpace([zoom.boardSize], true);
 for (const svg of qsa('svg:not(.icon)')) {
-  svg.setAttribute('width', zd.boardSize[0]);
-  svg.setAttribute('height', zd.boardSize[1]);
+  svg.setAttribute('width', zoom.boardSize[0]);
+  svg.setAttribute('height', zoom.boardSize[1]);
 }
 
 // Set initial view

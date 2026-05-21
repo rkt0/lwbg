@@ -5,7 +5,8 @@ import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {sfx} from './sfx.js';
 import {ui} from './functions-ui.js';
-import {gs, mv, zd, pl} from './game-objects.js';
+import {gs, mv, pl} from './game-objects.js';
+import {zoom} from './zoom.js';
 import {message} from './message.js';
 
 export const gp = {
@@ -31,7 +32,7 @@ export const gp = {
       message.hide();
       ui.hideButton('roll-display');
       ui.hideButton('turn-display');
-      if (zd.factor.current < 1) return;
+      if (zoom.factor.current < 1) return;
       anim.fade('#game-over', 1, anim.time.menuFade, {
         display: '',
       });
@@ -218,9 +219,9 @@ export const gp = {
   },
   initializeView() {
     click('#zoom-default');
-    zd.center.left = geom.initialViewCenter[0];
-    zd.center.top = geom.initialViewCenter[1];
-    zd.factor.current = null;
+    zoom.center.left = geom.initialViewCenter[0];
+    zoom.center.top = geom.initialViewCenter[1];
+    zoom.factor.current = null;
     // Click again to apply zoom center
     click('#zoom-default');
   },
