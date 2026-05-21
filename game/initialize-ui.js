@@ -1,18 +1,16 @@
 import {
-  qs, qsa, ael, click, sleep, sqrtStep, rollDie,
-  windowWH, absoluteBoundingRect, boundingBox,
+  qs, qsa, ael, click, rollDie, windowWH,
 } from './utility.js';
-import {scrollBetter} from './scroll.js';
 import {prng} from './prngs.js';
-import {bd} from './board-topology.js';
 import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
-import {gs, mv, zd, pl} from './game-objects.js';
+import {gs, mv, zd} from './game-objects.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 import {message} from './message.js';
+import {bringMoveIntoView} from './view-region.js';
 
 // Set display to none on dormant elements
 for (const element of qsa('.dormant')) {
@@ -124,58 +122,6 @@ ael('#cancel-button', 'mousedown', () => {
   if (gs.je) gp.startJumpEnter();
 });
 
-// Needed for confirm button click handler
-function movePlanRegion() {
-  const planCorners =
-    mv.plan.map(x => [...pl[gs.turn][x]]);
-  const [pw, ph] = pl[gs.turn].ps;
-  const planRegions = planCorners.map(x => ({
-    left: x[0], right: x[0] + pw,
-    top: x[1], bottom: x[1] + ph,
-  }));
-  return boundingBox(...planRegions);
-};
-async function bringIntoView(region) {
-  const padding = [216, 108];
-  const [ww, wh] = windowWH();
-  const [ph, pv] = padding;
-  const current = {
-    left: scrollX, right: scrollX + ww,
-    top: scrollY, bottom: scrollY + wh,
-  };
-  const excess = [
-    (region.right - region.left) - ww + ph * 2,
-    (region.bottom - region.top) - wh + pv * 2,
-  ].map(x => Math.max(x, 0));
-  const target = {
-    left: region.left - ph + excess[0] / 2,
-    right: region.right + ph - excess[0] / 2,
-    top: region.top - pv + excess[1] / 2,
-    bottom: region.bottom + pv - excess[1] / 2,
-  };
-  const location = {
-    left: Math.min(target.left, current.left),
-    top: Math.min(target.top, current.top),
-  };
-  if (target.right > current.right) {
-    location.left = target.right - ww;
-  }
-  if (target.bottom > current.bottom) {
-    location.top = target.bottom - wh;
-  }
-  const distance = Math.hypot(
-    location.left - current.left,
-    location.top - current.top,
-  );
-  // Times will be reduced if distance to be scrolled 
-  // is less than taperDistance
-  const taperDistance = 648;
-  const taper = sqrtStep(distance / taperDistance);
-  const duration = anim.time.autoScroll * taper;
-  await scrollBetter(location, duration);
-  await sleep(anim.time.autoScrollDelay * taper);
-}
-
 // Confirm button click handler
 ael('#confirm-button', 'mousedown', async () => {
   if (gs.phase !== 'move') return;
@@ -183,7 +129,7 @@ ael('#confirm-button', 'mousedown', async () => {
   clearVisibleMove();
   click('#zoom-default');
   const end = mv.plan[mv.plan.length - 1];
-  await bringIntoView(movePlanRegion(gs.turn));
+  await bringMoveIntoView();
   for (const s of mv.plan.slice(1)) {
     const isLast = s === end;
     if (gs.turn === 'human') {
@@ -194,37 +140,13 @@ ael('#confirm-button', 'mousedown', async () => {
   }
 });
 
-// Needed for T-rex button click handler
-function trexMoveRegion() {
-  const [oldL, oldT] = pl.trex[gs.trex];
-  const [newL, newT] = pl.trex[gs.trex - 1];
-  const [pw, ph] = pl.trex.ps;
-  const pieceRegionOld = {
-    left: oldL, right: oldL + pw,
-    top: oldT, bottom: oldT + ph,
-  };
-  const pieceRegionNew = {
-    left: newL, right: newL + pw,
-    top: newT, bottom: newT + ph,
-  };
-  const spaceOld = `#trex-space-${gs.trex}`;
-  const spaceNew = gs.trex === 1 ?
-    `#human-space-${bd.humanStart}` :
-    `#trex-space-${gs.trex - 1}`;
-  return boundingBox(
-    pieceRegionOld, pieceRegionNew,
-    absoluteBoundingRect(spaceOld),
-    absoluteBoundingRect(spaceNew),
-  );
-};
-
 // T-rex button click handler
 ael('#ok-trex-move', 'mousedown', async () => {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
   ui.hideButton('ok-trex-move');
   click('#zoom-default');
-  await bringIntoView(trexMoveRegion());
+  await bringMoveIntoView();
   gp.moveTrex(gs.trex - 1, true);
 });
 
@@ -313,22 +235,3 @@ ael('#zoom-in', 'mousedown', () => {
   zoomGeneral(zd.factor.in);
   qs('#zoom-in').classList.add('current');
 });
-
-// // Message hover handler
-// function mouseover(inbound) {
-//   const container = qs('#message-container');
-//   if (anim.isAnimated(container)) return;
-//   qs('.content', container).style.visibility =
-//     inbound ? 'hidden' : 'visible';
-//   qs('.hider', container).style.display =
-//     inbound ? 'flex' : 'none';
-// }
-// ael('#message-container', 'mousedown', () => {
-//   ui.hideMessage();
-// });
-// ael('#message-container', 'mouseenter', () => {
-//   mouseover(true);
-// });
-// ael('#message-container', 'mouseleave', () => {
-//   mouseover(false);
-// });
