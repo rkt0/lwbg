@@ -1,11 +1,12 @@
 import {
-  qs, qsa, ael, click, rollDie, windowWH,
+  qs, qsa, ael, click, rollDie,
 } from './utility.js';
 import {prng} from './prngs.js';
 import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {gs, mv, zd} from './game-objects.js';
+import {zoom} from './zoom.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
@@ -150,88 +151,12 @@ ael('#ok-trex-move', 'mousedown', async () => {
   gp.moveTrex(gs.trex - 1, true);
 });
 
-// Needed for zoom button click handlers
-function highlightPieces(setting) {
-  const pieces = qsa(
-    '.raptor-piece, .human-piece, .trex-piece'
-  );
-  const ids = zd.highlightBlinkIds;
-  if (setting) {
-    for (const piece of pieces) {
-      piece.classList.add('highlighted');
-    }
-    const id = setInterval(() => {
-      for (const element of qsa('.highlighted')) {
-        element.classList.toggle('on');
-      }
-    }, anim.time.highlightBlink);
-    ids.push(id);
-  } else {
-    for (const piece of pieces) {
-      piece.classList.remove('highlighted');
-    }
-    while (ids.length) clearInterval(ids.pop());
-  }
-}
-function applyZoomCenter() {
-  const {left: cl, top: ct} = zd.center;
-  const fc = zd.factor.current;
-  const [ww, wh] = windowWH();
-  scroll(cl * fc - ww / 2, ct * fc - wh / 2);
-}
-function zoomGeneral(factor) {
-  if (!zd.factor.current) {
-    zd.factor.current = 1;
-    applyZoomCenter();
-    return;
-  }
-  if (zd.factor.current === factor) return;
-  if (zd.factor.current >= 1) {
-    const [ww, wh] = windowWH();
-    const left = scrollX + ww / 2;
-    const top = scrollY + wh / 2;
-    zd.center.left = left / zd.factor.current;
-    zd.center.top = top / zd.factor.current;
-  }
-  qs('#gameplay-container').style.zoom = factor;
-  zd.factor.current = factor;
-  applyZoomCenter();
-  for (const element of qsa('.non-zoom')) {
-    element.style.zoom = 1 / zd.factor.current;
-  }
-  highlightPieces(factor < 1);
-  const humanBoard = qsa('.human-space, .human-edge');
-  for (const element of humanBoard) {
-    const isOut = factor < 1;
-    element.classList.toggle('more-visible', isOut);
-  }
-  const currentButton = qs('.zoom-button.current');
-  currentButton.classList.remove('current')
-  for (const element of qsa('.obstructive')) {
-    element.classList.remove('slim');
-  }
-  qs('#game-over').classList.remove('inactive');
-};
-
-// Zoom button click handlers
 ael('#zoom-out', 'mousedown', () => {
-  const w = windowWH();
-  const factor = Math.max(
-    ...[0, 1].map(i => w[i] / zd.boardSize[i]),
-    zd.factor.outMax,
-  );
-  zoomGeneral(factor);
-  qs('#zoom-out').classList.add('current');
-  for (const element of qsa('.obstructive')) {
-    element.classList.add('slim');
-  }
-  qs('#game-over').classList.add('inactive');
+  zoom.zoomOut();
 });
 ael('#zoom-default', 'mousedown', () => {
-  zoomGeneral(1);
-  qs('#zoom-default').classList.add('current');
+  zoom.zoomDefault();
 });
 ael('#zoom-in', 'mousedown', () => {
-  zoomGeneral(zd.factor.in);
-  qs('#zoom-in').classList.add('current');
+  zoom.zoomIn();
 });
