@@ -88,10 +88,8 @@ async function editGame(gsNew) {
   ui.raptorItemsClickable(gs.turn === 'raptor');
 }
 function endEditMode() {
-  const toDisable = '#cancel-edits, #confirm-edits';
-  for (const button of qsa(toDisable)) {
-    button.disabled = true;
-  }
+  qs('#cancel-edits').disabled = true;
+  qs('#confirm-edits').disabled = true;
   edit.clear();
   qs('.selected')?.classList.remove('selected');
   for (const element of qsa('.edit-control, .kill')) {

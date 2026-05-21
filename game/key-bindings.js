@@ -7,7 +7,9 @@ import {edit} from './edit-mode.js';
 
 function clickIfOk(buttonId) {
   const button = qs(`#${buttonId}`);
-  if (!button.disabled) click(button);
+  if (button.disabled) return;
+  if (button.closest('[inert]')) return;
+  click(button);
 }
 
 function toggleFullscreen() {

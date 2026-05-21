@@ -12,7 +12,8 @@ import {showControl} from './player-control.js';
 export const moreMenu = {
   element: qs('#more-menu'),
   async hide(resumeGameplay = true) {
-    ui.disableMenu('more-menu');
+    ui.disableMenu('more-options');
+    ui.disableMenu('quit-options');
     if (resumeGameplay) gp.resume();
     await anim.fade(this.element, 0, aTime);
     for (const child of this.element.children) {
@@ -79,6 +80,7 @@ async function showQuitOptions() {
   ui.disableMenu('quit-options', false);
 }
 async function confirmQuit() {
+  ui.disableMenu('quit-options');
   await moreMenu.hide();
   await anim.fade('#gameplay-container', 0, aTime);
   gp.initializeObjects();

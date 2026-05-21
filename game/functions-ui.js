@@ -71,10 +71,8 @@ export const ui = {
     const node = fromTemplate(templateId);
     qs('#start-message').replaceChildren(node);
   },
-  disableMenu(id, disable) {
-    for (const button of qsa(`#${id} button`)) {
-      button.disabled = disable ?? true;
-    }
+  disableMenu(id, disable = true) {
+    qs(`#${id}`).inert = disable;
   },
   humanItemsClickable(clickable) {
     const value = clickable ? 'auto' : 'none';
