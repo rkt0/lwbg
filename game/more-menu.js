@@ -12,8 +12,8 @@ import {showControl} from './player-control.js';
 export const moreMenu = {
   element: qs('#more-menu'),
   async hide(resumeGameplay = true) {
-    ui.disableMenu('more-options');
-    ui.disableMenu('quit-options');
+    qs('#more-options').inert = true;
+    qs('#quit-options').inert = true;
     if (resumeGameplay) gp.resume();
     await anim.fade(this.element, 0, aTime);
     for (const child of this.element.children) {
@@ -61,7 +61,7 @@ async function manualSave() {
   }
 }
 async function savePoint() {
-  ui.disableMenu('more-options');
+  qs('#more-options').inert = true;
   const help = qs('#manual-save-help');
   await anim.fade('#more-options', 0, aTime);
   await anim.fade(help, 1, aTime, {display: ''});
@@ -72,15 +72,15 @@ async function controlInGame() {
   showControl();
 }
 async function showQuitOptions() {
-  ui.disableMenu('more-options');
+  qs('#more-options').inert = true;
   await anim.fade('#more-options', 0, aTime);
   await anim.fade('#quit-options', 1, aTime, {
     display: '',
   });
-  ui.disableMenu('quit-options', false);
+  qs('#quit-options').inert = false;
 }
 async function confirmQuit() {
-  ui.disableMenu('quit-options');
+  qs('#quit-options').inert = true;
   await moreMenu.hide();
   await anim.fade('#gameplay-container', 0, aTime);
   gp.initializeObjects();

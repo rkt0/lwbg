@@ -22,9 +22,9 @@ for (const button of qsa('#gameplay-menu .dormant')) {
 }
 
 // Disable menus that should be inactive at start
-ui.disableMenu('player-control');
-ui.disableMenu('more-options');
-ui.disableMenu('quit-options');
+qs('#player-control').inert = true;
+qs('#more-options').inert = true;
+qs('#quit-options').inert = true;
 
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
@@ -34,7 +34,7 @@ ael('#show-more', 'mousedown', async () => {
   gp.interrupt();
   anim.fade('#more-options', 1, 0, {display: ''});
   await anim.fade('#more-menu', 1, aTime);
-  ui.disableMenu('more-options', false);
+  qs('#more-options').inert = false;
 });
 ael('#ok-no-move', 'mousedown', () => {
   if (gs.phase === 'roll') return;

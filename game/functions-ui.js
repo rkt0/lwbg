@@ -71,9 +71,6 @@ export const ui = {
     const node = fromTemplate(templateId);
     qs('#start-message').replaceChildren(node);
   },
-  disableMenu(id, disable = true) {
-    qs(`#${id}`).inert = disable;
-  },
   humanItemsClickable(clickable) {
     const value = clickable ? 'auto' : 'none';
     const items = qsa(
@@ -95,7 +92,7 @@ export const ui = {
   async showStartOptions(skipFx) {
     const aTime = skipFx ? 0 : anim.time.menuFade;
     await anim.fade('#start-message', 0, aTime);
-    this.disableMenu('start-options', false);
+    qs('#start-options').inert = false;
     anim.fade('#start-options', 1, aTime, {
       display: '',
     });

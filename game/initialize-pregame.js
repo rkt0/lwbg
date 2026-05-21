@@ -18,12 +18,12 @@ aelo('#title-container', 'mousedown', async () => {
 
 // Start screen click handlers
 async function startNew() {
-  ui.disableMenu('start-options');
+  qs('#start-options').inert = true;
   await anim.fade('#start-options', 0, aTime);
   showControl();
 }
 async function loadSaved() {
-  ui.disableMenu('start-options');
+  qs('#start-options').inert = true;
   await anim.fade('#start-options', 0, aTime);
   ui.startMessage('load-introduction');
   anim.fade('#start-message', 1, aTime);
@@ -33,7 +33,7 @@ async function loadSaved() {
 }
 async function loadOverwrite() {
   const {fhLoad} = autoSave;
-  ui.disableMenu('load-choose-save');
+  qs('#load-choose-save').inert = true;
   const okAlready = await fhLoad.queryPermission({
     mode: 'readwrite',
   });
@@ -47,7 +47,7 @@ async function loadOverwrite() {
 }
 async function loadNew() {
   const {fhLoad} = autoSave;
-  ui.disableMenu('load-choose-save');
+  qs('#load-choose-save').inert = true;
   await anim.fade('#load-choose-save', 0, aTime);
   autoSave.begin(fhLoad);
 }
@@ -77,7 +77,7 @@ async function selectFileToLoad() {
   await anim.fade('#load-choose-save', 1, aTime, {
     display: '',
   });
-  ui.disableMenu('load-choose-save', false);
+  qs('#load-choose-save').inert = false;
 }
 
 // Add start screen click handlers

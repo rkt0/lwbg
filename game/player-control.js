@@ -11,7 +11,7 @@ export async function showControl() {
   await anim.fade('#player-control', 1, aTime, {
     display: '',
   });
-  ui.disableMenu('player-control', false);
+  qs('#player-control').inert = false;
 }
 
 // Inject into auto-save object
@@ -75,7 +75,7 @@ function changeControl(species, level) {
 
 // Add player control screen click handlers
 ael('#continue-from-control', 'mousedown', () => {
-  ui.disableMenu('player-control');
+  qs('#player-control').inert = true;
   if (gs.turn) continueInGame();
   else continueAtStart();
 });
