@@ -39,6 +39,12 @@ export function click(x, type = 'mousedown') {
     bubbles: true, cancelable: true,
   }));
 }
+export function waitForClick(x, type = 'mousedown') {
+  const element = typeof x === 'object' ? x : qs(x);
+  return new Promise((resolve) => {
+    aelo(element, type, resolve);
+  });
+}
 
 export function sleep(delay) {
   return new Promise((resolve) => {

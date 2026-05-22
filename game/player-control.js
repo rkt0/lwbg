@@ -12,7 +12,14 @@ export async function showControl() {
     display: '',
   });
   qs('#player-control').inert = false;
+  if (gs.turn) return;
+  return new Promise((resolve) => {
+    resolvePromise = resolve;
+  })
 }
+
+// Reference to promise resolve function
+let resolvePromise;
 
 // Inject into auto-save object
 autoSave.startGameFromLoad = () => {
@@ -38,7 +45,6 @@ async function savePlayers() {
 }
 function continueInGame() {
   savePlayers();
-  message.hide();
   gp.resume();
   anim.fade('#player-control', 0, aTime);
   if (ai.control[gs.turn] && gs.phase !== 'roll') {
@@ -53,7 +59,7 @@ function continueInGame() {
 }
 async function continueAtStart() {
   await anim.fade('#player-control', 0, aTime);
-  autoSave.begin();
+  resolvePromise();
 };
 function changeControl(species, level) {
   const area = qs(`#${species}-control`);

@@ -4,23 +4,26 @@ import {music} from './music.js';
 import {ui} from './functions-ui.js';
 import {autoSave} from './auto-save.js';
 import {showControl} from './player-control.js';
+// Remember to change this
+import './pregame.js';
 
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
 
 // Add title screen click handler
 aelo('#title-container', 'mousedown', async () => {
-  onbeforeunload = () => '';
-  await anim.fade('#title-container', 0, aTime);
-  anim.fade('#start-container', 1, aTime);
-  music.next();
+  // onbeforeunload = () => '';
+  // await anim.fade('#title-container', 0, aTime);
+  // anim.fade('#start-container', 1, aTime);
+  // music.next();
 });
 
 // Start screen click handlers
 async function startNew() {
   qs('#start-options').inert = true;
   await anim.fade('#start-options', 0, aTime);
-  showControl();
+  await showControl();
+  autoSave.begin();
 }
 async function loadSaved() {
   qs('#start-options').inert = true;
@@ -83,7 +86,8 @@ async function selectFileToLoad() {
 // Add start screen click handlers
 ael('#start-container', 'mousedown', (e) => {
   const id = e.target.closest('button')?.id;
-  if (id === 'start-new') startNew();
+  // if (id === 'start-new') startNew();
+  if (id === 'start-new') null;
   else if (id === 'load-saved') loadSaved();
   else if (id === 'load-overwrite') loadOverwrite();
   else if (id === 'load-new') loadNew();
