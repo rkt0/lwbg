@@ -1,4 +1,4 @@
-import {ael, aelo} from './utility.js';
+import {qs, ael, aelo} from './utility.js';
 import {anim} from './animation.js';
 import {music} from './music.js';
 import {ui} from './functions-ui.js';
