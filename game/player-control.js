@@ -21,12 +21,6 @@ export async function showControl() {
 // Reference to promise resolve function
 let resolvePromise;
 
-// Inject into auto-save object
-autoSave.startGameFromLoad = () => {
-  gp.interrupt(0);
-  showControl();
-};
-
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
 

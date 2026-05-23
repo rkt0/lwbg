@@ -114,6 +114,8 @@ async function startGame(fhLoad) {
   await anim.fade(startContainer, 0, aTime);
   anim.fade(gameplayContainer, 1, aTime);
   gp.initializeView();
-  if (fhLoad) autoSave.startGameFromLoad();
-  else gp.endTurn();
+  if (fhLoad) {
+    gp.interrupt(0);
+    showControl();
+  } else gp.endTurn();
 }

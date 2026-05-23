@@ -48,7 +48,6 @@ export const autoSave = {
       createAutoSaveFile(fhLoad);
     });
   },
-  // startGameFromLoad() injected by player-control.js
 };
 
 // Inject into gameplay object
