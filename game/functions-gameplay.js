@@ -113,7 +113,7 @@ export const gp = {
       mv.toGo = 1;
       ui.showButton('decline-button');
     } else {
-      message.show(`no-${which}-available`, true);
+      message.show(`no-${which}-available`);
       mv.toGo = -1;
       ui.showButton('ok-no-move');
     }

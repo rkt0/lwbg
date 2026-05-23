@@ -1,5 +1,5 @@
 import {
-  qs, ael, aelo, waitForClick,
+  qs, ael, aelo, fromTemplate, waitForClick,
 } from './utility.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
@@ -20,6 +20,35 @@ const startContainer = qs('#start-container');
 const startOptions = qs('#start-options');
 const startMessage = qs('#start-message');
 const gameplayContainer = qs('#gameplay-container');
+const loadFork = qs('#load-fork');
+
+// UI helper functions
+async function showOptions() {
+  await anim.fade(startMessage, 0, aTime);
+  startOptions.inert = false;
+  anim.fade(startOptions, 1, aTime, {display: ''});
+}
+async function hideOptions() {
+  startOptions.inert = true;
+  await anim.fade(startOptions, 0, aTime);
+}
+async function showMessage(templateId) {
+  const node = fromTemplate(templateId);
+  startMessage.replaceChildren(node);
+  anim.fade(startMessage, 1, aTime);
+  await waitForClick(startContainer);
+}
+function hideMessage() {
+  anim.fade(startMessage, 0, aTime);
+}
+function showFork() {
+  loadFork.inert = false;
+  anim.fade(loadFork, 1, aTime, {display: ''});
+}
+async function hideFork() {
+  loadFork.inert = true;
+  await anim.fade(loadFork, 0, aTime);
+}
 
 // Add title screen click handler
 aelo(titleContainer, 'mousedown', async () => {
@@ -33,40 +62,58 @@ aelo(titleContainer, 'mousedown', async () => {
 ael(startContainer, 'mousedown', (e) => {
   const id = e.target.closest('button')?.id;
   if (id === 'start-new') startNew();
-  // else if (id === 'load-saved') loadSaved();
-  // else if (id === 'load-overwrite') loadOverwrite();
+  else if (id === 'load-saved') loadSaved();
+  else if (id === 'load-overwrite') loadOverwrite();
   // else if (id === 'load-new') loadNew();
 });
 
 // Start screen click handlers
 async function startNew() {
-  startOptions.inert = true;
-  await anim.fade(startOptions, 0, aTime);
+  await hideOptions();
   await showControl();
   if (debug.skipAutoSave) return startGame();
-  ui.startMessage('save-introduction');
-  anim.fade(startMessage, 1, aTime);
-  await waitForClick(startContainer);
+  await showMessage('save-introduction');
   try {await autoSave.createNewGameFile();}
-  // catch {return ui.showStartOptions();}
-  catch (error) {console.log(error);}
-  ui.startMessage('save-created');
-  await anim.fade(startMessage, 1, aTime);
-  await waitForClick(startContainer);
+  catch {return showOptions();}
+  await showMessage('save-created');
   startGame();
+}
+async function loadSaved() {
+  await hideOptions();
+  await showMessage('load-introduction');
+  hideMessage();
+  try {await autoSave.selectFileToLoad();}
+  catch (error) {
+    if (error.message === 'invalid file') {
+      await showMessage('load-invalid-file');
+    }
+    return showOptions();
+  }
+  showFork();
+}
+async function loadOverwrite() {
+  const {fhLoad} = autoSave;
+  const okAlready = await fhLoad.queryPermission({
+    mode: 'readwrite',
+  });
+  autoSave.fh = fhLoad;
+  await hideFork();
+  await showMessage(`load-permission-${okAlready}`);
+  startGame(fhLoad);
 }
 
 // Needed for start screen click handlers
-async function startGame() {
+async function startGame(fhLoad) {
   const okToSave = await autoSave.checkPermission();
   if (!okToSave) {
     autoSave.fh = void 0;
     await anim.fade(startMessage, 0, aTime);
     return ui.showStartOptions();
   }
+  if (fhLoad) await autoSave.executeLoad(fhLoad);
   await anim.fade(startContainer, 0, aTime);
   anim.fade(gameplayContainer, 1, aTime);
   gp.initializeView();
-  gp.endTurn();
-  // if (!gs.turn) gp.endTurn();
+  if (fhLoad) autoSave.startGameFromLoad();
+  else gp.endTurn();
 }

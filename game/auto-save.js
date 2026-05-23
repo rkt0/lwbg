@@ -1,12 +1,15 @@
-import {deepCopy, base64} from './utility.js';
+import {
+  click, deepCopy, base64, base256,
+} from './utility.js';
 import {debug} from './debug.js';
 import {ai} from './ai.js';
 import {pieces} from './pieces.js';
 import {gs} from './game-objects.js';
+import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 
 export const autoSave = {
-  defaultDirectory: 'desktop',
+  // defaultDirectory: 'desktop',
   fileType: {
     description: 'Text Files',
     accept: {'text/plain': ['.txt']},
@@ -38,12 +41,9 @@ export const autoSave = {
   },
   async createFile() {
     const fh = await showSaveFilePicker({
-      startIn: this.defaultDirectory,
+      // startIn: this.defaultDirectory,
       types: [this.fileType],
     });
-    const file = await fh.getFile();
-    const contents = await file.text();
-    if (contents.length) throw new Error();
     return fh;
   },
   async createNewGameFile() {
@@ -52,11 +52,53 @@ export const autoSave = {
     const writable = await fh.createWritable();
     const playerCode = ai.control.fullSaveCode();
     await writable.write(
-      'LWBG\n' + formatCode.gameLogic + ',' +
-      formatCode.compression + '\n' + playerCode +
-      '\n' + compressPieces() + '\n'
+      'LWBG\n' + format.code + '\n' +
+      playerCode + '\n' + compressPieces() + '\n'
     );
     await writable.close();
+  },
+  async selectFileToLoad() {
+    const [fhLoad] = await showOpenFilePicker({
+      // startIn: this.defaultDirectory,
+    });
+    const file = await fhLoad.getFile();
+    const contents = await file.text();
+    const lines = contents.split('\n');
+    const {header, code} = format;
+    if (lines[0] !== header || lines[1] !== code) {
+      throw new Error('invalid file');
+    };
+    this.fhLoad = fhLoad;
+  },
+  async executeLoad(fhLoad) {
+    const file = await fhLoad.getFile();
+    const contents = await file.text();
+    const lines = contents.split('\n');
+    loadPlayers(lines[2]);
+    loadPieces(lines[3]);
+    const changeCodeStrings = lines[4].split(';');
+    changeCodeStrings.pop();
+    for (const ccs of changeCodeStrings) {
+      await expandAndExecute(ccs);
+    }
+    gp.adjustHumanPositions();
+    ui.displayTurn(gs.turn);
+    if (gs.phase === 'roll') {
+      ui.replaceButton('roll-display', 'roll-button');
+    } else ui.displayRollResult(gs, true);
+    autoSave.gsPrevious = deepCopy(gs);
+    if (ai.control[gs.turn] && gs.phase !== 'roll') {
+      ui.showButton('ok-ai-move');
+    } else {
+      ui.hideButton('ok-ai-move');
+      if (gs.je) gp.startJumpEnter();
+    }
+    if (gs.turn === 'trex' && gs.phase === 'move') {
+      if (gs.rollN) ui.showButton('ok-trex-move');
+      else ui.showButton('ok-no-move');
+    }
+    ui.humanItemsClickable(gs.turn === 'human');
+    ui.raptorItemsClickable(gs.turn === 'raptor');
   },
 };
 
@@ -64,11 +106,14 @@ export const autoSave = {
 gp.save = () => {autoSave.update();};
 
 // Allow for future changes to save file format
-const formatCode = {gameLogic: 0, compression: 0};
+const format = {
+  header: 'LWBG', logic: 0, compression: 0,
+};
+format.code = `${format.logic},${format.compression}`;
 
 // Compress information for save file
 function compressPieces() {
-  if (formatCode.compression !== 0) return;
+  if (format.compression !== 0) return;
   let outputString = '';
   const hFeature = pieces.human.feature;
   const hKeys = Object.keys(hFeature).sort();
@@ -103,7 +148,7 @@ function codeTurn(turn) {
   return 0;
 }
 function compressChanges() {
-  if (formatCode.compression !== 0) return;
+  if (format.compression !== 0) return;
   const changeIntsRH = [];
   let changeIntTrex = 0;
   let changeIntOther = 0;
@@ -155,4 +200,106 @@ function compressChanges() {
   }
   if (!changeCodes.length) return '';
   return changeCodes.join('') + ';';
+}
+
+// Load changes from file
+function findAndSetLevel(species, code) {
+  const i = ai.level[species].findIndex(
+    (x) => x.saveCode === code
+  );
+  // i is -1 if not found, i.e., manual
+  const c = i < 0 ? 'manual' : `ai-${i}`;
+  click(`#${species}-control .${c}`);
+  ai.control.changed = false;
+}
+function loadPlayers(playerCodeString) {
+  const [, h, r] = playerCodeString.split('%');
+  findAndSetLevel('human', h);
+  findAndSetLevel('raptor', r);
+}
+function loadPieces(pieceCodeString) {
+  const pieceCodeArr = pieceCodeString.split(';');
+  const hFeature = pieces.human.feature;
+  const hKeys = Object.keys(hFeature).sort();
+  for (let h = 0; h < gs.humans.length; h++) {
+    const indices = [h * 4, (h + 1) * 4];
+    const b64 = pieceCodeArr[0].slice(...indices);
+    const charCodes = base256(b64);
+    for (let c = 0; c < 3; c++) {
+      const attr0 = charCodes[c] >> 4;
+      const attr1 = charCodes[c] & 15;
+      hFeature[hKeys[c * 2]][h] = attr0;
+      hFeature[hKeys[c * 2 + 1]][h] = attr1;
+    }
+  }
+  const raptorCodes = pieceCodeArr[1].split('');
+  for (let r = 0; r < gs.raptors.length; r++) {
+    const rInt = parseInt(raptorCodes[r], 16);
+    pieces.raptor.feature.shape[r] = rInt >> 2;
+    pieces.raptor.feature.color[r] = rInt & 3;
+  }
+  pieces.addImgs();
+}
+async function expandAndExecute(changeCodeString) {
+  if (changeCodeString.startsWith('%')) {
+    loadPlayers(changeCodeString);
+    return;
+  }
+  const changeCodes = [];
+  const characters = changeCodeString.split('');
+  characters.reverse();
+  while (characters.length) {
+    const chg = [];
+    chg.push(characters.pop());
+    chg.push(characters.pop());
+    chg.push(characters.pop());
+    changeCodes.push(chg.join(''));
+  }
+  for (const changeCode of changeCodes) {
+    const first = changeCode.substring(0, 1);
+    if (first === '@') continue;
+    const b64 = (['~', '|'].includes(first)) ?
+      changeCode.substring(1, 3) + 'AA' :
+      changeCode + 'A';
+    const charCodes = base256(b64);
+    if (first === '~') {
+      const changeInt =
+        charCodes[0] << 4 | charCodes[1] >> 4;
+      const turnCodes = changeInt & 15;
+      const rollGoCodes = changeInt >> 4 & 3;
+      const rollNCodes = changeInt >> 6 & 63;
+      if (turnCodes) {
+        gs.turn = [
+          'over', 'human', 'trex', 'raptor',
+        ][turnCodes & 3];
+      }
+      if (rollGoCodes) gs.rollGo = rollGoCodes & 1;
+      if (rollNCodes) {
+        const special = gs.turn === 'human' ?
+          'Jump' : 'Enter';
+        gs.rollN = [
+          0, 1, 2, 3, 4, special, 0, null,
+        ][rollNCodes & 7];
+      }
+      gs.phase = gs.rollN === null ? 'roll' :
+        gs.turn === 'trex' ? 'move' : 'select';
+      gs.je = ['Jump', 'Enter'].includes(gs.rollN);
+    } else if (first === '|') {
+      const changeInt = charCodes[0];
+      const space = changeInt & 15;
+      await gp.relocatePiece('trex', null, space);
+    } else {
+      const changeInt = charCodes[0] << 10 |
+        charCodes[1] << 2 | charCodes[2] >> 6;
+      const pieceCode = changeInt >> 14;
+      const loc = changeInt & 127;
+      let species = 'raptor';
+      let piece = pieceCode;
+      if (pieceCode >> 2) {
+        species = 'human';
+        piece = pieceCode - 4;
+      }
+      await gp.relocatePiece(species, piece, loc);
+    }
+  }
 }
