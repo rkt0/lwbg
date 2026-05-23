@@ -1,4 +1,4 @@
-import {qs, ael, fromTemplate} from './utility.js';
+import {qs, ael, ce, fromTemplate} from './utility.js';
 import {anim} from './animation.js';
 
 export const message = {
