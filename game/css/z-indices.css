@@ -46,7 +46,7 @@
 }
 
 #message-container,
-#toggle-audio {
+#gameplay-container .toggle-audio {
   z-index: 10;
 }
 
