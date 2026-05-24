@@ -68,38 +68,35 @@ async function loadSaved() {
   showLoadFork();
 }
 async function loadOverwrite() {
-  const {fhLoad} = autoSave;
-  const ok = await fhLoad.queryPermission({
-    mode: 'readwrite',
-  });
-  autoSave.fh = fhLoad;
+  autoSave.fh = autoSave.fhLoad;
   await hideLoadFork();
-  await showStartMessage(`load-permission-${ok}`);
-  startGame(fhLoad);
+  await showStartMessage(`overwrite-granted-${
+    await autoSave.checkPermission(true)
+  }`);
+  startGame(true);
 }
 async function loadCopy() {
-  const {fhLoad} = autoSave;
   await hideLoadFork();
   await showStartMessage('save-introduction');
-  try {await autoSave.createFile(fhLoad);}
+  try {await autoSave.createFile(true);}
   catch {return showStartOptions();}
   await showStartMessage('save-created');
-  startGame(fhLoad);
+  startGame(true);
 }
 
 // Needed for start screen click handlers
-async function startGame(fhLoad) {
+async function startGame(load) {
   const okToSave = await autoSave.checkPermission();
   if (!okToSave) {
     await hideStartMessage();
     return showStartOptions();
   }
-  if (fhLoad) await autoSave.executeLoad(fhLoad);
+  if (load) await autoSave.executeLoad(autoSave.fh);
   await anim.fade(startContainer, 0, aTime);
   hideStartMessage();
   anim.fade(gameplayContainer, 1, aTime);
   gp.initializeView();
-  if (fhLoad) {
+  if (load) {
     gp.interrupt(0);
     showControl();
   } else gp.endTurn();

@@ -31,20 +31,22 @@ export const autoSave = {
     await writable.close();
     this.gsPrevious = deepCopy(gs);
   },
-  async checkPermission() {
+  async checkPermission(queryOnly) {
     if (debug.skipAutoSave) return true;
-    const status = await this.fh.requestPermission({
+    const method = queryOnly ?
+      'queryPermission' : 'requestPermission';
+    const status = await this.fh[method]({
       mode: 'readwrite',
     });
     return status === 'granted';
   },
-  async createFile(fhToCopy) {
+  async createFile(load) {
     this.fh = await showSaveFilePicker({
       types: [this.fileType],
     });
     const writable = await this.fh.createWritable();
-    if (fhToCopy) {
-      const fileToCopy = await fhToCopy.getFile();
+    if (load) {
+      const fileToCopy = await this.fhLoad.getFile();
       const contentsToCopy = await fileToCopy.text();
       await writable.write(contentsToCopy);
     } else {
