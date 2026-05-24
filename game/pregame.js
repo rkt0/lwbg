@@ -14,40 +14,6 @@ export async function showStartOptions(time = aTime) {
   anim.fade(startOptions, 1, time, {display: ''});
 }
 
-// Animation time for menu fade
-const aTime = anim.time.menuFade;
-
-// Element references
-const titleContainer = qs('#title-container');
-const startContainer = qs('#start-container');
-const startOptions = qs('#start-options');
-const startMessage = qs('#start-message');
-const gameplayContainer = qs('#gameplay-container');
-const loadFork = qs('#load-fork');
-
-// UI helper functions
-async function hideStartOptions() {
-  startOptions.inert = true;
-  await anim.fade(startOptions, 0, aTime);
-}
-async function showStartMessage(templateId) {
-  const node = fromTemplate(templateId);
-  startMessage.replaceChildren(node);
-  anim.fade(startMessage, 1, aTime);
-  await waitForClick(startContainer);
-}
-function hideStartMessage() {
-  anim.fade(startMessage, 0, aTime);
-}
-function showLoadFork() {
-  loadFork.inert = false;
-  anim.fade(loadFork, 1, aTime, {display: ''});
-}
-async function hideLoadFork() {
-  loadFork.inert = true;
-  await anim.fade(loadFork, 0, aTime);
-}
-
 // Add title screen click handler
 aelo(titleContainer, 'mousedown', async () => {
   onbeforeunload = () => '';
@@ -126,4 +92,38 @@ async function startGame(fhLoad) {
     gp.interrupt(0);
     showControl();
   } else gp.endTurn();
+}
+
+// Animation time for menu fade
+const aTime = anim.time.menuFade;
+
+// Element references
+const titleContainer = qs('#title-container');
+const startContainer = qs('#start-container');
+const startOptions = qs('#start-options');
+const startMessage = qs('#start-message');
+const gameplayContainer = qs('#gameplay-container');
+const loadFork = qs('#load-fork');
+
+// UI helper functions
+async function hideStartOptions() {
+  startOptions.inert = true;
+  await anim.fade(startOptions, 0, aTime);
+}
+async function showStartMessage(templateId) {
+  const node = fromTemplate(templateId);
+  startMessage.replaceChildren(node);
+  anim.fade(startMessage, 1, aTime);
+  await waitForClick(startContainer);
+}
+function hideStartMessage() {
+  anim.fade(startMessage, 0, aTime);
+}
+function showLoadFork() {
+  loadFork.inert = false;
+  anim.fade(loadFork, 1, aTime, {display: ''});
+}
+async function hideLoadFork() {
+  loadFork.inert = true;
+  await anim.fade(loadFork, 0, aTime);
 }
