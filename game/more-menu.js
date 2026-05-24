@@ -87,7 +87,6 @@ async function confirmQuit() {
   gp.initializeView();
   pieces.shuffleFeatures();
   pieces.addImgs();
-  autoSave.clear();
   showStartOptions(0);
   anim.fade('#start-container', 1, aTime);
 }

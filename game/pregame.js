@@ -9,6 +9,7 @@ import {autoSave} from './auto-save.js';
 import {showControl} from './player-control.js';
 
 export async function showStartOptions(time = aTime) {
+  autoSave.clear();
   await anim.fade(startMessage, 0, time);
   startOptions.inert = false;
   anim.fade(startOptions, 1, time, {display: ''});
@@ -90,7 +91,6 @@ async function loadCopy() {
 async function startGame(fhLoad) {
   const okToSave = await autoSave.checkPermission();
   if (!okToSave) {
-    autoSave.fh = null;
     await hideStartMessage();
     return showStartOptions();
   }
