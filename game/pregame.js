@@ -64,7 +64,7 @@ ael(startContainer, 'mousedown', (e) => {
   if (id === 'start-new') startNew();
   else if (id === 'load-saved') loadSaved();
   else if (id === 'load-overwrite') loadOverwrite();
-  // else if (id === 'load-new') loadNew();
+  else if (id === 'load-copy') loadCopy();
 });
 
 // Start screen click handlers
@@ -101,13 +101,22 @@ async function loadOverwrite() {
   await showMessage(`load-permission-${okAlready}`);
   startGame(fhLoad);
 }
+async function loadCopy() {
+  const {fhLoad} = autoSave;
+  await hideFork();
+  await showMessage('save-introduction');
+  try {await autoSave.createLoadCopyFile(fhLoad);}
+  catch {return showOptions();}
+  await showMessage('save-created');
+  startGame(fhLoad);
+}
 
 // Needed for start screen click handlers
 async function startGame(fhLoad) {
   const okToSave = await autoSave.checkPermission();
   if (!okToSave) {
     autoSave.fh = void 0;
-    await anim.fade(startMessage, 0, aTime);
+    await hideMessage();
     return ui.showStartOptions();
   }
   if (fhLoad) await autoSave.executeLoad(fhLoad);

@@ -45,12 +45,12 @@ const aTime = anim.time.menuFade;
 //     autoSave.begin(fhLoad);
 //   });
 // }
-async function loadNew() {
-  const {fhLoad} = autoSave;
-  qs('#load-fork').inert = true;
-  await anim.fade('#load-fork', 0, aTime);
-  autoSave.begin(fhLoad);
-}
+// async function loadNew() {
+//   const {fhLoad} = autoSave;
+//   qs('#load-fork').inert = true;
+//   await anim.fade('#load-fork', 0, aTime);
+//   autoSave.begin(fhLoad);
+// }
 // async function selectFileToLoad() {
 //   anim.fade('#start-message', 0, aTime);
 //   let fh;
@@ -87,5 +87,5 @@ ael('#start-container', 'mousedown', (e) => {
   // if (id === 'start-new') startNew();
   // else if (id === 'load-saved') loadSaved();
   // else if (id === 'load-overwrite') loadOverwrite();
-  else if (id === 'load-new') loadNew();
+  // else if (id === 'load-copy') loadNew();
 });

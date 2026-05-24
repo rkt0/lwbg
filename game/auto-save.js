@@ -57,6 +57,15 @@ export const autoSave = {
     );
     await writable.close();
   },
+  async createLoadCopyFile(fhToCopy) {
+    const fh = await this.createFile();
+    this.fh = fh;
+    const writable = await fh.createWritable();
+    const fileToCopy = await fhToCopy.getFile();
+    const contentsToCopy = await fileToCopy.text();
+    await writable.write(contentsToCopy);
+    await writable.close();
+  },
   async selectFileToLoad() {
     const [fhLoad] = await showOpenFilePicker({
       // startIn: this.defaultDirectory,
