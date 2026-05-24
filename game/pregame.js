@@ -90,7 +90,7 @@ async function loadCopy() {
 async function startGame(fhLoad) {
   const okToSave = await autoSave.checkPermission();
   if (!okToSave) {
-    autoSave.fh = void 0;
+    autoSave.fh = null;
     await hideStartMessage();
     return showStartOptions();
   }

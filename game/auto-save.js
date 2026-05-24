@@ -14,8 +14,8 @@ export const autoSave = {
     accept: {'text/plain': ['.txt']},
   },
   clear() {
-    this.fh = void 0;
-    this.fhLoad = void 0;
+    this.fh = null;
+    this.fhLoad = null;
     this.gsPrevious = deepCopy(gs);
   },
   async update(markAsEdited) {
