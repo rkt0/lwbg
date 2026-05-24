@@ -73,7 +73,7 @@ async function startNew() {
   await showControl();
   if (debug.skipAutoSave) return startGame();
   await showMessage('save-introduction');
-  try {await autoSave.createNewGameFile();}
+  try {await autoSave.createFile();}
   catch {return showOptions();}
   await showMessage('save-created');
   startGame();
@@ -105,7 +105,7 @@ async function loadCopy() {
   const {fhLoad} = autoSave;
   await hideFork();
   await showMessage('save-introduction');
-  try {await autoSave.createLoadCopyFile(fhLoad);}
+  try {await autoSave.createFile(fhLoad);}
   catch {return showOptions();}
   await showMessage('save-created');
   startGame(fhLoad);

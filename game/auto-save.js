@@ -38,30 +38,22 @@ export const autoSave = {
     });
     return status === 'granted';
   },
-  async createFile() {
-    const fh = await showSaveFilePicker({
+  async createFile(fhToCopy) {
+    this.fh = await showSaveFilePicker({
       types: [this.fileType],
     });
-    return fh;
-  },
-  async createNewGameFile() {
-    const fh = await this.createFile();
-    this.fh = fh;
-    const writable = await fh.createWritable();
-    const playerCode = ai.control.fullSaveCode();
-    await writable.write(
-      'LWBG\n' + format.code + '\n' +
-      playerCode + '\n' + compressPieces() + '\n'
-    );
-    await writable.close();
-  },
-  async createLoadCopyFile(fhToCopy) {
-    const fh = await this.createFile();
-    this.fh = fh;
-    const writable = await fh.createWritable();
-    const fileToCopy = await fhToCopy.getFile();
-    const contentsToCopy = await fileToCopy.text();
-    await writable.write(contentsToCopy);
+    const writable = await this.fh.createWritable();
+    if (fhToCopy) {
+      const fileToCopy = await fhToCopy.getFile();
+      const contentsToCopy = await fileToCopy.text();
+      await writable.write(contentsToCopy);
+    } else {
+      const playerCode = ai.control.fullSaveCode();
+      await writable.write(
+        'LWBG\n' + format.code + '\n' +
+        playerCode + '\n' + compressPieces() + '\n'
+      );
+    }
     await writable.close();
   },
   async selectFileToLoad() {
