@@ -2,12 +2,12 @@ import {qs, aelo} from './utility.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
 import {pieces} from './pieces.js';
-import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 import {message} from './message.js';
 import {edit} from './edit-mode.js';
 import {showControl} from './player-control.js';
+import {showStartOptions} from './pregame.js';
 
 export const moreMenu = {
   element: qs('#more-menu'),
@@ -88,6 +88,6 @@ async function confirmQuit() {
   pieces.shuffleFeatures();
   pieces.addImgs();
   autoSave.clear();
-  ui.showStartOptions(true);
+  showStartOptions(0);
   anim.fade('#start-container', 1, aTime);
 }

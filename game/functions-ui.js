@@ -1,6 +1,4 @@
-import {
-  qs, qsa, fromTemplate, cssInt,
-} from './utility.js';
+import {qs, qsa, cssInt} from './utility.js';
 import {anim} from './animation.js';
 
 export const ui = {
@@ -67,10 +65,6 @@ export const ui = {
       }
     }, delay);
   },
-  startMessage(templateId) {
-    const node = fromTemplate(templateId);
-    qs('#start-message').replaceChildren(node);
-  },
   humanItemsClickable(clickable) {
     const value = clickable ? 'auto' : 'none';
     const items = qsa(
@@ -88,13 +82,5 @@ export const ui = {
     for (const element of qsa('.raptor-piece')) {
       element.style.pointerEvents = valuePieces;
     }
-  },
-  async showStartOptions(skipFx) {
-    const aTime = skipFx ? 0 : anim.time.menuFade;
-    await anim.fade('#start-message', 0, aTime);
-    qs('#start-options').inert = false;
-    anim.fade('#start-options', 1, aTime, {
-      display: '',
-    });
   },
 };
