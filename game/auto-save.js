@@ -9,7 +9,6 @@ import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 
 export const autoSave = {
-  // defaultDirectory: 'desktop',
   fileType: {
     description: 'Text Files',
     accept: {'text/plain': ['.txt']},
@@ -41,7 +40,6 @@ export const autoSave = {
   },
   async createFile() {
     const fh = await showSaveFilePicker({
-      // startIn: this.defaultDirectory,
       types: [this.fileType],
     });
     return fh;
@@ -67,9 +65,7 @@ export const autoSave = {
     await writable.close();
   },
   async selectFileToLoad() {
-    const [fhLoad] = await showOpenFilePicker({
-      // startIn: this.defaultDirectory,
-    });
+    const [fhLoad] = await showOpenFilePicker();
     const file = await fhLoad.getFile();
     const contents = await file.text();
     const lines = contents.split('\n');
