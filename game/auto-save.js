@@ -67,6 +67,10 @@ export const autoSave = {
     }
     await writable.close();
   },
+  async copyInGame() {
+    this.fhLoad = this.fh;
+    await this.createFile(true);
+  },
   async selectFileToLoad() {
     const [fhLoad] = await showOpenFilePicker({
       types: [this.fileType],

@@ -55,6 +55,7 @@ async function startNew() {
   startGame();
 }
 async function loadSaved() {
+  if (debug.skipAutoSave) return;
   await hideStartOptions();
   await showStartMessage('load-introduction');
   hideStartMessage();

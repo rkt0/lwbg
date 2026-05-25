@@ -41,24 +41,11 @@ const aTime = anim.time.menuFade;
 
 // More menu click handlers
 async function manualSave() {
-  if (debug.skipAutoSave) {
-    moreMenu.hide();
-    return;
-  }
-  const file = await autoSave.fh.getFile();
-  const contents = await file.text();
+  if (debug.skipAutoSave) return moreMenu.hide();
   try {
-    const fh = await showSaveFilePicker({
-      startIn: autoSave.fh,
-      types: [autoSave.fileType],
-    });
-    const writable = await fh.createWritable();
-    await writable.write(contents);
-    await writable.close();
+    await autoSave.copyInGame();
     message.show('manual-save-success');
-  } finally {
-    moreMenu.hide();
-  }
+  } catch {void 0;} finally {moreMenu.hide();}
 }
 async function savePoint() {
   qs('#more-options').inert = true;
