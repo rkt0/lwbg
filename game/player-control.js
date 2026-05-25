@@ -1,5 +1,4 @@
 import {qs, ael, isNull} from './utility.js';
-import {debug} from './debug.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {gs} from './game-objects.js';
@@ -25,20 +24,11 @@ let resolvePromise;
 const aTime = anim.time.menuFade;
 
 // Needed for player control screen click handlers
-async function savePlayers() {
-  if (!ai.control.changed) return;
-  ai.control.changed = false;
-  if (debug.skipAutoSave) return;
-  const file = await autoSave.fh.getFile();
-  const contents = await file.text();
-  const writable = await autoSave.fh.createWritable();
-  await writable.write(contents);
-  const playerCode = ai.control.fullSaveCode();
-  await writable.write(playerCode + ';');
-  await writable.close();
-}
 function continueInGame() {
-  savePlayers();
+  if (ai.control.changed) {
+    ai.control.changed = false;
+    autoSave.playerChange();
+  }
   gp.resume();
   anim.fade('#player-control', 0, aTime);
   if (ai.control[gs.turn] && gs.phase !== 'roll') {
