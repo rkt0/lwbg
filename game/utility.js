@@ -48,7 +48,7 @@ export function waitForClick(x, type = 'mousedown') {
 
 export function sleep(delay) {
   return new Promise((resolve) => {
-    setTimeout(() => {resolve();}, delay);
+    setTimeout(() => resolve(), delay);
   });
 }
 

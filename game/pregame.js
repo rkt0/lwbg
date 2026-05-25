@@ -49,8 +49,12 @@ async function startNew() {
   await showControl();
   if (debug.skipAutoSave) return startGame();
   await showStartMessage('save-introduction');
-  try {await autoSave.createFile();}
-  catch {return showStartOptions();}
+  try {
+    await autoSave.createFile();
+  }
+  catch {
+    return showStartOptions();
+  }
   await showStartMessage('save-created');
   startGame();
 }
@@ -59,7 +63,9 @@ async function loadSaved() {
   await hideStartOptions();
   await showStartMessage('load-introduction');
   hideStartMessage();
-  try {await autoSave.selectFileToLoad();}
+  try {
+    await autoSave.selectFileToLoad();
+  }
   catch (error) {
     if (error.message === 'invalid file') {
       await showStartMessage('load-invalid-file');
@@ -79,8 +85,12 @@ async function loadOverwrite() {
 async function loadCopy() {
   await hideLoadFork();
   await showStartMessage('save-introduction');
-  try {await autoSave.createFile(true);}
-  catch {return showStartOptions();}
+  try {
+    await autoSave.createFile(true);
+  }
+  catch {
+    return showStartOptions();
+  }
   await showStartMessage('save-created');
   startGame(true);
 }

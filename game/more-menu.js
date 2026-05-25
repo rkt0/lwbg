@@ -45,14 +45,18 @@ async function manualSave() {
   try {
     await autoSave.copyInGame();
     message.show('manual-save-success');
-  } catch {void 0;} finally {moreMenu.hide();}
+  } catch {
+    // Do nothing
+  } finally {
+    moreMenu.hide();
+  }
 }
 async function savePoint() {
   qs('#more-options').inert = true;
   const help = qs('#manual-save-help');
   await anim.fade('#more-options', 0, aTime);
   await anim.fade(help, 1, aTime, {display: ''});
-  aelo(help, 'mousedown', () => {manualSave();});
+  aelo(help, 'mousedown', () => manualSave());
 }
 async function controlInGame() {
   await moreMenu.hide(false);

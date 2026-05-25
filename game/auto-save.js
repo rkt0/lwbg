@@ -112,4 +112,4 @@ export const autoSave = {
 };
 
 // Inject into gameplay object
-gp.save = () => {autoSave.update();};
+gp.save = () => autoSave.update();

@@ -107,7 +107,7 @@ for (let i = 1; i < nTracks; i++) {
 const total = cdf[nTracks - 1];
 for (let i = 0; i < nTracks; i++) cdf[i] /= total;
 
-ael(element, 'ended', () => {music.next();});
+ael(element, 'ended', () => music.next());
 for (const button of qsa('.toggle-audio')) {
-  ael(button, 'mousedown', () => {music.toggle();});
+  ael(button, 'mousedown', () => music.toggle());
 }
