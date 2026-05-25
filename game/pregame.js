@@ -1,5 +1,6 @@
 import {
   qs, ael, aelo, fromTemplate, waitForClick,
+  addWarningBeforeUnload,
 } from './utility.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
@@ -28,7 +29,7 @@ const loadFork = qs('#load-fork');
 
 // Add title screen click handler
 aelo(titleContainer, 'mousedown', async () => {
-  onbeforeunload = () => '';
+  addWarningBeforeUnload();
   await anim.fade(titleContainer, 0, aTime);
   anim.fade(startContainer, 1, aTime);
   music.next();

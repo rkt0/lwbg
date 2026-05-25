@@ -52,6 +52,13 @@ export function sleep(delay) {
   });
 }
 
+export function addWarningBeforeUnload() {
+  ael(window, 'beforeunload', (e) => {
+    e.preventDefault();
+    e.returnValue = '';
+  });
+}
+
 export function deepCopy(x) {
   return JSON.parse(JSON.stringify(x));
 }
