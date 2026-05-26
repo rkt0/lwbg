@@ -1,5 +1,5 @@
 import {
-  deepCopy, appendToFile, copyFile,
+  deepCopy, appendToFile, copyFile, fileContents,
 } from './utility.js';
 import {debug} from './debug.js';
 import {ai} from './ai.js';
@@ -68,9 +68,7 @@ export const autoSave = {
     } else throw new Error('invalid file');
   },
   async executeLoad(fhLoad) {
-    const file = await fhLoad.getFile();
-    const contents = await file.text();
-    const lines = contents.split('\n');
+    const lines = await fileContents(fhLoad, true);
     deserialize.players(lines[2]);
     deserialize.pieces(lines[3]);
     const changeCodeStrings = lines[4].split(';');

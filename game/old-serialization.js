@@ -1,4 +1,6 @@
-import {click, base64, base256} from './utility.js';
+import {
+  click, base64, base256, fileContents,
+} from './utility.js';
 import {ai} from './ai.js';
 import {pieces} from './pieces.js';
 import {gs} from './game-objects.js';
@@ -93,9 +95,7 @@ export const serialize = {
 
 export const deserialize = {
   async checkHeader(fh) {
-    const file = await fh.getFile();
-    const contents = await file.text();
-    const lines = contents.split('\n');
+    const lines = await fileContents(fh, true);
     const data = lines.slice(0, 2).join('\n');
     return serialize.header() === data;
   },

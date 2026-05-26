@@ -144,18 +144,22 @@ export function cssIntWH(stem, where = ':root') {
   return dims.map(x => cssInt(`${stem}-${x}`, where));
 }
 
-export async function appendToFile(fileHandle, data) {
-  const writable = await fileHandle.createWritable({
+export async function fileContents(fh, splitLines) {
+  const file = await fh.getFile();
+  const contents = await file.text();
+  return splitLines ? contents.split('\n') : contents;
+}
+export async function appendToFile(fh, data) {
+  const writable = await fh.createWritable({
     keepExistingData: true,
   });
-  const file = await fileHandle.getFile();
+  const file = await fh.getFile();
   await writable.seek(file.size);
   await writable.write(data);
   await writable.close();
 }
 export async function copyFile(fhSource, fhDest) {
-  const fileSource = await fhSource.getFile();
-  const contents = await fileSource.text();
+  const contents = await fileContents(fhSource);
   const writable = await fhDest.createWritable();
   await writable.write(contents);
   await writable.close();
