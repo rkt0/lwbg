@@ -6,10 +6,9 @@ import {ai} from './ai.js';
 import {gs} from './game-objects.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
-// Remember to fix this
 import {
   serialize, deserialize,
-} from './old-serialization.js';
+} from './serialization.js';
 
 export const autoSave = {
   fileType: {
@@ -70,8 +69,8 @@ export const autoSave = {
   async executeLoad(fhLoad) {
     const lines = await fileContents(fhLoad, true);
     deserialize.players(lines[2]);
-    deserialize.pieces(lines[3]);
-    const changeCodeStrings = lines[4].split(';');
+    deserialize.pieces(lines.slice(3, 5));
+    const changeCodeStrings = lines[5].split(';');
     changeCodeStrings.pop();
     for (const ccs of changeCodeStrings) {
       await deserialize.change(ccs);
