@@ -907,11 +907,6 @@ ai.level.raptor[3] = (s, r) => {
 for (const species of ['human', 'raptor']) {
   const levels = ai.level[species];
   for (let i = 0; i < levels.length; i++) {
-    levels[i].saveCode = `${i}`;
+    levels[i].code = `${i}`;
   }
 }
-ai.control.fullSaveCode = () => {
-  const h = ai.control.human.saveCode ?? '$';
-  const r = ai.control.raptor.saveCode ?? '$';
-  return `%${h}%${r}`;
-};

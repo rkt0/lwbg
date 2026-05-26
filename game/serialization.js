@@ -13,7 +13,9 @@ export const serialize = {
     return `${signature}\n${logic},${format}`;
   },
   players() {
-    return ai.control.fullSaveCode();
+    const hData = ai.control.human.code ?? lastDigit;
+    const rData = ai.control.raptor.code ?? lastDigit;
+    return `C${hData}${rData}`;
   },
   pieces() {
     const hData = serializeSpeciesPieces('human');
@@ -83,7 +85,7 @@ export const deserialize = {
     return serialize.header() === data;
   },
   players(playerCodeString) {
-    const [, h, r] = playerCodeString.split('%');
+    const [, h, r] = playerCodeString.split('');
     findAndSetLevel('human', h);
     findAndSetLevel('raptor', r);
   },
@@ -160,6 +162,7 @@ export const deserialize = {
 
 // Base (radix) for integer-to-string conversions
 const base = 36;
+const lastDigit = (base - 1).toString(base);
 
 // Helper functions for pieces
 function serializeSpeciesPieces(species) {
@@ -201,9 +204,8 @@ function codeTurn(turn) {
   return 0;
 }
 function findAndSetLevel(species, code) {
-  const i = ai.level[species].findIndex(
-    (x) => x.saveCode === code
-  );
+  const levels = ai.level[species];
+  const i = levels.findIndex((x) => x.code === code);
   // i is -1 if not found, i.e., manual
   const c = i < 0 ? 'manual' : `ai-${i}`;
   click(`#${species}-control .${c}`);
