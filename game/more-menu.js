@@ -60,7 +60,9 @@ async function savePoint() {
 }
 async function controlInGame() {
   await moreMenu.hide(false);
-  control.show();
+  await control.show();
+  gp.resume();
+  gp.handleControlChange();
 }
 async function showQuitOptions() {
   qs('#more-options').inert = true;

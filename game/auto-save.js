@@ -22,17 +22,18 @@ export const autoSave = {
   },
   async update(markAsEdited) {
     if (debug.skipAutoSave) return;
-    const data = serialize.changes(this.gsPrevious);
-    if (!data.length) return;
-    const editMarker = markAsEdited ? '@@@' : '';
-    await appendToFile(this.fh, editMarker + data);
-    this.gsPrevious = deepCopy(gs);
-  },
-  async playerChange() {
-    if (debug.skipAutoSave) return;
-    let data = serialize.players();
-    data = '%' + data.slice(1) + ';'
+    let data;
+    if (ai.control.changed) {
+      ai.control.changed = false;
+      data = serialize.players();
+      data = '%' + data.slice(1) + ';'
+    } else {
+      data = serialize.changes(this.gsPrevious);
+      if (!data?.length) return;
+      if (markAsEdited) data = '@@@' + data;
+    }
     await appendToFile(this.fh, data);
+    this.gsPrevious = deepCopy(gs);
   },
   async checkPermission(queryOnly) {
     if (debug.skipAutoSave) return true;

@@ -233,6 +233,19 @@ export const gp = {
     anim.fade(scrim, 0, time);
     document.body.style.overflow = 'visible';
   },
+  handleControlChange() {
+    if (!ai.control.changed) return;
+    this.save();
+    if (ai.control[gs.turn] && gs.phase !== 'roll') {
+      click('#cancel-button');
+      ui.hideButton('ok-no-move');
+      ui.hideButton('decline-button');
+      ui.showButton('ok-ai-move');
+    } else {
+      ui.hideButton('ok-ai-move');
+      if (gs.je) this.startJumpEnter();
+    }
+  },
   // save() injected by auto-save.js
 };
 

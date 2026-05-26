@@ -2,19 +2,20 @@ import {qs, ael, isNull} from './utility.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {gs} from './game-objects.js';
-import {ui} from './functions-ui.js';
-import {gp} from './functions-gameplay.js';
-import {autoSave} from './auto-save.js';
 
 export const control = {
+  element: qs('#player-control'),
   async show() {
-    await anim.fade('#player-control', 1, aTime, {
+    await anim.fade(this.element, 1, aTime, {
       display: '',
     });
-    qs('#player-control').inert = false;
-    if (gs.turn) return;
+    this.element.inert = false;
     return new Promise((resolve) => {
-      resolvePromise = resolve;
+      hideAndResolve = async () => {
+        this.element.inert = true;
+        await anim.fade(this.element, 0, aTime);
+        resolve();
+      }
     })
   },
   change(species, level) {
@@ -37,39 +38,14 @@ export const control = {
   },
 };
 
-let resolvePromise;
+let hideAndResolve;
 
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
 
-// Needed for player control screen click handlers
-function continueInGame() {
-  if (ai.control.changed) {
-    ai.control.changed = false;
-    autoSave.playerChange();
-  }
-  gp.resume();
-  anim.fade('#player-control', 0, aTime);
-  if (ai.control[gs.turn] && gs.phase !== 'roll') {
-    click('#cancel-button');
-    ui.hideButton('ok-no-move');
-    ui.hideButton('decline-button');
-    ui.showButton('ok-ai-move');
-  } else {
-    ui.hideButton('ok-ai-move');
-    if (gs.je) gp.startJumpEnter();
-  }
-}
-async function continueAtStart() {
-  await anim.fade('#player-control', 0, aTime);
-  resolvePromise();
-};
-
-// Add player control screen click handlers
+// Add player control screen click handler
 ael('#continue-from-control', 'mousedown', () => {
-  qs('#player-control').inert = true;
-  if (gs.turn) continueInGame();
-  else continueAtStart();
+  hideAndResolve();
 });
 for (const species of ['human', 'raptor']) {
   const area = `#${species}-control`;
