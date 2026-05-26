@@ -110,7 +110,9 @@ async function startGame(load) {
   gp.initializeView();
   if (load) {
     gp.interrupt(0);
-    control.show();
+    await control.show();
+    gp.resume();
+    gp.handleControlChange();
   } else gp.endTurn();
 }
 
