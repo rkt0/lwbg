@@ -1,4 +1,6 @@
-import {deepCopy} from './utility.js';
+import {
+  deepCopy, appendToFile, copyFile,
+} from './utility.js';
 import {debug} from './debug.js';
 import {ai} from './ai.js';
 import {gs} from './game-objects.js';
@@ -23,23 +25,14 @@ export const autoSave = {
     if (debug.skipAutoSave) return;
     const data = serialize.changes(this.gsPrevious);
     if (!data.length) return;
-    const file = await this.fh.getFile();
-    const contents = await file.text();
-    const writable = await this.fh.createWritable();
-    await writable.write(contents);
-    if (markAsEdited) await writable.write('@@@');
-    await writable.write(data);
-    await writable.close();
+    const editMarker = markAsEdited ? '@@@' : '';
+    await appendToFile(this.fh, editMarker + data);
     this.gsPrevious = deepCopy(gs);
   },
   async playerChange() {
     if (debug.skipAutoSave) return;
-    const file = await this.fh.getFile();
-    const contents = await file.text();
-    const writable = await this.fh.createWritable();
-    await writable.write(contents);
-    await writable.write(serialize.players() + ';');
-    await writable.close();
+    const data = serialize.players() + ';'
+    await appendToFile(this.fh, data);
   },
   async checkPermission(queryOnly) {
     if (debug.skipAutoSave) return true;
@@ -54,18 +47,13 @@ export const autoSave = {
     this.fh = await showSaveFilePicker({
       types: [this.fileType],
     });
-    const writable = await this.fh.createWritable();
-    if (load) {
-      const fileToCopy = await this.fhLoad.getFile();
-      const contentsToCopy = await fileToCopy.text();
-      await writable.write(contentsToCopy);
-    } else {
+    if (load) await copyFile(this.fhLoad, this.fh);
+    else {
       const data = serialize.header() + '\n' +
         serialize.players() + '\n' +
         serialize.pieces() + '\n';
-      await writable.write(data);
+      await appendToFile(this.fh, data);
     }
-    await writable.close();
   },
   async copyInGame() {
     this.fhLoad = this.fh;

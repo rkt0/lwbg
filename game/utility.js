@@ -144,6 +144,23 @@ export function cssIntWH(stem, where = ':root') {
   return dims.map(x => cssInt(`${stem}-${x}`, where));
 }
 
+export async function appendToFile(fileHandle, data) {
+  const writable = await fileHandle.createWritable({
+    keepExistingData: true,
+  });
+  const file = await fileHandle.getFile();
+  await writable.seek(file.size);
+  await writable.write(data);
+  await writable.close();
+}
+export async function copyFile(fhSource, fhDest) {
+  const fileSource = await fhSource.getFile();
+  const contents = await fileSource.text();
+  const writable = await fhDest.createWritable();
+  await writable.write(contents);
+  await writable.close();
+}
+
 // Encode array of one-byte integers to base64
 // and keep a specified number of characters
 export function base64(codeArr, nKeep) {
