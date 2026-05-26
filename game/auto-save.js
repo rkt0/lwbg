@@ -30,7 +30,8 @@ export const autoSave = {
   },
   async playerChange() {
     if (debug.skipAutoSave) return;
-    const data = serialize.players() + ';'
+    let data = serialize.players();
+    data = '%' + data.slice(1) + ';'
     await appendToFile(this.fh, data);
   },
   async checkPermission(queryOnly) {

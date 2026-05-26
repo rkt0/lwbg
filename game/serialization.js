@@ -7,7 +7,7 @@ import {gs} from './game-objects.js';
 import {gp} from './functions-gameplay.js';
 
 export const serialize = {
-  code: {signature: 'LWBG', logic: 0, format: 0.1},
+  code: {signature: 'LWBG', logic: 0, format: 0.2},
   header() {
     const {signature, logic, format} = this.code;
     return `${signature}\n${logic},${format}`;

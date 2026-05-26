@@ -6,18 +6,37 @@ import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 
-export async function showControl() {
-  await anim.fade('#player-control', 1, aTime, {
-    display: '',
-  });
-  qs('#player-control').inert = false;
-  if (gs.turn) return;
-  return new Promise((resolve) => {
-    resolvePromise = resolve;
-  })
-}
+export const control = {
+  async show() {
+    await anim.fade('#player-control', 1, aTime, {
+      display: '',
+    });
+    qs('#player-control').inert = false;
+    if (gs.turn) return;
+    return new Promise((resolve) => {
+      resolvePromise = resolve;
+    })
+  },
+  change(species, level) {
+    const area = qs(`#${species}-control`);
+    qs('.current', area)?.classList.remove('current');
+    if (level === -1) {
+      qs('.manual', area).classList.add('current');
+      ai.control[species] = false;
+    } else {
+      const aiButton = qs(`.ai-${level}`, area);
+      aiButton.classList.add('current');
+      ai.control[species] = ai.level[species][level];
+    }
+    if (gs.turn) ai.control.changed = true;
+    if (isNull(ai.control.human)) return;
+    if (isNull(ai.control.raptor)) return;
+    const button = qs('#continue-from-control');
+    anim.fade(button, 1, aTime);
+    button.style.pointerEvents = 'auto';
+  },
+};
 
-// Reference to promise resolve function
 let resolvePromise;
 
 // Animation time for menu fade
@@ -45,23 +64,6 @@ async function continueAtStart() {
   await anim.fade('#player-control', 0, aTime);
   resolvePromise();
 };
-function changeControl(species, level) {
-  const area = qs(`#${species}-control`);
-  qs('.current', area)?.classList.remove('current');
-  if (level === -1) {
-    qs('.manual', area).classList.add('current');
-    ai.control[species] = false;
-  } else {
-    qs(`.ai-${level}`, area).classList.add('current');
-    ai.control[species] = ai.level[species][level];
-  }
-  if (gs.turn) ai.control.changed = true;
-  if (isNull(ai.control.human)) return;
-  if (isNull(ai.control.raptor)) return;
-  const button = qs('#continue-from-control');
-  anim.fade(button, 1, aTime);
-  button.style.pointerEvents = 'auto';
-}
 
 // Add player control screen click handlers
 ael('#continue-from-control', 'mousedown', () => {
@@ -72,11 +74,11 @@ ael('#continue-from-control', 'mousedown', () => {
 for (const species of ['human', 'raptor']) {
   const area = `#${species}-control`;
   ael(`${area} .manual`, 'mousedown', () => {
-    changeControl(species, -1);
+    control.change(species, -1);
   });
   for (let i = 0; i < ai.level[species].length; i++) {
     ael(`${area} .ai-${i}`, 'mousedown', () => {
-      changeControl(species, i);
+      control.change(species, i);
     });
   }
 }

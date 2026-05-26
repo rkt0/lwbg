@@ -7,7 +7,7 @@ import {anim} from './animation.js';
 import {music} from './music.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
-import {showControl} from './player-control.js';
+import {control} from './player-control.js';
 
 export async function showStartOptions(time = aTime) {
   autoSave.clear();
@@ -47,7 +47,7 @@ ael(startContainer, 'mousedown', (e) => {
 // Start screen click handlers
 async function startNew() {
   await hideStartOptions();
-  await showControl();
+  await control.show();
   if (debug.skipAutoSave) return startGame();
   await showStartMessage('save-introduction');
   try {
@@ -110,7 +110,7 @@ async function startGame(load) {
   gp.initializeView();
   if (load) {
     gp.interrupt(0);
-    showControl();
+    control.show();
   } else gp.endTurn();
 }
 
