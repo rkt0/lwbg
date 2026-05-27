@@ -1,5 +1,5 @@
 import {
-  base64, base256, fileContents,
+  invertMap, base64, base256, fileContents,
 } from './utility.js';
 import {ai} from './ai.js';
 import {pieces} from './pieces.js';
@@ -8,14 +8,14 @@ import {gp} from './functions-gameplay.js';
 import {control} from './control.js';
 
 export const serialize = {
-  code: {signature: 'LWBG', logic: 0, format: 0.2},
+  code: {signature: 'LWBG', logic: 0, format: 0.3},
   header() {
     const {signature, logic, format} = this.code;
     return `${signature}\n${logic},${format}`;
   },
   players() {
-    const hData = ai.control.human.code ?? lastDigit;
-    const rData = ai.control.raptor.code ?? lastDigit;
+    const hData = ai.control.human.code ?? digit(-1);
+    const rData = ai.control.raptor.code ?? digit(-1);
     return `C${hData}${rData}`;
   },
   pieces() {
@@ -23,7 +23,7 @@ export const serialize = {
     const rData = serializeSpeciesPieces('raptor');
     return `${hData}\n${rData}`;
   },
-  changes(gsPrevious) {
+  xxx(gsPrevious) {
     const changeIntsRH = [];
     let changeIntTrex = 0;
     let changeIntOther = 0;
@@ -76,6 +76,30 @@ export const serialize = {
     }
     if (!changeCodes.length) return '';
     return changeCodes.join('') + ';';
+  },
+  changes(gsPrevious) {
+    let data = '';
+    for (const [h, space] of gs.humans.entries()) {
+      if (space === gsPrevious.humans[h]) continue;
+      data += serializeMove('human', h, space);
+    }
+    if (gs.trex !== gsPrevious.trex) {
+      data += serializeMove('trex', '', gs.trex);
+    }
+    for (const [r, space] of gs.raptors.entries()) {
+      if (space === gsPrevious.raptors[r]) continue;
+      data += serializeMove('raptor', r, space);
+    }
+    if (gs.rollN !== gsPrevious.rollN) {
+      data += serializeDie('N', gs.rollN);
+    }
+    if (gs.rollGo !== gsPrevious.rollGo) {
+      data += serializeDie('Go', gs.rollGo);
+    }
+    if (gs.turn !== gsPrevious.turn) {
+      data += serializeTurn(gs.turn);
+    }
+    return data;
   },
 };
 
@@ -163,7 +187,9 @@ export const deserialize = {
 
 // Base (radix) for integer-to-string conversions
 const base = 36;
-const lastDigit = (base - 1).toString(base);
+function digit(n) {
+  return (((n % base) + base) % base).toString(base);
+}
 
 // Helper functions for pieces
 function serializeSpeciesPieces(species) {
@@ -191,6 +217,61 @@ function deserializeSpeciesPieces(species, data) {
   }
 }
 
+// Helper functions for player control
+function findAndSetLevel(species, code) {
+  const levels = ai.level[species];
+  const i = levels.findIndex((x) => x.code === code);
+  // i is -1 if not found, i.e., manual
+  control.change(species, i);
+  ai.control.changed = false;
+}
+
+// Leaders for change items
+const itemFromLeader = new Map([
+  ['H', 'humanMove'],
+  ['T', 'trexMove'],
+  ['R', 'raptorMove'],
+  ['N', 'rollN'],
+  ['G', 'rollGo'],
+  [' ', 'turn'],
+]);
+const leaderFromItem = invertMap(itemFromLeader);
+
+// Helper functions for turn
+const turnFromData = new Map([
+  [0, 'over'],
+  [1, 'human'],
+  [2, 'trex'],
+  [3, 'raptor'],
+]);
+const dataFromTurn = invertMap(turnFromData);
+function serializeTurn(turn) {
+  const leader = leaderFromItem.get('turn');
+  return leader + dataFromTurn.get(turn);
+}
+
+// Helper functions for dice
+const rollFromData = new Map([
+  [digit(-3), 'Jump'],
+  [digit(-2), 'Enter'],
+  [digit(-1), null],
+]);
+const dataFromRoll = invertMap(rollFromData);
+function serializeDie(dieType, roll) {
+  const leader = leaderFromItem.get(`roll${dieType}`);
+  return leader + (dataFromRoll.get(roll) ?? roll);
+}
+
+// Helper functions for moves
+function serializeMove(species, piece, space) {
+  const leader = leaderFromItem.get(`${species}Move`);
+  let spaceData = space.toString(base);
+  if (spaceData.length < 2 && species !== 'trex') {
+    spaceData = '0' + spaceData;
+  }
+  return leader + piece.toString(base) + spaceData;
+}
+
 // Other helper functions
 function codeRollN(rollN) {
   if (rollN === 'Jump' || rollN === 'Enter') return 5;
@@ -203,11 +284,4 @@ function codeTurn(turn) {
   if (turn === 'trex') return 2;
   if (turn === 'raptor') return 3;
   return 0;
-}
-function findAndSetLevel(species, code) {
-  const levels = ai.level[species];
-  const i = levels.findIndex((x) => x.code === code);
-  // i is -1 if not found, i.e., manual
-  control.change(species, i);
-  ai.control.changed = false;
 }

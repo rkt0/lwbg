@@ -69,6 +69,19 @@ export function sequence(n) {
   return new Array(n).fill().map((_, i) => i);
 }
 
+export function invertMap(source) {
+  const values = source.values();
+  const valuesUnique = new Set(values);
+  if (valuesUnique.size < values.length) {
+    throw new Error('values are not unique');
+  }
+  const output = new Map();
+  for (const [key, value] of source) {
+    output.set(value, key);
+  }
+  return output;
+}
+
 export function arrayMinus(arrFrom, arrSubtracted) {
   return arrFrom.map((e, i) => e - arrSubtracted[i]);
 }
