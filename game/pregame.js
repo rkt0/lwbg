@@ -7,7 +7,7 @@ import {anim} from './animation.js';
 import {music} from './music.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
-import {control} from './player-control.js';
+import {control} from './control.js';
 
 export async function showStartOptions(time = aTime) {
   autoSave.clear();

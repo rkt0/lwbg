@@ -5,7 +5,7 @@ import {ai} from './ai.js';
 import {pieces} from './pieces.js';
 import {gs} from './game-objects.js';
 import {gp} from './functions-gameplay.js';
-import {control} from './player-control.js';
+import {control} from './control.js';
 
 export const serialize = {
   code: {signature: 'LWBG', logic: 0, format: 0.2},
