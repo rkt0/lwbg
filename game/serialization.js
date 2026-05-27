@@ -5,6 +5,7 @@ import {ai} from './ai.js';
 import {pieces} from './pieces.js';
 import {gs} from './game-objects.js';
 import {gp} from './functions-gameplay.js';
+import {control} from './player-control.js';
 
 export const serialize = {
   code: {signature: 'LWBG', logic: 0, format: 0.2},
@@ -207,7 +208,6 @@ function findAndSetLevel(species, code) {
   const levels = ai.level[species];
   const i = levels.findIndex((x) => x.code === code);
   // i is -1 if not found, i.e., manual
-  const c = i < 0 ? 'manual' : `ai-${i}`;
-  click(`#${species}-control .${c}`);
+  control.change(species, i);
   ai.control.changed = false;
 }

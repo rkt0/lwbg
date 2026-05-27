@@ -903,6 +903,10 @@ ai.level.raptor[3] = (s, r) => {
   return ai.decision.raptor.evalSimple(s, r);
 };
 
+// Level -1 is manual control (false)
+ai.level.human[-1] = false;
+ai.level.raptor[-1] = false;
+
 // Save codes
 for (const species of ['human', 'raptor']) {
   const levels = ai.level[species];
