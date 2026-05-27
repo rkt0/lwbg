@@ -1,5 +1,5 @@
 import {
-  click, base64, base256, fileContents,
+  base64, base256, fileContents,
 } from './utility.js';
 import {ai} from './ai.js';
 import {pieces} from './pieces.js';
