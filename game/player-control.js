@@ -60,9 +60,7 @@ for (const species of ['human', 'raptor']) {
     control.change(species, -1);
   });
   for (let i = 0; i < ai.level[species].length; i++) {
-    const levelButton =
-      qs(`[data-level="${i}"]`, area);
-    ael(levelButton, 'mousedown', () => {
+    ael(levelButtons[species][i], 'mousedown', () => {
       control.change(species, i);
     });
   }
