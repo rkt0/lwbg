@@ -10,12 +10,12 @@ export const control = {
     });
     element.inert = false;
     return new Promise((resolve) => {
-      hideAndResolve = async () => {
+      finish = async () => {
         element.inert = true;
         await anim.fade(element, 0, aTime);
         resolve();
-      }
-    })
+      };
+    });
   },
   change(species, level) {
     const area = areaElement[species];
@@ -31,7 +31,7 @@ export const control = {
   },
 };
 
-let hideAndResolve;
+let finish;
 
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
@@ -50,18 +50,13 @@ for (const species of ['human', 'raptor']) {
 }
 
 // Add player control screen click handler
-ael(continueButton, 'mousedown', () => {
-  hideAndResolve();
+ael(element, 'mousedown', (e) => {
+  const button = e.target.closest('button');
+  if (button === continueButton) return finish();
+  const species = ['human', 'raptor'].find(
+    (s) => areaElement[s].contains(e.target)
+  );
+  if (!button || !species) return;
+  const i = levelButtons[species].indexOf(button);
+  control.change(species, i);
 });
-for (const species of ['human', 'raptor']) {
-  const area = qs(`#${species}-control`);
-  const manualButton = qs('.manual', area);
-  ael(manualButton, 'mousedown', () => {
-    control.change(species, -1);
-  });
-  for (let i = 0; i < ai.level[species].length; i++) {
-    ael(levelButtons[species][i], 'mousedown', () => {
-      control.change(species, i);
-    });
-  }
-}
