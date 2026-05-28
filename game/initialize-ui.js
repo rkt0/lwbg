@@ -38,19 +38,19 @@ ael('#show-more', 'mousedown', async () => {
   await anim.fade('#more-menu', 1, aTime);
   qs('#more-options').inert = false;
 });
-ael('#ok-no-move', 'mousedown', () => {
+ael('#ok-no-move', 'mousedown', async () => {
   if (gs.phase === 'roll') return;
   message.hide();
   ui.hideButton('ok-no-move');
-  gp.endTurn();
+  await gp.endTurn();
 });
-ael('#ok-ai-move', 'mousedown', () => {
+ael('#ok-ai-move', 'mousedown', async () => {
   if (gs.phase !== 'select') return;
   gs.phase = 'think';
   ui.hideButton('ok-ai-move');
   const decision = ai.control[gs.turn](gs, prng.ai);
   if (!decision.length) {
-    gp.endTurn();
+    await gp.endTurn();
     return;
   }
   mv.selected = decision[0];
@@ -58,7 +58,7 @@ ael('#ok-ai-move', 'mousedown', () => {
   gs.phase = 'move';
   click('#confirm-button');
 });
-ael('#decline-button', 'mousedown', () => {
+ael('#decline-button', 'mousedown', async () => {
   if (gs.phase !== 'select' || !gs.je) return;
   message.hide();
   if (mv.toGo) {
@@ -68,10 +68,10 @@ ael('#decline-button', 'mousedown', () => {
     mv.toGo--;
   } else {
     ui.hideButton('decline-button');
-    gp.endTurn();
+    await gp.endTurn();
   }
 });
-ael('#roll-button', 'mousedown', () => {
+ael('#roll-button', 'mousedown', async () => {
   if (gs.phase !== 'roll') return;
   gs.phase = 'execute';
   message.hide();
@@ -83,7 +83,7 @@ ael('#roll-button', 'mousedown', () => {
   );
   ui.displayRollResult(gs);
   gs.je = gs.rollN === 'Jump' || gs.rollN === 'Enter';
-  autoSave.update();
+  await autoSave.update();
   const delay = anim.time.buttonSlide * 2 +
     anim.time.dieRoll + anim.time.dieRollDelay;
   if (gs.turn === 'trex') {

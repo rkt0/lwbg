@@ -113,7 +113,11 @@ async function startGame(load) {
     await control.show();
     gp.resume();
     gp.handleControlChange();
-  } else gp.endTurn();
+  } else {
+    // Save first to record player control
+    await gp.save();
+    gp.endTurn();
+  }
 }
 
 // UI helper functions

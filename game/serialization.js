@@ -1,5 +1,5 @@
 import {
-  invertMap, base64, base256, fileContents,
+  invertMap, base256, fileContents,
 } from './utility.js';
 import {ai} from './ai.js';
 import {pieces} from './pieces.js';
@@ -8,74 +8,21 @@ import {gp} from './functions-gameplay.js';
 import {control} from './control.js';
 
 export const serialize = {
-  code: {signature: 'LWBG', logic: 0, format: 0.3},
+  code: {signature: 'LWBG', logic: 0, format: 0.5},
   header() {
     const {signature, logic, format} = this.code;
     return `${signature}\n${logic},${format}`;
   },
-  players() {
+  control() {
+    const leader = leaderFromItem.get('control');
     const hData = ai.control.human.code ?? digit(-1);
     const rData = ai.control.raptor.code ?? digit(-1);
-    return `C${hData}${rData}`;
+    return leader + hData + rData;
   },
   pieces() {
     const hData = serializeSpeciesPieces('human');
     const rData = serializeSpeciesPieces('raptor');
     return `${hData}\n${rData}`;
-  },
-  xxx(gsPrevious) {
-    const changeIntsRH = [];
-    let changeIntTrex = 0;
-    let changeIntOther = 0;
-    for (const [p, s] of gs.humans.entries()) {
-      const old = gsPrevious.humans[p];
-      if (s === old) continue;
-      changeIntsRH.push(p + 4 << 14 | old << 7 | s);
-    }
-    for (const [p, s] of gs.raptors.entries()) {
-      const old = gsPrevious.raptors[p];
-      if (s === old) continue;
-      changeIntsRH.push(p << 14 | old << 7 | s);
-    }
-    const oldTrex = gsPrevious.trex;
-    if (gs.trex !== oldTrex) {
-      changeIntTrex = oldTrex << 4 | gs.trex;
-    }
-    const oldRollN = gsPrevious.rollN;
-    if (gs.rollN !== oldRollN) {
-      const codeOld = codeRollN(oldRollN);
-      const codeNew = codeRollN(gs.rollN);
-      changeIntOther += codeOld << 9 | codeNew << 6;
-    }
-    const oldRollGo = gsPrevious.rollGo;
-    if (gs.rollGo !== oldRollGo) {
-      changeIntOther +=
-        oldRollGo << 5 | gs.rollGo << 4;
-    }
-    const oldTurn = gsPrevious.turn;
-    if (gs.turn !== oldTurn) {
-      const codeOld = codeTurn(oldTurn);
-      const codeNew = codeTurn(gs.turn);
-      changeIntOther += codeOld << 2 | codeNew;
-    }
-    // No need to save changes to gs.phase or gs.je
-    // since they can be inferred from other changes
-    const changeCodes = changeIntsRH.map(i => {
-      const charCodes =
-        [i >> 10, i >> 2 & 255, (i & 3) << 6];
-      return base64(charCodes, 3);
-    });
-    if (changeIntTrex) {
-      const charCodes = [changeIntTrex, 0, 0];
-      changeCodes.push('|' + base64(charCodes, 2));
-    }
-    if (changeIntOther) {
-      const i = changeIntOther;
-      const charCodes = [i >> 4, (i & 15) << 4, 0];
-      changeCodes.push('~' + base64(charCodes, 2));
-    }
-    if (!changeCodes.length) return '';
-    return changeCodes.join('') + ';';
   },
   changes(gsPrevious) {
     let data = '';
@@ -91,15 +38,20 @@ export const serialize = {
       data += serializeMove('raptor', r, space);
     }
     if (gs.rollN !== gsPrevious.rollN) {
-      data += serializeDie('N', gs.rollN);
+      data += serializeDie('rollN', gs.rollN);
     }
     if (gs.rollGo !== gsPrevious.rollGo) {
-      data += serializeDie('Go', gs.rollGo);
+      data += serializeDie('rollGo', gs.rollGo);
     }
     if (gs.turn !== gsPrevious.turn) {
       data += serializeTurn(gs.turn);
     }
     return data;
+  },
+  markEdit(data) {
+    const leader = leaderFromItem.get('editBegin');
+    const follower = leaderFromItem.get('editEnd');
+    return leader + data + follower;
   },
 };
 
@@ -228,12 +180,15 @@ function findAndSetLevel(species, code) {
 
 // Leaders for change items
 const itemFromLeader = new Map([
-  ['H', 'humanMove'],
-  ['T', 'trexMove'],
-  ['R', 'raptorMove'],
+  ['C', 'control'],
+  ['H', 'human'],
+  ['T', 'trex'],
+  ['R', 'raptor'],
   ['N', 'rollN'],
   ['G', 'rollGo'],
   [' ', 'turn'],
+  ['E', 'editBegin'],
+  ['F', 'editEnd'],
 ]);
 const leaderFromItem = invertMap(itemFromLeader);
 
@@ -258,30 +213,16 @@ const rollFromData = new Map([
 ]);
 const dataFromRoll = invertMap(rollFromData);
 function serializeDie(dieType, roll) {
-  const leader = leaderFromItem.get(`roll${dieType}`);
+  const leader = leaderFromItem.get(dieType);
   return leader + (dataFromRoll.get(roll) ?? roll);
 }
 
 // Helper functions for moves
 function serializeMove(species, piece, space) {
-  const leader = leaderFromItem.get(`${species}Move`);
+  const leader = leaderFromItem.get(species);
   let spaceData = space.toString(base);
   if (spaceData.length < 2 && species !== 'trex') {
     spaceData = '0' + spaceData;
   }
   return leader + piece.toString(base) + spaceData;
-}
-
-// Other helper functions
-function codeRollN(rollN) {
-  if (rollN === 'Jump' || rollN === 'Enter') return 5;
-  if (rollN === 0) return 6;
-  if (rollN === null) return 7;
-  return gs.rollN;
-}
-function codeTurn(turn) {
-  if (turn === 'human') return 1;
-  if (turn === 'trex') return 2;
-  if (turn === 'raptor') return 3;
-  return 0;
 }

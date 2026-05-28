@@ -1,7 +1,6 @@
 import {qs, qsa, ael, isNull} from './utility.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
-import {gs} from './game-objects.js';
 
 export const control = {
   async show() {
@@ -23,7 +22,7 @@ export const control = {
     ai.control[species] = ai.level[species][level];
     const button = levelButtons[species][level];
     button.classList.add('current');
-    if (gs.turn) ai.control.changed = true;
+    ai.control.changed = true;
     if (isNull(ai.control.human)) return;
     if (isNull(ai.control.raptor)) return;
     anim.fade(continueButton, 1, aTime);

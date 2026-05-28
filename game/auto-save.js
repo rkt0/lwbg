@@ -20,17 +20,16 @@ export const autoSave = {
     this.fhLoad = null;
     this.gsPrevious = deepCopy(gs);
   },
-  async update(markAsEdited) {
+  async update(edited) {
     if (debug.skipAutoSave) return;
     let data;
     if (ai.control.changed) {
       ai.control.changed = false;
-      data = serialize.players();
-      data = '%' + data.slice(1) + ';'
+      data = serialize.control();
     } else {
       data = serialize.changes(this.gsPrevious);
-      if (!data?.length) return;
-      if (markAsEdited) data = '@@@' + data;
+      if (!data.length) return;
+      if (edited) data = serialize.markEdit(data);
     }
     await appendToFile(this.fh, data);
     this.gsPrevious = deepCopy(gs);
@@ -51,7 +50,7 @@ export const autoSave = {
     if (load) await copyFile(this.fhLoad, this.fh);
     else {
       const data = serialize.header() + '\n' +
-        serialize.players() + '\n' +
+        // serialize.players() + '\n' +
         serialize.pieces() + '\n';
       await appendToFile(this.fh, data);
     }
@@ -99,4 +98,4 @@ export const autoSave = {
 };
 
 // Inject into gameplay object
-gp.save = () => autoSave.update();
+gp.save = async () => await autoSave.update();

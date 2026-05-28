@@ -16,7 +16,7 @@ export const gp = {
   nRaptorsOn(space) {
     return gs.raptors.filter(x => x === space).length;
   },
-  checkGameOver(immediate) {
+  async checkGameOver(immediate) {
     const nSaved = this.nHumansOn(bd.humanGoal);
     const nDead = this.nHumansOn(bd.humanDead);
     const nTotal = gs.humans.length;
@@ -25,7 +25,7 @@ export const gp = {
     // Set gs.phase to 'roll' so that 'over' state
     // is treated as state with nothing rolled
     gs.phase = 'roll';
-    this.save();
+    await this.save();
     setTimeout(() => {
       qs('#humans-saved').innerHTML = nSaved;
       qs('#humans-total').innerHTML = nTotal;
@@ -83,7 +83,7 @@ export const gp = {
     if (stop) return 'human';
     return nOnStart ? 'trex' : 'raptor';
   },
-  endTurn() {
+  async endTurn() {
     this.clearMoveObject();
     if (gs.turn === 'human') {
       this.adjustHumanPositions();
@@ -93,8 +93,8 @@ export const gp = {
         }
       }
     }
-    this.checkGameOver();
-    startNextTurn();
+    await this.checkGameOver();
+    await startNextTurn();
   },
   startJumpEnter() {
     let nChoices = 0;
@@ -135,7 +135,7 @@ export const gp = {
       endDelay: isLast ? 0 : anim.time.pauseMidMove,
     });
     this.adjustHumanPositions();
-    if (isLast) this.endTurn();
+    if (isLast) await this.endTurn();
   },
   async moveRaptor(piece, space, isLast, silent) {
     const [l, t] = pl.raptor[space];
@@ -162,7 +162,7 @@ export const gp = {
     // to work right
     gs.raptors[piece] = space;
     checkEatenByRaptor(piece);
-    if (isLast) this.endTurn();
+    if (isLast) await this.endTurn();
   },
   async moveTrex(space, isLast, skipFx) {
     const [l, t] = pl.trex[space];
@@ -187,7 +187,7 @@ export const gp = {
     }
     // Using isLast here too enables reuse of this
     // function for edit/load purposes
-    if (isLast) this.endTurn();
+    if (isLast) await this.endTurn();
   },
   async relocatePiece(species, piece, space) {
     let element;
@@ -233,9 +233,9 @@ export const gp = {
     anim.fade(scrim, 0, time);
     document.body.style.overflow = 'visible';
   },
-  handleControlChange() {
+  async handleControlChange() {
     if (!ai.control.changed) return;
-    this.save();
+    await this.save();
     if (ai.control[gs.turn] && gs.phase !== 'roll') {
       click('#cancel-button');
       ui.hideButton('ok-no-move');
@@ -246,7 +246,7 @@ export const gp = {
       if (gs.je) this.startJumpEnter();
     }
   },
-  // save() injected by auto-save.js
+  // async save() injected by auto-save.js
 };
 
 function hPiecesOn(space) {
@@ -263,7 +263,7 @@ function checkEatenByRaptor(rPiece) {
     message.show('eaten-raptor', true);
   }
 }
-function startNextTurn() {
+async function startNextTurn() {
   const species = gp.nextTurnSpecies();
   if (gs.turn === 'over') return;
   gs.turn = species;
@@ -272,7 +272,7 @@ function startNextTurn() {
   ui.displayTurn(species);
   ui.humanItemsClickable(species === 'human');
   ui.raptorItemsClickable(species === 'raptor');
-  gp.save();
+  await gp.save();
 }
 async function resetPieces() {
   for (let h = 0; h < bd.nHumanPieces; h++) {

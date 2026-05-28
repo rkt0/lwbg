@@ -104,7 +104,7 @@ ael('#cancel-edits', 'mousedown', async () => {
 ael('#confirm-edits', 'mousedown', async () => {
   await editGame(gs);
   endEditMode();
-  autoSave.update(true);
+  await autoSave.update(true);
 });
 
 // Used for editing both turn and dice
