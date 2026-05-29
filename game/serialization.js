@@ -1,6 +1,4 @@
-import {
-  invertMap, base256, fileContents,
-} from './utility.js';
+import {invertMap, fileContents} from './utility.js';
 import {ai} from './ai.js';
 import {pieces} from './pieces.js';
 import {gs} from './game-objects.js';
@@ -8,16 +6,10 @@ import {gp} from './functions-gameplay.js';
 import {control} from './control.js';
 
 export const serialize = {
-  code: {signature: 'LWBG', logic: 0, format: 0.5},
+  code: {signature: 'LWBG', logic: 0, format: 1},
   header() {
     const {signature, logic, format} = this.code;
     return `${signature}\n${logic},${format}`;
-  },
-  control() {
-    const leader = leaderFromItem.get('control');
-    const hData = ai.control.human.code ?? digit(-1);
-    const rData = ai.control.raptor.code ?? digit(-1);
-    return leader + hData + rData;
   },
   pieces() {
     const hData = serializeSpeciesPieces('human');
@@ -25,6 +17,10 @@ export const serialize = {
     return `${hData}\n${rData}`;
   },
   changes(gsPrevious) {
+    if (ai.control.changed) {
+      ai.control.changed = false;
+      return serializeControl();
+    }
     let data = '';
     for (const [h, space] of gs.humans.entries()) {
       if (space === gsPrevious.humans[h]) continue;
@@ -55,88 +51,90 @@ export const serialize = {
   },
 };
 
-export const deserialize = {
-  async checkHeader(fh) {
-    const lines = await fileContents(fh, true);
-    const data = lines.slice(0, 2).join('\n');
-    return serialize.header() === data;
-  },
-  players(playerCodeString) {
-    const [, h, r] = playerCodeString.split('');
-    findAndSetLevel('human', h);
-    findAndSetLevel('raptor', r);
-  },
-  pieces(dataLines) {
-    const [hData, rData] = dataLines;
-    deserializeSpeciesPieces('human', hData);
-    deserializeSpeciesPieces('raptor', rData);
-    pieces.addImgs();
-  },
-  async change(changeCodeString) {
-    if (changeCodeString.startsWith('%')) {
-      this.players(changeCodeString);
-      return;
-    }
-    const changeCodes = [];
-    const characters = changeCodeString.split('');
-    characters.reverse();
-    while (characters.length) {
-      const chg = [];
-      chg.push(characters.pop());
-      chg.push(characters.pop());
-      chg.push(characters.pop());
-      changeCodes.push(chg.join(''));
-    }
-    for (const changeCode of changeCodes) {
-      const first = changeCode.substring(0, 1);
-      if (first === '@') continue;
-      const b64 = (['~', '|'].includes(first)) ?
-        changeCode.substring(1, 3) + 'AA' :
-        changeCode + 'A';
-      const charCodes = base256(b64);
-      if (first === '~') {
-        const changeInt =
-          charCodes[0] << 4 | charCodes[1] >> 4;
-        const turnCodes = changeInt & 15;
-        const rollGoCodes = changeInt >> 4 & 3;
-        const rollNCodes = changeInt >> 6 & 63;
-        if (turnCodes) {
-          gs.turn = [
-            'over', 'human', 'trex', 'raptor',
-          ][turnCodes & 3];
-        }
-        if (rollGoCodes) gs.rollGo = rollGoCodes & 1;
-        if (rollNCodes) {
-          const special = gs.turn === 'human' ?
-            'Jump' : 'Enter';
-          gs.rollN = [
-            0, 1, 2, 3, 4, special, 0, null,
-          ][rollNCodes & 7];
-        }
-        gs.phase = gs.rollN === null ? 'roll' :
-          gs.turn === 'trex' ? 'move' : 'select';
-        gs.je = ['Jump', 'Enter'].includes(gs.rollN);
-      } else if (first === '|') {
-        const changeInt = charCodes[0];
-        const space = changeInt & 15;
-        await gp.relocatePiece('trex', null, space);
-      } else {
-        const changeInt = charCodes[0] << 10 |
-          charCodes[1] << 2 | charCodes[2] >> 6;
-        const pieceCode = changeInt >> 14;
-        const loc = changeInt & 127;
-        let species = 'raptor';
-        let piece = pieceCode;
-        if (pieceCode >> 2) {
-          species = 'human';
-          piece = pieceCode - 4;
-        }
-        await gp.relocatePiece(species, piece, loc);
-      }
-    }
-  },
-};
+export async function deserialize(fh) {
+  const lines = await fileContents(fh, true);
+  deserializePieces(lines.slice(2, 4));
+  const changesData = lines[4].split(/(?=[A-Z ])/);
+  for (const data of changesData) {
+    await deserializeChange(data);
+  }
+  reconcileGameStateAfterDeserialization();
+  gp.adjustHumanPositions();
+}
 
+export async function checkHeader(fh) {
+  const lines = await fileContents(fh, true);
+  const data = lines.slice(0, 2).join('\n');
+  return serialize.header() === data;
+}
+
+// export const deserializeObj = {
+//   async xxx(changeCodeString) {
+//     if (changeCodeString.startsWith('%')) {
+//       this.players(changeCodeString);
+//       return;
+//     }
+//     const changeCodes = [];
+//     const characters = changeCodeString.split('');
+//     characters.reverse();
+//     while (characters.length) {
+//       const chg = [];
+//       chg.push(characters.pop());
+//       chg.push(characters.pop());
+//       chg.push(characters.pop());
+//       changeCodes.push(chg.join(''));
+//     }
+//     for (const changeCode of changeCodes) {
+//       const first = changeCode.substring(0, 1);
+//       if (first === '@') continue;
+//       const b64 = (['~', '|'].includes(first)) ?
+//         changeCode.substring(1, 3) + 'AA' :
+//         changeCode + 'A';
+//       const charCodes = base256(b64);
+//       if (first === '~') {
+//         const changeInt =
+//           charCodes[0] << 4 | charCodes[1] >> 4;
+//         const turnCodes = changeInt & 15;
+//         const rollGoCodes = changeInt >> 4 & 3;
+//         const rollNCodes = changeInt >> 6 & 63;
+//         if (turnCodes) {
+//           gs.turn = [
+//             'over', 'human', 'trex', 'raptor',
+//           ][turnCodes & 3];
+//         }
+//         if (rollGoCodes) gs.rollGo = rollGoCodes & 1;
+//         if (rollNCodes) {
+//           const special = gs.turn === 'human' ?
+//             'Jump' : 'Enter';
+//           gs.rollN = [
+//             0, 1, 2, 3, 4, special, 0, null,
+//           ][rollNCodes & 7];
+//         }
+//         gs.phase = gs.rollN === null ? 'roll' :
+//           gs.turn === 'trex' ? 'move' : 'select';
+//         gs.je = ['Jump', 'Enter'].includes(gs.rollN);
+//       } else if (first === '|') {
+//         const changeInt = charCodes[0];
+//         const space = changeInt & 15;
+//         await gp.relocatePiece('trex', null, space);
+//       } else {
+//         const changeInt = charCodes[0] << 10 |
+//           charCodes[1] << 2 | charCodes[2] >> 6;
+//         const pieceCode = changeInt >> 14;
+//         const loc = changeInt & 127;
+//         let species = 'raptor';
+//         let piece = pieceCode;
+//         if (pieceCode >> 2) {
+//           species = 'human';
+//           piece = pieceCode - 4;
+//         }
+//         await gp.relocatePiece(species, piece, loc);
+//       }
+//     }
+//   },
+// };
+
+null;
 // Base (radix) for integer-to-string conversions
 const base = 36;
 function digit(n) {
@@ -168,19 +166,16 @@ function deserializeSpeciesPieces(species, data) {
     }
   }
 }
-
-// Helper functions for player control
-function findAndSetLevel(species, code) {
-  const levels = ai.level[species];
-  const i = levels.findIndex((x) => x.code === code);
-  // i is -1 if not found, i.e., manual
-  control.change(species, i);
-  ai.control.changed = false;
+function deserializePieces(dataLines) {
+  const [hData, rData] = dataLines;
+  deserializeSpeciesPieces('human', hData);
+  deserializeSpeciesPieces('raptor', rData);
+  pieces.addImgs();
 }
 
-// Leaders for change items
+// Helper functions for change items
 const itemFromLeader = new Map([
-  ['C', 'control'],
+  ['C', 'ctrl'],
   ['H', 'human'],
   ['T', 'trex'],
   ['R', 'raptor'],
@@ -191,6 +186,42 @@ const itemFromLeader = new Map([
   ['F', 'editEnd'],
 ]);
 const leaderFromItem = invertMap(itemFromLeader);
+async function deserializeChange(data) {
+  const item = itemFromLeader.get(data.slice(0, 1));
+  switch (item.slice(0, 4)) {
+    case 'edit': return;
+    case 'ctrl': return deserializeControl(data);
+    case 'turn': return deserializeTurn(data);
+    case 'roll': return deserializeDie(item, data);
+    default: await deserializeMove(item, data);
+  }
+}
+function reconcileGameStateAfterDeserialization() {
+  if (gs.rollN === null) gs.phase = 'roll';
+  else if (gs.turn === 'trex') gs.phase = 'move';
+  else gs.phase = 'select';
+  gs.je = ['Jump', 'Enter'].includes(gs.rollN);
+}
+
+// Helper functions for player control
+function serializeControl() {
+  const leader = leaderFromItem.get('ctrl');
+  const hData = ai.control.human.code ?? digit(-1);
+  const rData = ai.control.raptor.code ?? digit(-1);
+  return leader + hData + rData;
+}
+function findAndSetLevel(species, code) {
+  const levels = ai.level[species];
+  const i = levels.findIndex((x) => x.code === code);
+  // i is -1 if not found, i.e., manual
+  control.change(species, i);
+  ai.control.changed = false;
+}
+function deserializeControl(data) {
+  const [, h, r] = data.split('');
+  findAndSetLevel('human', h);
+  findAndSetLevel('raptor', r);
+}
 
 // Helper functions for turn
 const turnFromData = new Map([
@@ -204,6 +235,9 @@ function serializeTurn(turn) {
   const leader = leaderFromItem.get('turn');
   return leader + dataFromTurn.get(turn);
 }
+function deserializeTurn(data) {
+  gs.turn = turnFromData.get(+data.slice(1));
+}
 
 // Helper functions for dice
 const rollFromData = new Map([
@@ -216,6 +250,11 @@ function serializeDie(dieType, roll) {
   const leader = leaderFromItem.get(dieType);
   return leader + (dataFromRoll.get(roll) ?? roll);
 }
+function deserializeDie(dieType, data) {
+  const char = data.slice(1);
+  gs[dieType] = rollFromData.has(char) ?
+    rollFromData.get(char) : +char;
+}
 
 // Helper functions for moves
 function serializeMove(species, piece, space) {
@@ -225,4 +264,10 @@ function serializeMove(species, piece, space) {
     spaceData = '0' + spaceData;
   }
   return leader + piece.toString(base) + spaceData;
+}
+async function deserializeMove(species, data) {
+  let piece = parseInt(data.slice(1, 2), base);
+  let space = parseInt(data.slice(2), base);
+  if (species === 'trex') [piece, space] = [, piece];
+  await gp.relocatePiece(species, piece, space);
 }

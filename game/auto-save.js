@@ -1,13 +1,11 @@
 import {
-  deepCopy, appendToFile, copyFile, fileContents,
+  deepCopy, appendToFile, copyFile,
 } from './utility.js';
 import {debug} from './debug.js';
-import {ai} from './ai.js';
 import {gs} from './game-objects.js';
-import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {
-  serialize, deserialize,
+  serialize, deserialize, checkHeader,
 } from './serialization.js';
 
 export const autoSave = {
@@ -22,15 +20,9 @@ export const autoSave = {
   },
   async update(edited) {
     if (debug.skipAutoSave) return;
-    let data;
-    if (ai.control.changed) {
-      ai.control.changed = false;
-      data = serialize.control();
-    } else {
-      data = serialize.changes(this.gsPrevious);
-      if (!data.length) return;
-      if (edited) data = serialize.markEdit(data);
-    }
+    let data = serialize.changes(this.gsPrevious);
+    if (!data.length) return;
+    if (edited) data = serialize.markEdit(data);
     await appendToFile(this.fh, data);
     this.gsPrevious = deepCopy(gs);
   },
@@ -50,7 +42,6 @@ export const autoSave = {
     if (load) await copyFile(this.fhLoad, this.fh);
     else {
       const data = serialize.header() + '\n' +
-        // serialize.players() + '\n' +
         serialize.pieces() + '\n';
       await appendToFile(this.fh, data);
     }
@@ -63,37 +54,14 @@ export const autoSave = {
     const [fhLoad] = await showOpenFilePicker({
       types: [this.fileType],
     });
-    if (await deserialize.checkHeader(fhLoad)) {
+    if (await checkHeader(fhLoad)) {
       this.fhLoad = fhLoad;
     } else throw new Error('invalid file');
   },
   async executeLoad(fhLoad) {
-    const lines = await fileContents(fhLoad, true);
-    deserialize.players(lines[2]);
-    deserialize.pieces(lines.slice(3, 5));
-    const changeCodeStrings = lines[5].split(';');
-    changeCodeStrings.pop();
-    for (const ccs of changeCodeStrings) {
-      await deserialize.change(ccs);
-    }
-    gp.adjustHumanPositions();
-    ui.displayTurn(gs.turn);
-    if (gs.phase === 'roll') {
-      ui.replaceButton('roll-display', 'roll-button');
-    } else ui.displayRollResult(gs, true);
-    autoSave.gsPrevious = deepCopy(gs);
-    if (ai.control[gs.turn] && gs.phase !== 'roll') {
-      ui.showButton('ok-ai-move');
-    } else {
-      ui.hideButton('ok-ai-move');
-      if (gs.je) gp.startJumpEnter();
-    }
-    if (gs.turn === 'trex' && gs.phase === 'move') {
-      if (gs.rollN) ui.showButton('ok-trex-move');
-      else ui.showButton('ok-no-move');
-    }
-    ui.humanItemsClickable(gs.turn === 'human');
-    ui.raptorItemsClickable(gs.turn === 'raptor');
+    await deserialize(fhLoad);
+    this.gsPrevious = deepCopy(gs);
+    gp.handleLoad();
   },
 };
 
