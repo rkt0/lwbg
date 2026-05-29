@@ -194,8 +194,10 @@ function enableDiceEdit() {
   for (const element of qsa('.edit-dice')) {
     anim.fade(element, 1, eTime);
   }
-  for (const wrapper of qsa(`.wrapper-${gs.turn}`)) {
-    wrapper.style.display = 'block';
+  const onClass = `wrapper-${gs.turn}`;
+  for (const wrapper of qsa('.wrapper')) {
+    const isOn = wrapper.classList.contains(onClass);
+    wrapper.style.display = isOn ? 'block' : 'none';
   }
   edit.dieCodes.movement =
     dieCode(gs.rollN, dice[gs.turn].movement);
