@@ -25,8 +25,9 @@ export const control = {
     ai.control.changed = true;
     if (isNull(ai.control.human)) return;
     if (isNull(ai.control.raptor)) return;
+    if (!continueButton.disabled) return;
+    continueButton.disabled = false;
     anim.fade(continueButton, 1, aTime);
-    continueButton.style.pointerEvents = 'auto';
   },
 };
 
