@@ -3,4 +3,3 @@ die buttons for multiple species appear
 music frequency distribution seems suspicious
 kill button remains after moving
 eaten check fails if turn changed via edit
-selected human spaces not visible when zoomed out

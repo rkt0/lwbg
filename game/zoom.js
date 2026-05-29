@@ -33,18 +33,18 @@ export const zoom = {
 const buttonZoomOut = qs('#zoom-out');
 const buttonZoomDefault = qs('#zoom-default');
 const buttonZoomIn = qs('#zoom-in');
-const allPieces = qsa(
-  '.raptor-piece, .human-piece, .trex-piece'
-);
 const container = qs('#gameplay-container');
 const nonZoomElements = qsa('.non-zoom');
-const humanBoard = qsa('.human-space, .human-edge');
 const obstructiveElements = qsa('.obstructive');
 const gameOverElement = qs('#game-over');
+let allPieces, humanBoard;
 
 // Needed for zoom button click handlers
 function highlightPieces(setting) {
   const ids = zoom.highlightBlinkIds;
+  allPieces ??= qsa(
+    '.raptor-piece, .human-piece, .trex-piece'
+  );
   if (setting) {
     for (const piece of allPieces) {
       piece.classList.add('highlighted');
@@ -90,6 +90,7 @@ function zoomGeneral(factor) {
   }
   const isOut = factor < 1;
   highlightPieces(isOut);
+  humanBoard ??= qsa('.human-space, .human-edge');
   for (const element of humanBoard) {
     element.classList.toggle('more-visible', isOut);
   }

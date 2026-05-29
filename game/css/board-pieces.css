@@ -73,10 +73,10 @@
   stroke-width: var(--board-border-width);
 }
 
-.human-space.more-visible {
+.human-space:where(.more-visible) {
   border-color: #fff;
 }
-.human-edge.more-visible {
+.human-edge:where(.more-visible) {
   stroke: #fff;
 }
 
