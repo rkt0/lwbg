@@ -129,6 +129,7 @@ export const gp = {
     else if (gs.je) aTime = anim.time.jumpHuman;
     await anim.move(element, location, aTime, {
       endDelay: isLast ? 0 : anim.time.pauseMidMove,
+      delay: isNowDead ? anim.time.killHumanDelay : 0,
     });
     this.adjustHumanPositions();
     if (isLast) await this.endTurn();

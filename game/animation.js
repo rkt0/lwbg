@@ -22,10 +22,10 @@ export const anim = {
   async move(x, location, duration, options) {
     const element = typeof x === 'object' ? x : qs(x);
     const {
-      endDelay = 0, easing = 'ease-in-out',
+      delay = 0, endDelay = 0, easing = 'ease-in-out',
     } = options ?? {};
     await element.animate({...location, easing}, {
-      duration, endDelay, fill: 'forwards',
+      duration, delay, endDelay, fill: 'forwards',
     }).finished;
   },
   async slide(x, to, duration, options) {
@@ -83,7 +83,8 @@ const multiplier = {
   moveTrex: 1,
   adjustHuman: 1,
   jumpHuman: 2,
-  killHuman: 12,
+  killHuman: 6,
+  killHumanDelay: 3,
   pauseMidMove: 0.25,
   autoScroll: 2,
   autoScrollDelay: 1,
