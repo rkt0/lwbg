@@ -11,7 +11,7 @@ import {edit} from './edit-mode.js';
 export function clickHumanPiece(piece) {
   const space = gs.humans[piece];
   if (edit.on) {
-    clickHumanPieceEditMode(piece, space)
+    clickHumanPieceEditMode(piece, space);
     return;
   }
   if (gs.turn !== 'human') return;
@@ -69,8 +69,8 @@ export function clickRaptorPiece(piece) {
 
 export function clickEditKill(piece) {
   gp.moveHuman(piece, bd.humanDead, false);
-  const time = anim.time.editControlFade;
-  anim.fade(`#human-piece-${piece} .kill`, 0, time);
+  const aTime = anim.time.editControlFade;
+  anim.fade(`#human-piece-${piece} .kill`, 0, aTime);
   qs('.selected').classList.remove('selected');
   ui.raptorItemsClickable(true);
   edit.selected.species = null;
@@ -122,13 +122,12 @@ function clickHumanPieceEditMode(piece, space) {
     return;
   }
   selectAppropriate(piece);
-  if (space !== bd.humanDead) {
-    const time = anim.time.editControlFade;
-    anim.fade(`#human-piece-${piece} .kill`, 1, time);
-  }
   ui.raptorItemsClickable(false);
   edit.selected.species = 'human';
   edit.selected.piece = piece;
+  if (space === bd.humanDead) return;
+  const aTime = anim.time.editControlFade;
+  anim.fade(`#human-piece-${piece} .kill`, 1, aTime);
 }
 
 // Needed for raptor piece click handler

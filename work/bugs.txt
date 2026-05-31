@@ -1,4 +1,3 @@
 backdrop filter fails sometimes after fade in
 music frequency distribution seems suspicious
-kill button remains after moving
 eaten check fails if turn changed via edit
