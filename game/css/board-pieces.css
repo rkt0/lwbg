@@ -204,6 +204,9 @@
 .dead-marker {
   display: none;
   font: var(--font-large);
+  color: #ccc;
+  -webkit-text-stroke: 1px black;
+  transform: translate(-6px, -2px);
 }
 
 .dead .dead-marker {
