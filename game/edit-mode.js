@@ -104,6 +104,7 @@ ael('#cancel-edits', 'mousedown', async () => {
 ael('#confirm-edits', 'mousedown', async () => {
   await editGame(gs);
   endEditMode();
+  if (gs.turn !== 'human') gp.checkEatenByAnyRaptor();
   await autoSave.update(true);
 });
 

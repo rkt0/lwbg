@@ -87,11 +87,7 @@ export const gp = {
     this.clearMoveObject();
     if (gs.turn === 'human') {
       this.adjustHumanPositions();
-      if (!gs.rollGo) {
-        for (let r = 0; r < gs.raptors.length; r++) {
-          checkEatenByRaptor(r);
-        }
-      }
+      if (!gs.rollGo) this.checkEatenByAnyRaptor();
     }
     await this.checkGameOver();
     await startNextTurn();
@@ -207,6 +203,11 @@ export const gp = {
     const [l, t] = pl[species][space];
     const location = {top: `${t}px`, left: `${l}px`};
     await anim.move(element, location, 0);
+  },
+  checkEatenByAnyRaptor() {
+    for (let r = 0; r < gs.raptors.length; r++) {
+      checkEatenByRaptor(r);
+    }
   },
   async initializeObjects() {
     this.clearMoveObject();
