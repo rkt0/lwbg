@@ -89,7 +89,7 @@ button {
 
 /* Title screen */
 
-#title-container .info {
+.title .info {
   width: auto;
   font: var(--font-large);
   padding: 36px;
@@ -206,14 +206,14 @@ button {
 
 /* Audio toggle */
 
-#gameplay-container .toggle-audio {
+.gameplay .toggle-audio {
   position: fixed;
   top: var(--matte-top, 0);
   right: var(--matte-right, 0);
   border-style: none none solid solid;
 }
 
-#gameplay-container .toggle-audio .icon {
+.gameplay .toggle-audio .icon {
   --size: 24px;
   width: var(--size);
   height: var(--size);
@@ -222,11 +222,11 @@ button {
   );
 }
 
-#start-container .toggle-audio {
+.start .toggle-audio {
   text-align: left;
 }
 
-#start-container .toggle-audio .icon {
+.start .toggle-audio .icon {
   --size: 36px;
   position: absolute;
   right: 0;
@@ -246,7 +246,7 @@ button {
 
 /* Player select screen */
 
-#player-control .info {
+.control .info {
   width: auto;
   height: auto;
   margin: 54px 18px 36px;
@@ -254,34 +254,34 @@ button {
   backdrop-filter: none;
 }
 
-#player-control h1 {
+.control h1 {
   margin-top: 18px;
   text-transform: capitalize;
 }
 
-#player-control .info button {
+.control .info button {
   box-sizing: content-box;
   --size: 48px;
   height: var(--size);
   min-width: var(--size);
   margin: 3px;
-  background: var(--color-player-control);
+  background: var(--color-control);
 }
 
-#player-control .info button.manual {
+.control .info button.manual {
   width: 216px;
   height: 54px;
   margin-bottom: 24px;
 }
 
-#player-control .info button.current {
+.control .info button.current {
   background: var(--color-selected);
   box-shadow: none;
   cursor: default;
   color: var(--color-text);
 }
 
-#player-control #continue-from-control {
+.control #continue-from-control {
   width: 216px;
   height: var(--start-button-height);
   font: var(--font-large);

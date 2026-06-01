@@ -1,6 +1,7 @@
 import {
   qs, qsa, ce, cesvg, cssInt, cssIntWH,
 } from './utility.js';
+import {dom} from './dom.js';
 import {debug} from './debug.js';
 import {bd} from './board-topology.js';
 import {geom} from './board-geometry.js';
@@ -135,7 +136,6 @@ for (const [i, bg] of geom.bldgBgId.entries()) {
 }
 
 // Make human spaces
-const gameplayContainer = qs('#gameplay-container');
 addExtraSpace(geom.humanSpaces);
 const humanSpaceSize = cssInt('--human-space-size');
 for (const [i, pt] of geom.humanSpaces.entries()) {
@@ -148,7 +148,7 @@ for (const [i, pt] of geom.humanSpaces.entries()) {
   div.classList.toggle('dead', i === bd.humanDead);
   div.style.left = `${pt[0] - humanSpaceSize / 2}px`;
   div.style.top = `${pt[1] - humanSpaceSize / 2}px`;
-  gameplayContainer.append(div);
+  dom.sectionGameplay.append(div);
   if (!isBldg) pl.human[i] = [...pt];
 }
 if (debug.boardLabels.humanSpace)  {
@@ -194,7 +194,7 @@ for (const [i, pt] of geom.trexSpaces.entries()) {
     // be adjusted to top-left corners later
     pl.trex[i] = [...pl.raptor[rSpace]];
   }
-  gameplayContainer.append(div);
+  dom.sectionGameplay.append(div);
 }
 
 // Make T-rex edges
@@ -217,11 +217,11 @@ addEntrances(svgRaptorMap, geom.entranceMarkers);
 // Make jump markers
 addExtraSpace(geom.jumpMarkers.jump);
 addExtraSpace(geom.jumpMarkers.land);
-addJumps(gameplayContainer, geom.jumpMarkers);
+addJumps(dom.sectionGameplay, geom.jumpMarkers);
 
 // Make helicopters
 addExtraSpace(geom.heloCorners);
-addHelos(gameplayContainer, geom.heloCorners);
+addHelos(dom.sectionGameplay, geom.heloCorners);
 
 // Additional piece layout adjustments
 for (const species of Object.keys(pl)) {

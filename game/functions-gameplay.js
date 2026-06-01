@@ -1,4 +1,5 @@
 import {qs, qsa, click} from './utility.js';
+import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {geom} from './board-geometry.js';
 import {ai} from './ai.js';
@@ -173,7 +174,7 @@ export const gp = {
     await anim.move(element, location, aTime);
     if (!skipFx) {
       const settings = anim.trexScreenBounce;
-      anim.bounce('#gameplay-container', settings);
+      anim.bounce(dom.sectionGameplay, settings);
     }
     gs.trex = space;
     if (gs.trex === 0) {
@@ -229,10 +230,10 @@ export const gp = {
   },
   interrupt(time = anim.time.menuFade) {
     document.body.style.overflow = 'hidden';
-    anim.fade(scrim, 1, time);
+    anim.fade(dom.scrim, 1, time);
   },
   resume(time = anim.time.menuFade) {
-    anim.fade(scrim, 0, time);
+    anim.fade(dom.scrim, 0, time);
     document.body.style.overflow = 'visible';
   },
   async handleControlChange() {
@@ -307,4 +308,3 @@ async function resetPieces() {
     await gp.relocatePiece('raptor', r, s);
   }
 }
-const scrim = qs('#gameplay-container .scrim');

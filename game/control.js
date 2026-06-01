@@ -1,17 +1,18 @@
 import {qs, qsa, ael, isNull} from './utility.js';
+import {dom} from './dom.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 
 export const control = {
   async show() {
-    await anim.fade(element, 1, aTime, {
+    await anim.fade(dom.sectionControl, 1, aTime, {
       display: '',
     });
-    element.inert = false;
+    dom.sectionControl.inert = false;
     return new Promise((resolve) => {
       finish = async () => {
-        element.inert = true;
-        await anim.fade(element, 0, aTime);
+        dom.sectionControl.inert = true;
+        await anim.fade(dom.sectionControl, 0, aTime);
         resolve();
       };
     });
@@ -37,7 +38,6 @@ let finish;
 const aTime = anim.time.menuFade;
 
 // Element references
-const element = qs('#player-control');
 const continueButton = qs('#continue-from-control');
 const areaElement = {};
 const levelButtons = {};
@@ -50,7 +50,7 @@ for (const species of ['human', 'raptor']) {
 }
 
 // Add player control screen click handler
-ael(element, 'mousedown', (e) => {
+ael(dom.sectionControl, 'mousedown', (e) => {
   const button = e.target.closest('button');
   if (button === continueButton) return finish();
   const species = ['human', 'raptor'].find(

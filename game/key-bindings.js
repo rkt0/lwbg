@@ -1,4 +1,5 @@
 import {qs, click} from './utility.js';
+import {dom} from './dom.js';
 import {ai} from './ai.js';
 import {music} from './music.js';
 import {gs, mv} from './game-objects.js';
@@ -33,8 +34,8 @@ function quitOptionsActive() {
   return !qs('#quit-options').style.display;
 }
 function gameplayActive() {
-  const gc = qs('#gameplay-container').style.display;
-  if (gc !== 'block') return false;
+  const {display} = dom.sectionGameplay.style;
+  if (display !== 'block') return false;
   return !moreMenuActive();
 }
 

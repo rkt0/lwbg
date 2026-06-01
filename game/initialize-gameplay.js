@@ -1,4 +1,5 @@
 import {ael} from './utility.js';
+import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {pieces} from './pieces.js';
 import {gp} from './functions-gameplay.js';
@@ -31,7 +32,7 @@ function targetItem(event, selector) {
 }
 
 // Add gameplay click handlers
-ael('#gameplay-container', 'mousedown', (e) => {
+ael(dom.sectionGameplay, 'mousedown', (e) => {
   if (e.target.closest('#more-menu')) {
     return moreMenu.handleClick(e);
   }

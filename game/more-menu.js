@@ -1,4 +1,5 @@
 import {qs, aelo} from './utility.js';
+import {dom} from './dom.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
 import {pieces} from './pieces.js';
@@ -75,11 +76,11 @@ async function showQuitOptions() {
 async function confirmQuit() {
   qs('#quit-options').inert = true;
   await moreMenu.hide();
-  await anim.fade('#gameplay-container', 0, aTime);
+  await anim.fade(dom.sectionGameplay, 0, aTime);
   gp.initializeObjects();
   gp.initializeView();
   pieces.shuffleFeatures();
   pieces.addImgs();
   showStartOptions(0);
-  anim.fade('#start-container', 1, aTime);
+  anim.fade(dom.sectionStart, 1, aTime);
 }

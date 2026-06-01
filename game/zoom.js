@@ -1,4 +1,5 @@
 import {qs, qsa, windowWH} from './utility.js';
+import {dom} from './dom.js';
 import {anim} from './animation.js';
 
 export const zoom = {
@@ -33,7 +34,6 @@ export const zoom = {
 const buttonZoomOut = qs('#zoom-out');
 const buttonZoomDefault = qs('#zoom-default');
 const buttonZoomIn = qs('#zoom-in');
-const container = qs('#gameplay-container');
 const nonZoomElements = qsa('.non-zoom');
 const obstructiveElements = qsa('.obstructive');
 const gameOverElement = qs('#game-over');
@@ -82,7 +82,7 @@ function zoomGeneral(factor) {
     zoom.center.left = left / zoom.factor.current;
     zoom.center.top = top / zoom.factor.current;
   }
-  container.style.zoom = factor;
+  dom.sectionGameplay.style.zoom = factor;
   zoom.factor.current = factor;
   applyZoomCenter();
   for (const element of nonZoomElements) {

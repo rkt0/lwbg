@@ -1,6 +1,7 @@
 import {
   qs, qsa, ce, fromTemplate, sequence, shuffle,
 } from './utility.js';
+import {dom} from './dom.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
 import {bd} from './board-topology.js';
@@ -63,7 +64,6 @@ const hatShadow = [
   'bc', 'bc', 'bc', 'bc', 'bc', 'bc',
   'cb', 'cb', 'cb', 'cb', 'cb', 'cb',
 ];
-const gameplayContainer = qs('#gameplay-container');
 
 function addHumanImgs() {
   const {feature} = pieces.human;
@@ -111,10 +111,10 @@ function addTrexImgs() {
 function makeHumanPiece(piece) {
   const element = fromTemplate('human-piece', true);
   element.id = `human-piece-${piece}`;
-  gameplayContainer.append(element);
+  dom.sectionGameplay.append(element);
 }
 function makeRaptorPiece(piece) {
   const element = fromTemplate('raptor-piece', true);
   element.id = `raptor-piece-${piece}`;
-  gameplayContainer.append(element);
+  dom.sectionGameplay.append(element);
 }

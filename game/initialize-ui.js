@@ -1,6 +1,7 @@
 import {
   qs, qsa, ael, click, rollDie,
 } from './utility.js';
+import {dom} from './dom.js';
 import {prng} from './prngs.js';
 import {dice} from './dice.js';
 import {ai} from './ai.js';
@@ -24,7 +25,7 @@ for (const button of qsa('#gameplay-menu .dormant')) {
 }
 
 // Disable menus that should be inactive at start
-qs('#player-control').inert = true;
+dom.sectionControl.inert = true;
 qs('#more-options').inert = true;
 qs('#quit-options').inert = true;
 

@@ -7,7 +7,7 @@
   --color-selected: #fabf00;
   --color-selected-fill: #fabf0066;
   --color-zoom: #fabf00aa;
-  --color-player-control: #fabf0044;
+  --color-control: #fabf0044;
 
   --color-path: #a67e00;
   --color-path-fill: #a67e0033;
@@ -59,12 +59,12 @@ svg {
   display: none;
 }
 
-#title-container {
+.title {
   background: #5a5c5f;
 }
 
-#start-container,
-#gameplay-container {
+.start,
+.gameplay {
   background-image: url("../img/bg/jungle.png");
   background-repeat: repeat;
   display: none;
