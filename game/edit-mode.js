@@ -1,6 +1,7 @@
 import {
   qs, qsa, ael, click, deepCopy,
 } from './utility.js';
+import {dom} from './dom.js';
 import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -29,13 +30,8 @@ export const edit = {
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',
     ];
     for (const x of hidden) ui.hideButton(x);
-    for (const element of qsa('.edit-control')) {
-      if (element.classList.contains('.edit-dice')) {
-        return;
-      }
-    }
     const universalControls =
-      '.edit-control:not(.edit-dice):not(.edit-turn)';
+      '.edit-only:not(.edit-dice):not(.edit-turn)';
     for (const element of qsa(universalControls)) {
       anim.fade(element, 1, eTime);
     }
@@ -92,7 +88,7 @@ function endEditMode() {
   qs('#confirm-edits').disabled = true;
   edit.clear();
   qs('.selected')?.classList.remove('selected');
-  for (const element of qsa('.edit-control, .kill')) {
+  for (const element of qsa('.edit-only, .kill')) {
     anim.fade(element, 0, anim.time.editControlFade);
   }
   ui.showButton('show-more');

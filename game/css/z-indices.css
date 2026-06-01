@@ -41,7 +41,7 @@
 }
 
 #gameplay-menu,
-.edit-control {
+.edit-only {
   z-index: 9;
 }
 

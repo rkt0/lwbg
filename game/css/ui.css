@@ -160,7 +160,7 @@ button {
 
 /* Edit mode controls */
 
-.edit-control {
+.edit-only {
   display: none;
 }
 
