@@ -46,7 +46,7 @@
 }
 
 #message-container,
-.gameplay .toggle-audio {
+#gameplay .toggle-audio {
   z-index: 10;
 }
 
@@ -125,16 +125,16 @@
 
 /* Other elements relative to containers */
 
-.start,
-.gameplay {
+#start,
+#gameplay {
   z-index: 0;
 }
 
-.control {
+#control {
   z-index: 1;
 }
 
-.title {
+#front {
   z-index: 2;
 }
 
