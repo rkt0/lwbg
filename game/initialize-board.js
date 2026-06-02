@@ -158,10 +158,7 @@ for (const [i, bg] of geom.bldgBgId.entries()) {
 const svgHumanEdges = cesvg('svg');
 qs('#human-edges').append(svgHumanEdges);
 for (const edge of bd.humanEdges) {
-  const space0 = Math.min(...edge);
-  const space1 = Math.max(...edge);
   const line = cesvg('line');
-  line.id = `human-edge-${space0}_${space1}`;
   const points = edge.map(i => geom.humanSpaces[i]);
   line.setAttribute('x1', points[0][0]);
   line.setAttribute('y1', points[0][1]);
@@ -169,6 +166,8 @@ for (const edge of bd.humanEdges) {
   line.setAttribute('y2', points[1][1]);
   line.classList.add('human-edge');
   svgHumanEdges.append(line);
+  dom.humanEdge[edge.join('-')] = line;
+  dom.humanEdge[edge.toReversed().join('-')] = line;
 }
 
 // Make T-rex spaces

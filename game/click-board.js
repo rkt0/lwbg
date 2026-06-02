@@ -41,9 +41,7 @@ export function clickHumanSpace(space) {
     dom.humanSpace[space].classList.add('move');
     mv.plan.push(space);
     if (!gs.je) {
-      const s0 = Math.min(from, space);
-      const s1 = Math.max(from, space);
-      const edge = qs(`#human-edge-${s0}_${s1}`);
+      const edge = dom.humanEdge[`${from}-${space}`];
       edge.classList.add('path');
     }
     if (isBldg) mv.toGo = 0; else mv.toGo--;

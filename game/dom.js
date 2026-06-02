@@ -5,4 +5,5 @@ export const dom = {
   sectionStart: qs('#start'),
   raptorSpace: [],
   humanSpace: [],
+  humanEdge: {},
 };
