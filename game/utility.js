@@ -27,8 +27,8 @@ export function cesvg(...args) {
   const uri = 'http://www.w3.org/2000/svg';
   return document.createElementNS(uri, ...args);
 }
-export function fromTemplate(templateId, oneElement) {
-  const {content} = qs(`#${templateId}`);
+export function fromTemplate(id, oneElement) {
+  const {content} = document.getElementById(id);
   const node = content.cloneNode(true);
   if (oneElement) return node.firstElementChild;
   return node;
