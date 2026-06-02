@@ -254,12 +254,12 @@
   </div>
 </section>
 <section id="front" class="full-screen">
-  <div id="title-content" class="flex-container">
+  <div class="flex-container">
     <div class="info">Click anywhere to start</div>
   </div>
 </section>
 <section id="start" class="full-screen">
-  <div id="start-options" class="flex-container">
+  <nav class="options flex-container">
     <button type="button" id="start-new">
       Start New Game
     </button>
@@ -277,12 +277,9 @@
         </svg>
       </span>
     </button>
-  </div>
-  <div id="start-message"
-    class="info centered dormant">
-  </div>
-  <div id="load-fork"
-    class="flex-container dormant">
+  </nav>
+  <div class="message info centered dormant"></div>
+  <div class="fork flex-container dormant">
     <div class="info">
       <p>Do you want to use this same file as
       your auto-save file (overwriting it)?
@@ -300,7 +297,7 @@
 <section id="control"
   class="full-screen flex-container tight dormant">
   <div class="flex-container row tight">
-    <div id="human-control" class="info">
+    <div class="human-menu info">
       <h1>Humans</h1>
       <button type="button" class="manual">
         Manual Control
@@ -313,7 +310,7 @@
         <button type="button">3</button>
       </div>
     </div>
-    <div id="raptor-control" class="info">
+    <div class="raptor-menu info">
       <h1>Raptors</h1>
       <button type="button" class="manual">
         Manual Control

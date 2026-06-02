@@ -42,7 +42,8 @@ const continueButton = qs('#continue-from-control');
 const areaElement = {};
 const levelButtons = {};
 for (const species of ['human', 'raptor']) {
-  const area = qs(`#${species}-control`);
+  const area =
+    qs(`.${species}-menu`, dom.sectionControl);
   const buttons = qsa('button', area);
   buttons[-1] = buttons.shift();
   areaElement[species] = area;

@@ -98,18 +98,18 @@ button {
 
 /* Start screen */
 
-#start-options button {
+#start .options button {
   width: 350px;
   height: var(--start-button-height);
   font: var(--font-large);
 }
 
-#start-message {
+#start .message {
   position: fixed;
   text-align: left;
 }
 
-#load-fork button {
+#start .fork button {
   width: 324px;
   height: 54px;
 }

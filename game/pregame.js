@@ -12,18 +12,13 @@ import {control} from './control.js';
 
 export async function showStartOptions(time = aTime) {
   autoSave.clear();
-  await anim.fade(startMessage, 0, time);
-  startOptions.inert = false;
-  anim.fade(startOptions, 1, time, {display: ''});
+  await anim.fade(dom.startMessage, 0, time);
+  dom.startOptions.inert = false;
+  anim.fade(dom.startOptions, 1, time, {display: ''});
 }
 
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
-
-// Element references
-const startOptions = qs('#start-options');
-const startMessage = qs('#start-message');
-const loadFork = qs('#load-fork');
 
 // Add title screen click handler
 aelo(dom.sectionTitle, 'mousedown', async () => {
@@ -71,18 +66,18 @@ async function loadSaved() {
     }
     return showStartOptions();
   }
-  showLoadFork();
+  showFork();
 }
 async function loadOverwrite() {
   autoSave.fh = autoSave.fhLoad;
-  await hideLoadFork();
+  await hideFork();
   await showStartMessage(`overwrite-granted-${
     await autoSave.checkPermission(true)
   }`);
   startGame(true);
 }
 async function loadCopy() {
-  await hideLoadFork();
+  await hideFork();
   await showStartMessage('save-introduction');
   try {
     await autoSave.createFile(true);
@@ -120,23 +115,23 @@ async function startGame(load) {
 
 // UI helper functions
 async function hideStartOptions() {
-  startOptions.inert = true;
-  await anim.fade(startOptions, 0, aTime);
+  dom.startOptions.inert = true;
+  await anim.fade(dom.startOptions, 0, aTime);
 }
 async function showStartMessage(templateId) {
   const node = fromTemplate(templateId);
-  startMessage.replaceChildren(node);
-  anim.fade(startMessage, 1, aTime);
+  dom.startMessage.replaceChildren(node);
+  anim.fade(dom.startMessage, 1, aTime);
   await waitForClick(dom.sectionStart);
 }
 function hideStartMessage() {
-  anim.fade(startMessage, 0, aTime);
+  anim.fade(dom.startMessage, 0, aTime);
 }
-function showLoadFork() {
-  loadFork.inert = false;
-  anim.fade(loadFork, 1, aTime, {display: ''});
+function showFork() {
+  dom.startFork.inert = false;
+  anim.fade(dom.startFork, 1, aTime, {display: ''});
 }
-async function hideLoadFork() {
-  loadFork.inert = true;
-  await anim.fade(loadFork, 0, aTime);
+async function hideFork() {
+  dom.startFork.inert = true;
+  await anim.fade(dom.startFork, 0, aTime);
 }
