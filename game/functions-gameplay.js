@@ -230,10 +230,10 @@ export const gp = {
   },
   interrupt(time = anim.time.menuFade) {
     document.body.style.overflow = 'hidden';
-    anim.fade(dom.scrim, 1, time);
+    anim.fade(scrim, 1, time);
   },
   resume(time = anim.time.menuFade) {
-    anim.fade(dom.scrim, 0, time);
+    anim.fade(scrim, 0, time);
     document.body.style.overflow = 'visible';
   },
   async handleControlChange() {
@@ -269,6 +269,8 @@ export const gp = {
   },
   // async save() injected by auto-save.js
 };
+
+const scrim = qs('.scrim');
 
 function hPiecesOn(space) {
   return gs.humans.flatMap(

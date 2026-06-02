@@ -24,11 +24,6 @@ for (const button of qsa('#gameplay-menu .dormant')) {
   ui.hideButton(button.id);
 }
 
-// Disable menus that should be inactive at start
-dom.sectionControl.inert = true;
-qs('#more-options').inert = true;
-qs('#quit-options').inert = true;
-
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
 
