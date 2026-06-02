@@ -1,4 +1,5 @@
 import {qs, click} from './utility.js';
+import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -11,14 +12,12 @@ import {edit} from './edit-mode.js';
 export function clickHumanPiece(piece) {
   const space = gs.humans[piece];
   if (edit.on) {
-    clickHumanPieceEditMode(piece, space);
-    return;
+    return clickHumanPieceEditMode(piece, space);
   }
   if (gs.turn !== 'human') return;
   if (ai.control.human) return;
   if (gs.phase === 'move') {
-    click(`#human-space-${space}`);
-    return;
+    return click(`#human-space-${space}`);
   }
   if (gs.phase === 'select') {
     if (checkNoLeaveEnd(space)) return;
@@ -41,14 +40,12 @@ export function clickHumanPiece(piece) {
 export function clickRaptorPiece(piece) {
   const space = gs.raptors[piece];
   if (edit.on) {
-    clickRaptorPieceEditMode(piece, space);
-    return;
+    return clickRaptorPieceEditMode(piece, space);
   }
   if (gs.turn !== 'raptor') return;
   if (ai.control.raptor) return;
   if (gs.phase === 'move') {
-    click(`#raptor-space-${space}`);
-    return;
+    return click(dom.raptorSpace[space]);
   }
   if (gs.phase === 'select') {
     if (gs.je) {
@@ -118,8 +115,7 @@ function selectAppropriate(piece) {
 function clickHumanPieceEditMode(piece, space) {
   if (edit.selected.species === 'raptor') return;
   if (edit.selected.species === 'human') {
-    click(`#human-space-${space}`);
-    return;
+    return click(`#human-space-${space}`);
   }
   selectAppropriate(piece);
   ui.raptorItemsClickable(false);
@@ -140,8 +136,7 @@ function checkNotEnterPosition(space) {
 function clickRaptorPieceEditMode(piece, space) {
   if (edit.selected.species === 'human') return;
   if (edit.selected.species === 'raptor') {
-    click(`#raptor-space-${space}`);
-    return;
+    return click(dom.raptorSpace[space]);
   }
   const element = qs(`#raptor-piece-${piece}`);
   element.classList.add('selected');

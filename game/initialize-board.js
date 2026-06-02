@@ -98,12 +98,12 @@ for (const space of Object.keys(geom.adjustRaptor)) {
 // Make raptor spaces
 const svgRaptorMap = cesvg('svg');
 qs('#raptor-map').append(svgRaptorMap);
-for (const [i, pts] of raptorSpacePoints.entries()) {
+for (const pts of raptorSpacePoints) {
   const element = cesvg('polygon');
-  element.id = `raptor-space-${i}`;
   element.setAttribute('points', pts.join(' '));
   element.classList.add('raptor-space');
   svgRaptorMap.append(element);
+  dom.raptorSpace.push(element);
 }
 if (debug.boardLabels.raptorPoint) {
   debug.makeLabels('raptor-point', geom.raptorPoints);

@@ -1,4 +1,5 @@
 import {qs, click} from './utility.js';
+import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -85,7 +86,7 @@ export function clickRaptorSpace(space) {
       moveToPath.classList.remove('move');
       moveToPath.classList.add('path');
     }
-    const moveElement = qs(`#raptor-space-${space}`);
+    const moveElement = dom.raptorSpace[space];
     moveElement.classList.add('move');
     // Pull space from current location in DOM and
     // append it to end to ensure it is 'on top'

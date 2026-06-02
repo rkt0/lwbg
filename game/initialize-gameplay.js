@@ -1,4 +1,4 @@
-import {ael} from './utility.js';
+import {ael, camelFromKebab} from './utility.js';
 import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {pieces} from './pieces.js';
@@ -30,6 +30,11 @@ function targetItem(event, selector) {
   if (!id) return -1;
   return +id.slice(id.lastIndexOf('-') + 1);
 }
+function targetItemIndex(event, className) {
+  const item = event.target.closest(`.${className}`);
+  if (!item) return -1;
+  return dom[camelFromKebab(className)].indexOf(item);
+}
 
 // Add gameplay click handlers
 ael(dom.sectionGameplay, 'mousedown', (e) => {
@@ -60,6 +65,6 @@ ael(dom.sectionGameplay, 'mousedown', (e) => {
     const bldg = bd.bldgHumanSpaces.indexOf(hSpace);
     rSpace = bd.bldgRaptorSpaces[bldg];
   }
-  rSpace ??= targetItem(e, '.raptor-space');
+  rSpace ??= targetItemIndex(e, 'raptor-space');
   if (rSpace > -1) clickRaptorSpace(rSpace);
 });
