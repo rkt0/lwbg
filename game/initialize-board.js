@@ -112,6 +112,23 @@ if (debug.boardLabels.raptorSpace) {
   debug.makeLabels('raptor-space', pl.raptor);
 }
 
+// Make human spaces
+addExtraSpace(geom.humanSpaces);
+const humanSpaceSize = cssInt('--human-space-size');
+for (const pt of geom.humanSpaces) {
+  const div = ce('div');
+  div.classList.add('human-space');
+  div.style.left = `${pt[0] - humanSpaceSize / 2}px`;
+  div.style.top = `${pt[1] - humanSpaceSize / 2}px`;
+  dom.sectionGameplay.append(div);
+  dom.humanSpace.push(div);
+  pl.human.push([...pt]);
+}
+dom.humanSpace[bd.humanDead].classList.add('dead');
+if (debug.boardLabels.humanSpace)  {
+  debug.makeLabels('human-space', geom.humanSpaces);
+}
+
 // Make buildings
 const svgBuildingsMap = cesvg('svg');
 addBldgBgs(svgBuildingsMap);
@@ -120,6 +137,8 @@ for (const [i, bg] of geom.bldgBgId.entries()) {
   const hSpace = bd.bldgHumanSpaces[i];
   const rSpace = bd.bldgRaptorSpaces[i];
   const pts = raptorSpacePoints[rSpace];
+  // Remove existing regular human space
+  dom.humanSpace[hSpace].remove();
   // First make polygon with background only
   const background = cesvg('polygon');
   background.setAttribute('points', pts.join(' '));
@@ -127,32 +146,12 @@ for (const [i, bg] of geom.bldgBgId.entries()) {
   background.setAttribute('fill', fill);
   // Then make clickable polygon on top
   const clickable = cesvg('polygon');
-  clickable.id = `human-space-${hSpace}`;
   clickable.setAttribute('points', pts.join(' '));
   clickable.setAttribute('fill', '#0000');
   clickable.classList.add('human-space', 'building');
   svgBuildingsMap.append(background, clickable);
+  dom.humanSpace[hSpace] = clickable;
   pl.human[hSpace] = [...pl.raptor[rSpace]];
-}
-
-// Make human spaces
-addExtraSpace(geom.humanSpaces);
-const humanSpaceSize = cssInt('--human-space-size');
-for (const [i, pt] of geom.humanSpaces.entries()) {
-  const isBldg = bd.bldgHumanSpaces.includes(i);
-  const div = ce('div');
-  div.id = `human-space-${i}`;
-  if (isBldg) div.id += '-under';
-  div.classList.add('human-space');
-  div.classList.toggle('under-building', isBldg);
-  div.classList.toggle('dead', i === bd.humanDead);
-  div.style.left = `${pt[0] - humanSpaceSize / 2}px`;
-  div.style.top = `${pt[1] - humanSpaceSize / 2}px`;
-  dom.sectionGameplay.append(div);
-  if (!isBldg) pl.human[i] = [...pt];
-}
-if (debug.boardLabels.humanSpace)  {
-  debug.makeLabels('human-space', geom.humanSpaces);
 }
 
 // Make human edges

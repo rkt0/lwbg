@@ -17,7 +17,7 @@ export function clickHumanPiece(piece) {
   if (gs.turn !== 'human') return;
   if (ai.control.human) return;
   if (gs.phase === 'move') {
-    return click(`#human-space-${space}`);
+    return click(dom.humanSpace[space]);
   }
   if (gs.phase === 'select') {
     if (checkNoLeaveEnd(space)) return;
@@ -105,17 +105,17 @@ function checkNotJumpPosition(space) {
 }
 function selectAppropriate(piece) {
   const space = gs.humans[piece];
-  let id = `human-space-${space}`;
+  let element = dom.humanSpace[space];
   const isBldg = bd.bldgHumanSpaces.includes(space);
   if (isBldg || space === bd.humanDead) {
-    id = `human-piece-${piece}`;
+    element = qs(`#human-piece-${piece}`);
   }
-  qs(`#${id}`).classList.add('selected');
+  element.classList.add('selected');
 }
 function clickHumanPieceEditMode(piece, space) {
   if (edit.selected.species === 'raptor') return;
   if (edit.selected.species === 'human') {
-    return click(`#human-space-${space}`);
+    return click(dom.humanSpace[space]);
   }
   selectAppropriate(piece);
   ui.raptorItemsClickable(false);

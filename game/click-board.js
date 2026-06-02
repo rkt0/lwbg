@@ -12,22 +12,17 @@ import {edit} from './edit-mode.js';
 export function clickHumanSpace(space) {
   const isBldg = bd.bldgHumanSpaces.includes(space);
   if (edit.on) {
-    clickHumanSpaceEditMode(space, isBldg);
-    return;
+    return clickHumanSpaceEditMode(space, isBldg);
   }
   if (gs.turn !== 'human') return;
   if (ai.control.human) return;
   if (gs.phase === 'select') {
-    clickHumanPieceOnClickedSpace(space);
-    return;
+    return clickHumanPieceOnClickedSpace(space);
   }
   if (gs.phase === 'move') {
     const from = mv.plan[mv.plan.length - 1];
     if (space === from) return;
-    if (!mv.toGo) {
-      checkBuildingEndsMove(from);
-      return;
-    }
+    if (!mv.toGo) return checkBuildingEndsMove(from);
     if (gs.je) {
       if (checkJump(from, space)) return;
     } else {
@@ -43,7 +38,7 @@ export function clickHumanSpace(space) {
       moveToPath.classList.remove('move');
       moveToPath.classList.add('path');
     }
-    qs(`#human-space-${space}`).classList.add('move');
+    dom.humanSpace[space].classList.add('move');
     mv.plan.push(space);
     if (!gs.je) {
       const s0 = Math.min(from, space);
@@ -58,15 +53,11 @@ export function clickHumanSpace(space) {
 
 export function clickRaptorSpace(space) {
   const isBldg = bd.bldgRaptorSpaces.includes(space);
-  if (edit.on) {
-    clickRaptorSpaceEditMode(space);
-    return;
-  }
+  if (edit.on) return clickRaptorSpaceEditMode(space);
   if (gs.turn !== 'raptor') return;
   if (ai.control.raptor) return;
   if (gs.phase === 'select') {
-    clickRaptorPieceOnClickedSpace(space);
-    return;
+    return clickRaptorPieceOnClickedSpace(space);
   }
   if (gs.phase === 'move') {
     const from = mv.plan[mv.plan.length - 1];
@@ -95,8 +86,7 @@ export function clickRaptorSpace(space) {
       const {bldgRaptorSpaces, bldgHumanSpaces} = bd;
       const rIndex = bldgRaptorSpaces.indexOf(space);
       const hSpace = bldgHumanSpaces[rIndex];
-      const hElement = qs(`#human-space-${hSpace}`);
-      hElement.classList.add('move');
+      dom.humanSpace[hSpace].classList.add('move');
     }
     mv.plan.push(space);
     mv.toGo--;
@@ -161,8 +151,7 @@ function clickHumanPieceOnClickedSpace(space) {
 function clickHumanSpaceEditMode(space, isBldg) {
   if (edit.selected.species === 'raptor') return;
   if (!edit.selected.species) {
-    clickHumanPieceOnClickedSpace(space);
-    return;
+    return clickHumanPieceOnClickedSpace(space);
   }
   const piece = edit.selected.piece;
   const aTime = anim.time.editControlFade;
@@ -223,8 +212,7 @@ function clickRaptorPieceOnClickedSpace(space) {
 function clickRaptorSpaceEditMode(space) {
   if (edit.selected.species === 'human') return;
   if (!edit.selected.species) {
-    clickRaptorPieceOnClickedSpace(space);
-    return;
+    return clickRaptorPieceOnClickedSpace(space);
   }
   const piece = edit.selected.piece;
   if (gs.raptors[piece] !== space) {

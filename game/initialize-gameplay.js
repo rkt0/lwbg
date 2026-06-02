@@ -58,7 +58,7 @@ ael(dom.sectionGameplay, 'mousedown', (e) => {
     const relative = +trexButton.dataset.change;
     return clickEditTrex({relative});
   }
-  const hSpace = targetItem(e, '.human-space');
+  const hSpace = targetItemIndex(e, 'human-space');
   let rSpace;
   if (hSpace > -1) {
     clickHumanSpace(hSpace);

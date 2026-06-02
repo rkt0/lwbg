@@ -51,8 +51,7 @@
   border-color: var(--color-path);
 }
 
-.human-space.dead,
-.human-space.under-building {
+.human-space.dead {
   display: none;
 }
 

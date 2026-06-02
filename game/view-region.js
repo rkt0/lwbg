@@ -3,6 +3,7 @@ import {
   absoluteBoundingRect, boundingBox,
 } from './utility.js';
 import {scrollBetter} from './scroll.js';
+import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {anim} from './animation.js';
 import {gs, mv, pl} from './game-objects.js';
@@ -30,13 +31,13 @@ function trexMoveRegion() {
     top: newT, bottom: newT + ph,
   };
   const spaceOld = `#trex-space-${gs.trex}`;
-  const spaceNew = gs.trex === 1 ?
-    `#human-space-${bd.humanStart}` :
+  const spaceOrElementNew = gs.trex === 1 ?
+    dom.humanSpace[bd.humanStart] :
     `#trex-space-${gs.trex - 1}`;
   return boundingBox(
     pieceRegionOld, pieceRegionNew,
     absoluteBoundingRect(spaceOld),
-    absoluteBoundingRect(spaceNew),
+    absoluteBoundingRect(spaceOrElementNew),
   );
 };
 export async function bringMoveIntoView() {

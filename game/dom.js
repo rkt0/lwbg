@@ -4,4 +4,5 @@ export const dom = {
   sectionGameplay: qs('#gameplay'),
   sectionStart: qs('#start'),
   raptorSpace: [],
+  humanSpace: [],
 };
