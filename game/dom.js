@@ -6,4 +6,5 @@ export const dom = {
   raptorSpace: [],
   humanSpace: [],
   humanEdge: {},
+  trexSpace: [],
 };

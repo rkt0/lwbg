@@ -49,7 +49,7 @@ ael(dom.sectionGameplay, 'mousedown', (e) => {
       return clickEditKill(hPiece);
     } else return clickHumanPiece(hPiece);
   }
-  const tSpace = targetItem(e, '.trex-space');
+  const tSpace = targetItemIndex(e, 'trex-space');
   if (tSpace > -1) {
     return clickEditTrex({absolute: tSpace});
   }

@@ -173,27 +173,23 @@ for (const edge of bd.humanEdges) {
 // Make T-rex spaces
 addExtraSpace(geom.trexSpaces);
 const trexSpaceSize = cssInt('--trex-space-size');
-for (const [i, pt] of geom.trexSpaces.entries()) {
+for (const pt of geom.trexSpaces) {
   const div = ce('div');
-  div.id = `trex-space-${i}`;
-  if (!i) div.id += '-under';
   div.classList.add('trex-space');
-  div.classList.toggle('under-building', !i);
   div.style.left = `${pt[0] - trexSpaceSize / 2}px`;
   div.style.top = `${pt[1] - trexSpaceSize / 2}px`;
-  if (i) {
-    pl.trex[i] = [pt[0] + trexSpaceSize / 2, pt[1]];
-  } else {
-    const rSpace = bd.bldgRaptorSpaces[
-      bd.bldgHumanSpaces.indexOf(bd.humanStart)
-    ];
-    // Below is ok here since values represent
-    // piece location centers that will only
-    // be adjusted to top-left corners later
-    pl.trex[i] = [...pl.raptor[rSpace]];
-  }
   dom.sectionGameplay.append(div);
+  dom.trexSpace.push(div);
+  pl.trex.push([pt[0] + trexSpaceSize / 2, pt[1]]);
 }
+dom.trexSpace[0].remove();
+dom.trexSpace[0] = null;
+// Below is ok here since values represent
+// piece location centers that will only
+// be adjusted to top-left corners later
+pl.trex[0] = [...pl.raptor[bd.bldgRaptorSpaces[
+  bd.bldgHumanSpaces.indexOf(bd.humanStart)
+]]];
 
 // Make T-rex edges
 const svgTrexEdges = cesvg('svg');

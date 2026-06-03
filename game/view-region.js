@@ -30,14 +30,14 @@ function trexMoveRegion() {
     left: newL, right: newL + pw,
     top: newT, bottom: newT + ph,
   };
-  const spaceOld = `#trex-space-${gs.trex}`;
-  const spaceOrElementNew = gs.trex === 1 ?
+  const elementOld = dom.trexSpace[gs.trex];
+  const elementNew = gs.trex === 1 ?
     dom.humanSpace[bd.humanStart] :
-    `#trex-space-${gs.trex - 1}`;
+    dom.trexSpace[gs.trex - 1];
   return boundingBox(
     pieceRegionOld, pieceRegionNew,
-    absoluteBoundingRect(spaceOld),
-    absoluteBoundingRect(spaceOrElementNew),
+    absoluteBoundingRect(elementOld),
+    absoluteBoundingRect(elementNew),
   );
 };
 export async function bringMoveIntoView() {
