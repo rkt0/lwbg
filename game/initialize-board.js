@@ -97,7 +97,7 @@ for (const space of Object.keys(geom.adjustRaptor)) {
 
 // Make raptor spaces
 const svgRaptorMap = cesvg('svg');
-qs('#raptor-map').append(svgRaptorMap);
+dom.raptorMap.append(svgRaptorMap);
 for (const pts of raptorSpacePoints) {
   const element = cesvg('polygon');
   element.setAttribute('points', pts.join(' '));

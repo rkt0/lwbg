@@ -143,18 +143,15 @@
   pointer-events: none;
 }
 
-#human-space-labels {
-  display: none;
+.human-space-labels {
   fill: #00a;
 }
 
-#raptor-point-labels {
-  display: none;
+.raptor-point-labels {
   fill: var(--color-selected);
 }
 
-#raptor-space-labels {
-  display: none;
+.raptor-space-labels {
   fill: var(--color-dino-space);
 }
 

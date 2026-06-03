@@ -79,7 +79,7 @@ export function clickRaptorSpace(space) {
     moveElement.classList.add('move');
     // Pull space from current location in DOM and
     // append it to end to ensure it is 'on top'
-    qs('#raptor-map svg').append(moveElement);
+    svgRaptorMap.append(moveElement);
     if (isBldg) {
       const {bldgRaptorSpaces, bldgHumanSpaces} = bd;
       const rIndex = bldgRaptorSpaces.indexOf(space);
@@ -180,6 +180,7 @@ function clickHumanSpaceEditMode(space, isBldg) {
 }
 
 // Needed for raptor space click handler
+const svgRaptorMap = qs('svg', dom.raptorMap);
 function checkEnter(from, space) {
   const result =
     !bd.raptorChoices.enter[from].has(space);

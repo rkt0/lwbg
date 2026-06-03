@@ -1,4 +1,5 @@
-import {qs, cesvg} from './utility.js';
+import {ce, cesvg, fromTemplate} from './utility.js';
+import {dom} from './dom.js';
 
 export const debug = {
   skipAutoSave: true,
@@ -14,11 +15,14 @@ export const debug = {
   // Cycle music starting at specified track
   music: {cycle: false, startAt: 0},
   makeLabels(kind, points) {
-    const container = qs(`#${kind}-labels`);
-    container.style.display = 'block';
+    const div = fromTemplate('debug-labels', true);
+    div.classList.add(`${kind}-labels`);
+    dom.sectionGameplay.append(div);
     const svg = cesvg('svg');
-    container.append(svg);
-    for (const [i, [x, y]] of points.entries()) {
+    div.append(svg);
+    for (const [i, point] of points.entries()) {
+      if (!point) continue;
+      const [x, y] = point;
       const element = cesvg('text');
       element.setAttribute('x', x);
       element.setAttribute('y', y);

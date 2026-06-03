@@ -78,10 +78,9 @@ export const ui = {
     }
   },
   raptorItemsClickable(clickable) {
-    const valueMap =
+    dom.raptorMap.style.pointerEvents =
       clickable ? 'visibleFill' : 'none';
     const valuePieces = clickable ? 'auto' : 'none';
-    qs('#raptor-map').style.pointerEvents = valueMap;
     for (const element of dom.raptorPiece) {
       element.style.pointerEvents = valuePieces;
     }

@@ -13,17 +13,8 @@
   href="img/icon/icon-64.png">
 <section id="gameplay" class="full-board">
   <div id="raptor-map" class="full-board"></div>
-  <div id="raptor-point-labels"
-    class="full-board debug-labels">
-  </div>
-  <div id="raptor-space-labels"
-    class="full-board debug-labels">
-  </div>
   <div id="buildings-map" class="full-board"></div>
   <div id="human-edges" class="full-board"></div>
-  <div id="human-space-labels"
-    class="full-board debug-labels">
-  </div>
   <div id="trex-edges" class="full-board"></div>
   <div class="trex-piece">
     <button type="button" data-change="-1"
@@ -345,6 +336,9 @@
 </template>
 <template id="raptor-piece">
   <div class="raptor-piece"></div>
+</template>
+<template id="debug-labels">
+  <div class="full-board debug-labels"></div>
 </template>
 <template id="save-introduction">
   <p>You will now be asked to create a file.
