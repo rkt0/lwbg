@@ -142,8 +142,7 @@ function checkHumanOccupied(space, isBldg) {
 }
 function clickHumanPieceOnClickedSpace(space) {
   if (gp.nHumansOn(space) === 1) {
-    const piece = gs.humans.indexOf(space);
-    click(`#human-piece-${piece}`);
+    click(dom.humanPiece[gs.humans.indexOf(space)]);
   }
 }
 function clickHumanSpaceEditMode(space, isBldg) {
@@ -166,7 +165,8 @@ function clickHumanSpaceEditMode(space, isBldg) {
       anim.fade('.edit-turn', 1, aTime);
     }
   }
-  anim.fade(`#human-piece-${piece} .kill`, 0, aTime);
+  const button = qs('.kill', dom.humanPiece[piece]);
+  anim.fade(button, 0, aTime);
   qs('.selected').classList.remove('selected');
   ui.raptorItemsClickable(true);
   // If edit.selected were reset immediately,
@@ -203,8 +203,7 @@ function checkRaptorOccupied(space) {
 }
 function clickRaptorPieceOnClickedSpace(space) {
   if (gp.nRaptorsOn(space) === 1) {
-    const piece = gs.raptors.indexOf(space);
-    click(`#raptor-piece-${piece}`);
+    click(dom.raptorPiece[gs.raptors.indexOf(space)]);
   }
 }
 function clickRaptorSpaceEditMode(space) {

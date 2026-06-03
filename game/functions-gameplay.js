@@ -51,10 +51,9 @@ export const gp = {
       for (const [i, p] of occupants.entries()) {
         const adj = sep * i - offset;
         const l = pl.human[space][0] + adj;
-        const element = qs(`#human-piece-${p}`);
         const location = {left: `${l}px`};
         const aTime = anim.time.adjustHuman;
-        anim.move(element, location, aTime);
+        anim.move(dom.humanPiece[p], location, aTime);
       }
     }
   },
@@ -117,7 +116,7 @@ export const gp = {
   },
   async moveHuman(piece, space, isLast) {
     if (gs.humans[piece] === space) return;
-    const element = qs(`#human-piece-${piece}`);
+    const element = dom.humanPiece[piece];
     const isNowDead = space === bd.humanDead;
     element.classList.toggle('dead', isNowDead);
     // Piece location update needs to occur
@@ -149,7 +148,7 @@ export const gp = {
       const de = Math.min(...enter[0]);
       if (dm <= maxN || de === 1) sfx.raptor();
     }
-    const element = qs(`#raptor-piece-${piece}`);
+    const element = dom.raptorPiece[piece];
     const location = {top: `${t}px`, left: `${l}px`};
     const aTime = anim.time.moveRaptor;
     await anim.move(element, location, aTime, {
@@ -168,10 +167,9 @@ export const gp = {
       if (gs.trex === 1) sfx.trexRoar();
       else sfx.trexStomp();
     }
-    const element = qs('#trex-piece');
     const location = {top: `${t}px`, left: `${l}px`};
     const aTime = anim.time.moveTrex;
-    await anim.move(element, location, aTime);
+    await anim.move(dom.trexPiece, location, aTime);
     if (!skipFx) {
       const settings = anim.trexScreenBounce;
       anim.bounce(dom.sectionGameplay, settings);
@@ -192,11 +190,11 @@ export const gp = {
     if (species === 'trex') {
       if (gs.trex === space) return;
       gs.trex = space;
-      element = qs('#trex-piece');
+      element = dom.trexPiece;
     } else {
       if (gs[`${species}s`][piece] === space) return;
       gs[`${species}s`][piece] = space;
-      element = qs(`#${species}-piece-${piece}`);
+      element = dom[`${species}Piece`][piece];
     }
     if (species === 'human') {
       const isNowDead = space === bd.humanDead;

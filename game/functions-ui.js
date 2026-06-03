@@ -1,4 +1,5 @@
 import {qs, qsa, cssInt} from './utility.js';
+import {dom} from './dom.js';
 import {anim} from './animation.js';
 
 export const ui = {
@@ -67,11 +68,13 @@ export const ui = {
   },
   humanItemsClickable(clickable) {
     const value = clickable ? 'auto' : 'none';
-    const items = qsa(
-      '.human-space:not(.building), .human-piece'
-    );
-    for (const item of items) {
-      item.style.pointerEvents = value;
+    humanClickableItems ??= [
+      ...dom.humanSpace, ...dom.humanPiece,
+    ];
+    for (const item of humanClickableItems) {
+      if (!item.classList.contains('building')) {
+        item.style.pointerEvents = value;
+      }
     }
   },
   raptorItemsClickable(clickable) {
@@ -79,8 +82,10 @@ export const ui = {
       clickable ? 'visibleFill' : 'none';
     const valuePieces = clickable ? 'auto' : 'none';
     qs('#raptor-map').style.pointerEvents = valueMap;
-    for (const element of qsa('.raptor-piece')) {
+    for (const element of dom.raptorPiece) {
       element.style.pointerEvents = valuePieces;
     }
   },
 };
+
+let humanClickableItems;

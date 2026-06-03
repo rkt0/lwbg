@@ -49,8 +49,8 @@ export const pieces = {
     addTrexImgs();
   },
   makeAll() {
-    for (let p = 0; p < nHumanPieces; p++) {
-      makeHumanPiece(p);
+    for (let _ = 0; _ < nHumanPieces; _++) {
+      makeHumanPiece();
     }
     for (let p = 0; p < nRaptorPieces; p++) {
       makeRaptorPiece(p);
@@ -77,7 +77,7 @@ function addHumanImgs() {
         f === 'hat' ? `_${hatShadow[id]}` : ''
       }.png`;
       imgS.classList.add('human-component', 'shadow');
-      qs(`#human-piece-${piece}`).append(imgB, imgS);
+      dom.humanPiece[piece].append(imgB, imgS);
     }
   }
 }
@@ -95,7 +95,7 @@ function addRaptorImgs() {
     const imgS = ce('img');
     imgS.src = `img/raptor/shadow-raptor-${idS}.png`;
     imgS.classList.add('raptor-component', 'shadow');
-    qs(`#raptor-piece-${piece}`).append(imgB, imgS);
+    dom.raptorPiece[piece].append(imgB, imgS);
   }
 }
 function addTrexImgs() {
@@ -105,16 +105,16 @@ function addTrexImgs() {
   const imgS = ce('img');
   imgS.src = 'img/trex/shadow-trex.png';
   imgS.classList.add('trex-component', 'shadow');
-  qs('#trex-piece').append(imgB, imgS);
+  dom.trexPiece.append(imgB, imgS);
 }
 
-function makeHumanPiece(piece) {
+function makeHumanPiece() {
   const element = fromTemplate('human-piece', true);
-  element.id = `human-piece-${piece}`;
   dom.sectionGameplay.append(element);
+  dom.humanPiece.push(element);
 }
-function makeRaptorPiece(piece) {
+function makeRaptorPiece() {
   const element = fromTemplate('raptor-piece', true);
-  element.id = `raptor-piece-${piece}`;
   dom.sectionGameplay.append(element);
+  dom.raptorPiece.push(element);
 }

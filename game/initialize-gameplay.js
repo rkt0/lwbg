@@ -25,12 +25,7 @@ autoSave.clear();
 edit.clear();
 
 // Helper function to get item index for click target
-function targetItem(event, selector) {
-  const id = event.target.closest(selector)?.id;
-  if (!id) return -1;
-  return +id.slice(id.lastIndexOf('-') + 1);
-}
-function targetItemIndex(event, className) {
+function targetItem(event, className) {
   const item = event.target.closest(`.${className}`);
   if (!item) return -1;
   return dom[camelFromKebab(className)].indexOf(item);
@@ -41,15 +36,15 @@ ael(dom.sectionGameplay, 'mousedown', (e) => {
   if (e.target.closest('#more-menu')) {
     return moreMenu.handleClick(e);
   }
-  const rPiece = targetItem(e, '.raptor-piece');
+  const rPiece = targetItem(e, 'raptor-piece');
   if (rPiece > -1) return clickRaptorPiece(rPiece);
-  const hPiece = targetItem(e, '.human-piece');
+  const hPiece = targetItem(e, 'human-piece');
   if (hPiece > -1) {
     if (e.target.closest('.kill')) {
       return clickEditKill(hPiece);
     } else return clickHumanPiece(hPiece);
   }
-  const tSpace = targetItemIndex(e, 'trex-space');
+  const tSpace = targetItem(e, 'trex-space');
   if (tSpace > -1) {
     return clickEditTrex({absolute: tSpace});
   }
@@ -58,13 +53,13 @@ ael(dom.sectionGameplay, 'mousedown', (e) => {
     const relative = +trexButton.dataset.change;
     return clickEditTrex({relative});
   }
-  const hSpace = targetItemIndex(e, 'human-space');
+  const hSpace = targetItem(e, 'human-space');
   let rSpace;
   if (hSpace > -1) {
     clickHumanSpace(hSpace);
     const bldg = bd.bldgHumanSpaces.indexOf(hSpace);
     rSpace = bd.bldgRaptorSpaces[bldg];
   }
-  rSpace ??= targetItemIndex(e, 'raptor-space');
+  rSpace ??= targetItem(e, 'raptor-space');
   if (rSpace > -1) clickRaptorSpace(rSpace);
 });

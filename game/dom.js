@@ -7,4 +7,7 @@ export const dom = {
   humanSpace: [],
   humanEdge: {},
   trexSpace: [],
+  humanPiece: [],
+  raptorPiece: [],
+  trexPiece: qs('.trex-piece'),
 };

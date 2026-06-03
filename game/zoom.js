@@ -42,9 +42,11 @@ let allPieces, humanBoard;
 // Needed for zoom button click handlers
 function highlightPieces(setting) {
   const ids = zoom.highlightBlinkIds;
-  allPieces ??= qsa(
-    '.raptor-piece, .human-piece, .trex-piece'
-  );
+  allPieces ??= [
+    ...dom.humanPiece,
+    ...dom.raptorPiece,
+    dom.trexPiece,
+  ];
   if (setting) {
     for (const piece of allPieces) {
       piece.classList.add('highlighted');

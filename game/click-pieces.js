@@ -52,8 +52,7 @@ export function clickRaptorPiece(piece) {
       if (checkNotEnterPosition(space)) return;
     }
     message.hide();
-    const element = qs(`#raptor-piece-${piece}`);
-    element.classList.add('selected');
+    dom.raptorPiece[piece].classList.add('selected');
     mv.selected = piece;
     mv.plan = [space];
     mv.toGo = gs.je ? 1 : gs.rollN;
@@ -67,7 +66,8 @@ export function clickRaptorPiece(piece) {
 export function clickEditKill(piece) {
   gp.moveHuman(piece, bd.humanDead, false);
   const aTime = anim.time.editControlFade;
-  anim.fade(`#human-piece-${piece} .kill`, 0, aTime);
+  const button = qs('.kill', dom.humanPiece[piece]);
+  anim.fade(button, 0, aTime);
   qs('.selected').classList.remove('selected');
   ui.raptorItemsClickable(true);
   edit.selected.species = null;
@@ -108,7 +108,7 @@ function selectAppropriate(piece) {
   let element = dom.humanSpace[space];
   const isBldg = bd.bldgHumanSpaces.includes(space);
   if (isBldg || space === bd.humanDead) {
-    element = qs(`#human-piece-${piece}`);
+    element = dom.humanPiece[piece];
   }
   element.classList.add('selected');
 }
@@ -122,8 +122,8 @@ function clickHumanPieceEditMode(piece, space) {
   edit.selected.species = 'human';
   edit.selected.piece = piece;
   if (space === bd.humanDead) return;
-  const aTime = anim.time.editControlFade;
-  anim.fade(`#human-piece-${piece} .kill`, 1, aTime);
+  const button = qs('.kill', dom.humanPiece[piece]);
+  anim.fade(button, 1, anim.time.editControlFade);
 }
 
 // Needed for raptor piece click handler
@@ -138,8 +138,7 @@ function clickRaptorPieceEditMode(piece, space) {
   if (edit.selected.species === 'raptor') {
     return click(dom.raptorSpace[space]);
   }
-  const element = qs(`#raptor-piece-${piece}`);
-  element.classList.add('selected');
+  dom.raptorPiece[piece].classList.add('selected');
   ui.humanItemsClickable(false);
   edit.selected.species = 'raptor';
   edit.selected.piece = piece;
