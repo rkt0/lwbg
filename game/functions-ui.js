@@ -78,7 +78,7 @@ export const ui = {
     }
   },
   raptorItemsClickable(clickable) {
-    dom.raptorMap.style.pointerEvents =
+    dom.board.style.pointerEvents =
       clickable ? 'visibleFill' : 'none';
     const valuePieces = clickable ? 'auto' : 'none';
     for (const element of dom.raptorPiece) {

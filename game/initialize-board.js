@@ -96,13 +96,11 @@ for (const space of Object.keys(geom.adjustRaptor)) {
 }
 
 // Make raptor spaces
-const svgRaptorMap = cesvg('svg');
-dom.raptorMap.append(svgRaptorMap);
 for (const pts of raptorSpacePoints) {
   const element = cesvg('polygon');
   element.setAttribute('points', pts.join(' '));
   element.classList.add('raptor-space');
-  svgRaptorMap.append(element);
+  dom.raptorSpaceGroup.append(element);
   dom.raptorSpace.push(element);
 }
 if (debug.boardLabels.raptorPoint) {
@@ -129,34 +127,7 @@ if (debug.boardLabels.humanSpace)  {
   debug.makeLabels('human-space', geom.humanSpaces);
 }
 
-// Make buildings
-const svgBuildingsMap = cesvg('svg');
-addBldgBgs(svgBuildingsMap);
-qs('#buildings-map').append(svgBuildingsMap);
-for (const [i, bg] of geom.bldgBgId.entries()) {
-  const hSpace = bd.bldgHumanSpaces[i];
-  const rSpace = bd.bldgRaptorSpaces[i];
-  const pts = raptorSpacePoints[rSpace];
-  // Remove existing regular human space
-  dom.humanSpace[hSpace].remove();
-  // First make polygon with background only
-  const background = cesvg('polygon');
-  background.setAttribute('points', pts.join(' '));
-  const fill = `url(#bldg-bg-${bg})`;
-  background.setAttribute('fill', fill);
-  // Then make clickable polygon on top
-  const clickable = cesvg('polygon');
-  clickable.setAttribute('points', pts.join(' '));
-  clickable.setAttribute('fill', '#0000');
-  clickable.classList.add('human-space', 'building');
-  svgBuildingsMap.append(background, clickable);
-  dom.humanSpace[hSpace] = clickable;
-  pl.human[hSpace] = [...pl.raptor[rSpace]];
-}
-
 // Make human edges
-const svgHumanEdges = cesvg('svg');
-qs('#human-edges').append(svgHumanEdges);
 for (const edge of bd.humanEdges) {
   const line = cesvg('line');
   const points = edge.map(i => geom.humanSpaces[i]);
@@ -165,7 +136,7 @@ for (const edge of bd.humanEdges) {
   line.setAttribute('x2', points[1][0]);
   line.setAttribute('y2', points[1][1]);
   line.classList.add('human-edge');
-  svgHumanEdges.append(line);
+  dom.board.append(line);
   dom.humanEdge[edge.join('-')] = line;
   dom.humanEdge[edge.toReversed().join('-')] = line;
 }
@@ -192,8 +163,6 @@ pl.trex[0] = [...pl.raptor[bd.bldgRaptorSpaces[
 ]]];
 
 // Make T-rex edges
-const svgTrexEdges = cesvg('svg');
-qs('#trex-edges').append(svgTrexEdges);
 for (let i = 0; i < bd.trexStart; i++) {
   const line = cesvg('line');
   line.setAttribute('x1', geom.trexSpaces[i][0]);
@@ -201,12 +170,35 @@ for (let i = 0; i < bd.trexStart; i++) {
   line.setAttribute('x2', geom.trexSpaces[i + 1][0]);
   line.setAttribute('y2', geom.trexSpaces[i + 1][1]);
   line.classList.add('trex-edge');
-  svgTrexEdges.append(line);
+  dom.board.append(line);
 }
 
 // Make entrance markers
 addExtraSpace(geom.entranceMarkers);
-addEntrances(svgRaptorMap, geom.entranceMarkers);
+addEntrances(dom.board, geom.entranceMarkers);
+
+// Make buildings
+addBldgBgs(dom.board);
+for (const [i, bg] of geom.bldgBgId.entries()) {
+  const hSpace = bd.bldgHumanSpaces[i];
+  const rSpace = bd.bldgRaptorSpaces[i];
+  const pts = raptorSpacePoints[rSpace];
+  // Remove existing regular human space
+  dom.humanSpace[hSpace].remove();
+  // First make polygon with background only
+  const background = cesvg('polygon');
+  background.setAttribute('points', pts.join(' '));
+  const fill = `url(#bldg-bg-${bg})`;
+  background.setAttribute('fill', fill);
+  // Then make clickable polygon on top
+  const clickable = cesvg('polygon');
+  clickable.setAttribute('points', pts.join(' '));
+  clickable.setAttribute('fill', '#0000');
+  clickable.classList.add('human-space', 'building');
+  dom.board.append(background, clickable);
+  dom.humanSpace[hSpace] = clickable;
+  pl.human[hSpace] = [...pl.raptor[rSpace]];
+}
 
 // Make jump markers
 addExtraSpace(geom.jumpMarkers.jump);

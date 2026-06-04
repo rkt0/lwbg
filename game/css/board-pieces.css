@@ -132,12 +132,6 @@
   pointer-events: none;
 }
 
-#human-edges,
-#trex-edges,
-#buildings-map {
-  pointer-events: none;
-}
-
 .debug-labels {
   font: var(--font-large);
   pointer-events: none;

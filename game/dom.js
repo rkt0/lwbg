@@ -3,7 +3,8 @@ import {qs} from './utility.js';
 export const dom = {
   sectionGameplay: qs('#gameplay'),
   sectionStart: qs('#start'),
-  raptorMap: qs('#raptor-map'),
+  board: qs('#board'),
+  raptorSpaceGroup: qs('#board g'),
   raptorSpace: [],
   humanSpace: [],
   humanEdge: {},
