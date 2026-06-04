@@ -1,7 +1,6 @@
 import {
   qs, qsa, ael, click, rollDie,
 } from './utility.js';
-import {dom} from './dom.js';
 import {prng} from './prngs.js';
 import {dice} from './dice.js';
 import {ai} from './ai.js';

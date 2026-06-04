@@ -105,7 +105,7 @@ async function startGame(load) {
   if (load) await autoSave.executeLoad(autoSave.fh);
   await anim.fade(dom.sectionStart, 0, aTime);
   hideStartMessage();
-  anim.fade(dom.sectionGameplay, 1, aTime);
+  anim.fade(dom.gameplay, 1, aTime);
   gp.initializeView();
   if (load) {
     gp.interrupt(0);

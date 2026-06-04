@@ -32,7 +32,7 @@ function targetItem(event, className) {
 }
 
 // Add gameplay click handlers
-ael(dom.sectionGameplay, 'mousedown', (e) => {
+ael(dom.gameplay, 'mousedown', (e) => {
   if (e.target.closest('#more-menu')) {
     return moreMenu.handleClick(e);
   }

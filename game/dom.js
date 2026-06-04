@@ -1,7 +1,7 @@
 import {qs} from './utility.js';
 
 export const dom = {
-  sectionGameplay: qs('#gameplay'),
+  gameplay: qs('#gameplay'),
   sectionStart: qs('#start'),
   board: qs('#board'),
   raptorSpaceGroup: qs('#board g'),

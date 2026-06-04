@@ -34,7 +34,7 @@ function quitOptionsActive() {
   return !qs('#quit-options').style.display;
 }
 function gameplayActive() {
-  const {display} = dom.sectionGameplay.style;
+  const {display} = dom.gameplay.style;
   if (display !== 'block') return false;
   return !moreMenuActive();
 }

@@ -110,11 +110,11 @@ function addTrexImgs() {
 
 function makeHumanPiece() {
   const element = fromTemplate('human-piece', true);
-  dom.sectionGameplay.append(element);
+  dom.gameplay.append(element);
   dom.humanPiece.push(element);
 }
 function makeRaptorPiece() {
   const element = fromTemplate('raptor-piece', true);
-  dom.sectionGameplay.append(element);
+  dom.gameplay.append(element);
   dom.raptorPiece.push(element);
 }

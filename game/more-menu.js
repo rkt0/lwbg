@@ -76,7 +76,7 @@ async function showQuitOptions() {
 async function confirmQuit() {
   qs('#quit-options').inert = true;
   await moreMenu.hide();
-  await anim.fade(dom.sectionGameplay, 0, aTime);
+  await anim.fade(dom.gameplay, 0, aTime);
   gp.initializeObjects();
   gp.initializeView();
   pieces.shuffleFeatures();

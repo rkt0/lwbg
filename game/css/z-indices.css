@@ -20,7 +20,7 @@
 }
 
 #message-container,
-#gameplay .toggle-audio {
+.gameplay .toggle-audio {
   z-index: 4;
 }
 
@@ -100,7 +100,7 @@
 /* Other elements relative to containers */
 
 #start,
-#gameplay {
+.gameplay {
   z-index: 0;
 }
 

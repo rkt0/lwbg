@@ -118,7 +118,7 @@ for (const pt of geom.humanSpaces) {
   div.classList.add('human-space');
   div.style.left = `${pt[0] - humanSpaceSize / 2}px`;
   div.style.top = `${pt[1] - humanSpaceSize / 2}px`;
-  dom.sectionGameplay.append(div);
+  dom.gameplay.append(div);
   dom.humanSpace.push(div);
   pl.human.push([...pt]);
 }
@@ -149,7 +149,7 @@ for (const pt of geom.trexSpaces) {
   div.classList.add('trex-space');
   div.style.left = `${pt[0] - trexSpaceSize / 2}px`;
   div.style.top = `${pt[1] - trexSpaceSize / 2}px`;
-  dom.sectionGameplay.append(div);
+  dom.gameplay.append(div);
   dom.trexSpace.push(div);
   pl.trex.push([pt[0] + trexSpaceSize / 2, pt[1]]);
 }
@@ -203,11 +203,11 @@ for (const [i, bg] of geom.bldgBgId.entries()) {
 // Make jump markers
 addExtraSpace(geom.jumpMarkers.jump);
 addExtraSpace(geom.jumpMarkers.land);
-addJumps(dom.sectionGameplay, geom.jumpMarkers);
+addJumps(dom.gameplay, geom.jumpMarkers);
 
 // Make helicopters
 addExtraSpace(geom.heloCorners);
-addHelos(dom.sectionGameplay, geom.heloCorners);
+addHelos(dom.gameplay, geom.heloCorners);
 
 // Additional piece layout adjustments
 for (const species of Object.keys(pl)) {

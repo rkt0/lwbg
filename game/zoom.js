@@ -84,7 +84,7 @@ function zoomGeneral(factor) {
     zoom.center.left = left / zoom.factor.current;
     zoom.center.top = top / zoom.factor.current;
   }
-  dom.sectionGameplay.style.zoom = factor;
+  dom.gameplay.style.zoom = factor;
   zoom.factor.current = factor;
   applyZoomCenter();
   for (const element of nonZoomElements) {

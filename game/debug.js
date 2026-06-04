@@ -17,7 +17,7 @@ export const debug = {
   makeLabels(kind, points) {
     const div = fromTemplate('debug-labels', true);
     div.classList.add(`${kind}-labels`);
-    dom.sectionGameplay.append(div);
+    dom.gameplay.append(div);
     const svg = cesvg('svg');
     div.append(svg);
     for (const [i, point] of points.entries()) {

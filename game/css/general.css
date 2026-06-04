@@ -63,9 +63,7 @@ svg {
   background: #5a5c5f;
 }
 
-#start,
-#gameplay {
+.jungle {
   background-image: url("../img/bg/jungle.png");
   background-repeat: repeat;
-  display: none;
 }

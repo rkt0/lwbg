@@ -172,7 +172,7 @@ export const gp = {
     await anim.move(dom.trexPiece, location, aTime);
     if (!skipFx) {
       const settings = anim.trexScreenBounce;
-      anim.bounce(dom.sectionGameplay, settings);
+      anim.bounce(dom.gameplay, settings);
     }
     gs.trex = space;
     if (gs.trex === 0) {
