@@ -32,6 +32,7 @@
 }
 
 body {
+  display: none;
   margin: 0px;
   overscroll-behavior: none;
   background: var(--color-dark);
@@ -59,11 +60,7 @@ svg {
   display: none;
 }
 
-#front {
-  background: #5a5c5f;
-}
-
-.jungle {
+section:not(#control) {
   background-image: url("../img/bg/jungle.png");
   background-repeat: repeat;
 }

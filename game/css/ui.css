@@ -90,7 +90,7 @@ button {
 
 /* Title screen */
 
-#front .info {
+.front .info {
   width: auto;
   font: var(--font-large);
   padding: 36px;
