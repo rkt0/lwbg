@@ -1,3 +1,6 @@
+export function qjs(value, parent = document) {
+  return parent.querySelector(`[data-js="${value}"]`);
+}
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
