@@ -1,4 +1,4 @@
-import {qs, qsa, click} from './utility.js';
+import {qjs, qs, qsa, click} from './utility.js';
 import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {geom} from './board-geometry.js';
@@ -268,7 +268,7 @@ export const gp = {
   // async save() injected by auto-save.js
 };
 
-const scrim = qs('.scrim');
+const scrim = qjs('scrim');
 
 function hPiecesOn(space) {
   return gs.humans.flatMap(
