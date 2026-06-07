@@ -1,6 +1,10 @@
 export function qjs(value, parent = document) {
   return parent.querySelector(`[data-js="${value}"]`);
 }
+export function qda(attrName, parent = document) {
+  const selector = `[data-${attrName}]`;
+  return [...parent.querySelectorAll(selector)];
+}
 export function closestData(event, attrName = 'js') {
   const selector = `[data-${attrName}]`;
   const element = event.target.closest(selector);
