@@ -11,9 +11,11 @@
 <link rel="stylesheet" href="css/display.css">
 <link rel="icon" type="image/png" sizes="64x64"
   href="img/icon/icon-64.png">
-<section id="gameplay"
+<section data-js="gameplay"
   class="gameplay full-board dormant">
-  <svg id="board"><g></g></svg>
+  <svg data-js="board">
+    <g data-js="raptor-space-group"></g>
+  </svg>
   <div class="trex-piece">
     <button type="button" data-change="-1"
       class="trex-edit small-button edit-only">
@@ -242,17 +244,19 @@
     </div>
   </div>
 </section>
-<section id="front" class="front full-screen">
+<section data-js="front" class="front full-screen">
   <div class="flex-container">
     <div class="info">Click anywhere to start</div>
   </div>
 </section>
-<section id="start" class="full-screen dormant">
-  <nav class="options flex-container">
-    <button type="button" id="start-new">
+<section data-js="start"
+  class="start full-screen dormant">
+  <div data-js="start-options"
+    class="options flex-container">
+    <button type="button" data-js="start-new">
       Start New Game
     </button>
-    <button type="button" id="load-saved">
+    <button type="button" data-js="load-saved">
       Load Saved Game
     </button>
     <button type="button" class="toggle-audio">
@@ -266,19 +270,21 @@
         </svg>
       </span>
     </button>
-  </nav>
-  <div class="message info centered dormant"></div>
-  <div class="fork flex-container dormant">
+  </div>
+  <div data-js="start-message"
+    class="message info centered dormant"></div>
+  <div data-js="start-fork"
+    class="fork flex-container dormant">
     <div class="info">
       <p>Do you want to use this same file as
       your auto-save file (overwriting it)?
       <p>Or do you want to leave this file
       alone and create a new auto-save file?
     </div>
-    <button type="button" id="load-overwrite">
+    <button type="button" data-js="load-overwrite">
       Use Same File (Overwrite)
     </button>
-    <button type="button" id="load-copy">
+    <button type="button" data-js="load-copy">
       Create New File
     </button>
   </div>

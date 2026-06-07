@@ -1,10 +1,10 @@
-import {qs} from './utility.js';
+import {qs, qjs} from './utility.js';
 
 export const dom = {
-  gameplay: qs('#gameplay'),
-  sectionStart: qs('#start'),
-  board: qs('#board'),
-  raptorSpaceGroup: qs('#board g'),
+  gameplay: qjs('gameplay'),
+  start: qjs('start'),
+  board: qjs('board'),
+  raptorSpaceGroup: qjs('raptor-space-group'),
   raptorSpace: [],
   humanSpace: [],
   humanEdge: {},

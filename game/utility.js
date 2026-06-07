@@ -1,6 +1,12 @@
 export function qjs(value, parent = document) {
   return parent.querySelector(`[data-js="${value}"]`);
 }
+export function closestData(event, attrName = 'js') {
+  const selector = `[data-${attrName}]`;
+  const element = event.target.closest(selector);
+  return element?.dataset[camelFromKebab(attrName)];
+}
+
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }

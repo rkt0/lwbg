@@ -1,6 +1,6 @@
 import {
-  qs, ael, aelo, fromTemplate, waitForClick,
-  addWarningBeforeUnload,
+  qjs, closestData, ael, aelo, fromTemplate,
+  waitForClick, addWarningBeforeUnload,
 } from './utility.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
@@ -12,35 +12,35 @@ import {control} from './control.js';
 
 export async function showStartOptions(time = aTime) {
   autoSave.clear();
-  await anim.fade(startMessage, 0, time);
-  startOptions.inert = false;
-  anim.fade(startOptions, 1, time, {display: ''});
+  await anim.fade(message, 0, time);
+  options.inert = false;
+  anim.fade(options, 1, time, {display: ''});
 }
 
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
 
 // Element references
-const sectionFront = qs('#front');
-const startOptions = qs('#start .options');
-const startMessage = qs('#start .message');
-const startFork = qs('#start .fork');
+const front = qjs('front');
+const options = qjs('start-options');
+const message = qjs('start-message');
+const fork = qjs('start-fork');
 
 // Add title screen click handler
-aelo(sectionFront, 'mousedown', async () => {
+aelo(front, 'mousedown', async () => {
   addWarningBeforeUnload();
-  await anim.fade(sectionFront, 0, aTime);
-  anim.fade(dom.sectionStart, 1, aTime);
+  await anim.fade(front, 0, aTime);
+  anim.fade(dom.start, 1, aTime);
   music.next();
 });
 
 // Add start screen click handlers
-ael(dom.sectionStart, 'mousedown', (e) => {
-  const id = e.target.closest('button')?.id;
-  if (id === 'start-new') startNew();
-  else if (id === 'load-saved') loadSaved();
-  else if (id === 'load-overwrite') loadOverwrite();
-  else if (id === 'load-copy') loadCopy();
+ael(dom.start, 'mousedown', (e) => {
+  const js = closestData(e);
+  if (js === 'start-new') startNew();
+  else if (js === 'load-saved') loadSaved();
+  else if (js === 'load-overwrite') loadOverwrite();
+  else if (js === 'load-copy') loadCopy();
 });
 
 // Start screen click handlers
@@ -103,7 +103,7 @@ async function startGame(load) {
     return showStartOptions();
   }
   if (load) await autoSave.executeLoad(autoSave.fh);
-  await anim.fade(dom.sectionStart, 0, aTime);
+  await anim.fade(dom.start, 0, aTime);
   hideStartMessage();
   anim.fade(dom.gameplay, 1, aTime);
   gp.initializeView();
@@ -121,23 +121,23 @@ async function startGame(load) {
 
 // UI helper functions
 async function hideStartOptions() {
-  startOptions.inert = true;
-  await anim.fade(startOptions, 0, aTime);
+  options.inert = true;
+  await anim.fade(options, 0, aTime);
 }
 async function showStartMessage(templateId) {
   const node = fromTemplate(templateId);
-  startMessage.replaceChildren(node);
-  anim.fade(startMessage, 1, aTime);
-  await waitForClick(dom.sectionStart);
+  message.replaceChildren(node);
+  anim.fade(message, 1, aTime);
+  await waitForClick(dom.start);
 }
 function hideStartMessage() {
-  anim.fade(startMessage, 0, aTime);
+  anim.fade(message, 0, aTime);
 }
 function showFork() {
-  startFork.inert = false;
-  anim.fade(startFork, 1, aTime, {display: ''});
+  fork.inert = false;
+  anim.fade(fork, 1, aTime, {display: ''});
 }
 async function hideFork() {
-  startFork.inert = true;
-  await anim.fade(startFork, 0, aTime);
+  fork.inert = true;
+  await anim.fade(fork, 0, aTime);
 }

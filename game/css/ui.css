@@ -99,18 +99,18 @@ button {
 
 /* Start screen */
 
-#start .options button {
+.start .options button {
   width: 350px;
   height: var(--start-button-height);
   font: var(--font-large);
 }
 
-#start .message {
+.start .message {
   position: fixed;
   text-align: left;
 }
 
-#start .fork button {
+.start .fork button {
   width: 324px;
   height: 54px;
 }
@@ -223,11 +223,11 @@ button {
   );
 }
 
-#start .toggle-audio {
+.start .toggle-audio {
   text-align: left;
 }
 
-#start .toggle-audio .icon {
+.start .toggle-audio .icon {
   --size: 36px;
   position: absolute;
   right: 0;

@@ -82,5 +82,5 @@ async function confirmQuit() {
   pieces.shuffleFeatures();
   pieces.addImgs();
   showStartOptions(0);
-  anim.fade(dom.sectionStart, 1, aTime);
+  anim.fade(dom.start, 1, aTime);
 }
