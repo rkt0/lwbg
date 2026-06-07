@@ -1,4 +1,4 @@
-import {qs} from './utility.js';
+import {qjs} from './utility.js';
 import {rollDie} from './utility.js';
 import {prng} from './prngs.js';
 import {music} from './music.js';
@@ -17,7 +17,7 @@ export const sfx = {
   },
 };
 
-const element = qs('#sfx-player');
+const element = qjs('sfx-player');
 function play(sound) {
   if (!music.audioOn) return;
   element.src = sound.src;

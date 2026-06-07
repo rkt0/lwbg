@@ -1,4 +1,4 @@
-import {qda, qs, qsa, ael, isNull} from './utility.js';
+import {qjs, qda, ael, isNull} from './utility.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
 
@@ -50,7 +50,7 @@ export const music = {
   },
 };
 
-const element = qs('#music-player');
+const element = qjs('music-player');
 const icons = qda('icon');
 const tooRecent = 6;
 const recentIds = [];
