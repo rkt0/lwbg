@@ -1,4 +1,4 @@
-import {qs, qsa, ael, isNull} from './utility.js';
+import {qda, qs, qsa, ael, isNull} from './utility.js';
 import {debug} from './debug.js';
 import {prng} from './prngs.js';
 
@@ -44,7 +44,6 @@ export const music = {
     if (this.audioOn) element.pause();
     else element.play();
     this.audioOn = !this.audioOn;
-    const icons = qsa('.audio-on, .audio-off');
     for (const icon of icons) {
       icon.classList.toggle('inactive');
     }
@@ -52,6 +51,7 @@ export const music = {
 };
 
 const element = qs('#music-player');
+const icons = qda('icon');
 const tooRecent = 6;
 const recentIds = [];
 let nowPlaying = null;
@@ -108,6 +108,6 @@ const total = cdf[nTracks - 1];
 for (let i = 0; i < nTracks; i++) cdf[i] /= total;
 
 ael(element, 'ended', () => music.next());
-for (const button of qsa('.toggle-audio')) {
+for (const button of qda('toggle-audio')) {
   ael(button, 'mousedown', () => music.toggle());
 }

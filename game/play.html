@@ -184,12 +184,12 @@
     Humans Saved:<br><span id="humans-saved"></span>
     of <span id="humans-total"></span>
   </div>
-  <button type="button"
+  <button type="button" data-toggle-audio
     class="toggle-audio small-button non-zoom">
-    <svg class="icon audio-off inactive">
+    <svg data-icon class="icon inactive">
       <use href="img/sprite.svg#icon-audio-off"/>
     </svg>
-    <svg class="icon audio-on">
+    <svg data-icon class="icon">
       <use href="img/sprite.svg#icon-audio-on"/>
     </svg>
   </button>
@@ -260,13 +260,14 @@
     <button type="button" data-js="load-saved">
       Load Saved Game
     </button>
-    <button type="button" class="toggle-audio">
+    <button type="button" data-toggle-audio
+      class="toggle-audio">
       <span>
         Toggle Audio
-        <svg class="icon audio-off inactive">
+        <svg data-icon class="icon inactive">
           <use href="img/sprite.svg#icon-audio-off"/>
         </svg>
-        <svg class="icon audio-on">
+        <svg data-icon class="icon">
           <use href="img/sprite.svg#icon-audio-on"/>
         </svg>
       </span>
