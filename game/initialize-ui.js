@@ -1,5 +1,5 @@
 import {
-  qs, qsa, ael, click, rollDie,
+  qda, qs, qsa, ael, click, rollDie,
 } from './utility.js';
 import {prng} from './prngs.js';
 import {dice} from './dice.js';
@@ -14,12 +14,13 @@ import {message} from './message.js';
 import {bringMoveIntoView} from './view-region.js';
 
 // Set display to none on dormant elements
-for (const element of qsa('.dormant')) {
+for (const element of qda('dormant')) {
   element.style.display = 'none';
 }
 
 // Initialize dormant elements in gameplay menu
-for (const button of qsa('#gameplay-menu .dormant')) {
+const gameplayMenu = qs('#gameplay-menu');
+for (const button of qda('dormant', gameplayMenu)) {
   ui.hideButton(button.id);
 }
 

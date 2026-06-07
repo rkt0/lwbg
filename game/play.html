@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="css/display.css">
 <link rel="icon" type="image/png" sizes="64x64"
   href="img/icon/icon-64.png">
-<section data-js="gameplay"
-  class="gameplay full-board dormant">
+<section data-js="gameplay" data-dormant
+  class="gameplay full-board">
   <svg data-js="board">
     <g data-js="raptor-space-group"></g>
   </svg>
@@ -39,8 +39,8 @@
         </div>
       </div>
     </div>
-    <div id="roll-display"
-      class="info dormant slot-roll">
+    <div id="roll-display" data-dormant
+      class="info slot-roll">
       <div class="flex-container">
         <div class="die die-human die-movement">
         </div>
@@ -65,32 +65,32 @@
     <button type="button" id="show-more">
       &bull; &bull; &bull;
     </button>
-    <button type="button" id="ok-no-move"
-      class="dormant default-action slot-cancel">
+    <button type="button" id="ok-no-move" data-dormant
+      class="default-action slot-cancel">
       OK
     </button>
-    <button type="button" id="ok-ai-move"
-      class="dormant default-action slot-cancel">
+    <button type="button" id="ok-ai-move" data-dormant
+      class="default-action slot-cancel">
       Move
     </button>
     <button type="button" id="decline-button"
-      class="dormant slot-cancel">
+      data-dormant class="slot-cancel">
       Decline
     </button>
     <button type="button" id="cancel-button"
-      class="dormant slot-cancel">
+      data-dormant class="slot-cancel">
       Cancel
     </button>
     <button type="button" id="confirm-button"
-      class="dormant default-action">
+      data-dormant class="default-action">
       Confirm
     </button>
     <button type="button" id="ok-trex-move"
-      class="dormant default-action slot-cancel">
+      data-dormant class="default-action slot-cancel">
       Move
     </button>
     <button type="button" id="roll-button"
-      class="dormant default-action slot-roll">
+      data-dormant class="default-action slot-roll">
       Roll
     </button>
     <button type="button" id="zoom-out"
@@ -171,15 +171,15 @@
       </div>
     </div>
   </div>
-  <div id="message-container"
-    class="flex-container info non-zoom dormant">
+  <div id="message-container" data-dormant
+    class="flex-container info non-zoom">
     <span class="content"></span>
-    <div class="hider flex-container dormant">
+    <div data-dormant class="hider flex-container">
       <span>Hide Message</span>
     </div>
   </div>
-  <div id="game-over"
-    class="info non-zoom centered dormant">
+  <div id="game-over" data-dormant
+    class="info non-zoom centered">
     <h1>Game Over</h1>
     Humans Saved:<br><span id="humans-saved"></span>
     of <span id="humans-total"></span>
@@ -193,12 +193,13 @@
       <use href="img/sprite.svg#icon-audio-on"/>
     </svg>
   </button>
-  <div class="scrim full-screen non-zoom dormant">
+  <div data-dormant
+    class="scrim full-screen non-zoom">
   </div>
-  <div id="more-menu"
-    class="full-screen non-zoom dormant">
-    <div id="more-options" inert
-      class="flex-container dormant">
+  <div id="more-menu" data-dormant
+    class="full-screen non-zoom">
+    <div id="more-options" inert data-dormant
+      class="flex-container">
       <button type="button" id="hide-more">
         Return to Game
       </button>
@@ -215,8 +216,8 @@
         Quit Game
       </button>
     </div>
-    <div id="manual-save-help"
-      class="flex-container dormant">
+    <div id="manual-save-help" data-dormant
+      class="flex-container">
       <div class="info">
         <p>You will now be asked to create a file.
         This file will allow you to resume your game
@@ -228,8 +229,8 @@
         <p>Click anywhere to continue.
       </div>
     </div>
-    <div id="quit-options" inert
-      class="flex-container dormant">
+    <div id="quit-options" inert data-dormant
+      class="flex-container">
       <div class="info">
         <p>Do you really want to quit the game?
         <p>(You'll still be able to resume it
@@ -249,8 +250,8 @@
     <div class="info">Click anywhere to start</div>
   </div>
 </section>
-<section data-js="start"
-  class="start full-screen dormant">
+<section data-js="start" data-dormant
+  class="start full-screen">
   <div data-js="start-options"
     class="options flex-container">
     <button type="button" data-js="start-new">
@@ -271,10 +272,10 @@
       </span>
     </button>
   </div>
-  <div data-js="start-message"
-    class="message info centered dormant"></div>
-  <div data-js="start-fork"
-    class="fork flex-container dormant">
+  <div data-js="start-message" data-dormant
+    class="message info centered"></div>
+  <div data-js="start-fork" data-dormant
+    class="fork flex-container">
     <div class="info">
       <p>Do you want to use this same file as
       your auto-save file (overwriting it)?
@@ -289,8 +290,8 @@
     </button>
   </div>
 </section>
-<section id="control" inert
-  class="full-screen flex-container tight dormant">
+<section id="control" inert data-dormant
+  class="full-screen flex-container tight">
   <div class="flex-container row tight">
     <div class="human-menu info">
       <h1>Humans</h1>
