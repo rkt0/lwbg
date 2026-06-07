@@ -19,13 +19,6 @@ function toggleFullscreen() {
     element?.requestFullscreen();
   } else document.exitFullscreen();
 }
-function cycleDisplayMode() {
-  const modes = ['', 'tv'];
-  const valueOld = document.body.dataset.display;
-  const indexOld = modes.indexOf(valueOld ?? '');
-  const indexNew = (indexOld + 1) % modes.length;
-  document.body.dataset.display = modes[indexNew];
-}
 
 function moreMenuActive() {
   return !qs('#more-menu').style.display;
@@ -95,7 +88,7 @@ document.addEventListener('keydown', (e) => {
       break;
     case 't':
       e.preventDefault();
-      cycleDisplayMode();
+      document.body.classList.toggle('tv-mode');
       break;
     case '-':
     case '=':

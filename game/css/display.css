@@ -1,4 +1,4 @@
-body[data-display="tv"] {
+body.tv-mode {
   --matte-top: 35px;
   --matte-right: 159.5px;
   --matte-bottom: 125px;
