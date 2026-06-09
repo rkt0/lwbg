@@ -1,31 +1,35 @@
-import {qs, qsa, ael, isNull} from './utility.js';
+import {
+  qjs, qda, closestData, ael,
+} from './utility.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 
 export const control = {
   async show() {
-    await anim.fade(sectionControl, 1, aTime, {
+    await anim.fade(section, 1, aTime, {
       display: '',
     });
-    sectionControl.inert = false;
+    section.inert = false;
     return new Promise((resolve) => {
       finish = async () => {
-        sectionControl.inert = true;
-        await anim.fade(sectionControl, 0, aTime);
+        section.inert = true;
+        await anim.fade(section, 0, aTime);
         resolve();
       };
     });
   },
   change(species, level) {
-    const area = areaElement[species];
-    qs('.current', area)?.classList.remove('current');
+    const buttons = levelButtons[species];
+    // Use Object.values() to include buttons[-1]
+    for (const button of Object.values(buttons)) {
+      button.classList.remove('current');
+    }
+    buttons[level].classList.add('current');
     ai.control[species] = ai.level[species][level];
-    const button = levelButtons[species][level];
-    button.classList.add('current');
     ai.control.changed = true;
-    if (isNull(ai.control.human)) return;
-    if (isNull(ai.control.raptor)) return;
     if (!continueButton.disabled) return;
+    const {human, raptor} = ai.control;
+    if (human === null || raptor === null) return;
     continueButton.disabled = false;
     anim.fade(continueButton, 1, aTime);
   },
@@ -37,26 +41,24 @@ let finish;
 const aTime = anim.time.menuFade;
 
 // Element references
-const sectionControl = qs('#control');
-const continueButton = qs('#continue-from-control');
-const areaElement = {};
+const section = qjs('control');
+const continueButtonIdentifier = 'control-continue';
+const continueButton = qjs(continueButtonIdentifier);
 const levelButtons = {};
-for (const species of ['human', 'raptor']) {
-  const area = qs(`.${species}-menu`, sectionControl);
-  const buttons = qsa('button', area);
+for (const area of qda('control-species')) {
+  const species = area.dataset.controlSpecies;
+  const buttons = qda('control-level', area);
   buttons[-1] = buttons.shift();
-  areaElement[species] = area;
   levelButtons[species] = buttons;
 }
 
 // Add player control screen click handler
-ael(sectionControl, 'mousedown', (e) => {
-  const button = e.target.closest('button');
-  if (button === continueButton) return finish();
-  const species = ['human', 'raptor'].find(
-    (s) => areaElement[s].contains(e.target)
-  );
-  if (!button || !species) return;
-  const i = levelButtons[species].indexOf(button);
-  control.change(species, i);
+ael(section, 'mousedown', (e) => {
+  if (closestData(e) === continueButtonIdentifier) {
+    return finish();
+  }
+  const levelData = closestData(e, 'control-level');
+  const species = closestData(e, 'control-species');
+  if (!levelData || !species) return;
+  control.change(species, +levelData);
 });

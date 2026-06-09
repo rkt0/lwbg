@@ -291,38 +291,66 @@
     </button>
   </div>
 </section>
-<section id="control" inert data-dormant
-  class="full-screen flex-container tight">
+<section data-js="control" inert data-dormant
+  class="control full-screen flex-container tight">
   <div class="flex-container row tight">
-    <div class="human-menu info">
+    <div data-control-species="human"
+      class="control-menu info">
       <h1>Humans</h1>
-      <button type="button" class="manual">
+      <button type="button" data-control-level="-1"
+        class="manual-control">
         Manual Control
       </button>
       <div>Computer Level</div>
       <div>
-        <button type="button">0</button>
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button">3</button>
+        <button type="button" data-control-level="0"
+          class="ai-level">
+          0
+        </button>
+        <button type="button" data-control-level="1"
+          class="ai-level">
+          1
+        </button>
+        <button type="button" data-control-level="2"
+          class="ai-level">
+          2
+        </button>
+        <button type="button" data-control-level="3"
+          class="ai-level">
+          3
+        </button>
       </div>
     </div>
-    <div class="raptor-menu info">
+    <div data-control-species="raptor"
+      class="control-menu info">
       <h1>Raptors</h1>
-      <button type="button" class="manual">
+      <button type="button" data-control-level="-1"
+        class="manual-control">
         Manual Control
       </button>
       <div>Computer Level</div>
       <div>
-        <button type="button">0</button>
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button">3</button>
+        <button type="button" data-control-level="0"
+          class="ai-level">
+          0
+        </button>
+        <button type="button" data-control-level="1"
+          class="ai-level">
+          1
+        </button>
+        <button type="button" data-control-level="2"
+          class="ai-level">
+          2
+        </button>
+        <button type="button" data-control-level="3"
+          class="ai-level">
+          3
+        </button>
       </div>
     </div>
   </div>
-  <button type="button" id="continue-from-control" 
-    disabled>
+  <button type="button" data-js="control-continue" 
+    disabled class="control-continue">
     Continue
   </button>
 </section>

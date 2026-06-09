@@ -111,6 +111,11 @@ export function arrayCumSum(arr) {
 export function camelFromKebab(str) {
   return str.replace(/-./g, x => x[1].toUpperCase());
 }
+export function kebabFromCamel(str) {
+  return str.replace(
+    /[A-Z]/g, x => `-${x.toLowerCase()}`,
+  );
+}
 
 export function sqrtStep(t) {
   if (t < 0) return 0;

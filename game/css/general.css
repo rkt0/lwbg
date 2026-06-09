@@ -50,6 +50,7 @@ body {
 
 h1 {
   font: var(--font-large);
+  margin-top: 18px;
 }
 
 svg {
@@ -60,7 +61,7 @@ svg {
   display: none;
 }
 
-section:not(#control) {
+section {
   background-image: url("../img/bg/jungle.png");
   background-repeat: repeat;
 }
