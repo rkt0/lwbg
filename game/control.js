@@ -42,8 +42,7 @@ const aTime = anim.time.menuFade;
 
 // Element references
 const section = qjs('control');
-const continueButtonIdentifier = 'control-continue';
-const continueButton = qjs(continueButtonIdentifier);
+const continueButton = qjs('control-continue');
 const levelButtons = {};
 for (const area of qda('control-species')) {
   const species = area.dataset.controlSpecies;
@@ -54,7 +53,7 @@ for (const area of qda('control-species')) {
 
 // Add player control screen click handler
 ael(section, 'mousedown', (e) => {
-  if (closestData(e) === continueButtonIdentifier) {
+  if (continueButton.contains(e.target)) {
     return finish();
   }
   const levelData = closestData(e, 'control-level');
