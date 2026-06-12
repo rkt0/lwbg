@@ -41,7 +41,7 @@
     </div>
     <div id="roll-display" data-dormant
       class="info slot-roll">
-      <div class="flex-container">
+      <div class="flex-container spread">
         <div class="die die-human die-movement">
         </div>
         <div class="die die-human die-continue">
@@ -132,7 +132,7 @@
     </button>
     <div id="die-button-area"
       class="edit-only slot-roll edit-dice">
-      <div class="flex-container">
+      <div class="flex-container spread">
         <div class="wrapper wrapper-human">
           <button type="button"
             id="die-button-human-movement"
@@ -180,7 +180,7 @@
   </div>
   <div id="game-over" data-dormant
     class="info non-zoom centered">
-    <h1>Game Over</h1>
+    <div class="heading">Game Over</div>
     Humans Saved:<br><span id="humans-saved"></span>
     of <span id="humans-total"></span>
   </div>
@@ -196,10 +196,10 @@
   <div data-js="scrim" data-dormant
     class="scrim full-screen non-zoom">
   </div>
-  <div id="more-menu" data-dormant
-    class="full-screen non-zoom">
+  <div data-js="more-menu" data-dormant
+    class="more-menu full-screen non-zoom">
     <div id="more-options" inert data-dormant
-      class="flex-container">
+      class="flex-container inline">
       <button type="button" id="hide-more">
         Return to Game
       </button>
@@ -236,12 +236,14 @@
         <p>(You'll still be able to resume it
         later from your saved game file.)
       </div>
-      <button type="button" id="abort-quit">
-        Return to Game
-      </button>
-      <button type="button" id="confirm-quit">
-        Quit Game
-      </button>
+      <div class="flex-container short inline">
+        <button type="button" id="abort-quit">
+          Return to Game
+        </button>
+        <button type="button" id="confirm-quit">
+          Quit Game
+        </button>
+      </div>
     </div>
   </div>
 </section>
@@ -253,7 +255,7 @@
 <section data-js="start" data-dormant
   class="start full-screen">
   <div data-js="start-options"
-    class="options flex-container">
+    class="options flex-container inline">
     <button type="button" data-js="start-new">
       Start New Game
     </button>
@@ -262,47 +264,47 @@
     </button>
     <button type="button" data-toggle-audio
       class="toggle-audio">
-      <span>
-        Toggle Audio
-        <svg data-icon class="icon inactive">
-          <use href="img/sprite.svg#icon-audio-off"/>
-        </svg>
-        <svg data-icon class="icon">
-          <use href="img/sprite.svg#icon-audio-on"/>
-        </svg>
-      </span>
+      Toggle Audio
+      <svg data-icon class="icon inactive">
+        <use href="img/sprite.svg#icon-audio-off"/>
+      </svg>
+      <svg data-icon class="icon">
+        <use href="img/sprite.svg#icon-audio-on"/>
+      </svg>
     </button>
   </div>
   <div data-js="start-message" data-dormant
     class="message info centered"></div>
   <div data-js="start-fork" data-dormant
-    class="fork flex-container">
+    class="flex-container">
     <div class="info">
       <p>Do you want to use this same file as
       your auto-save file (overwriting it)?
       <p>Or do you want to leave this file
       alone and create a new auto-save file?
     </div>
-    <button type="button" data-js="load-overwrite">
-      Use Same File (Overwrite)
-    </button>
-    <button type="button" data-js="load-copy">
-      Create New File
-    </button>
+    <div class="flex-container short inline">
+      <button type="button" data-js="load-overwrite">
+        Use Same File (Overwrite)
+      </button>
+      <button type="button" data-js="load-copy">
+        Create New File
+      </button>
+    </div>
   </div>
 </section>
 <section data-js="control" inert data-dormant
-  class="control full-screen flex-container tight">
-  <div class="flex-container row tight">
+  class="control full-screen flex-container">
+  <div class="flex-container row">
     <div data-control-species="human"
       class="control-menu info">
-      <h1>Humans</h1>
+      <div class="heading">Humans</div>
       <button type="button" data-control-level="-1"
         class="manual-control">
         Manual Control
       </button>
       <div>Computer Level</div>
-      <div>
+      <div class="flex-container row tight">
         <button type="button" data-control-level="0"
           class="ai-level">
           0
@@ -323,13 +325,13 @@
     </div>
     <div data-control-species="raptor"
       class="control-menu info">
-      <h1>Raptors</h1>
+      <div class="heading">Raptors</div>
       <button type="button" data-control-level="-1"
         class="manual-control">
         Manual Control
       </button>
       <div>Computer Level</div>
-      <div>
+      <div class="flex-container row tight">
         <button type="button" data-control-level="0"
           class="ai-level">
           0

@@ -234,6 +234,11 @@ export const gp = {
     anim.fade(scrim, 0, time);
     document.body.style.overflow = 'visible';
   },
+  isActive() {
+    const {display} = dom.gameplay.style;
+    if (display !== 'block') return false;
+    return scrim.style.display !== 'block';
+  },
   async handleControlChange() {
     if (!ai.control.changed) return;
     await this.save();

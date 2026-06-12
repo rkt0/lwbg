@@ -12,6 +12,7 @@ import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 import {message} from './message.js';
 import {bringMoveIntoView} from './view-region.js';
+import {moreMenu} from './more-menu.js';
 
 // Set display to none on dormant elements
 for (const element of qda('dormant')) {
@@ -31,7 +32,7 @@ const aTime = anim.time.menuFade;
 ael('#show-more', 'mousedown', async () => {
   gp.interrupt();
   anim.fade('#more-options', 1, 0, {display: ''});
-  await anim.fade('#more-menu', 1, aTime);
+  await anim.fade(moreMenu.element, 1, aTime);
   qs('#more-options').inert = false;
 });
 ael('#ok-no-move', 'mousedown', async () => {

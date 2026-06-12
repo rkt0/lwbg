@@ -1,10 +1,11 @@
 import {qs, click} from './utility.js';
-import {dom} from './dom.js';
 import {ai} from './ai.js';
 import {music} from './music.js';
 import {gs, mv} from './game-objects.js';
 import {zoom} from './zoom.js';
 import {edit} from './edit-mode.js';
+import {moreMenu} from './more-menu.js';
+import {gp} from './functions-gameplay.js';
 
 function clickIfOk(buttonId) {
   const button = qs(`#${buttonId}`);
@@ -20,16 +21,8 @@ function toggleFullscreen() {
   } else document.exitFullscreen();
 }
 
-function moreMenuActive() {
-  return !qs('#more-menu').style.display;
-}
 function quitOptionsActive() {
   return !qs('#quit-options').style.display;
-}
-function gameplayActive() {
-  const {display} = dom.gameplay.style;
-  if (display !== 'block') return false;
-  return !moreMenuActive();
 }
 
 // Do not use the ael utility function here;
@@ -38,7 +31,7 @@ document.addEventListener('keydown', (e) => {
   switch (e.key) {
     case 'Enter':
     case ' ': {
-      if (!gameplayActive()) return;
+      if (!gp.isActive()) return;
       e.preventDefault();
       if (edit.on) return;
       let id;
@@ -63,10 +56,10 @@ document.addEventListener('keydown', (e) => {
       if (quitOptionsActive()) {
         e.preventDefault();
         clickIfOk('abort-quit');
-      } else if (moreMenuActive()) {
+      } else if (moreMenu.isActive()) {
         e.preventDefault();
         clickIfOk('hide-more');
-      } else if (gameplayActive()) {
+      } else if (gp.isActive()) {
         e.preventDefault();
         if (edit.on) return;
         if (gs.phase === 'move') {
@@ -93,7 +86,7 @@ document.addEventListener('keydown', (e) => {
     case '-':
     case '=':
     case '0': {
-      if (!gameplayActive()) return;
+      if (!gp.isActive()) return;
       e.preventDefault();
       let which = 'default';
       if (zoom.factor.current === 1) {

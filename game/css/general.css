@@ -16,7 +16,7 @@
   --color-dino-highlighted: #a3061bcc;
 
   --font-normal: bold 24px Atkinson;
-  --font-large: bold 36px Atkinson;
+  --font-size-large: 32px;
 
   --board-border-width: 6px;
 
@@ -48,9 +48,8 @@ body {
   height: 0;
 }
 
-h1 {
-  font: var(--font-large);
-  margin-top: 18px;
+.heading {
+  font-size: var(--font-size-large);
 }
 
 svg {

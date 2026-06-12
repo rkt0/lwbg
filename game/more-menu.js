@@ -1,4 +1,4 @@
-import {qs, aelo} from './utility.js';
+import {qjs, qs, aelo} from './utility.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
@@ -11,7 +11,10 @@ import {control} from './control.js';
 import {showStartOptions} from './pregame.js';
 
 export const moreMenu = {
-  element: qs('#more-menu'),
+  element: qjs('more-menu'),
+  isActive() {
+    return this.element.style.display === 'block';
+  },
   async hide(resumeGameplay = true) {
     qs('#more-options').inert = true;
     qs('#quit-options').inert = true;

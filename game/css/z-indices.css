@@ -33,7 +33,7 @@
   z-index: 6;
 }
 
-#more-menu {
+.more-menu {
   z-index: 7;
 }
 
@@ -100,5 +100,5 @@
 /* Other elements relative to containers */
 
 .display-matte {
-  z-index: 3;
+  z-index: 8;
 }

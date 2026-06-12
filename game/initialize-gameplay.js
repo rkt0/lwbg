@@ -33,7 +33,7 @@ function targetItem(event, className) {
 
 // Add gameplay click handlers
 ael(dom.gameplay, 'mousedown', (e) => {
-  if (e.target.closest('#more-menu')) {
+  if (moreMenu.element.contains(e.target)) {
     return moreMenu.handleClick(e);
   }
   const rPiece = targetItem(e, 'raptor-piece');

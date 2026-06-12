@@ -26,7 +26,7 @@
 }
 
 .die-content {
-  font: var(--font-large);
+  font-size: 36px;
   line-height: var(--die-content-height);
 }
 
@@ -45,7 +45,7 @@
 }
 
 .face {
-  font: var(--font-large);
+  font-size: 36px;
   line-height: var(--die-content-height);
   text-transform: uppercase;
 }

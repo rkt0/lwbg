@@ -1,7 +1,6 @@
 :root {
   --button-border-width: 3px;
   --small-button-size: 36px;
-  --start-button-height: 81px;
   --color-info: #b1b3b6aa;
 }
 
@@ -59,7 +58,8 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: calc(1.5em + 4px);
 }
 
 .flex-container.row {
@@ -69,7 +69,27 @@ button {
 }
 
 .flex-container.tight {
-  justify-content: center;
+  gap: 12px;
+}
+
+.flex-container.spread {
+  justify-content: space-evenly;
+  gap: 0;
+}
+
+.flex-container.short {
+  height: auto;
+}
+
+.flex-container.inline {
+  display: inline-flex;
+}
+
+.flex-container.inline button {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5em 1em;
+  font-size: inherit;
 }
 
 .full-screen {
@@ -88,21 +108,17 @@ button {
 }
 
 
-/* Title screen */
+/* Pregame screens */
 
 .front .info {
   width: auto;
-  font: var(--font-large);
-  padding: 36px;
+  font-size: var(--font-size-large);
+  padding: 1em 1.5em;
 }
 
 
-/* Start screen */
-
-.start .options button {
-  width: 350px;
-  height: var(--start-button-height);
-  font: var(--font-large);
+.start .options {
+  font-size: var(--font-size-large);
 }
 
 .start .message {
@@ -110,22 +126,9 @@ button {
   text-align: left;
 }
 
-.start .fork button {
-  width: 324px;
-  height: 54px;
-}
-
 
 /* Gameplay menu */
 /* see gameplay-menu.css */
-
-
-/* More menu */
-
-#more-menu button {
-  width: 288px;
-  height: 54px;
-}
 
 
 /* Message */
@@ -155,7 +158,11 @@ button {
 #game-over {
   position: fixed;
   width: auto;
-  padding: 24px 36px;
+  padding: 1em 2em;
+}
+
+#game-over .heading {
+  margin-block: 0.25em 0.75em;
 }
 
 
@@ -223,25 +230,14 @@ button {
   );
 }
 
-.start .toggle-audio {
-  text-align: left;
-}
-
-.start .toggle-audio .icon {
-  --size: 36px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: var(--size);
-  height: var(--size);
-  margin: calc(
-    (var(--start-button-height) - var(--size)) / 2
-  );
-  margin-right: 36px;
-}
-
-.toggle-audio span {
-  padding-left: 36px;
+.start .toggle-audio .icon:not(.inactive) {
+  display: inline;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  position: relative;
+  top: -2.5px;
+  margin-left: 0.25em;
 }
 
 
@@ -253,25 +249,24 @@ button {
 
 .control-menu {
   width: auto;
-  height: auto;
-  margin: 54px 18px 36px;
   background: #8d997a;
   backdrop-filter: none;
 }
 
+.control-menu .heading {
+  margin-block: 0.25em;
+}
+
 .control-menu button {
-  box-sizing: content-box;
-  --size: 48px;
-  height: var(--size);
-  min-width: var(--size);
-  margin: 3px;
+  padding: 0.5em;
+  min-width: 1.25em;
   background: var(--color-control);
+  margin-block: 6px 0;
 }
 
 .control-menu .manual-control {
-  width: 216px;
-  height: 54px;
-  margin-bottom: 24px;
+  margin-block: 1em;
+  padding-inline: 1em;
 }
 
 .control-menu button.current {
@@ -282,8 +277,7 @@ button {
 }
 
 .control-continue {
-  width: 216px;
-  height: var(--start-button-height);
-  font: var(--font-large);
+  font-size: var(--font-size-large);
   opacity: 0;
+  padding: 0.5em 1em;
 }

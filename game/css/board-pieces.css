@@ -133,7 +133,7 @@
 }
 
 .debug-labels {
-  font: var(--font-large);
+  font-size: var(--font-size-large);
   pointer-events: none;
 }
 
@@ -193,7 +193,8 @@
 
 .dead-marker {
   display: none;
-  font: var(--font-large);
+  font-weight: normal;
+  font-size: 36px;
   color: #ccc;
   -webkit-text-stroke: 1px var(--color-dark);
   transform: translate(-6px, -2px);
