@@ -12,4 +12,5 @@ export const dom = {
   humanPiece: [],
   raptorPiece: [],
   trexPiece: qs('.trex-piece'),
+  gameOver: qjs('game-over'),
 };

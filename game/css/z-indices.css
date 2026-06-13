@@ -19,12 +19,11 @@
   z-index: 3;
 }
 
-#message-container,
-.gameplay .toggle-audio {
+.gameplay :is(.message, .toggle-audio) {
   z-index: 4;
 }
 
-#game-over,
+.game-over,
 #edit-mode-banner {
   z-index: 5;
 }

@@ -1,4 +1,6 @@
-import {qs, ael, ce, fromTemplate} from './utility.js';
+import {
+  qjs, qs, ael, ce, fromTemplate,
+} from './utility.js';
 import {anim} from './animation.js';
 
 export const message = {
@@ -23,7 +25,7 @@ export const message = {
   },
 };
 
-const container = qs('#message-container');
+const container = qjs('gameplay-message');
 const content = qs('.content', container);
 const hider = qs('.hider', container);
 

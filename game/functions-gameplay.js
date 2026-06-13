@@ -1,4 +1,4 @@
-import {qjs, qs, qsa, click} from './utility.js';
+import {qjs, qsa, click} from './utility.js';
 import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {geom} from './board-geometry.js';
@@ -28,13 +28,13 @@ export const gp = {
     gs.phase = 'roll';
     await this.save();
     setTimeout(() => {
-      qs('#humans-saved').innerHTML = nSaved;
-      qs('#humans-total').innerHTML = nTotal;
+      qjs('humans-saved').innerHTML = nSaved;
+      qjs('humans-total').innerHTML = nTotal;
       message.hide();
       ui.hideButton('roll-display');
       ui.hideButton('turn-display');
       if (zoom.factor.current < 1) return;
-      anim.fade('#game-over', 1, anim.time.menuFade, {
+      anim.fade(dom.gameOver, 1, anim.time.menuFade, {
         display: '',
       });
     }, immediate ? 0 : anim.time.gameOverDelay);
@@ -273,8 +273,10 @@ export const gp = {
   // async save() injected by auto-save.js
 };
 
+// Element references
 const scrim = qjs('scrim');
 
+// Helper functions
 function hPiecesOn(space) {
   return gs.humans.flatMap(
     (s, p) => s === space ? p : []

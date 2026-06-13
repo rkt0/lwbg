@@ -20,7 +20,7 @@ button,
 }
 
 button:hover,
-#message-container:hover {
+.gameplay .message:hover {
   box-shadow: inset 0px 0px 0px 999px #0003;
   cursor: pointer;
   color: #000;
@@ -132,7 +132,7 @@ button {
 
 /* Message */
 
-#message-container {
+.gameplay .message {
   position: fixed;
   top: var(--matte-top, 0);
   left: var(--matte-left, 0);
@@ -146,7 +146,7 @@ button {
   text-wrap: balance;
 }
 
-#message-container .hider {
+.gameplay .message .hider {
   position: absolute;
   top: 0;
 }
@@ -154,13 +154,13 @@ button {
 
 /* Game Over */
 
-#game-over {
+.game-over {
   position: fixed;
   width: auto;
   padding: 1em 2em;
 }
 
-#game-over .heading {
+.game-over .heading {
   margin-block: 0.25em 0.75em;
 }
 

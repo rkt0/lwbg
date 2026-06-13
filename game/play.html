@@ -171,18 +171,19 @@
       </div>
     </div>
   </div>
-  <div id="message-container" data-dormant
-    class="flex-container info non-zoom">
+  <div data-js="gameplay-message" data-dormant
+    class="message flex-container info non-zoom">
     <span class="content"></span>
     <div data-dormant class="hider flex-container">
       <span>Hide Message</span>
     </div>
   </div>
-  <div id="game-over" data-dormant
-    class="info non-zoom centered">
+  <div data-js="game-over" data-dormant
+    class="game-over info non-zoom centered">
     <div class="heading">Game Over</div>
-    Humans Saved:<br><span id="humans-saved"></span>
-    of <span id="humans-total"></span>
+    Humans Saved:<br>
+    <span data-js="humans-saved"></span>
+    of <span data-js="humans-total"></span>
   </div>
   <button type="button" data-toggle-audio
     class="toggle-audio small-button non-zoom">

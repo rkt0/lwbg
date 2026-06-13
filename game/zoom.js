@@ -18,7 +18,7 @@ export const zoom = {
     for (const element of obstructiveElements) {
       element.classList.add('slim');
     }
-    gameOverElement.classList.add('inactive');
+    dom.gameOver.classList.add('inactive');
   },
   zoomDefault() {
     zoomGeneral(1);
@@ -36,7 +36,6 @@ const buttonZoomDefault = qs('#zoom-default');
 const buttonZoomIn = qs('#zoom-in');
 const nonZoomElements = qsa('.non-zoom');
 const obstructiveElements = qsa('.obstructive');
-const gameOverElement = qs('#game-over');
 let allPieces, humanBoard;
 
 // Needed for zoom button click handlers
@@ -101,5 +100,5 @@ function zoomGeneral(factor) {
   for (const element of obstructiveElements) {
     element.classList.remove('slim');
   }
-  gameOverElement.classList.remove('inactive');
+  dom.gameOver.classList.remove('inactive');
 };

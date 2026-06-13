@@ -36,7 +36,7 @@ export const edit = {
       anim.fade(element, 1, eTime);
     }
     if (gs.turn === 'over') {
-      anim.fade('#game-over', 0, eTime);
+      anim.fade(dom.gameOver, 0, eTime);
     } else anim.fade('.edit-turn', 1, eTime);
     if (gs.phase !== 'roll') enableDiceEdit();
     ui.humanItemsClickable(true);
