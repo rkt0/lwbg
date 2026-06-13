@@ -1,4 +1,4 @@
-import {qjs, qs, aelo} from './utility.js';
+import {qjs, closestData, aelo} from './utility.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
@@ -15,9 +15,15 @@ export const moreMenu = {
   isActive() {
     return this.element.style.display === 'block';
   },
+  async show() {
+    gp.interrupt();
+    anim.fade(moreOptions, 1, 0, {display: ''});
+    await anim.fade(this.element, 1, aTime);
+    moreOptions.inert = false;
+  },
   async hide(resumeGameplay = true) {
-    qs('#more-options').inert = true;
-    qs('#quit-options').inert = true;
+    moreOptions.inert = true;
+    quitOptions.inert = true;
     if (resumeGameplay) gp.resume();
     await anim.fade(this.element, 0, aTime);
     for (const child of this.element.children) {
@@ -25,23 +31,27 @@ export const moreMenu = {
     }
   },
   handleClick(e) {
-    const id = e.target.closest('button')?.id;
-    if (id === 'show-quit-options') showQuitOptions();
-    else if (id === 'abort-quit') this.hide();
-    else if (id === 'confirm-quit') confirmQuit();
-    else if (id === 'hide-more') this.hide();
-    else if (id === 'save-point') savePoint();
-    else if (id === 'change-control') controlInGame();
-    else if (id === 'begin-edit') {
+    const js = closestData(e);
+    if (js === 'show-quit') showQuit();
+    else if (js === 'abort-quit') this.hide();
+    else if (js === 'confirm-quit') confirmQuit();
+    else if (js === 'hide-more') this.hide();
+    else if (js === 'save-point') savePoint();
+    else if (js === 'change-control') controlInGame();
+    else if (js === 'begin-edit') {
       this.hide();
       edit.begin();
     }
   },
 };
 
-
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
+
+// Element references
+const moreOptions = qjs('more-options');
+const quitOptions = qjs('quit-options');
+const saveHelp = qjs('manual-save-help');
 
 // More menu click handlers
 async function manualSave() {
@@ -56,11 +66,10 @@ async function manualSave() {
   }
 }
 async function savePoint() {
-  qs('#more-options').inert = true;
-  const help = qs('#manual-save-help');
-  await anim.fade('#more-options', 0, aTime);
-  await anim.fade(help, 1, aTime, {display: ''});
-  aelo(help, 'mousedown', () => manualSave());
+  moreOptions.inert = true;
+  await anim.fade(moreOptions, 0, aTime);
+  await anim.fade(saveHelp, 1, aTime, {display: ''});
+  aelo(saveHelp, 'mousedown', () => manualSave());
 }
 async function controlInGame() {
   await moreMenu.hide(false);
@@ -68,16 +77,16 @@ async function controlInGame() {
   gp.resume();
   gp.handleControlChange();
 }
-async function showQuitOptions() {
-  qs('#more-options').inert = true;
-  await anim.fade('#more-options', 0, aTime);
-  await anim.fade('#quit-options', 1, aTime, {
+async function showQuit() {
+  moreOptions.inert = true;
+  await anim.fade(moreOptions, 0, aTime);
+  await anim.fade(quitOptions, 1, aTime, {
     display: '',
   });
-  qs('#quit-options').inert = false;
+  quitOptions.inert = false;
 }
 async function confirmQuit() {
-  qs('#quit-options').inert = true;
+  quitOptions.inert = true;
   await moreMenu.hide();
   await anim.fade(dom.gameplay, 0, aTime);
   gp.initializeObjects();

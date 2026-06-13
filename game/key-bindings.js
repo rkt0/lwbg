@@ -21,10 +21,6 @@ function toggleFullscreen() {
   } else document.exitFullscreen();
 }
 
-function quitOptionsActive() {
-  return !qs('#quit-options').style.display;
-}
-
 // Do not use the ael utility function here;
 // ael always calls .preventDefault()
 document.addEventListener('keydown', (e) => {
@@ -53,12 +49,9 @@ document.addEventListener('keydown', (e) => {
     case 'Escape':
     case 'x':
     case 'z':
-      if (quitOptionsActive()) {
+      if (moreMenu.isActive()) {
         e.preventDefault();
-        clickIfOk('abort-quit');
-      } else if (moreMenu.isActive()) {
-        e.preventDefault();
-        clickIfOk('hide-more');
+        moreMenu.hide();
       } else if (gp.isActive()) {
         e.preventDefault();
         if (edit.on) return;

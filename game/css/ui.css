@@ -37,7 +37,7 @@ button {
 
 .info {
   width: 450px;
-  padding: 24px;
+  padding: 1em 1.5em;
   background: var(--color-info);
 }
 
@@ -113,7 +113,6 @@ button {
 .front .info {
   width: auto;
   font-size: var(--font-size-large);
-  padding: 1em 1.5em;
 }
 
 
@@ -251,6 +250,7 @@ button {
   width: auto;
   background: #8d997a;
   backdrop-filter: none;
+  padding: 1em;
 }
 
 .control-menu .heading {

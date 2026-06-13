@@ -25,15 +25,9 @@ for (const button of qda('dormant', gameplayMenu)) {
   ui.hideButton(button.id);
 }
 
-// Animation time for menu fade
-const aTime = anim.time.menuFade;
-
 // Simple gameplay menu click handlers
-ael('#show-more', 'mousedown', async () => {
-  gp.interrupt();
-  anim.fade('#more-options', 1, 0, {display: ''});
-  await anim.fade(moreMenu.element, 1, aTime);
-  qs('#more-options').inert = false;
+ael('#show-more', 'mousedown', () => {
+  moreMenu.show();
 });
 ael('#ok-no-move', 'mousedown', async () => {
   if (gs.phase === 'roll') return;

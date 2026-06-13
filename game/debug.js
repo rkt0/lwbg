@@ -1,4 +1,4 @@
-import {ce, cesvg, fromTemplate} from './utility.js';
+import {cesvg, fromTemplate} from './utility.js';
 import {dom} from './dom.js';
 
 export const debug = {
