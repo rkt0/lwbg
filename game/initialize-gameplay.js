@@ -1,14 +1,11 @@
-import {
-  closestData, ael, camelFromKebab,
-} from './utility.js';
+import {closestData, ael} from './utility.js';
 import {dom} from './dom.js';
-import {bd} from './board-topology.js';
 import {pieces} from './pieces.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 import {edit} from './edit-mode.js';
 import {
-  clickHumanSpace, clickRaptorSpace,
+  clickHumanSpace, clickRaptorSpace, clickBuilding,
 } from './click-board.js';
 import {
   clickHumanPiece, clickRaptorPiece,
@@ -26,42 +23,35 @@ await gp.initializeObjects();
 autoSave.clear();
 edit.clear();
 
-// Helper function to get item index for click target
-function targetItem(event, className) {
-  const item = event.target.closest(`.${className}`);
-  if (!item) return -1;
-  return dom[camelFromKebab(className)].indexOf(item);
-}
-
 // Add gameplay click handlers
 ael(dom.gameplay, 'mousedown', (e) => {
   if (moreMenu.element.contains(e.target)) {
     return moreMenu.handleClick(e);
   }
-  const rPiece = closestData(e, 'raptor-piece');
-  if (rPiece) return clickRaptorPiece(+rPiece);
-  const hPiece = closestData(e, 'human-piece');
-  if (hPiece) {
+  const rPieceData = closestData(e, 'raptor-piece');
+  if (rPieceData) {
+    return clickRaptorPiece(+rPieceData);
+  }
+  const hPieceData = closestData(e, 'human-piece');
+  if (hPieceData) {
     if (closestData(e) === 'kill') {
-      return clickEditKill(+hPiece);
-    } else return clickHumanPiece(+hPiece);
+      return clickEditKill(+hPieceData);
+    } else return clickHumanPiece(+hPieceData);
   }
-  const tSpace = targetItem(e, 'trex-space');
-  if (tSpace > -1) {
-    return clickEditTrex({absolute: tSpace});
+  const tSpaceData = closestData(e, 'trex-space');
+  if (tSpaceData) {
+    return clickEditTrex({absolute: +tSpaceData});
   }
-  const trexButton = e.target.closest('.trex-edit');
-  if (trexButton) {
-    const relative = +trexButton.dataset.change;
-    return clickEditTrex({relative});
+  const tChangeData = closestData(e, 'trex-change');
+  if (tChangeData) {
+    return clickEditTrex({relative: +tChangeData});
   }
-  const hSpace = targetItem(e, 'human-space');
-  let rSpace;
-  if (hSpace > -1) {
-    clickHumanSpace(hSpace);
-    const bldg = bd.bldgHumanSpaces.indexOf(hSpace);
-    rSpace = bd.bldgRaptorSpaces[bldg];
+  const buildingData = closestData(e, 'building');
+  if (buildingData) {
+    return clickBuilding(+buildingData);
   }
-  rSpace ??= targetItem(e, 'raptor-space');
-  if (rSpace > -1) clickRaptorSpace(rSpace);
+  const hSpaceData = closestData(e, 'human-space');
+  if (hSpaceData) return clickHumanSpace(+hSpaceData);
+  const rSpaceData = closestData(e, 'raptor-space');
+  if (rSpaceData) clickRaptorSpace(+rSpaceData);
 });

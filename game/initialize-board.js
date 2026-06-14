@@ -1,5 +1,5 @@
 import {
-  qs, qsa, ce, cesvg, cssInt, cssIntWH,
+  qsa, ce, cesvg, cssInt, cssIntWH,
 } from './utility.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
@@ -96,10 +96,11 @@ for (const space of Object.keys(geom.adjustRaptor)) {
 }
 
 // Make raptor spaces
-for (const pts of raptorSpacePoints) {
+for (const [s, pts] of raptorSpacePoints.entries()) {
   const element = cesvg('polygon');
   element.setAttribute('points', pts.join(' '));
   element.classList.add('raptor-space');
+  element.dataset.raptorSpace = s;
   dom.raptorSpaceGroup.append(element);
   dom.raptorSpace.push(element);
 }
@@ -113,11 +114,12 @@ if (debug.boardLabels.raptorSpace) {
 // Make human spaces
 addExtraSpace(geom.humanSpaces);
 const humanSpaceSize = cssInt('--human-space-size');
-for (const pt of geom.humanSpaces) {
+for (const [s, pt] of geom.humanSpaces.entries()) {
   const div = ce('div');
   div.classList.add('human-space');
   div.style.left = `${pt[0] - humanSpaceSize / 2}px`;
   div.style.top = `${pt[1] - humanSpaceSize / 2}px`;
+  div.dataset.humanSpace = s;
   dom.gameplay.append(div);
   dom.humanSpace.push(div);
   pl.human.push([...pt]);
@@ -144,11 +146,12 @@ for (const edge of bd.humanEdges) {
 // Make T-rex spaces
 addExtraSpace(geom.trexSpaces);
 const trexSpaceSize = cssInt('--trex-space-size');
-for (const pt of geom.trexSpaces) {
+for (const [s, pt] of geom.trexSpaces.entries()) {
   const div = ce('div');
   div.classList.add('trex-space');
   div.style.left = `${pt[0] - trexSpaceSize / 2}px`;
   div.style.top = `${pt[1] - trexSpaceSize / 2}px`;
+  div.dataset.trexSpace = s;
   dom.gameplay.append(div);
   dom.trexSpace.push(div);
   pl.trex.push([pt[0] + trexSpaceSize / 2, pt[1]]);
@@ -194,7 +197,8 @@ for (const [i, bg] of geom.bldgBgId.entries()) {
   const clickable = cesvg('polygon');
   clickable.setAttribute('points', pts.join(' '));
   clickable.setAttribute('fill', '#0000');
-  clickable.classList.add('human-space', 'building');
+  clickable.classList.add('building');
+  clickable.dataset.building = i;
   dom.board.append(background, clickable);
   dom.humanSpace[hSpace] = clickable;
   pl.human[hSpace] = [...pl.raptor[rSpace]];
