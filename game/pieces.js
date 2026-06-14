@@ -49,8 +49,8 @@ export const pieces = {
     addTrexImgs();
   },
   makeAll() {
-    for (let _ = 0; _ < nHumanPieces; _++) {
-      makeHumanPiece();
+    for (let p = 0; p < nHumanPieces; p++) {
+      makeHumanPiece(p);
     }
     for (let p = 0; p < nRaptorPieces; p++) {
       makeRaptorPiece(p);
@@ -108,13 +108,15 @@ function addTrexImgs() {
   dom.trexPiece.append(imgB, imgS);
 }
 
-function makeHumanPiece() {
+function makeHumanPiece(p) {
   const element = fromTemplate('human-piece', true);
+  element.dataset.humanPiece = p;
   dom.gameplay.append(element);
   dom.humanPiece.push(element);
 }
-function makeRaptorPiece() {
+function makeRaptorPiece(p) {
   const element = fromTemplate('raptor-piece', true);
+  element.dataset.raptorPiece = p;
   dom.gameplay.append(element);
   dom.raptorPiece.push(element);
 }

@@ -1,4 +1,6 @@
-import {ael, camelFromKebab} from './utility.js';
+import {
+  closestData, ael, camelFromKebab,
+} from './utility.js';
 import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {pieces} from './pieces.js';
@@ -36,13 +38,13 @@ ael(dom.gameplay, 'mousedown', (e) => {
   if (moreMenu.element.contains(e.target)) {
     return moreMenu.handleClick(e);
   }
-  const rPiece = targetItem(e, 'raptor-piece');
-  if (rPiece > -1) return clickRaptorPiece(rPiece);
-  const hPiece = targetItem(e, 'human-piece');
-  if (hPiece > -1) {
-    if (e.target.closest('.kill')) {
-      return clickEditKill(hPiece);
-    } else return clickHumanPiece(hPiece);
+  const rPiece = closestData(e, 'raptor-piece');
+  if (rPiece) return clickRaptorPiece(+rPiece);
+  const hPiece = closestData(e, 'human-piece');
+  if (hPiece) {
+    if (closestData(e) === 'kill') {
+      return clickEditKill(+hPiece);
+    } else return clickHumanPiece(+hPiece);
   }
   const tSpace = targetItem(e, 'trex-space');
   if (tSpace > -1) {
