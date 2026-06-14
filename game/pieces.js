@@ -1,5 +1,5 @@
 import {
-  qs, qsa, ce, fromTemplate, sequence, shuffle,
+  qsa, ce, fromTemplate, sequence, shuffle,
 } from './utility.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
