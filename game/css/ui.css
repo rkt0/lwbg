@@ -81,6 +81,10 @@ button {
   height: auto;
 }
 
+.flex-container.narrow {
+  width: auto;
+}
+
 .flex-container.inline {
   display: inline-flex;
 }

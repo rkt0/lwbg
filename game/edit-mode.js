@@ -25,8 +25,9 @@ export const edit = {
     this.on = true;
     this.gsPrevious = deepCopy(gs);
     message.hide();
+    qs('#show-more').style.visibility = 'hidden';
     const hidden = [
-      'show-more', 'roll-button', 'decline-button',
+      'roll-button', 'decline-button',
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',
     ];
     for (const x of hidden) ui.hideButton(x);
@@ -91,7 +92,7 @@ function endEditMode() {
   for (const element of qsa('.edit-only, .kill')) {
     anim.fade(element, 0, anim.time.editControlFade);
   }
-  ui.showButton('show-more');
+  qs('#show-more').style.visibility = 'visible';
 }
 ael('#cancel-edits', 'mousedown', async () => {
   await editGame(edit.gsPrevious);

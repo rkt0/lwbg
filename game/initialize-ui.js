@@ -1,5 +1,5 @@
 import {
-  qda, qs, qsa, ael, click, rollDie,
+  qjs, qda, qs, qsa, ael, click, rollDie,
 } from './utility.js';
 import {prng} from './prngs.js';
 import {dice} from './dice.js';
@@ -119,7 +119,7 @@ ael('#confirm-button', 'mousedown', async () => {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
   clearVisibleMove();
-  click('#zoom-default');
+  zoom.zoomDefault();
   const end = mv.plan[mv.plan.length - 1];
   await bringMoveIntoView();
   for (const s of mv.plan.slice(1)) {
@@ -137,18 +137,18 @@ ael('#ok-trex-move', 'mousedown', async () => {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
   ui.hideButton('ok-trex-move');
-  click('#zoom-default');
+  zoom.zoomDefault();
   await bringMoveIntoView();
   gp.moveTrex(gs.trex - 1, true);
 });
 
 // Zoom button click handlers
-ael('#zoom-out', 'mousedown', () => {
+ael(qjs('zoom-out'), 'mousedown', () => {
   zoom.zoomOut();
 });
-ael('#zoom-default', 'mousedown', () => {
+ael(qjs('zoom-default'), 'mousedown', () => {
   zoom.zoomDefault();
 });
-ael('#zoom-in', 'mousedown', () => {
+ael(qjs('zoom-in'), 'mousedown', () => {
   zoom.zoomIn();
 });

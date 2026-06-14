@@ -81,12 +81,10 @@ document.addEventListener('keydown', (e) => {
     case '0': {
       if (!gp.isActive()) return;
       e.preventDefault();
-      let which = 'default';
-      if (zoom.factor.current === 1) {
-        if (e.key === '-') which = 'out';
-        if (e.key === '=') which = 'in';
-      }
-      click(`#zoom-${which}`);
+      const isNowOutOrIn = zoom.factor.current !== 1;
+      if (isNowOutOrIn) zoom.zoomDefault();
+      else if (e.key === '-') zoom.zoomOut();
+      else if (e.key === '=') zoom.zoomIn();
       break;
     }
   }

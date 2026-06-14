@@ -1,4 +1,4 @@
-import {qs, qsa, windowWH} from './utility.js';
+import {qjs, qs, qsa, windowWH} from './utility.js';
 import {dom} from './dom.js';
 import {anim} from './animation.js';
 
@@ -31,9 +31,9 @@ export const zoom = {
 };
 
 // Element references
-const buttonZoomOut = qs('#zoom-out');
-const buttonZoomDefault = qs('#zoom-default');
-const buttonZoomIn = qs('#zoom-in');
+const buttonZoomOut = qjs('zoom-out');
+const buttonZoomDefault = qjs('zoom-default');
+const buttonZoomIn = qjs('zoom-in');
 const nonZoomElements = qsa('.non-zoom');
 const obstructiveElements = qsa('.obstructive');
 let allPieces, humanBoard;

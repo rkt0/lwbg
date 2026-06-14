@@ -219,12 +219,12 @@ export const gp = {
     await resetPieces();
   },
   initializeView() {
-    click('#zoom-default');
+    zoom.zoomDefault();
     zoom.center.left = geom.initialViewCenter[0];
     zoom.center.top = geom.initialViewCenter[1];
     zoom.factor.current = null;
-    // Click again to apply zoom center
-    click('#zoom-default');
+    // Call again to apply zoom center
+    zoom.zoomDefault();
   },
   interrupt(time = anim.time.menuFade) {
     document.body.style.overflow = 'hidden';

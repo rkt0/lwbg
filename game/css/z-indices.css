@@ -87,7 +87,7 @@
   z-index: 1;
 }
 
-#zoom-display {
+.zoom-display {
   z-index: 0;
 }
 
