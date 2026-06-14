@@ -190,11 +190,11 @@ button {
   );
 }
 
-.trex-edit[data-change="-1"] {
+.trex-edit[data-trex-change="-1"] {
   left: 84px;
 }
 
-.trex-edit[data-change="+1"] {
+.trex-edit[data-trex-change="+1"] {
   left: 132px;
 }
 
