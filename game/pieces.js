@@ -39,14 +39,13 @@ export const pieces = {
   addImgs() {
     const toRemove = [
       '.human-component:not(.dead-marker)',
-      '.raptor-component', '.trex-component',
+      '.raptor-component',
     ];
     for (const element of qsa(toRemove.join(', '))) {
       element.remove();
     }
     addHumanImgs();
     addRaptorImgs();
-    addTrexImgs();
   },
   makeAll() {
     for (let p = 0; p < nHumanPieces; p++) {
@@ -97,15 +96,6 @@ function addRaptorImgs() {
     imgS.classList.add('raptor-component', 'shadow');
     dom.raptorPiece[piece].append(imgB, imgS);
   }
-}
-function addTrexImgs() {
-  const imgB = ce('img');
-  imgB.src = 'img/trex/trex.png';
-  imgB.classList.add('trex-component', 'base');
-  const imgS = ce('img');
-  imgS.src = 'img/trex/shadow-trex.png';
-  imgS.classList.add('trex-component', 'shadow');
-  dom.trexPiece.append(imgB, imgS);
 }
 
 function makeHumanPiece(p) {
