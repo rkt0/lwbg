@@ -1,4 +1,4 @@
-import {qs, qjs} from './utility.js';
+import {qjs, qd1} from './utility.js';
 
 export const dom = {
   gameplay: qjs('gameplay'),
@@ -11,6 +11,6 @@ export const dom = {
   trexSpace: [],
   humanPiece: [],
   raptorPiece: [],
-  trexPiece: qs('.trex-piece'),
+  trexPiece: qd1('trex-piece'),
   gameOver: qjs('game-over'),
 };
