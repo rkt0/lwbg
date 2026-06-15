@@ -2,6 +2,7 @@ import {
   qjs, qda, qs, qsa, ael, click, rollDie,
 } from './utility.js';
 import {prng} from './prngs.js';
+import {dom} from './dom.js';
 import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
@@ -22,20 +23,20 @@ for (const element of qda('dormant')) {
 // Initialize dormant elements in gameplay menu
 const gameplayMenu = qs('#gameplay-menu');
 for (const button of qda('dormant', gameplayMenu)) {
-  ui.hideButton(button.id);
+  ui.hideButton(button.dataset.js);
 }
 
 // Simple gameplay menu click handlers
-ael('#show-more', 'mousedown', () => {
+ael(dom.showMore, 'mousedown', () => {
   moreMenu.show();
 });
-ael('#ok-no-move', 'mousedown', async () => {
+ael(qjs('ok-no-move'), 'mousedown', async () => {
   if (gs.phase === 'roll') return;
   message.hide();
   ui.hideButton('ok-no-move');
   await gp.endTurn();
 });
-ael('#ok-ai-move', 'mousedown', async () => {
+ael(qjs('ok-ai-move'), 'mousedown', async () => {
   if (gs.phase !== 'select') return;
   gs.phase = 'think';
   ui.hideButton('ok-ai-move');
@@ -47,9 +48,9 @@ ael('#ok-ai-move', 'mousedown', async () => {
   mv.selected = decision[0];
   mv.plan = decision[1];
   gs.phase = 'move';
-  click('#confirm-button');
+  click(qjs('confirm'));
 });
-ael('#decline-button', 'mousedown', async () => {
+ael(qjs('decline'), 'mousedown', async () => {
   if (gs.phase !== 'select' || !gs.je) return;
   message.hide();
   if (mv.toGo) {
@@ -58,11 +59,11 @@ ael('#decline-button', 'mousedown', async () => {
     }`);
     mv.toGo--;
   } else {
-    ui.hideButton('decline-button');
+    ui.hideButton('decline');
     await gp.endTurn();
   }
 });
-ael('#roll-button', 'mousedown', async () => {
+ael(qjs('roll-button'), 'mousedown', async () => {
   if (gs.phase !== 'roll') return;
   gs.phase = 'execute';
   message.hide();
@@ -96,8 +97,8 @@ ael('#roll-button', 'mousedown', async () => {
 // Needed for multiple click handlers
 function clearVisibleMove() {
   message.hide();
-  ui.hideButton('cancel-button');
-  ui.hideButton('confirm-button');
+  ui.hideButton('cancel');
+  ui.hideButton('confirm');
   for (const c of ['selected', 'move', 'path'] ) {
     for (const element of qsa(`.${c}`)) {
       element.classList.remove(c);
@@ -106,7 +107,7 @@ function clearVisibleMove() {
 }
 
 // Cancel button click handler
-ael('#cancel-button', 'mousedown', () => {
+ael(qjs('cancel'), 'mousedown', () => {
   if (gs.phase !== 'move') return;
   gs.phase = 'select';
   clearVisibleMove();
@@ -115,7 +116,7 @@ ael('#cancel-button', 'mousedown', () => {
 });
 
 // Confirm button click handler
-ael('#confirm-button', 'mousedown', async () => {
+ael(qjs('confirm'), 'mousedown', async () => {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
   clearVisibleMove();
@@ -133,7 +134,7 @@ ael('#confirm-button', 'mousedown', async () => {
 });
 
 // T-rex button click handler
-ael('#ok-trex-move', 'mousedown', async () => {
+ael(qjs('ok-trex-move'), 'mousedown', async () => {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
   ui.hideButton('ok-trex-move');

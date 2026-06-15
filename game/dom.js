@@ -13,4 +13,5 @@ export const dom = {
   raptorPiece: [],
   trexPiece: qd1('trex-piece'),
   gameOver: qjs('game-over'),
+  showMore: qjs('show-more'),
 };

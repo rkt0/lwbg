@@ -1,5 +1,5 @@
 import {
-  qs, qsa, ael, click, deepCopy,
+  qjs, qs, qsa, ael, click, deepCopy,
 } from './utility.js';
 import {dom} from './dom.js';
 import {dice} from './dice.js';
@@ -20,14 +20,14 @@ export const edit = {
   },
   begin() {
     if (gs.turn !== 'trex' && gs.turn !== 'over') {
-      click('#cancel-button');
+      click(qjs('cancel'));
     }
     this.on = true;
     this.gsPrevious = deepCopy(gs);
     message.hide();
-    qs('#show-more').style.visibility = 'hidden';
+    dom.showMore.style.visibility = 'hidden';
     const hidden = [
-      'roll-button', 'decline-button',
+      'roll-button', 'decline',
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',
     ];
     for (const x of hidden) ui.hideButton(x);
@@ -92,7 +92,7 @@ function endEditMode() {
   for (const element of qsa('.edit-only, .kill')) {
     anim.fade(element, 0, anim.time.editControlFade);
   }
-  qs('#show-more').style.visibility = 'visible';
+  dom.showMore.style.visibility = 'visible';
 }
 ael('#cancel-edits', 'mousedown', async () => {
   await editGame(edit.gsPrevious);
@@ -155,11 +155,11 @@ ael('#change-turn', 'mousedown', () => {
 // Dice
 ael('#unroll-dice', 'mousedown', () => {
   gp.clearRoll();
-  const idsToHide = [
-    'decline-button', 'ok-no-move', 'ok-trex-move',
+  const buttonsToHide = [
+    'decline', 'ok-no-move', 'ok-trex-move',
     'roll-display',
   ];
-  for (const id of idsToHide) ui.hideButton(id);
+  for (const b of buttonsToHide) ui.hideButton(b);
   for (const element of qsa('.edit-dice')) {
     anim.fade(element, 0, anim.time.editControlFade);
   }

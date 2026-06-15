@@ -107,7 +107,7 @@ export const gp = {
     }
     if (nChoices) {
       mv.toGo = 1;
-      ui.showButton('decline-button');
+      ui.showButton('decline');
     } else {
       message.show(`no-${which}-available`);
       mv.toGo = -1;
@@ -243,9 +243,9 @@ export const gp = {
     if (!ai.control.changed) return;
     await this.save();
     if (ai.control[gs.turn] && gs.phase !== 'roll') {
-      click('#cancel-button');
+      click(qjs('cancel'));
       ui.hideButton('ok-no-move');
-      ui.hideButton('decline-button');
+      ui.hideButton('decline');
       ui.showButton('ok-ai-move');
     } else {
       ui.hideButton('ok-ai-move');

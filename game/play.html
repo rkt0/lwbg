@@ -33,7 +33,7 @@
     </div>
   </div>
   <div id="gameplay-menu" class="non-zoom">
-    <button type="button" id="show-more">
+    <button type="button" data-js="show-more">
       &bull; &bull; &bull;
     </button>
     <div class="zoom-display info flex-container">
@@ -56,16 +56,19 @@
         </button>
       </div>
     </div>
-    <div id="turn-display" class="info slot-turn">
+    <div data-js="turn-display"
+      class="turn-display info slot-turn">
       <div class="flex-container">
-        <div id="turn-display-content">
+        <div>
           Turn:<br>
-          <span id="species-turn-text">&nbsp;</span>
+          <span data-js="species-turn-text">
+            &nbsp;
+          </span>
         </div>
       </div>
     </div>
-    <div id="roll-display" data-dormant
-      class="info slot-roll">
+    <div data-js="roll-display" data-dormant
+      class="roll-display info slot-roll">
       <div class="flex-container spread">
         <div class="die die-human die-movement">
         </div>
@@ -87,31 +90,31 @@
         </div>
       </div>
     </div>
-    <button type="button" id="ok-no-move" data-dormant
-      class="default-action slot-cancel">
+    <button type="button" data-js="ok-no-move"
+      data-dormant class="default-action slot-cancel">
       OK
     </button>
-    <button type="button" id="ok-ai-move" data-dormant
-      class="default-action slot-cancel">
-      Move
-    </button>
-    <button type="button" id="decline-button"
-      data-dormant class="slot-cancel">
-      Decline
-    </button>
-    <button type="button" id="cancel-button"
-      data-dormant class="slot-cancel">
-      Cancel
-    </button>
-    <button type="button" id="confirm-button"
-      data-dormant class="default-action">
-      Confirm
-    </button>
-    <button type="button" id="ok-trex-move"
+    <button type="button" data-js="ok-ai-move"
       data-dormant class="default-action slot-cancel">
       Move
     </button>
-    <button type="button" id="roll-button"
+    <button type="button" data-js="decline"
+      data-dormant class="slot-cancel">
+      Decline
+    </button>
+    <button type="button" data-js="cancel"
+      data-dormant class="cancel slot-cancel">
+      Cancel
+    </button>
+    <button type="button" data-js="confirm"
+      data-dormant class="default-action">
+      Confirm
+    </button>
+    <button type="button" data-js="ok-trex-move"
+      data-dormant class="default-action slot-cancel">
+      Move
+    </button>
+    <button type="button" data-js="roll-button"
       data-dormant class="default-action slot-roll">
       Roll
     </button>

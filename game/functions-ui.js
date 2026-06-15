@@ -1,10 +1,10 @@
-import {qs, qsa, cssInt} from './utility.js';
+import {qjs, qs, qsa, cssInt} from './utility.js';
 import {dom} from './dom.js';
 import {anim} from './animation.js';
 
 export const ui = {
-  async showButton(id) {
-    const element = qs(`#${id}`);
+  async showButton(identifier) {
+    const element = qjs(identifier);
     element.style.display = 'inline';
     const aTime = anim.time.buttonSlide;
     await anim.move(element, {left: '0px'}, aTime, {
@@ -12,8 +12,8 @@ export const ui = {
     });
     element.disabled = false;
   },
-  async hideButton(id) {
-    const element = qs(`#${id}`);
+  async hideButton(identifier) {
+    const element = qjs(identifier);
     element.disabled = true;
     await anim.move(element, {
       left: `-${cssInt('--button-width')}px`,
@@ -28,7 +28,7 @@ export const ui = {
     const speciesText =
       species === 'human' ? 'Humans' :
       species === 'trex' ? 'T-Rex' : 'Raptors';
-    const span = qs('#species-turn-text');
+    const span = qjs('species-turn-text');
     if (span.innerHTML === speciesText) return;
     const aTime = skipFx ? 0 : anim.time.turnFade;
     await anim.fade(span, 0, aTime);

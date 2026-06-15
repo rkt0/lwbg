@@ -45,7 +45,7 @@ export function clickHumanSpace(space) {
       edge.classList.add('path');
     }
     if (isBldg) mv.toGo = 0; else mv.toGo--;
-    if (!mv.toGo) ui.showButton('confirm-button');
+    if (!mv.toGo) ui.showButton('confirm');
   }
 }
 
@@ -88,7 +88,7 @@ export function clickRaptorSpace(space) {
     }
     mv.plan.push(space);
     mv.toGo--;
-    if (!mv.toGo) ui.showButton('confirm-button');
+    if (!mv.toGo) ui.showButton('confirm');
   }
 }
 

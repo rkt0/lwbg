@@ -30,9 +30,7 @@ export function clickHumanPiece(piece) {
     mv.selected = piece;
     mv.plan = [space];
     mv.toGo = gs.je ? 1 : gs.rollN;
-    ui.replaceButton(
-      'decline-button', 'cancel-button'
-    );
+    ui.replaceButton('decline', 'cancel');
     gs.phase = 'move';
   }
 }
@@ -56,9 +54,7 @@ export function clickRaptorPiece(piece) {
     mv.selected = piece;
     mv.plan = [space];
     mv.toGo = gs.je ? 1 : gs.rollN;
-    ui.replaceButton(
-      'decline-button', 'cancel-button'
-    );
+    ui.replaceButton('decline', 'cancel');
     gs.phase = 'move';
   }
 }

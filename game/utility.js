@@ -1,6 +1,10 @@
 export function qjs(value, parent = document) {
   return parent.querySelector(`[data-js="${value}"]`);
 }
+export function qd1(attrName, parent = document) {
+  const selector = `[data-${attrName}]`;
+  return parent.querySelector(selector);
+}
 export function qda(attrName, parent = document) {
   const selector = `[data-${attrName}]`;
   return [...parent.querySelectorAll(selector)];

@@ -40,7 +40,7 @@
 
 /* Permanent area */
 
-#gameplay-menu #show-more {
+#gameplay-menu [data-js="show-more"] {
   position: static;
 }
 
@@ -88,7 +88,7 @@
   );
 }
 
-#turn-display {
+.turn-display {
   height: var(--turn-display-height);
   line-height: var(--compressed-line-height);
 }
@@ -104,7 +104,7 @@
   );;
 }
 
-#roll-display {
+.roll-display {
   height: var(--roll-display-height);
 }
 
@@ -117,11 +117,11 @@
   );;
 }
 
-#cancel-button {
+.cancel {
   background: #ff2f4eaa;
 }
 
-#confirm-button {
+[data-js="confirm"] {
   top: calc(
     2 * var(--button-height) +
     var(--zoom-display-height) +

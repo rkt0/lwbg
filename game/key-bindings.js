@@ -1,4 +1,4 @@
-import {qs, click} from './utility.js';
+import {qjs, click} from './utility.js';
 import {ai} from './ai.js';
 import {music} from './music.js';
 import {gs, mv} from './game-objects.js';
@@ -7,8 +7,7 @@ import {edit} from './edit-mode.js';
 import {moreMenu} from './more-menu.js';
 import {gp} from './functions-gameplay.js';
 
-function clickIfOk(buttonId) {
-  const button = qs(`#${buttonId}`);
+function clickIfOk(button) {
   if (button.disabled) return;
   if (button.closest('[inert]')) return;
   click(button);
@@ -30,20 +29,23 @@ document.addEventListener('keydown', (e) => {
       if (!gp.isActive()) return;
       e.preventDefault();
       if (edit.on) return;
-      let id;
+      let identifier;
       if (gs.phase === 'select') {
-        if (ai.control[gs.turn]) id = 'ok-ai-move';
+        if (ai.control[gs.turn]) {
+          identifier = 'ok-ai-move';
+        }
         else if (gs.je && mv.toGo === -1) {
-          id = 'ok-no-move';
+          identifier = 'ok-no-move';
         }
       } else if (gs.phase === 'roll') {
-        id = 'roll-button';
+        identifier = 'roll-button';
       } else if (gs.phase === 'move') {
-        id = gs.turn === 'trex' ?
-          (gs.rollN ? 'ok-trex-move' : 'ok-no-move') :
-          (mv.toGo ? '' : 'confirm-button');
+        if (gs.turn === 'trex') {
+          identifier = gs.rollN ?
+            'ok-trex-move' : 'ok-no-move';
+        } else if (!mv.toGo) identifier = 'confirm';
       }
-      if (id) clickIfOk(id);
+      if (identifier) clickIfOk(qjs(identifier));
       break;
     }
     case 'Escape':
@@ -56,7 +58,7 @@ document.addEventListener('keydown', (e) => {
         e.preventDefault();
         if (edit.on) return;
         if (gs.phase === 'move') {
-          clickIfOk('cancel-button');
+          clickIfOk(qjs('cancel'));
         }
       }
       break;
