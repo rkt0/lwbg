@@ -180,22 +180,15 @@ button {
   height: var(--small-button-size);
 }
 
-.trex-edit {
-  position: absolute;
-  top: calc(
-    (
-      var(--trex-piece-height) -
-      var(--small-button-size)
-    ) / 2 - var(--button-border-width)
-  );
-}
-
-.trex-edit[data-trex-change="-1"] {
-  left: 84px;
-}
-
-.trex-edit[data-trex-change="+1"] {
-  left: 132px;
+.trex-button-area {
+  height: var(--trex-piece-height);
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  --gap: 6px;
+  gap: var(--gap);
+  padding-left:
+    calc(var(--trex-piece-width) + var(--gap));
 }
 
 .kill {
