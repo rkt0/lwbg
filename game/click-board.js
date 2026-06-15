@@ -169,7 +169,6 @@ function clickHumanSpaceEditMode(space, isBldg) {
       gs.phase = 'roll';
       ui.showButton('turn-display');
       ui.displayTurn('human');
-      anim.fade('.edit-turn', 1, aTime);
     }
   }
   const button = qs('.kill', dom.humanPiece[piece]);

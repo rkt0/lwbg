@@ -1,4 +1,6 @@
-import {qjs, qs, qsa, windowWH} from './utility.js';
+import {
+  qjs, qda, qs, qsa, windowWH,
+} from './utility.js';
 import {dom} from './dom.js';
 import {anim} from './animation.js';
 
@@ -35,7 +37,7 @@ const buttonZoomOut = qjs('zoom-out');
 const buttonZoomDefault = qjs('zoom-default');
 const buttonZoomIn = qjs('zoom-in');
 const nonZoomElements = qsa('.non-zoom');
-const obstructiveElements = qsa('.obstructive');
+const obstructiveElements = qda('obstructive');
 let allPieces, humanBoard;
 
 // Needed for zoom button click handlers

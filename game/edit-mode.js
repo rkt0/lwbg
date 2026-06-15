@@ -1,5 +1,5 @@
 import {
-  qjs, qs, qsa, ael, click, deepCopy,
+  qjs, qda, qs, qsa, ael, click, deepCopy,
 } from './utility.js';
 import {dom} from './dom.js';
 import {dice} from './dice.js';
@@ -38,7 +38,7 @@ export const edit = {
     }
     if (gs.turn === 'over') {
       anim.fade(dom.gameOver, 0, eTime);
-    } else anim.fade('.edit-turn', 1, eTime);
+    } else anim.fade(qjs('edit-turn'), 1, eTime);
     if (gs.phase !== 'roll') enableDiceEdit();
     ui.humanItemsClickable(true);
     ui.raptorItemsClickable(true);
@@ -49,6 +49,9 @@ export const edit = {
 
 // Animation time for edit control fade
 const eTime = anim.time.editControlFade;
+
+// Element references
+const editModeElements = qda('edit');
 
 // Banner
 async function editGame(gsNew) {
@@ -92,6 +95,9 @@ function endEditMode() {
   for (const element of qsa('.edit-only, .kill')) {
     anim.fade(element, 0, anim.time.editControlFade);
   }
+  for (const element of editModeElements) {
+    anim.fade(element, 0, anim.time.editControlFade);
+  }
   dom.showMore.style.visibility = 'visible';
 }
 ael('#cancel-edits', 'mousedown', async () => {
@@ -121,7 +127,7 @@ function replaceDieValue(species, type, value) {
 }
 
 // Turn
-ael('#change-turn', 'mousedown', () => {
+ael(qjs('edit-turn'), 'mousedown', () => {
   const species = gp.nextTurnSpecies(true);
   gs.turn = species;
   ui.displayTurn(species, true);
@@ -202,3 +208,8 @@ function enableDiceEdit() {
   edit.dieCodes.continue =
     dieCode(gs.rollGo, dice[gs.turn].continue);
 };
+
+// Hide edit controls
+for (const element of editModeElements) {
+  element.style.display = 'none';
+}

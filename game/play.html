@@ -57,7 +57,7 @@
       </div>
     </div>
     <div data-js="turn-display"
-      class="turn-display info slot-turn">
+      class="turn-display info">
       <div class="flex-container">
         <div>
           Turn:<br>
@@ -66,9 +66,17 @@
           </span>
         </div>
       </div>
+      <button type="button" data-js="edit-turn"
+        data-edit data-obstructive class="edit-turn">
+        Change
+      </button>
     </div>
+    <button type="button" data-js="roll-button"
+      data-dormant class="default-action">
+      Roll
+    </button>
     <div data-js="roll-display" data-dormant
-      class="roll-display info slot-roll">
+      class="roll-display info">
       <div class="flex-container spread">
         <div class="die die-human die-movement">
         </div>
@@ -90,43 +98,30 @@
         </div>
       </div>
     </div>
+    <button type="button" data-js="ok-trex-move"
+      data-dormant class="default-action">
+      Move
+    </button>
     <button type="button" data-js="ok-no-move"
-      data-dormant class="default-action slot-cancel">
+      data-dormant class="default-action">
       OK
     </button>
     <button type="button" data-js="ok-ai-move"
-      data-dormant class="default-action slot-cancel">
+      data-dormant class="default-action">
       Move
     </button>
     <button type="button" data-js="decline"
-      data-dormant class="slot-cancel">
+      data-dormant>
       Decline
     </button>
     <button type="button" data-js="cancel"
-      data-dormant class="cancel slot-cancel">
+      data-dormant class="cancel">
       Cancel
     </button>
     <button type="button" data-js="confirm"
       data-dormant class="default-action">
       Confirm
     </button>
-    <button type="button" data-js="ok-trex-move"
-      data-dormant class="default-action slot-cancel">
-      Move
-    </button>
-    <button type="button" data-js="roll-button"
-      data-dormant class="default-action slot-roll">
-      Roll
-    </button>
-    <div id="turn-button-area"
-      class="edit-only slot-turn edit-turn">
-      <div class="flex-container">
-        <button type="button" id="change-turn"
-          class="obstructive">
-          Change
-        </button>
-      </div>
-    </div>
     <button type="button" id="unroll-dice"
       class="edit-only slot-cancel edit-dice">
       Unroll

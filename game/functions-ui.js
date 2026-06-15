@@ -5,7 +5,7 @@ import {anim} from './animation.js';
 export const ui = {
   async showButton(identifier) {
     const element = qjs(identifier);
-    element.style.display = 'inline';
+    element.style.display = 'block';
     const aTime = anim.time.buttonSlide;
     await anim.move(element, {left: '0px'}, aTime, {
       easing: 'linear',

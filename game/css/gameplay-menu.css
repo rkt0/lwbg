@@ -8,7 +8,6 @@
   --zoom-button-height: 36px;
   --edit-banner-button-width: 183px;
   --edit-turn-die-button-height: 48px;
-  --compressed-line-height: 1.0625;
 }
 
 
@@ -41,11 +40,11 @@
 /* Permanent area */
 
 #gameplay-menu [data-js="show-more"] {
-  position: static;
+  position: relative;
 }
 
 #gameplay-menu .zoom-display {
-  position: static;
+  position: relative;
   height: var(--zoom-display-height);
   background: var(--color-zoom);
   justify-content: space-between;
@@ -55,7 +54,7 @@
 
 #gameplay-menu .zoom-button {
   box-sizing: border-box;
-  position: static;
+  position: relative;
   display: block;
   width: var(--zoom-button-width);
   height: var(--zoom-button-height);
@@ -88,9 +87,10 @@
   );
 }
 
-.turn-display {
+#gameplay-menu .turn-display {
+  position: relative;
   height: var(--turn-display-height);
-  line-height: var(--compressed-line-height);
+  line-height: 1.0625;
 }
 
 
@@ -104,7 +104,12 @@
   );;
 }
 
-.roll-display {
+#gameplay-menu [data-js="roll-button"] {
+  position: relative;
+}
+
+#gameplay-menu .roll-display {
+  position: relative;
   height: var(--roll-display-height);
 }
 
@@ -152,13 +157,22 @@
   padding: 0;
 }
 
-div:is(.edit-turn, .edit-dice) {
+#gameplay-menu .edit-turn {
+  position: absolute;
+  left: calc(100% + var(--button-border-width));
+  top: 50%;
+  transform: translateY(-50%);
+  border-top-style: solid;
+  height: var(--edit-turn-die-button-height);
+}
+
+div:is(.edit-dice) {
   position: absolute;
   left: var(--button-width);
   width: var(--button-width);
 }
 
-div:is(.edit-turn, .edit-dice) .flex-container {
+div:is(.edit-dice) .flex-container {
   align-items: start;
 }
 
