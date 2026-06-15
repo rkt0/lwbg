@@ -1,3 +1,4 @@
 backdrop filter fails sometimes after fade in
 music frequency distribution seems suspicious
 display matte prevents full rightward scroll
+player control screen behind scrim after t-rex move
