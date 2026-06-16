@@ -147,7 +147,7 @@
   width: auto;
 }
 
-.edit-banner .edit-only.banner {
+.edit-banner .banner {
   box-sizing: border-box;
   width: var(--edit-banner-button-width);
   height: var(--button-height);

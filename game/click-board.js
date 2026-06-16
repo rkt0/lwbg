@@ -171,8 +171,7 @@ function clickHumanSpaceEditMode(space, isBldg) {
       ui.displayTurn('human');
     }
   }
-  const button = qs('.kill', dom.humanPiece[piece]);
-  anim.fade(button, 0, aTime);
+  anim.fade(dom.editKill[piece], 0, aTime);
   qs('.selected').classList.remove('selected');
   ui.raptorItemsClickable(true);
   // If edit.selected were reset immediately,

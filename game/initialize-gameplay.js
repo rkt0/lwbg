@@ -28,30 +28,20 @@ ael(dom.gameplay, 'mousedown', (e) => {
   if (moreMenu.element.contains(e.target)) {
     return moreMenu.handleClick(e);
   }
-  const rPieceData = closestData(e, 'raptor-piece');
-  if (rPieceData) {
-    return clickRaptorPiece(+rPieceData);
-  }
-  const hPieceData = closestData(e, 'human-piece');
-  if (hPieceData) {
-    if (closestData(e) === 'kill') {
-      return clickEditKill(+hPieceData);
-    } else return clickHumanPiece(+hPieceData);
-  }
-  const tSpaceData = closestData(e, 'trex-space');
-  if (tSpaceData) {
-    return clickEditTrex({absolute: +tSpaceData});
-  }
-  const tChangeData = closestData(e, 'trex-change');
-  if (tChangeData) {
-    return clickEditTrex({relative: +tChangeData});
-  }
-  const buildingData = closestData(e, 'building');
-  if (buildingData) {
-    return clickBuilding(+buildingData);
-  }
-  const hSpaceData = closestData(e, 'human-space');
-  if (hSpaceData) return clickHumanSpace(+hSpaceData);
-  const rSpaceData = closestData(e, 'raptor-space');
-  if (rSpaceData) clickRaptorSpace(+rSpaceData);
+  const killData = closestData(e, 'kill');
+  if (killData) return clickEditKill(+killData);
+  const rpData = closestData(e, 'raptor-piece');
+  if (rpData) return clickRaptorPiece(+rpData);
+  const hpData = closestData(e, 'human-piece');
+  if (hpData) return clickHumanPiece(+hpData);
+  const tsData = closestData(e, 'trex-space');
+  if (tsData) return clickEditTrex(+tsData, true);
+  const tcData = closestData(e, 'trex-change');
+  if (tcData) return clickEditTrex(+tcData);
+  const bldgData = closestData(e, 'building');
+  if (bldgData) return clickBuilding(+bldgData);
+  const hsData = closestData(e, 'human-space');
+  if (hsData) return clickHumanSpace(+hsData);
+  const rsData = closestData(e, 'raptor-space');
+  if (rsData) return clickRaptorSpace(+rsData);
 });

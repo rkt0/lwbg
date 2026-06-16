@@ -61,21 +61,19 @@ export function clickRaptorPiece(piece) {
 
 export function clickEditKill(piece) {
   gp.moveHuman(piece, bd.humanDead, false);
-  const aTime = anim.time.editControlFade;
-  const button = qs('.kill', dom.humanPiece[piece]);
-  anim.fade(button, 0, aTime);
+  const button = dom.editKill[piece];
+  button.disabled = true;
+  anim.fade(button, 0, anim.time.editControlFade);
   qs('.selected').classList.remove('selected');
   ui.raptorItemsClickable(true);
   edit.selected.species = null;
   edit.selected.piece = null;
 }
 
-export function clickEditTrex(change) {
+export function clickEditTrex(change, absolute) {
   if (!edit.on) return;
-  const {absolute, relative} = change;
   let space = gs.trex;
-  if (relative) space += relative;
-  if (absolute) space = absolute;
+  if (absolute) space = change; else space += change;
   space = Math.max(space, 0);
   space = Math.min(space, bd.trexStart);
   if (space === gs.trex) return;
@@ -106,6 +104,7 @@ function selectAppropriate(piece) {
   if (isBldg || space === bd.humanDead) {
     element = dom.humanPiece[piece];
   }
+  edit.selected.element = element;
   element.classList.add('selected');
 }
 function clickHumanPieceEditMode(piece, space) {
@@ -118,7 +117,8 @@ function clickHumanPieceEditMode(piece, space) {
   edit.selected.species = 'human';
   edit.selected.piece = piece;
   if (space === bd.humanDead) return;
-  const button = qs('.kill', dom.humanPiece[piece]);
+  const button = dom.editKill[piece];
+  button.disabled = false;
   anim.fade(button, 1, anim.time.editControlFade);
 }
 
@@ -134,6 +134,7 @@ function clickRaptorPieceEditMode(piece, space) {
   if (edit.selected.species === 'raptor') {
     return click(dom.raptorSpace[space]);
   }
+  edit.selected.element = dom.raptorPiece[piece];
   dom.raptorPiece[piece].classList.add('selected');
   ui.humanItemsClickable(false);
   edit.selected.species = 'raptor';

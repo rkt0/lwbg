@@ -192,19 +192,11 @@ button {
 }
 
 .kill {
-  display: none;
   position: absolute;
   line-height: 1.58;
-  top: calc(
-    var(--human-piece-height) +
-    var(--board-border-width) + 6px
-  );
-  left: calc(
-    (
-      var(--human-piece-width) -
-      var(--small-button-size)
-    ) / 2 - var(--button-border-width)
-  );
+  top: calc(100% + 2 * var(--board-border-width));
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 

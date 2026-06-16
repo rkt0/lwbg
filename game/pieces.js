@@ -1,5 +1,5 @@
 import {
-  qsa, ce, fromTemplate, sequence, shuffle,
+  qd, qsa, ce, fromTemplate, sequence, shuffle,
 } from './utility.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
@@ -103,6 +103,9 @@ function makeHumanPiece(p) {
   element.dataset.humanPiece = p;
   dom.gameplay.append(element);
   dom.humanPiece.push(element);
+  const killButton = qd('kill', element);
+  killButton.dataset.kill = p;
+  dom.editKill.push(killButton);
 }
 function makeRaptorPiece(p) {
   const element = fromTemplate('raptor-piece', true);

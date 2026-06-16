@@ -16,4 +16,5 @@ export const dom = {
   showMore: qjs('show-more'),
   dice: {},
   faces: {},
+  editKill: [],
 };
