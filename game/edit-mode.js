@@ -1,5 +1,6 @@
 import {
-  qjs, qda, qs, qsa, ael, click, deepCopy,
+  qjs, qda, closestData, qs, qsa, ael, click,
+  deepCopy,
 } from './utility.js';
 import {dom} from './dom.js';
 import {dice} from './dice.js';
@@ -113,14 +114,14 @@ ael('#confirm-edits', 'mousedown', async () => {
 
 // Used for editing both turn and dice
 function replaceDieValue(species, type, value) {
-  const die = qs(`.die-${species}.die-${type}`);
-  for (const face of qsa('.face', die)) {
+  const name = `${species}-${type}`;
+  const faces = Object.values(dom.faces[name]);
+  for (const face of faces) {
     face.style.display = 'none';
   }
   if (type === 'movement') gs.rollN = value;
   else gs.rollGo = value;
-  const face = qs(`[data-roll="${value}"]`, die);
-  face.style.display = 'block';
+  dom.faces[name][value].style.display = 'block';
   if (type === 'movement') {
     gs.je = value === 'Jump' || value === 'Enter';
   }
@@ -159,18 +160,7 @@ ael(qjs('edit-turn'), 'mousedown', () => {
 });
 
 // Dice
-ael('#unroll-dice', 'mousedown', () => {
-  gp.clearRoll();
-  const buttonsToHide = [
-    'decline', 'ok-no-move', 'ok-trex-move',
-    'roll-display',
-  ];
-  for (const b of buttonsToHide) ui.hideButton(b);
-  for (const element of qsa('.edit-dice')) {
-    anim.fade(element, 0, anim.time.editControlFade);
-  }
-});
-const changeDie = (species, type) => {
+function changeDie(species, type) {
   const die = dice[species][type];
   const current = die[edit.dieCodes[type]];
   while(die[edit.dieCodes[type]] === current) {
@@ -181,27 +171,34 @@ const changeDie = (species, type) => {
   }
   const changed = die[edit.dieCodes[type]];
   replaceDieValue(species, type, changed);
-};
-for (const s of Object.keys(dice)) {
-  for (const t of Object.keys(dice[s])) {
-    ael(`#die-button-${s}-${t}`, 'mousedown', () => {
-      changeDie(s, t);
-    });
-  }
 }
+for (const element of qda('edit-die')) {
+  if (element.dataset.js) continue;
+  ael(element, 'mousedown', (e) => {
+    const dieData = closestData(e);
+    const [, species, type] = dieData.split('-');
+    changeDie(species, type);
+  });
+}
+ael(qjs('unroll-dice'), 'mousedown', () => {
+  gp.clearRoll();
+  const buttonsToHide = [
+    'decline', 'ok-no-move', 'ok-trex-move',
+    'roll-display',
+  ];
+  for (const b of buttonsToHide) ui.hideButton(b);
+  for (const element of qsa('.edit-dice')) {
+    anim.fade(element, 0, anim.time.editControlFade);
+  }
+});
 function dieCode(value, die) {
   if (value === null || !die) return 0;
   // Max to return 0 instead of -1 if not found
   return Math.max(die.lastIndexOf(value), 0);
 }
 function enableDiceEdit() {
-  for (const element of qsa('.edit-dice')) {
+  for (const element of qda('edit-die')) {
     anim.fade(element, 1, eTime);
-  }
-  const onClass = `wrapper-${gs.turn}`;
-  for (const wrapper of qsa('.wrapper')) {
-    const isOn = wrapper.classList.contains(onClass);
-    wrapper.style.display = isOn ? 'block' : 'none';
   }
   edit.dieCodes.movement =
     dieCode(gs.rollN, dice[gs.turn].movement);

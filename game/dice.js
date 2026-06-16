@@ -1,4 +1,5 @@
-import {qs, qsa, ce, cssInt} from './utility.js';
+import {qjs, qda, ce, cssInt} from './utility.js';
+import {dom} from './dom.js';
 
 export const dice = {
   human: {
@@ -14,16 +15,31 @@ export const dice = {
   },
 };
 
+// Add existing element references to dom object
+for (const [species, sObj] of Object.entries(dice)) {
+  for (const type of Object.keys(sObj)) {
+    const name = `${species}-${type}`;
+    dom.dice[name] = qjs(`die-${name}`);
+    dom.faces[name] = {};
+    for (const face of qda('roll', dom.dice[name])) {
+      dom.faces[name][face.dataset.roll] = face;
+    }
+  }
+}
+
 // Make faces for human and raptor movement dice
-for (const species of ['human', 'raptor']) {
-  const die = qs(`.die-${species}.die-movement`);
+for (const species of Object.keys(dice)) {
+  if (species === 'trex') continue;
+  const name = `${species}-movement`;
+  const dieElement = dom.dice[name];
   const values = [...new Set(dice[species].movement)];
   for (const value of values) {
     const face = ce('div');
     face.classList.add('face');
     face.dataset.roll = value;
     face.append(value);
-    die.append(face);
+    dieElement.append(face);
+    dom.faces[name][value] = face;
   }
 }
 
@@ -43,4 +59,4 @@ async function initializeFace(face) {
     `translateX(${translate}px) scaleX(${scale})`;
   face.style.display = 'none';
 }
-for (const face of qsa('.face')) initializeFace(face);
+for (const face of qda('roll')) initializeFace(face);

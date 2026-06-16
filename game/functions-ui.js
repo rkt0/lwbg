@@ -1,4 +1,4 @@
-import {qjs, qs, qsa, cssInt} from './utility.js';
+import {qjs, cssInt} from './utility.js';
 import {dom} from './dom.js';
 import {anim} from './animation.js';
 
@@ -36,24 +36,25 @@ export const ui = {
     anim.fade(span, 1, aTime);
   },
   displayRollResult(rollState, skipFx) {
-    for (const die of qsa('.die')) {
+    for (const die of Object.values(dom.dice)) {
       die.style.display = 'none';
       die.classList.remove('rolled', 'no-animation');
     }
     const {turn, rollN, rollGo} = rollState;
     const diceToRoll = [];
     for (const type of ['movement', 'continue']) {
-      const die = qs(`.die-${turn}.die-${type}`);
+      const name = `${turn}-${type}`;
+      const die = dom.dice[name];
       if (!die) continue;
       diceToRoll.push(die);
       die.style.display = 'inline';
-      for (const face of qsa('.face', die)) {
+      const faces = Object.values(dom.faces[name]);
+      for (const face of faces) {
         face.style.display = 'none';
       }
       const value =
         type === 'movement' ? rollN : rollGo;
-      const face = qs(`[data-roll="${value}"]`, die);
-      face.style.display = 'block';
+      dom.faces[name][value].style.display = 'block';
     }
     this.replaceButton('roll-button', 'roll-display');
     const delay = skipFx ? 0 :

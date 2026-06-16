@@ -91,6 +91,7 @@
   position: relative;
   height: var(--turn-display-height);
   line-height: 1.0625;
+  --change-button-offset: var(--button-border-width);
 }
 
 
@@ -157,64 +158,16 @@
   padding: 0;
 }
 
-#gameplay-menu .edit-turn {
+#gameplay-menu .edit-turn-die {
   position: absolute;
-  left: calc(100% + var(--button-border-width));
+  left: calc(100% + var(--change-button-offset));
   top: 50%;
   transform: translateY(-50%);
   border-top-style: solid;
   height: var(--edit-turn-die-button-height);
 }
 
-div:is(.edit-dice) {
-  position: absolute;
-  left: var(--button-width);
-  width: var(--button-width);
-}
-
-div:is(.edit-dice) .flex-container {
-  align-items: start;
-}
-
-#gameplay-menu #turn-button-area button,
-#gameplay-menu #die-button-area button {
-  height: var(--edit-turn-die-button-height);
-  border-top-style: solid;
-}
-
-#gameplay-menu #turn-button-area .slim:not(:hover),
-#gameplay-menu #die-button-area .slim:not(:hover) {
+#gameplay-menu .edit-turn-die.slim:not(:hover) {
   width: 33px;
   color: #0000;
-}
-
-#turn-button-area {
-  height: calc(
-    var(--turn-display-height) -
-    var(--button-border-width)
-  );
-}
-
-#die-button-area {
-  height: calc(
-    var(--roll-display-height) -
-    var(--button-border-width)
-  );
-}
-
-.wrapper {
-  box-sizing: border-box;
-  display: none;
-  height: calc(
-    var(--die-content-height) +
-    var(--die-border-width) * 2
-  );
-  padding-top: calc(
-    (
-      var(--die-content-height) +
-      var(--die-border-width) * 2 -
-      var(--edit-turn-die-button-height)
-    ) / 2
-  );
-  margin-left: -21px;
 }

@@ -1,4 +1,4 @@
-import {qjs, qsa, click} from './utility.js';
+import {qjs, click} from './utility.js';
 import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {geom} from './board-geometry.js';
@@ -67,9 +67,6 @@ export const gp = {
     gs.rollGo = 0;
     gs.phase = 'roll';
     gs.je = false;
-    for (const face of qsa('.face')) {
-      face.style.display = 'none';
-    }
   },
   nextTurnSpecies(forceStop) {
     if (!gs.turn) return bd.firstTurn;

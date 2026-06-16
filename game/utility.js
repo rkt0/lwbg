@@ -1,18 +1,22 @@
 export function qjs(value, parent = document) {
   return parent.querySelector(`[data-js="${value}"]`);
 }
-export function qd1(attrName, parent = document) {
-  const selector = `[data-${attrName}]`;
+export function qd(attr, parent = document) {
+  const selector = `[data-${attr}]`;
   return parent.querySelector(selector);
 }
-export function qda(attrName, parent = document) {
-  const selector = `[data-${attrName}]`;
+export function qdv(attr, value, parent = document) {
+  const selector = `[data-${attr}="${value}"]`;
+  return parent.querySelector(selector);
+}
+export function qda(attr, parent = document) {
+  const selector = `[data-${attr}]`;
   return [...parent.querySelectorAll(selector)];
 }
-export function closestData(event, attrName = 'js') {
-  const selector = `[data-${attrName}]`;
+export function closestData(event, attr = 'js') {
+  const selector = `[data-${attr}]`;
   const element = event.target.closest(selector);
-  return element?.dataset[camelFromKebab(attrName)];
+  return element?.dataset[camelFromKebab(attr)];
 }
 
 export function qs(selector, parent = document) {

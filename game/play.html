@@ -67,7 +67,8 @@
         </div>
       </div>
       <button type="button" data-js="edit-turn"
-        data-edit data-obstructive class="edit-turn">
+        data-edit data-obstructive
+        class="edit-turn-die">
         Change
       </button>
     </div>
@@ -78,23 +79,55 @@
     <div data-js="roll-display" data-dormant
       class="roll-display info">
       <div class="flex-container spread">
-        <div class="die die-human die-movement">
+        <div data-js="die-human-movement"
+          class="die die-human">
+          <button type="button" data-edit
+            data-edit-die data-obstructive
+            class="edit-turn-die">
+            Change
+          </button>
         </div>
-        <div class="die die-human die-continue">
+        <div data-js="die-human-continue"
+          class="die die-human">
           <div class="face" data-roll="0">Stop</div>
           <div class="face" data-roll="1">Go</div>
+          <button type="button" data-edit
+            data-edit-die data-obstructive
+            class="edit-turn-die">
+            Change
+          </button>
         </div>
-        <div class="die die-raptor die-movement">
+        <div data-js="die-raptor-movement"
+          class="die die-raptor">
+          <button type="button" data-edit
+            data-edit-die data-obstructive
+            class="edit-turn-die">
+            Change
+          </button>
         </div>
-        <div class="die die-raptor die-continue">
+        <div data-js="die-raptor-continue"
+          class="die die-raptor">
           <div class="face" data-roll="0">Stop</div>
           <div class="face" data-roll="1">Go</div>
+          <button type="button" data-edit
+            data-edit-die data-obstructive
+            class="edit-turn-die">
+            Change
+          </button>
         </div>
-        <div class="die die-trex die-movement">
-          <div class="face" data-roll="0">&#x2716;
+        <div data-js="die-trex-movement"
+          class="die die-trex">
+          <div class="face" data-roll="0">
+            &#x2716;
           </div>
-          <div class="face" data-roll="1">&#x2b06;
+          <div class="face" data-roll="1">
+            &#x2b06;
           </div>
+          <button type="button" data-edit
+            data-edit-die data-obstructive
+            class="edit-turn-die">
+            Change
+          </button>
         </div>
       </div>
     </div>
@@ -122,50 +155,11 @@
       data-dormant class="default-action">
       Confirm
     </button>
-    <button type="button" id="unroll-dice"
-      class="edit-only slot-cancel edit-dice">
+    <button type="button" data-js="unroll-dice"
+      data-edit data-edit-die
+      class="edit-dice">
       Unroll
     </button>
-    <div id="die-button-area"
-      class="edit-only slot-roll edit-dice">
-      <div class="flex-container spread">
-        <div class="wrapper wrapper-human">
-          <button type="button"
-            id="die-button-human-movement"
-            class="obstructive">
-            Change
-          </button>
-        </div>
-        <div class="wrapper wrapper-human">
-          <button type="button"
-            id="die-button-human-continue"
-            class="obstructive">
-            Change
-          </button>
-        </div>
-        <div class="wrapper wrapper-raptor">
-          <button type="button"
-            id="die-button-raptor-movement"
-            class="obstructive">
-            Change
-          </button>
-        </div>
-        <div class="wrapper wrapper-raptor">
-          <button type="button"
-            id="die-button-raptor-continue"
-            class="obstructive">
-            Change
-          </button>
-        </div>
-        <div class="wrapper wrapper-trex">
-          <button type="button"
-            id="die-button-trex-movement"
-            class="obstructive">
-            Change
-          </button>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="edit-banner flex-container row narrow">
     <div id="edit-mode-indicator"
