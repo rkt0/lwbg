@@ -32,7 +32,7 @@
       </button>
     </div>
   </div>
-  <div id="gameplay-menu" class="non-zoom">
+  <div id="gameplay-menu" data-non-zoom>
     <button type="button" data-js="show-more">
       &bull; &bull; &bull;
     </button>
@@ -161,7 +161,8 @@
       Unroll
     </button>
   </div>
-  <div class="edit-banner flex-container row narrow">
+  <div data-non-zoom
+    class="edit-banner flex-container row narrow">
     <div id="edit-mode-indicator"
       class="info edit-only banner">
       <div class="flex-container">Edit Mode On</div>
@@ -176,21 +177,21 @@
     </button>
   </div>
   <div data-js="gameplay-message" data-dormant
-    class="message flex-container info non-zoom">
+    data-non-zoom class="message flex-container info">
     <span class="content"></span>
     <div data-dormant class="hider flex-container">
       <span>Hide Message</span>
     </div>
   </div>
-  <div data-js="game-over" data-dormant
-    class="game-over info non-zoom centered">
+  <div data-js="game-over" data-dormant data-non-zoom
+    class="game-over info centered">
     <div class="heading">Game Over</div>
     Humans Saved:<br>
     <span data-js="humans-saved"></span>
     of <span data-js="humans-total"></span>
   </div>
   <button type="button" data-toggle-audio
-    class="toggle-audio small-button non-zoom">
+    data-non-zoom class="toggle-audio small-button">
     <svg data-icon class="icon inactive">
       <use href="img/sprite.svg#icon-audio-off"/>
     </svg>
@@ -198,11 +199,11 @@
       <use href="img/sprite.svg#icon-audio-on"/>
     </svg>
   </button>
-  <div data-js="scrim" data-dormant
-    class="scrim full-screen non-zoom">
+  <div data-js="scrim" data-dormant data-non-zoom
+    class="scrim full-screen">
   </div>
-  <div data-js="more-menu" data-dormant
-    class="more-menu full-screen non-zoom">
+  <div data-js="more-menu" data-dormant data-non-zoom
+    class="more-menu full-screen">
     <div data-js="more-options" inert data-dormant
       class="flex-container inline">
       <button type="button" data-js="hide-more">

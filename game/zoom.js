@@ -36,7 +36,7 @@ export const zoom = {
 const buttonZoomOut = qjs('zoom-out');
 const buttonZoomDefault = qjs('zoom-default');
 const buttonZoomIn = qjs('zoom-in');
-const nonZoomElements = qsa('.non-zoom');
+const nonZoomElements = qda('non-zoom');
 const obstructiveElements = qda('obstructive');
 let allPieces, humanBoard;
 
