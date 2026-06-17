@@ -1,5 +1,5 @@
 import {
-  qjs, qda, closestData, ael, click, deepCopy,
+  qjs, qda, closestData, ael, click, sleep, deepCopy,
 } from './utility.js';
 import {dom} from './dom.js';
 import {dice} from './dice.js';
@@ -68,6 +68,12 @@ async function editGame(gsNew) {
     await gp.relocatePiece('raptor', p, s);
   }
   await gp.relocatePiece('trex', null, gsNew.trex);
+  // Check whether roll result needs to be changed;
+  // if ui.displayRollResult were called with 
+  // unchanged roll result, dice would flicker
+  const rollResultChanged = gs.turn !== gsNew.turn ||
+    gs.rollN !== gsNew.rollN ||
+    gs.rollGo !== gsNew.rollGo;
   // Must assign object after piece moves since
   // otherwise piece moves are skipped due to
   // guard clause in functions above
@@ -77,7 +83,9 @@ async function editGame(gsNew) {
   ui.displayTurn(gs.turn);
   if (gs.phase === 'roll') {
     ui.replaceButton('roll-display', 'roll-button');
-  } else ui.displayRollResult(gs, true);
+  } else if (rollResultChanged) {
+    ui.displayRollResult(gs, true);
+  }
   if (ai.control[gs.turn] && gs.phase !== 'roll') {
     ui.showButton('ok-ai-move');
   } else {
@@ -91,7 +99,7 @@ async function editGame(gsNew) {
   ui.humanItemsClickable(gs.turn === 'human');
   ui.raptorItemsClickable(gs.turn === 'raptor');
 }
-function endEditMode() {
+async function endEditMode() {
   elements.banner.inert = true;
   anim.slide(elements.banner, 0, eTime);
   for (const element of elements.all) {
@@ -106,14 +114,16 @@ function endEditMode() {
   }
   edit.clear();
   dom.showMore.style.visibility = 'visible';
+  await sleep(eTime);
 }
 ael(qjs('cancel-edits'), 'mousedown', async () => {
-  await editGame(edit.gsPrevious);
-  endEditMode();
+  const {gsPrevious} = edit;
+  await endEditMode();
+  await editGame(gsPrevious);
 });
 ael(qjs('confirm-edits'), 'mousedown', async () => {
+  await endEditMode();
   await editGame(gs);
-  endEditMode();
   if (gs.turn !== 'human') gp.checkEatenByAnyRaptor();
   await autoSave.update(true);
 });
