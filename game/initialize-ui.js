@@ -1,5 +1,5 @@
 import {
-  qjs, qda, qs, qsa, ael, click, rollDie,
+  qjs, qda, qsa, ael, click, rollDie,
 } from './utility.js';
 import {prng} from './prngs.js';
 import {dom} from './dom.js';
@@ -21,7 +21,7 @@ for (const element of qda('dormant')) {
 }
 
 // Initialize dormant elements in gameplay menu
-const gameplayMenu = qs('#gameplay-menu');
+const gameplayMenu = qjs('gameplay-menu');
 for (const button of qda('dormant', gameplayMenu)) {
   ui.hideButton(button.dataset.js);
 }

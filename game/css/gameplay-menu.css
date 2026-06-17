@@ -13,14 +13,14 @@
 
 /* Overall */
 
-#gameplay-menu {
+.gameplay-menu {
   position: fixed;
   top: var(--matte-top, 0);
   left: var(--matte-left, 0);
 }
 
-#gameplay-menu button,
-#gameplay-menu .info {
+.gameplay-menu button,
+.gameplay-menu .info {
   box-sizing: border-box;
   position: relative;
   width: var(--button-width);
@@ -28,7 +28,7 @@
   padding: 0px;
 }
 
-#gameplay-menu button {
+.gameplay-menu button {
   height: var(--button-height);
 }
 
@@ -39,7 +39,7 @@
 
 /* Permanent area */
 
-#gameplay-menu .zoom-display {
+.gameplay-menu .zoom-display {
   height: var(--zoom-display-height);
   background: var(--color-zoom);
   justify-content: space-between;
@@ -47,7 +47,7 @@
   padding-top: 9.5px;
 }
 
-#gameplay-menu .zoom-button {
+.gameplay-menu .zoom-button {
   box-sizing: border-box;
   display: block;
   width: var(--zoom-button-width);
@@ -57,7 +57,7 @@
   backdrop-filter: none;
 }
 
-#gameplay-menu .zoom-button.current {
+.gameplay-menu .zoom-button.current {
   box-shadow: none;
   cursor: default;
   color: var(--color-text);
@@ -75,7 +75,7 @@
   display: block;
 }
 
-#gameplay-menu .turn-display {
+.gameplay-menu .turn-display {
   height: var(--turn-display-height);
   line-height: 1.0625;
   --change-button-offset: var(--button-border-width);
@@ -84,7 +84,7 @@
 
 /* Changing area */
 
-#gameplay-menu .roll-display {
+.gameplay-menu .roll-display {
   height: var(--roll-display-height);
 }
 
@@ -114,7 +114,7 @@
   padding: 0;
 }
 
-#gameplay-menu .edit-turn-die {
+.gameplay-menu .edit-turn-die {
   position: absolute;
   left: calc(100% + var(--change-button-offset));
   top: 50%;
@@ -123,7 +123,7 @@
   height: var(--edit-turn-die-button-height);
 }
 
-#gameplay-menu .edit-turn-die.slim:not(:hover) {
+.gameplay-menu .edit-turn-die.slim:not(:hover) {
   width: 33px;
   color: #0000;
 }

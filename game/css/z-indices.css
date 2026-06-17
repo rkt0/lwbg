@@ -14,7 +14,7 @@
   z-index: 2;
 }
 
-#gameplay-menu,
+.gameplay-menu,
 .edit-banner,
 .edit-only {
   z-index: 3;
