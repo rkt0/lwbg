@@ -17,4 +17,8 @@ export const dom = {
   dice: {},
   faces: {},
   editKill: [],
+  selected: null,
+  move: null,
+  path: [],
+  variableImages: [],
 };

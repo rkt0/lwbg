@@ -150,9 +150,8 @@ button {
   text-wrap: balance;
 }
 
-.gameplay .message .hider {
+.hider {
   position: absolute;
-  top: 0;
 }
 
 

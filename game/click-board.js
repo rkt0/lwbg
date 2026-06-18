@@ -1,4 +1,4 @@
-import {qs, click} from './utility.js';
+import {click} from './utility.js';
 import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {ai} from './ai.js';
@@ -33,15 +33,17 @@ export function clickHumanSpace(space) {
     }
     if (checkHumanOccupied(space, isBldg)) return;
     message.hide();
-    const moveToPath = qs('.human-space.move');
-    if (moveToPath) {
-      moveToPath.classList.remove('move');
-      moveToPath.classList.add('path');
+    if (dom.move) {
+      dom.path.push(dom.move);
+      dom.move.classList.add('path');
+      dom.move.classList.remove('move');
     }
-    dom.humanSpace[space].classList.add('move');
+    dom.move = dom.humanSpace[space];
+    dom.move.classList.add('move');
     mv.plan.push(space);
     if (!gs.je) {
       const edge = dom.humanEdge[`${from}-${space}`];
+      dom.path.push(edge);
       edge.classList.add('path');
     }
     if (isBldg) mv.toGo = 0; else mv.toGo--;
@@ -70,13 +72,12 @@ export function clickRaptorSpace(space) {
     }
     if (checkRaptorOccupied(space)) return;
     message.hide();
-    const moveToPath = qs('.raptor-space.move');
-    if (moveToPath) {
-      moveToPath.classList.remove('move');
-      moveToPath.classList.add('path');
+    if (dom.move) {
+      dom.path.push(dom.move);
+      dom.move.classList.add('path');
+      dom.move.classList.remove('move');
     }
     const moveElement = dom.raptorSpace[space];
-    moveElement.classList.add('move');
     // Pull space from current location in DOM and
     // append it to end to ensure it is 'on top'
     dom.raptorSpaceGroup.append(moveElement);
@@ -84,8 +85,9 @@ export function clickRaptorSpace(space) {
       const {bldgRaptorSpaces, bldgHumanSpaces} = bd;
       const rIndex = bldgRaptorSpaces.indexOf(space);
       const hSpace = bldgHumanSpaces[rIndex];
-      dom.humanSpace[hSpace].classList.add('move');
-    }
+      dom.move = dom.humanSpace[hSpace];
+    } else dom.move = moveElement;
+    dom.move.classList.add('move');
     mv.plan.push(space);
     mv.toGo--;
     if (!mv.toGo) ui.showButton('confirm');
@@ -172,7 +174,7 @@ function clickHumanSpaceEditMode(space, isBldg) {
     }
   }
   anim.fade(dom.editKill[piece], 0, aTime);
-  qs('.selected').classList.remove('selected');
+  dom.selected.classList.remove('selected');
   ui.raptorItemsClickable(true);
   // If edit.selected were reset immediately,
   // then moving a human to a building (by edit) that
@@ -221,7 +223,7 @@ function clickRaptorSpaceEditMode(space) {
     if (gp.nRaptorsOn(space)) return;
     gp.moveRaptor(piece, space, false, true);
   }
-  qs('.selected').classList.remove('selected');
+  dom.selected.classList.remove('selected');
   ui.humanItemsClickable(true);
   edit.selected.species = null;
   edit.selected.piece = null;

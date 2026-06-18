@@ -1,5 +1,5 @@
 import {
-  qsa, ce, cesvg, cssInt, cssIntWH,
+  ce, cesvg, cssInt, cssIntWH,
 } from './utility.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
@@ -227,13 +227,11 @@ for (const species of Object.keys(pl)) {
 pl.trex[0][0] -= pl.trex.ps[0] / 2;
 pl.human.margin = cssInt('--board-border-width');
 
-// Set dimensions of board and svgs
+// Set dimensions of board
 zoom.boardSize = cssIntWH('--raw-board');
 addExtraSpace([zoom.boardSize], true);
-for (const svg of qsa('svg:not(.icon)')) {
-  svg.setAttribute('width', zoom.boardSize[0]);
-  svg.setAttribute('height', zoom.boardSize[1]);
-}
+dom.board.setAttribute('width', zoom.boardSize[0]);
+dom.board.setAttribute('height', zoom.boardSize[1]);
 
 // Set initial view
 addExtraSpace([geom.initialViewCenter]);

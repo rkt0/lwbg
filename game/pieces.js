@@ -1,5 +1,5 @@
 import {
-  qd, qsa, ce, fromTemplate, sequence, shuffle,
+  qd, ce, fromTemplate, sequence, shuffle,
 } from './utility.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
@@ -37,13 +37,10 @@ export const pieces = {
     }
   },
   addImgs() {
-    const toRemove = [
-      '.human-component:not(.dead-marker)',
-      '.raptor-component',
-    ];
-    for (const element of qsa(toRemove.join(', '))) {
+    for (const element of dom.variableImages) {
       element.remove();
     }
+    dom.variableImages = [];
     addHumanImgs();
     addRaptorImgs();
   },
@@ -77,6 +74,7 @@ function addHumanImgs() {
       }.png`;
       imgS.classList.add('human-component', 'shadow');
       dom.humanPiece[piece].append(imgB, imgS);
+      dom.variableImages.push(imgB, imgS);
     }
   }
 }
@@ -95,6 +93,7 @@ function addRaptorImgs() {
     imgS.src = `img/raptor/shadow-raptor-${idS}.png`;
     imgS.classList.add('raptor-component', 'shadow');
     dom.raptorPiece[piece].append(imgB, imgS);
+    dom.variableImages.push(imgB, imgS);
   }
 }
 

@@ -42,6 +42,14 @@
   border-radius: 50%;
 }
 
+.zoomed-out .human-space {
+  border-color: #fff;
+}
+
+.zoomed-out .human-edge {
+  stroke: #fff;
+}
+
 .human-space.move,
 .human-space.selected {
   border-color: var(--color-selected);
@@ -70,13 +78,6 @@
 .building {
   stroke: var(--color-border);
   stroke-width: var(--board-border-width);
-}
-
-.human-space:where(.more-visible) {
-  border-color: #fff;
-}
-.human-edge:where(.more-visible) {
-  stroke: #fff;
 }
 
 .human-edge.path {
@@ -218,6 +219,14 @@
   --color-highlight: #aaac;
 }
 
-.highlighted.on {
-  background: var(--color-highlight);
+@keyframes highlight-blink {
+  0% {background-color: none;}
+  100% {background-color: var(--color-highlight);}
+}
+
+.zoomed-out .human-piece,
+.zoomed-out .raptor-piece,
+.zoomed-out .trex-piece {
+  animation: var(--highlight-blink-time) steps(2)
+    infinite highlight-blink;
 }

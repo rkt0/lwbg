@@ -1,47 +1,45 @@
 import {
-  qjs, qs, ael, ce, fromTemplate,
+  qjs, ael, ce, fromTemplate,
 } from './utility.js';
 import {anim} from './animation.js';
 
 export const message = {
   show(templateId, append) {
     const node = fromTemplate(templateId);
-    const previousWasAppendable =
-      container.classList.contains('appendable');
-    if (append && previousWasAppendable) {
+    if (append && element.dataset.appendable === '') {
       content.append(ce('br'), node);
     } else content.replaceChildren(node);
-    if (append) container.classList.add('appendable');
+    if (append) element.dataset.appendable = '';
     content.style.visibility = 'visible';
-    anim.slide(container, 1, anim.time.messageSlide);
+    anim.slide(element, 1, anim.time.messageSlide);
   },
   hide() {
-    if (container.style.display === 'none') return;
-    if (anim.isAnimated(container)) return;
+    if (element.style.display === 'none') return;
+    if (anim.isAnimated(element)) return;
     content.style.visibility = 'hidden';
     hider.style.display = 'none';
-    container.classList.remove('appendable');
-    anim.slide(container, 0, anim.time.messageSlide);
+    delete element.dataset.appendable;
+    anim.slide(element, 0, anim.time.messageSlide);
   },
 };
 
-const container = qjs('gameplay-message');
-const content = qs('.content', container);
-const hider = qs('.hider', container);
+const element = qjs('gameplay-message');
+const content = qjs('content', element);
+const hider = qjs('hider', element);
 
 function mouseover(inbound) {
-  if (anim.isAnimated(container)) return;
+  if (anim.isAnimated(element)) return;
   content.style.visibility =
     inbound ? 'hidden' : 'visible';
   hider.style.display = inbound ? 'flex' : 'none';
 }
 
-ael(container, 'mousedown', () => {
+ael(element, 'mousedown', () => {
   message.hide();
 });
-ael(container, 'mouseenter', () => {
+ael(element, 'mouseenter', () => {
   mouseover(true);
 });
-ael(container, 'mouseleave', () => {
+ael(element, 'mouseleave', () => {
   mouseover(false);
 });

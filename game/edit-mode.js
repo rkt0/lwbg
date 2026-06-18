@@ -15,9 +15,7 @@ export const edit = {
   clear() {
     this.on = false;
     this.gsPrevious = {};
-    this.selected = {
-      species: null, piece: null, element: null,
-    };
+    this.selected = {species: null, piece: null};
     this.dieCodes = {movement: 0, continue: 0};
   },
   begin() {
@@ -106,7 +104,7 @@ async function endEditMode() {
     if (element === elements.banner) continue;
     anim.fade(element, 0, eTime);
   }
-  edit.selected.element?.classList.remove('selected');
+  dom.selected?.classList.remove('selected');
   if (edit.selected.species === 'human') {
     const button = dom.editKill[edit.selected.piece];
     button.disabled = true;

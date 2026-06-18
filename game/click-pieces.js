@@ -1,4 +1,4 @@
-import {qs, click} from './utility.js';
+import {click} from './utility.js';
 import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {ai} from './ai.js';
@@ -50,6 +50,7 @@ export function clickRaptorPiece(piece) {
       if (checkNotEnterPosition(space)) return;
     }
     message.hide();
+    dom.selected = dom.raptorPiece[piece];
     dom.raptorPiece[piece].classList.add('selected');
     mv.selected = piece;
     mv.plan = [space];
@@ -64,7 +65,7 @@ export function clickEditKill(piece) {
   const button = dom.editKill[piece];
   button.disabled = true;
   anim.fade(button, 0, anim.time.editControlFade);
-  qs('.selected').classList.remove('selected');
+  dom.selected.classList.remove('selected');
   ui.raptorItemsClickable(true);
   edit.selected.species = null;
   edit.selected.piece = null;
@@ -104,7 +105,7 @@ function selectAppropriate(piece) {
   if (isBldg || space === bd.humanDead) {
     element = dom.humanPiece[piece];
   }
-  edit.selected.element = element;
+  dom.selected = element;
   element.classList.add('selected');
 }
 function clickHumanPieceEditMode(piece, space) {
@@ -134,7 +135,7 @@ function clickRaptorPieceEditMode(piece, space) {
   if (edit.selected.species === 'raptor') {
     return click(dom.raptorSpace[space]);
   }
-  edit.selected.element = dom.raptorPiece[piece];
+  dom.selected = dom.raptorPiece[piece];
   dom.raptorPiece[piece].classList.add('selected');
   ui.humanItemsClickable(false);
   edit.selected.species = 'raptor';

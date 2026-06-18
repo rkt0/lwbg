@@ -1,8 +1,5 @@
-import {
-  qjs, qda, qs, qsa, windowWH,
-} from './utility.js';
+import {qjs, qda, windowWH} from './utility.js';
 import {dom} from './dom.js';
-import {anim} from './animation.js';
 
 export const zoom = {
   factor: {current: null, in: 2, outMax: 0.125},
@@ -16,7 +13,7 @@ export const zoom = {
       this.factor.outMax
     );
     zoomGeneral(factor);
-    buttonZoomOut.classList.add('current');
+    buttons.zoomOut.classList.add('current');
     for (const element of obstructiveElements) {
       element.classList.add('slim');
     }
@@ -24,47 +21,24 @@ export const zoom = {
   },
   zoomDefault() {
     zoomGeneral(1);
-    buttonZoomDefault.classList.add('current');
+    buttons.zoomDefault.classList.add('current');
   },
   zoomIn() {
     zoomGeneral(this.factor.in);
-    buttonZoomIn.classList.add('current');
+    buttons.zoomIn.classList.add('current');
   },
 };
 
 // Element references
-const buttonZoomOut = qjs('zoom-out');
-const buttonZoomDefault = qjs('zoom-default');
-const buttonZoomIn = qjs('zoom-in');
+const buttons = {
+  zoomOut: qjs('zoom-out'),
+  zoomDefault: qjs('zoom-default'),
+  zoomIn: qjs('zoom-in'),
+};
 const nonZoomElements = qda('non-zoom');
 const obstructiveElements = qda('obstructive');
-let allPieces, humanBoard;
 
 // Needed for zoom button click handlers
-function highlightPieces(setting) {
-  const ids = zoom.highlightBlinkIds;
-  allPieces ??= [
-    ...dom.humanPiece,
-    ...dom.raptorPiece,
-    dom.trexPiece,
-  ];
-  if (setting) {
-    for (const piece of allPieces) {
-      piece.classList.add('highlighted');
-    }
-    const id = setInterval(() => {
-      for (const element of qsa('.highlighted')) {
-        element.classList.toggle('on');
-      }
-    }, anim.time.highlightBlink);
-    ids.push(id);
-  } else {
-    for (const piece of allPieces) {
-      piece.classList.remove('highlighted');
-    }
-    while (ids.length) clearInterval(ids.pop());
-  }
-}
 function applyZoomCenter() {
   const {left: cl, top: ct} = zoom.center;
   const fc = zoom.factor.current;
@@ -92,13 +66,10 @@ function zoomGeneral(factor) {
     element.style.zoom = 1 / zoom.factor.current;
   }
   const isOut = factor < 1;
-  highlightPieces(isOut);
-  humanBoard ??= qsa('.human-space, .human-edge');
-  for (const element of humanBoard) {
-    element.classList.toggle('more-visible', isOut);
+  dom.gameplay.classList.toggle('zoomed-out', isOut);
+  for (const button of Object.values(buttons)) {
+    button.classList.remove('current');
   }
-  const currentButton = qs('.zoom-button.current');
-  currentButton.classList.remove('current')
   for (const element of obstructiveElements) {
     element.classList.remove('slim');
   }

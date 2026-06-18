@@ -1,5 +1,5 @@
 import {
-  qjs, qda, qsa, ael, click, rollDie,
+  qjs, qda, ael, click, rollDie,
 } from './utility.js';
 import {prng} from './prngs.js';
 import {dom} from './dom.js';
@@ -99,11 +99,14 @@ function clearVisibleMove() {
   message.hide();
   ui.hideButton('cancel');
   ui.hideButton('confirm');
-  for (const c of ['selected', 'move', 'path'] ) {
-    for (const element of qsa(`.${c}`)) {
-      element.classList.remove(c);
-    }
+  dom.selected?.classList.remove('selected');
+  dom.selected = null;
+  dom.move?.classList.remove('move');
+  dom.move = null;
+  for (const element of dom.path) {
+    element.classList.remove('path');
   }
+  dom.path = [];
 }
 
 // Cancel button click handler

@@ -88,7 +88,7 @@ const multiplier = {
   pauseMidMove: 0.25,
   autoScroll: 2,
   autoScrollDelay: 1,
-  highlightBlink: 1,
+  highlightBlink: 2,
 };
 for (const [key, m] of Object.entries(multiplier)) {
   anim.time[key] = m * baseTime;
@@ -98,6 +98,7 @@ const html = document.documentElement;
 const toCss = {
   dieRoll: '--die-roll-time',
   dieResultDelay: '--die-roll-delay',
+  highlightBlink: '--highlight-blink-time',
 };
 for (const [key, cssProp] of Object.entries(toCss)) {
   const seconds = anim.time[key] / 1000;
