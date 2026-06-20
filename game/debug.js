@@ -19,7 +19,6 @@ export const debug = {
     div.classList.add(`${kind}-labels`);
     dom.gameplay.append(div);
     const svg = cesvg('svg');
-    div.append(svg);
     for (const [i, point] of points.entries()) {
       if (!point) continue;
       const [x, y] = point;
@@ -29,5 +28,7 @@ export const debug = {
       element.textContent = i;
       svg.append(element);
     }
+    div.append(svg);
+    dom.debugLabelSvg.push(svg);
   },
 };

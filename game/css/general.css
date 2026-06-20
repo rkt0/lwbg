@@ -1,27 +1,16 @@
 :root {
-
   --color-dark: #16171a;
   --color-text: var(--color-dark);
   --color-border: var(--color-dark);
-
   --color-selected: #fabf00;
   --color-selected-fill: #fabf0066;
   --color-zoom: #fabf00aa;
   --color-control: #fabf0044;
-
-  --color-path: #a67e00;
-  --color-path-fill: #a67e0033;
-
-  --color-dino-space: #a3061b;
-  --color-dino-highlighted: #a3061bcc;
-
   --font-normal: bold 24px Atkinson;
   --font-size-large: 32px;
-
-  --board-border-width: 6px;
-
+  --button-border-width: 3px;
+  --small-button-size: 36px;
   /* Also see custom propertes in animation.js */
-
 }
 
 @font-face {
@@ -48,8 +37,8 @@ body {
   height: 0;
 }
 
-.heading {
-  font-size: var(--font-size-large);
+.large-text {
+  font-size: 32px;
 }
 
 svg {
@@ -63,4 +52,109 @@ svg {
 section {
   background-image: url("../img/bg/jungle.png");
   background-repeat: repeat;
+}
+
+button {
+  box-sizing: content-box;
+  padding: 0px;
+  outline: none;
+  background: #009cf3aa;
+  color: inherit;
+  font: inherit;
+}
+
+button:hover,
+.hover-darken:hover {
+  box-shadow: inset 0px 0px 0px 999px #0003;
+  cursor: pointer;
+  color: #000;
+}
+
+button,
+.info {
+  backdrop-filter: blur(5px);
+  border: solid var(--button-border-width)
+    var(--color-border);
+}
+
+.small-button {
+  width: var(--small-button-size);
+  height: var(--small-button-size);
+}
+
+.info {
+  max-width: 450px;
+  padding: 1em 1.5em;
+  background: #b1b3b6aa;
+}
+
+.info p {
+  text-align: left;
+}
+
+.info p:first-child {
+  margin-top: 0;
+}
+
+.info p:last-child {
+  margin-bottom: 0;
+}
+
+.flex-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(1.5em + 4px);
+}
+
+.flex-container.row {
+  width: 100%;
+  height: auto;
+  flex-direction: row;
+}
+
+.flex-container.tight {
+  gap: 12px;
+}
+
+.flex-container.spread {
+  justify-content: space-evenly;
+  gap: 0;
+}
+
+.flex-container.short {
+  height: auto;
+}
+
+.flex-container.narrow {
+  width: auto;
+}
+
+.flex-container.inline {
+  display: inline-flex;
+}
+
+.flex-container.inline button {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5em 1em;
+  font-size: inherit;
+}
+
+.full-screen {
+  top: 0;
+  position: fixed;
+  box-sizing: border-box;
+  padding: var(--matte, 0);
+  width: 100%;
+  height: 100%;
+}
+
+.centered {
+  position: fixed;
+  left: calc(50% + var(--matte-center-shift-lr, 0px));
+  top: calc(50% + var(--matte-center-shift-tb, 0px));
+  transform: translate(-50%, -50%);
 }

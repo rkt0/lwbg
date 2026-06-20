@@ -176,6 +176,10 @@ export function boundingBox(...rects) {
     bottom: Math.max(...rects.map(x => x.bottom)),
   };
 }
+export function setSvgSize(svg, size) {
+  svg.setAttribute('width', size[0]);
+  svg.setAttribute('height', size[1]);
+}
 
 export function cssInt(property, where = ':root') {
   const style = getComputedStyle(qs(where));

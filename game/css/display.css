@@ -18,10 +18,10 @@ body.tv-mode {
   background: #17181b;
   height: 100vh;
   width: 100vw;
+  z-index: 1;
 }
 
 .display-matte.top {
-  top: 0;
   height: var(--matte-top, 0);
 }
 
@@ -31,7 +31,6 @@ body.tv-mode {
 }
 
 .display-matte.left {
-  left: 0;
   width: var(--matte-left, 0);
 }
 

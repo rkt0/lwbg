@@ -17,18 +17,13 @@
 
 .die-human {
   background: #c6d3a6;
-  color: #c6d3a6;
+  color: #0000;
 }
 
 .die-trex,
 .die-raptor {
   background: #ad996a;
-  color: #ad996a;
-}
-
-.die-content {
-  font-size: 36px;
-  line-height: var(--die-content-height);
+  color: #0000;
 }
 
 .die.rolled {

@@ -4,6 +4,7 @@ export const dom = {
   gameplay: qjs('gameplay'),
   start: qjs('start'),
   board: qjs('board'),
+  debugLabelSvg: [],
   raptorSpaceGroup: qjs('raptor-space-group'),
   raptorSpace: [],
   humanSpace: [],

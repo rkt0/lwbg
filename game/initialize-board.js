@@ -1,5 +1,5 @@
 import {
-  ce, cesvg, cssInt, cssIntWH,
+  ce, cesvg, cssInt, cssIntWH, setSvgSize,
 } from './utility.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
@@ -227,11 +227,13 @@ for (const species of Object.keys(pl)) {
 pl.trex[0][0] -= pl.trex.ps[0] / 2;
 pl.human.margin = cssInt('--board-border-width');
 
-// Set dimensions of board
+// Set dimensions of board and debug labels
 zoom.boardSize = cssIntWH('--raw-board');
 addExtraSpace([zoom.boardSize], true);
-dom.board.setAttribute('width', zoom.boardSize[0]);
-dom.board.setAttribute('height', zoom.boardSize[1]);
+setSvgSize(dom.board, zoom.boardSize);
+for (const svg of dom.debugLabelSvg) {
+  setSvgSize(svg, zoom.boardSize);
+}
 
 // Set initial view
 addExtraSpace([geom.initialViewCenter]);

@@ -17,6 +17,7 @@
   position: fixed;
   top: var(--matte-top, 0);
   left: var(--matte-left, 0);
+  z-index: 4;
 }
 
 .gameplay-menu button,
@@ -101,6 +102,7 @@
   left: var(--matte-left, 0);
   gap: 0;
   width: auto;
+  z-index: 4;
 }
 
 .edit-banner .banner {

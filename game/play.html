@@ -3,11 +3,11 @@
 <meta charset="utf-8">
 <title>TLW:JP Board Game</title>
 <link rel="stylesheet" href="css/general.css">
-<link rel="stylesheet" href="css/board-pieces.css">
+<link rel="stylesheet" href="css/board.css">
+<link rel="stylesheet" href="css/pieces.css">
 <link rel="stylesheet" href="css/ui.css">
 <link rel="stylesheet" href="css/gameplay-menu.css">
 <link rel="stylesheet" href="css/dice.css">
-<link rel="stylesheet" href="css/z-indices.css">
 <link rel="stylesheet" href="css/display.css">
 <link rel="icon" type="image/png" sizes="64x64"
   href="img/icon/icon-64.png">
@@ -179,7 +179,8 @@
     </button>
   </div>
   <div data-js="gameplay-message" data-dormant
-    data-non-zoom class="message flex-container info">
+    data-non-zoom
+    class="message flex-container info hover-darken">
     <span data-js="content"></span>
     <div data-js="hider" data-dormant
       class="hider flex-container">
@@ -188,7 +189,7 @@
   </div>
   <div data-js="game-over" data-dormant data-non-zoom
     class="game-over info centered">
-    <div class="heading">Game Over</div>
+    <div class="heading large-text">Game Over</div>
     Humans Saved:<br>
     <span data-js="humans-saved"></span>
     of <span data-js="humans-total"></span>
@@ -257,14 +258,16 @@
   </div>
 </section>
 <section data-js="front" class="front full-screen">
-  <div class="flex-container">
-    <div class="info">Click anywhere to start</div>
+  <div class="flex-container large-text">
+    <div class="info">
+      Click anywhere to start
+    </div>
   </div>
 </section>
 <section data-js="start" data-dormant
   class="start full-screen">
   <div data-js="start-options"
-    class="options flex-container inline">
+    class="options flex-container inline large-text">
     <button type="button" data-js="start-new">
       Start New Game
     </button>
@@ -307,7 +310,7 @@
   <div class="flex-container row">
     <div data-control-species="human"
       class="control-menu info">
-      <div class="heading">Humans</div>
+      <div class="heading large-text">Humans</div>
       <button type="button" data-control-level="-1"
         class="manual-control">
         Manual Control
@@ -334,7 +337,7 @@
     </div>
     <div data-control-species="raptor"
       class="control-menu info">
-      <div class="heading">Raptors</div>
+      <div class="heading large-text">Raptors</div>
       <button type="button" data-control-level="-1"
         class="manual-control">
         Manual Control
@@ -361,7 +364,7 @@
     </div>
   </div>
   <button type="button" data-js="control-continue" 
-    disabled class="control-continue">
+    disabled class="control-continue large-text">
     Continue
   </button>
 </section>
@@ -384,7 +387,8 @@
   <div class="raptor-piece"></div>
 </template>
 <template id="debug-labels">
-  <div class="full-board debug-labels"></div>
+  <div class="full-board large-text debug-labels">
+  </div>
 </template>
 <template id="save-introduction">
   <p>You will now be asked to create a file.

@@ -1,0 +1,120 @@
+:root {
+  --human-piece-width: 36px;
+  --human-piece-height: 60px;
+  --raptor-piece-width: 144px;
+  --raptor-piece-height: 72px;
+  --trex-piece-width: 75px;
+  --trex-piece-height: 48px;
+  --color-dino-space: #a3061b;
+  --color-dino-highlighted: #a3061bcc;
+}
+
+.human-piece {
+  position: absolute;
+  width: var(--human-piece-width);
+  height: var(--human-piece-height);
+  --color-highlight: #008b4bcc;
+  z-index: 0;
+}
+
+.raptor-piece {
+  position: absolute;
+  width: var(--raptor-piece-width);
+  height: var(--raptor-piece-height);
+  --color-highlight: var(--color-dino-highlighted);
+  z-index: 1;
+}
+
+.trex-piece {
+  position: absolute;
+  width: var(--trex-piece-width);
+  height: var(--trex-piece-height);
+  --color-highlight: var(--color-dino-highlighted);
+  z-index: 1;
+}
+
+.human-component {
+  position: absolute;
+  left: 6px; /*  ceil((36px - 25px) / 2) */
+  top: 5px; /* floor((60px - 49px) / 2) */
+  /* component size is 25x49  */
+}
+
+.raptor-component {
+  position: absolute;
+  left: 9px; /* ceil((144px - 126px) / 2) */
+  top: 9px; /* ceil(( 72px -  55px) / 2) */
+  /* component size is 126x55  */
+}
+
+.trex-component {
+  position: absolute;
+  left: 0; /* floor((75px - 75px) / 2) */
+  top: 0; /* floor((48px - 48px) / 2) */
+  /* component size is 75x48  */
+}
+
+.shadow {
+  z-index: 1;
+}
+
+.dead-marker {
+  display: none;
+  font-weight: normal;
+  font-size: 36px;
+  color: #ccc;
+  -webkit-text-stroke: 1px var(--color-dark);
+  transform: translate(-6px, -2px);
+  z-index: 2;
+}
+
+.dead .dead-marker {
+  display: block;
+}
+
+.dead img.human-component {
+  opacity: 0.6;
+}
+
+.human-piece.selected,
+.raptor-piece.selected {
+  outline: solid var(--board-border-width)
+    var(--color-selected);
+  z-index: 2;
+}
+
+.human-piece.dead {
+  --color-highlight: #aaac;
+  z-index: 2;
+}
+
+@keyframes highlight-blink {
+  0% {background-color: none;}
+  100% {background-color: var(--color-highlight);}
+}
+
+.zoomed-out .human-piece,
+.zoomed-out .raptor-piece,
+.zoomed-out .trex-piece {
+  animation: var(--highlight-blink-time) steps(2)
+    infinite highlight-blink;
+}
+
+.trex-button-area {
+  height: var(--trex-piece-height);
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  --gap: 6px;
+  gap: var(--gap);
+  padding-left:
+    calc(var(--trex-piece-width) + var(--gap));
+}
+
+.kill {
+  position: absolute;
+  line-height: 1.58;
+  top: calc(100% + 2 * var(--board-border-width));
+  left: 50%;
+  transform: translateX(-50%);
+}
