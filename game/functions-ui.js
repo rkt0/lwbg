@@ -5,7 +5,7 @@ import {anim} from './animation.js';
 export const ui = {
   async showButton(identifier) {
     const element = qjs(identifier);
-    element.style.display = 'block';
+    element.style.display = '';
     const aTime = anim.time.buttonSlide;
     await anim.move(element, {left: '0px'}, aTime, {
       easing: 'linear',
@@ -20,9 +20,9 @@ export const ui = {
     }, anim.time.buttonSlide, {easing: 'linear'});
     element.style.display = 'none';
   },
-  async replaceButton(idOld, idNew) {
-    await this.hideButton(idOld);
-    this.showButton(idNew);
+  async replaceButton(identifierOld, identifierNew) {
+    await this.hideButton(identifierOld);
+    this.showButton(identifierNew);
   },
   async displayTurn(species, skipFx) {
     const speciesText =

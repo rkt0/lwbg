@@ -31,7 +31,7 @@ function mouseover(inbound) {
   if (anim.isAnimated(element)) return;
   content.style.visibility =
     inbound ? 'hidden' : 'visible';
-  hider.style.display = inbound ? 'flex' : 'none';
+  hider.style.display = inbound ? '' : 'none';
 }
 
 ael(element, 'mousedown', () => {

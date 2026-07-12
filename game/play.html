@@ -39,9 +39,9 @@
     <button type="button" data-js="show-more">
       &bull; &bull; &bull;
     </button>
-    <div class="zoom-display info flex-container">
+    <div class="zoom-display info">
       <div>Zoom</div>
-      <div class="flex-container row spread">
+      <div class="zoom-button-row">
         <button type="button" data-js="zoom-out"
           class="zoom-button">
           <div class="zoom-indicator">&dtrif;</div>
@@ -61,14 +61,8 @@
     </div>
     <div data-js="turn-display"
       class="turn-display info">
-      <div class="flex-container">
-        <div>
-          Turn:<br>
-          <span data-js="species-turn-text">
-            &nbsp;
-          </span>
-        </div>
-      </div>
+      Turn:<br>
+      <span data-js="species-turn-text">&nbsp;</span>
       <button type="button" data-js="edit-turn"
         data-edit data-obstructive
         class="edit-turn-die">
@@ -81,57 +75,55 @@
     </button>
     <div data-js="roll-display" data-dormant
       class="roll-display info">
-      <div class="flex-container spread">
-        <div data-js="die-human-movement"
-          class="die die-human">
-          <button type="button" data-edit
-            data-edit-die data-obstructive
-            class="edit-turn-die">
-            Change
-          </button>
+      <div data-js="die-human-movement"
+        class="die die-human">
+        <button type="button" data-edit
+          data-edit-die data-obstructive
+          class="edit-turn-die">
+          Change
+        </button>
+      </div>
+      <div data-js="die-human-continue"
+        class="die die-human">
+        <div class="face" data-roll="0">Stop</div>
+        <div class="face" data-roll="1">Go</div>
+        <button type="button" data-edit
+          data-edit-die data-obstructive
+          class="edit-turn-die">
+          Change
+        </button>
+      </div>
+      <div data-js="die-raptor-movement"
+        class="die die-raptor">
+        <button type="button" data-edit
+          data-edit-die data-obstructive
+          class="edit-turn-die">
+          Change
+        </button>
+      </div>
+      <div data-js="die-raptor-continue"
+        class="die die-raptor">
+        <div class="face" data-roll="0">Stop</div>
+        <div class="face" data-roll="1">Go</div>
+        <button type="button" data-edit
+          data-edit-die data-obstructive
+          class="edit-turn-die">
+          Change
+        </button>
+      </div>
+      <div data-js="die-trex-movement"
+        class="die die-trex">
+        <div class="face" data-roll="0">
+          &#x2716;
         </div>
-        <div data-js="die-human-continue"
-          class="die die-human">
-          <div class="face" data-roll="0">Stop</div>
-          <div class="face" data-roll="1">Go</div>
-          <button type="button" data-edit
-            data-edit-die data-obstructive
-            class="edit-turn-die">
-            Change
-          </button>
+        <div class="face" data-roll="1">
+          &#x2b06;
         </div>
-        <div data-js="die-raptor-movement"
-          class="die die-raptor">
-          <button type="button" data-edit
-            data-edit-die data-obstructive
-            class="edit-turn-die">
-            Change
-          </button>
-        </div>
-        <div data-js="die-raptor-continue"
-          class="die die-raptor">
-          <div class="face" data-roll="0">Stop</div>
-          <div class="face" data-roll="1">Go</div>
-          <button type="button" data-edit
-            data-edit-die data-obstructive
-            class="edit-turn-die">
-            Change
-          </button>
-        </div>
-        <div data-js="die-trex-movement"
-          class="die die-trex">
-          <div class="face" data-roll="0">
-            &#x2716;
-          </div>
-          <div class="face" data-roll="1">
-            &#x2b06;
-          </div>
-          <button type="button" data-edit
-            data-edit-die data-obstructive
-            class="edit-turn-die">
-            Change
-          </button>
-        </div>
+        <button type="button" data-edit
+          data-edit-die data-obstructive
+          class="edit-turn-die">
+          Change
+        </button>
       </div>
     </div>
     <button type="button" data-js="ok-trex-move"
@@ -163,11 +155,10 @@
       Unroll
     </button>
   </div>
-  <div data-js="edit-banner" data-non-zoom
-    data-edit data-edit-general inert
-    class="edit-banner flex-container row narrow">
+  <div data-js="edit-banner" data-non-zoom data-edit
+    data-edit-general inert class="edit-banner">
     <div class="info banner">
-      <div class="flex-container">Edit Mode On</div>
+      Edit Mode On
     </div>
     <button type="button" data-js="cancel-edits"
       class="banner">
@@ -179,16 +170,14 @@
     </button>
   </div>
   <div data-js="gameplay-message" data-dormant
-    data-non-zoom
-    class="message flex-container info hover-darken">
+    data-non-zoom class="message info hover-darken">
     <span data-js="content"></span>
-    <div data-js="hider" data-dormant
-      class="hider flex-container">
+    <div data-js="hider" data-dormant class="hider">
       <span>Hide Message</span>
     </div>
   </div>
   <div data-js="game-over" data-dormant data-non-zoom
-    class="game-over info centered">
+    class="game-over info">
     <div class="heading large-text">Game Over</div>
     Humans Saved:<br>
     <span data-js="humans-saved"></span>
@@ -209,7 +198,7 @@
   <div data-js="more-menu" data-dormant data-non-zoom
     class="more-menu full-screen">
     <div data-js="more-options" inert data-dormant
-      class="flex-container inline">
+      class="choices">
       <button type="button" data-js="hide-more">
         Return to Game
       </button>
@@ -227,26 +216,24 @@
       </button>
     </div>
     <div data-js="manual-save-help" data-dormant
-      class="flex-container">
-      <div class="info">
-        <p>You will now be asked to create a file.
-        This file will allow you to resume your game
-        later at this exact point.
-        <p>Your progress will continue to be
-        automatically saved to your original
-        saved game file (and not to the file
-        that you're about to create).
-        <p>Click anywhere to continue.
-      </div>
+      class="info">
+      <p>You will now be asked to create a file.
+      This file will allow you to resume your game
+      later at this exact point.
+      <p>Your progress will continue to be
+      automatically saved to your original
+      saved game file (and not to the file
+      that you're about to create).
+      <p>Click anywhere to continue.
     </div>
     <div data-js="quit-options" inert data-dormant
-      class="flex-container">
+      class="decision">
       <div class="info">
         <p>Do you really want to quit the game?
         <p>(You'll still be able to resume it
         later from your saved game file.)
       </div>
-      <div class="flex-container short inline">
+      <div class="choices">
         <button type="button" data-js="abort-quit">
           Return to Game
         </button>
@@ -257,17 +244,12 @@
     </div>
   </div>
 </section>
-<section data-js="front" class="front full-screen">
-  <div class="flex-container large-text">
-    <div class="info">
-      Click anywhere to start
-    </div>
-  </div>
+<section data-js="front" class="front large-text">
+  <div class="info">Click anywhere to start</div>
 </section>
-<section data-js="start" data-dormant
-  class="start full-screen">
+<section data-js="start" data-dormant class="start">
   <div data-js="start-options"
-    class="options flex-container inline large-text">
+    class="choices large-text">
     <button type="button" data-js="start-new">
       Start New Game
     </button>
@@ -286,16 +268,17 @@
     </button>
   </div>
   <div data-js="start-message" data-dormant
-    class="message info centered"></div>
+    class="info">
+  </div>
   <div data-js="start-fork" data-dormant
-    class="flex-container">
+    class="decision">
     <div class="info">
       <p>Do you want to use this same file as
       your auto-save file (overwriting it)?
       <p>Or do you want to leave this file
       alone and create a new auto-save file?
     </div>
-    <div class="flex-container short inline">
+    <div class="choices">
       <button type="button" data-js="load-overwrite">
         Use Same File (Overwrite)
       </button>
@@ -306,61 +289,51 @@
   </div>
 </section>
 <section data-js="control" inert data-dormant
-  class="control full-screen flex-container">
-  <div class="flex-container row">
-    <div data-control-species="human"
-      class="control-menu info">
-      <div class="heading large-text">Humans</div>
-      <button type="button" data-control-level="-1"
-        class="manual-control">
-        Manual Control
+  class="control">
+  <div data-control-species="human"
+    class="control-menu info">
+    <div class="heading large-text">Humans</div>
+    <button type="button" data-control-level="-1"
+      class="manual-control">
+      Manual Control
+    </button>
+    <div>Computer Level</div>
+    <div class="ai-levels">
+      <button type="button" data-control-level="0">
+        0
       </button>
-      <div>Computer Level</div>
-      <div class="flex-container row tight">
-        <button type="button" data-control-level="0"
-          class="ai-level">
-          0
-        </button>
-        <button type="button" data-control-level="1"
-          class="ai-level">
-          1
-        </button>
-        <button type="button" data-control-level="2"
-          class="ai-level">
-          2
-        </button>
-        <button type="button" data-control-level="3"
-          class="ai-level">
-          3
-        </button>
-      </div>
+      <button type="button" data-control-level="1">
+        1
+      </button>
+      <button type="button" data-control-level="2">
+        2
+      </button>
+      <button type="button" data-control-level="3">
+        3
+      </button>
     </div>
-    <div data-control-species="raptor"
-      class="control-menu info">
-      <div class="heading large-text">Raptors</div>
-      <button type="button" data-control-level="-1"
-        class="manual-control">
-        Manual Control
+  </div>
+  <div data-control-species="raptor"
+    class="control-menu info">
+    <div class="heading large-text">Raptors</div>
+    <button type="button" data-control-level="-1"
+      class="manual-control">
+      Manual Control
+    </button>
+    <div>Computer Level</div>
+    <div class="ai-levels">
+      <button type="button" data-control-level="0">
+        0
       </button>
-      <div>Computer Level</div>
-      <div class="flex-container row tight">
-        <button type="button" data-control-level="0"
-          class="ai-level">
-          0
-        </button>
-        <button type="button" data-control-level="1"
-          class="ai-level">
-          1
-        </button>
-        <button type="button" data-control-level="2"
-          class="ai-level">
-          2
-        </button>
-        <button type="button" data-control-level="3"
-          class="ai-level">
-          3
-        </button>
-      </div>
+      <button type="button" data-control-level="1">
+        1
+      </button>
+      <button type="button" data-control-level="2">
+        2
+      </button>
+      <button type="button" data-control-level="3">
+        3
+      </button>
     </div>
   </div>
   <button type="button" data-js="control-continue" 

@@ -17,8 +17,9 @@ export const moreMenu = {
   },
   async show() {
     gp.interrupt();
-    anim.fade(moreOptions, 1, 0, {display: ''});
-    await anim.fade(this.element, 1, aTime);
+    const aOpts = {display: ''};
+    anim.fade(moreOptions, 1, 0, aOpts);
+    await anim.fade(this.element, 1, aTime, aOpts);
     moreOptions.inert = false;
   },
   async hide(resumeGameplay = true) {
@@ -94,5 +95,5 @@ async function confirmQuit() {
   pieces.shuffleFeatures();
   pieces.addImgs();
   showStartOptions(0);
-  anim.fade(dom.start, 1, aTime);
+  anim.fade(dom.start, 1, aTime, {display: ''});
 }

@@ -30,7 +30,7 @@ const fork = qjs('start-fork');
 aelo(front, 'mousedown', async () => {
   addWarningBeforeUnload();
   await anim.fade(front, 0, aTime);
-  anim.fade(dom.start, 1, aTime);
+  anim.fade(dom.start, 1, aTime, {display: ''});
   music.next();
 });
 
