@@ -42,7 +42,8 @@
 
 .gameplay-menu .zoom-display {
   height: var(--zoom-display-height);
-  background: var(--color-zoom);
+  background:
+    rgb(from var(--color-selected) r g b / 0.667);
   display: grid;
   align-content: space-between;
   padding-top: 9.5px;

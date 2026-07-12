@@ -6,7 +6,8 @@
   --trex-piece-width: 75px;
   --trex-piece-height: 48px;
   --color-dino-space: #a3061b;
-  --color-dino-highlighted: #a3061bcc;
+  --color-dino-highlighted:
+    rgb(from var(--color-dino-space) r g b / 0.8);
 }
 
 .human-piece {

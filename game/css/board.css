@@ -11,7 +11,6 @@
   --jump-land-border-width: 3px;
   --board-border-width: 6px;
   --color-path: #a67e00;
-  --color-path-fill: #a67e0033;
 }
 
 .full-board {
@@ -100,7 +99,7 @@
 .raptor-space.path,
 .building.path {
   stroke: var(--color-path);
-  fill: var(--color-path-fill);
+  fill: rgb(from var(--color-path) r g b / 0.2);
 }
 
 .raptor-entrance {

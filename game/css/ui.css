@@ -90,7 +90,8 @@
 .control-menu button {
   padding: 0.5em;
   min-width: 1.25em;
-  background: var(--color-control);
+  background:
+    rgb(from var(--color-selected) r g b / 0.267);
   margin-block: 6px 0;
 }
 

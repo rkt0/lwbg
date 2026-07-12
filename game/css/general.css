@@ -3,9 +3,8 @@
   --color-text: var(--color-dark);
   --color-border: var(--color-dark);
   --color-selected: #fabf00;
-  --color-selected-fill: #fabf0066;
-  --color-zoom: #fabf00aa;
-  --color-control: #fabf0044;
+  --color-selected-fill:
+    rgb(from var(--color-selected) r g b / 0.4);
   --font-normal: bold 24px Atkinson;
   --font-size-large: 32px;
   --button-border-width: 3px;
