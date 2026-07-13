@@ -4,64 +4,71 @@
   --zoom-button-size: 36px;
 }
 
-
-/* Overall */
-
 .gameplay-menu {
   position: fixed;
   top: var(--matte-top, 0);
   left: var(--matte-left, 0);
   z-index: 4;
+
+  button,
+  .info {
+    box-sizing: border-box;
+    position: relative;
+    width: var(--button-width);
+    border-style: none solid solid none;
+    padding: 0px;
+  }
+
+  button {
+    height: var(--button-height);
+  }
+
+  .edit-turn-die {
+    position: absolute;
+    left: calc(100% + var(--change-button-offset));
+    top: 50%;
+    transform: translateY(-50%);
+    border-top-style: solid;
+    height: 48px;
+
+    &.slim:not(:hover) {
+      width: 33px;
+      color: #0000;
+    }
+  }
 }
 
-.gameplay-menu button,
-.gameplay-menu .info {
-  box-sizing: border-box;
-  position: relative;
-  width: var(--button-width);
-  border-style: none solid solid none;
-  padding: 0px;
-}
-
-.gameplay-menu button {
-  height: var(--button-height);
-}
-
-.default-action {
-  background: #00cb98aa;
-}
-
-
-/* Permanent area */
-
-.gameplay-menu .zoom-display {
+.zoom-display {
   height: 93px;
   background:
     rgb(from var(--color-selected) r g b / 0.667);
   display: grid;
   align-content: space-between;
-  padding-top: 9.5px;
+
+  .heading {
+    margin-top: 9.5px;
+  }
 }
 
-.gameplay-menu .zoom-button-row {
+.zoom-button-row {
   display: grid;
   grid-auto-flow: column;
-}
 
-.gameplay-menu .zoom-button {
-  box-sizing: border-box;
-  display: block;
-  height: var(--zoom-button-size);
-  width: var(--zoom-button-size);
-  border-style: none;
-  background: none;
-  backdrop-filter: none;
-}
+  .zoom-button {
+    box-sizing: border-box;
+    display: block;
+    height: var(--zoom-button-size);
+    width: var(--zoom-button-size);
+    border-style: none;
+    background: none;
+    backdrop-filter: none;
 
-.gameplay-menu .zoom-button.current {
-  box-shadow: none;
-  cursor: default;
-  color: var(--color-text);
+    &.current {
+      box-shadow: none;
+      cursor: default;
+      color: var(--color-text);
+    }
+  }
 }
 
 .zoom-indicator {
@@ -70,13 +77,13 @@
   top: calc(0px - var(--zoom-button-size) * 5 / 8);
   margin-bottom:
     calc(0px - var(--zoom-button-size) * 5 / 6);
+
+  .current & {
+    display: block;
+  }
 }
 
-.current .zoom-indicator {
-  display: block;
-}
-
-.gameplay-menu .turn-display {
+.turn-display {
   height: 78px;
   line-height: 1.0625;
   --change-button-offset: var(--button-border-width);
@@ -84,10 +91,7 @@
   place-content: center;
 }
 
-
-/* Changing area */
-
-.gameplay-menu .roll-display {
+.roll-display {
   height: 201px;
   display: grid;
   align-content: space-evenly;
@@ -98,8 +102,9 @@
   background: #ff2f4eaa;
 }
 
-
-/* Edit mode controls */
+.default-action {
+  background: #00cb98aa;
+}
 
 .edit-banner {
   position: fixed;
@@ -108,29 +113,14 @@
   display: grid;
   grid-auto-flow: column;
   z-index: 4;
-}
 
-.edit-banner .banner {
-  box-sizing: border-box;
-  width: 183px;
-  height: var(--button-height);
-  line-height: calc(
-    var(--button-height) - var(--button-border-width)
-  );
-  border-style: none solid solid none;
-  padding: 0;
-}
-
-.gameplay-menu .edit-turn-die {
-  position: absolute;
-  left: calc(100% + var(--change-button-offset));
-  top: 50%;
-  transform: translateY(-50%);
-  border-top-style: solid;
-  height: 48px;
-}
-
-.gameplay-menu .edit-turn-die.slim:not(:hover) {
-  width: 33px;
-  color: #0000;
+  .banner {
+    box-sizing: border-box;
+    width: 183px;
+    height: var(--button-height);
+    line-height: calc(var(--button-height) -
+      var(--button-border-width));
+    border-style: none solid solid none;
+    padding: 0;
+  }
 }

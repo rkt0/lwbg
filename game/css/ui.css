@@ -39,3 +39,36 @@
     margin-left: 0.25em;
   }
 }
+
+.message {
+  position: fixed;
+  top: var(--matte-top, 0);
+  left: var(--matte-left, 0);
+  right: var(--matte-right, 0);
+  margin-left: auto;
+  margin-right: auto;
+  width: 540px;
+  height: auto;
+  padding: 12px;
+  border-top-style: none;
+  text-wrap: balance;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+}
+
+.hider {
+  position: absolute;
+}
+
+.more-menu {
+  display: grid;
+  place-content: center;
+  z-index: 6;
+}
+
+.scrim {
+  background: #5a5b5faa;
+  backdrop-filter: blur(5px);
+  z-index: 5;
+}
