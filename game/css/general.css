@@ -5,8 +5,6 @@
   --color-selected: #fabf00;
   --color-selected-fill:
     rgb(from var(--color-selected) r g b / 0.4);
-  --font-normal: bold 24px Atkinson;
-  --font-size-large: 32px;
   --button-border-width: 3px;
   --small-button-size: 36px;
   --gap: 1.5em;
@@ -28,7 +26,7 @@ body {
   color: var(--color-text);
   text-align: center;
   user-select: none;
-  font: var(--font-normal);
+  font: bold 24px Atkinson;
   image-rendering: pixelated;
 }
 

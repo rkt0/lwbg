@@ -1,13 +1,7 @@
 :root {
   --button-width: 111px;
   --button-height: 57px;
-  --zoom-display-height: 93px;
-  --turn-display-height: 78px;
-  --roll-display-height: 201px;
-  --zoom-button-width: 36px;
-  --zoom-button-height: 36px;
-  --edit-banner-button-width: 183px;
-  --edit-turn-die-button-height: 48px;
+  --zoom-button-size: 36px;
 }
 
 
@@ -41,7 +35,7 @@
 /* Permanent area */
 
 .gameplay-menu .zoom-display {
-  height: var(--zoom-display-height);
+  height: 93px;
   background:
     rgb(from var(--color-selected) r g b / 0.667);
   display: grid;
@@ -57,8 +51,8 @@
 .gameplay-menu .zoom-button {
   box-sizing: border-box;
   display: block;
-  width: var(--zoom-button-width);
-  height: var(--zoom-button-height);
+  height: var(--zoom-button-size);
+  width: var(--zoom-button-size);
   border-style: none;
   background: none;
   backdrop-filter: none;
@@ -73,9 +67,9 @@
 .zoom-indicator {
   display: none;
   position: relative;
-  top: calc(0px - var(--zoom-button-height) * 5 / 8);
+  top: calc(0px - var(--zoom-button-size) * 5 / 8);
   margin-bottom:
-    calc(0px - var(--zoom-button-height) * 5 / 6);
+    calc(0px - var(--zoom-button-size) * 5 / 6);
 }
 
 .current .zoom-indicator {
@@ -83,7 +77,7 @@
 }
 
 .gameplay-menu .turn-display {
-  height: var(--turn-display-height);
+  height: 78px;
   line-height: 1.0625;
   --change-button-offset: var(--button-border-width);
   display: grid;
@@ -94,7 +88,7 @@
 /* Changing area */
 
 .gameplay-menu .roll-display {
-  height: var(--roll-display-height);
+  height: 201px;
   display: grid;
   align-content: space-evenly;
   justify-content: center;
@@ -118,7 +112,7 @@
 
 .edit-banner .banner {
   box-sizing: border-box;
-  width: var(--edit-banner-button-width);
+  width: 183px;
   height: var(--button-height);
   line-height: calc(
     var(--button-height) - var(--button-border-width)
@@ -133,7 +127,7 @@
   top: 50%;
   transform: translateY(-50%);
   border-top-style: solid;
-  height: var(--edit-turn-die-button-height);
+  height: 48px;
 }
 
 .gameplay-menu .edit-turn-die.slim:not(:hover) {

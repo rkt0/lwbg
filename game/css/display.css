@@ -5,12 +5,6 @@ body.tv-mode {
   --matte-left: 0.5px;
   --matte: var(--matte-top) var(--matte-right)
     var(--matte-bottom) var(--matte-left);
-  --matte-center-shift-lr: calc(
-    (var(--matte-left) - var(--matte-right)) / 2
-  );
-  --matte-center-shift-tb: calc(
-    (var(--matte-top) - var(--matte-bottom)) / 2
-  );
 }
 
 .display-matte {
