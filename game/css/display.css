@@ -13,22 +13,24 @@ body.tv-mode {
   height: 100vh;
   width: 100vw;
   z-index: 1;
+
+  &.top {
+    height: var(--matte-top, 0);
+  }
+
+  &.bottom {
+    bottom: 0;
+    height: var(--matte-bottom, 0);
+  }
+
+  &.left {
+    width: var(--matte-left, 0);
+  }
+
+  &.right {
+    right: 0;
+    width: var(--matte-right, 0);
+  }
 }
 
-.display-matte.top {
-  height: var(--matte-top, 0);
-}
 
-.display-matte.bottom {
-  bottom: 0;
-  height: var(--matte-bottom, 0);
-}
-
-.display-matte.left {
-  width: var(--matte-left, 0);
-}
-
-.display-matte.right {
-  right: 0;
-  width: var(--matte-right, 0);
-}

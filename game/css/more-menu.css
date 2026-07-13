@@ -1,0 +1,11 @@
+.more-menu {
+  display: grid;
+  place-content: center;
+  z-index: 6;
+}
+
+.scrim {
+  background: #5a5b5faa;
+  backdrop-filter: blur(5px);
+  z-index: 5;
+}

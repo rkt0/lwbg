@@ -36,27 +36,23 @@
   border: solid var(--board-border-width)
     var(--color-border);
   border-radius: 50%;
-}
 
-.zoomed-out .human-space {
-  border-color: #fff;
-}
+  &.move,
+  &.selected {
+    border-color: var(--color-selected);
+  }
 
-.zoomed-out .human-edge {
-  stroke: #fff;
-}
+  &.path:not(.selected) {
+    border-color: var(--color-path);
+  }
 
-.human-space.move,
-.human-space.selected {
-  border-color: var(--color-selected);
-}
+  &.dead {
+    display: none;
+  }
 
-.human-space.path:not(.selected) {
-  border-color: var(--color-path);
-}
-
-.human-space.dead {
-  display: none;
+  .zoomed-out & {
+    border-color: #fff;
+  }
 }
 
 .trex-space {
@@ -69,37 +65,54 @@
     var(--color-border);
 }
 
-.human-edge,
-.trex-edge,
-.building {
+.human-edge {
+  stroke: var(--color-border);
+  stroke-width: var(--board-border-width);
+
+  &.path {
+    stroke: var(--color-path);
+  }
+
+  .zoomed-out & {
+    stroke: #fff;
+  }
+}
+
+.trex-edge {
   stroke: var(--color-border);
   stroke-width: var(--board-border-width);
 }
 
-.human-edge.path {
-  stroke: var(--color-path);
+.building {
+  stroke: var(--color-border);
+  stroke-width: var(--board-border-width);
+  pointer-events: auto;
+
+  &.move {
+    stroke: var(--color-selected);
+    fill: var(--color-selected-fill);
+  }
+
+  &.path {
+    stroke: var(--color-path);
+    fill: rgb(from var(--color-path) r g b / 0.2);
+  }
 }
 
 .raptor-space {
   stroke: var(--color-dino-space);
   stroke-width: var(--board-border-width);
   fill: none;
-}
 
-.building {
-  pointer-events: auto;
-}
+  &.move {
+    stroke: var(--color-selected);
+    fill: var(--color-selected-fill);
+  }
 
-.raptor-space.move,
-.building.move {
-  stroke: var(--color-selected);
-  fill: var(--color-selected-fill);
-}
-
-.raptor-space.path,
-.building.path {
-  stroke: var(--color-path);
-  fill: rgb(from var(--color-path) r g b / 0.2);
+  &.path {
+    stroke: var(--color-path);
+    fill: rgb(from var(--color-path) r g b / 0.2);
+  }
 }
 
 .raptor-entrance {

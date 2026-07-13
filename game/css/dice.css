@@ -13,40 +13,39 @@
     var(--color-border);
   border-radius: 12px;
   --change-button-offset: var(--die-border-width);
+  color: #0000;
+
+  &.rolled {
+    transform: rotate(2turn);
+    color: var(--color-text);
+    transition-property: transform, color;
+    transition-duration: var(--die-roll-time), calc(
+      var(--die-roll-time) - var(--die-roll-delay)
+    );
+    transition-delay: 0s, var(--die-roll-delay);
+
+    &.no-animation {
+      transition-property: none;
+    }
+  }
 }
 
 .die-human {
   background: #c6d3a6;
-  color: #0000;
 }
 
 .die-trex,
 .die-raptor {
   background: #ad996a;
-  color: #0000;
-}
-
-.die.rolled {
-  transform: rotate(2turn);
-  color: var(--color-text);
-  transition-property: transform, color;
-  transition-duration: var(--die-roll-time), calc(
-    var(--die-roll-time) - var(--die-roll-delay)
-  );
-  transition-delay: 0s, var(--die-roll-delay);
-}
-
-.die.rolled.no-animation {
-  transition-property: none;
 }
 
 .face {
   font-size: 36px;
   line-height: var(--die-content-height);
   text-transform: uppercase;
-}
 
-.face.copy {
-  position: fixed;
-  z-index: -1;
+  &.copy {
+    position: fixed;
+    z-index: -1;
+  }
 }
