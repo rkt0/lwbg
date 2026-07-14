@@ -8,13 +8,24 @@ export const zoom = {
   center: {},
   highlightBlinkIds: [],
   zoomOut() {
-    const windowSize = windowWH();
-    const factor = Math.max(
-      windowSize[0] / this.boardSize[0],
-      windowSize[1] / this.boardSize[1],
-      this.factor.outMax
+    const [bw, bh] = this.boardSize;
+    const [ww, wh] = windowWH();
+    const matte = displayMatte();
+    const wwMatted = ww - matte.left - matte.right;
+    const whMatted = wh - matte.top - matte.bottom;
+    let factor = Math.min(
+      wwMatted / bw, whMatted / bh,
     );
+    factor = Math.max(factor, this.factor.outMax);
     zoomGeneral(factor);
+    const bwZoomed = bw * factor;
+    const bhZoomed = bh * factor;
+    const fw = Math.max((wwMatted - bwZoomed) / 2, 0);
+    const fh = Math.max((whMatted - bhZoomed) / 2, 0);
+    const rawLeft = fw + matte.left;
+    const rawTop = fh + matte.top;
+    dom.gameplay.style.left = `${rawLeft / factor}px`;
+    dom.gameplay.style.top = `${rawTop / factor}px`;
     buttons.zoomOut.classList.add('current');
     for (const element of obstructiveElements) {
       element.classList.add('slim');
@@ -41,15 +52,19 @@ const nonZoomElements = qda('non-zoom');
 const obstructiveElements = qda('obstructive');
 
 // Needed for zoom button click handlers
-function applyZoomCenter() {
-  const {left: cl, top: ct} = zoom.center;
-  const fc = zoom.factor.current;
-  const [ww, wh] = windowWH();
+function displayMatte() {
   const matte = {};
   const sides = ['top', 'right', 'bottom', 'left'];
   for (const side of sides) {
     matte[side] = cssFloat(`--matte-${side}`, 'body');
   }
+  return matte;
+}
+function applyZoomCenter() {
+  const {left: cl, top: ct} = zoom.center;
+  const fc = zoom.factor.current;
+  const [ww, wh] = windowWH();
+  const matte = displayMatte();
   const offsetH = (ww + matte.left - matte.right) / 2;
   const offsetV = (wh + matte.top - matte.bottom) / 2;
   scroll(cl * fc - offsetH, ct * fc - offsetV);
@@ -69,13 +84,18 @@ function zoomGeneral(factor) {
     zoom.center.top = top / zoom.factor.current;
   }
   dom.gameplay.style.zoom = factor;
+  dom.gameplay.style.left = null;
+  dom.gameplay.style.top = null;
   zoom.factor.current = factor;
   applyZoomCenter();
   for (const element of nonZoomElements) {
     element.style.zoom = 1 / zoom.factor.current;
   }
   const isOut = factor < 1;
-  dom.gameplay.classList.toggle('zoomed-out', isOut);
+  document.body.classList.toggle('zoomed-out', isOut);
+  document.body.style.setProperty(
+    '--bg-scale', factor,
+  );
   for (const button of Object.values(buttons)) {
     button.classList.remove('current');
   }

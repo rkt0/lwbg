@@ -8,6 +8,7 @@
   --button-border-width: 3px;
   --small-button-size: 36px;
   --gap: 1.5em;
+  --jungle: url("../img/bg/jungle.png");
 }
 
 @font-face {
@@ -27,6 +28,11 @@ body {
   user-select: none;
   font: bold 24px Atkinson;
   image-rendering: pixelated;
+
+  &.zoomed-out {
+    background-image: var(--jungle);
+    background-size: calc(512px * var(--bg-scale));
+  }
 }
 
 ::-webkit-scrollbar {
@@ -47,8 +53,7 @@ svg {
 }
 
 section {
-  background-image: url("../img/bg/jungle.png");
-  background-repeat: repeat;
+  background-image: var(--jungle);
   position: fixed;
   box-sizing: border-box;
   width: 100%;
@@ -57,6 +62,10 @@ section {
   display: grid;
   place-content: center;
   gap: var(--gap);
+
+  .zoomed-out & {
+    background-image: none;
+  }
 }
 
 button {
@@ -129,4 +138,8 @@ p {
 
 .gameplay {
   padding: 0;
+
+  &.zoomed-out {
+    background: none;
+  }
 }
