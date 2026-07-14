@@ -1,4 +1,6 @@
-import {qjs, qda, windowWH} from './utility.js';
+import {
+  qjs, qda, windowWH, cssFloat,
+} from './utility.js';
 import {dom} from './dom.js';
 
 export const zoom = {
@@ -43,7 +45,14 @@ function applyZoomCenter() {
   const {left: cl, top: ct} = zoom.center;
   const fc = zoom.factor.current;
   const [ww, wh] = windowWH();
-  scroll(cl * fc - ww / 2, ct * fc - wh / 2);
+  const matte = {};
+  const sides = ['top', 'right', 'bottom', 'left'];
+  for (const side of sides) {
+    matte[side] = cssFloat(`--matte-${side}`, 'body');
+  }
+  const offsetH = (ww + matte.left - matte.right) / 2;
+  const offsetV = (wh + matte.top - matte.bottom) / 2;
+  scroll(cl * fc - offsetH, ct * fc - offsetV);
 }
 function zoomGeneral(factor) {
   if (!zoom.factor.current) {

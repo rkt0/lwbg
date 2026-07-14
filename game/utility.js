@@ -190,6 +190,11 @@ export function cssIntWH(stem, where = ':root') {
   const dims = ['width', 'height'];
   return dims.map(x => cssInt(`${stem}-${x}`, where));
 }
+export function cssFloat(property, where = ':root') {
+  const style = getComputedStyle(qs(where));
+  const value = style.getPropertyValue(property);
+  return parseFloat(value || 0);
+}
 
 export async function fileContents(fh, splitLines) {
   const file = await fh.getFile();
