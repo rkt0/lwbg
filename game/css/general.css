@@ -137,7 +137,11 @@ p {
 }
 
 .gameplay {
+  box-sizing: content-box;
   padding: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-width: var(--matte, 0);
 
   &.zoomed-out {
     background: none;
