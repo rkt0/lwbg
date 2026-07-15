@@ -27,7 +27,15 @@ async function toggleFullscreen() {
 function toggleTvMode() {
   const isZoomedOut = (zoom.factor.current ?? 1) < 1;
   if (!isZoomedOut) zoom.setCenter();
-  document.body.classList.toggle('tv-mode');
+  if (document.body.classList.contains('tv-mode')) {
+    // Adjust center before removing matte
+    zoom.adjustCenterForMatte(-1);
+    document.body.classList.remove('tv-mode');
+  } else {
+    // Adjust center after adding matte
+    document.body.classList.add('tv-mode');
+    zoom.adjustCenterForMatte(1);
+  }
   if (isZoomedOut) zoom.zoomOut();
   else zoom.applyCenter();
 }

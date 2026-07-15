@@ -49,15 +49,16 @@ export const zoom = {
       top: (scrollY + shiftY) / this.factor.current,
     };
   },
-  applyCenter(adjustInitialView) {
+  adjustCenterForMatte(direction) {
     const dm = displayMatte();
-    if (adjustInitialView) {
-      this.center.left += dm.left;
-      this.center.top += dm.top;
-    }
+    this.center.left += dm.left * direction;
+    this.center.top += dm.top * direction;
+  },
+  applyCenter() {
     const {left: cl, top: ct} = this.center;
     const fc = this.factor.current;
     const [wwMatted, whMatted] = windowWHMatted();
+    const dm = displayMatte();
     const shiftX = wwMatted / 2 + dm.left;
     const shiftY = whMatted / 2 + dm.top;
     scroll(cl * fc - shiftX, ct * fc - shiftY);
@@ -77,7 +78,8 @@ const obstructiveElements = qda('obstructive');
 function zoomGeneral(factor) {
   if (!zoom.factor.current) {
     zoom.factor.current = 1;
-    zoom.applyCenter(true);
+    zoom.adjustCenterForMatte(1);
+    zoom.applyCenter();
     return;
   }
   if (zoom.factor.current === factor) return;
