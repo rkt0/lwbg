@@ -18,7 +18,7 @@ export const edit = {
     this.selected = {species: null, piece: null};
     this.dieCodes = {movement: 0, continue: 0};
   },
-  begin() {
+  async begin() {
     if (gs.turn !== 'trex' && gs.turn !== 'over') {
       click(qjs('cancel'));
     }
@@ -30,7 +30,7 @@ export const edit = {
       'roll-button', 'decline',
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',
     ];
-    for (const x of hidden) ui.hideButton(x);
+    for (const x of hidden) await ui.hideButton(x);
     anim.slide(elements.banner, 1, eTime);
     for (const element of elements.trexButtons) {
       anim.fade(element, 1, eTime);

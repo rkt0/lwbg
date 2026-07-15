@@ -14,6 +14,7 @@ export const ui = {
   },
   async hideButton(identifier) {
     const element = qjs(identifier);
+    if (element.disabled) return;
     element.disabled = true;
     await anim.move(element, {
       left: `-${cssInt('--button-width')}px`,
