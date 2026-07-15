@@ -1,6 +1,8 @@
-import {qjs, qda, windowWH} from './utility.js';
+import {qjs, qda} from './utility.js';
+import {
+  displayMatte, windowWHMatted,
+} from './display-matte.js';
 import {dom} from './dom.js';
-import {displayMatte} from './display-matte.js';
 
 export const zoom = {
   factor: {current: null, in: 2, outMax: 0.125},
@@ -8,10 +10,8 @@ export const zoom = {
   highlightBlinkIds: [],
   zoomOut() {
     const [bw, bh] = this.boardSize;
-    const [ww, wh] = windowWH();
-    const matte = displayMatte();
-    const wwMatted = ww - matte.left - matte.right;
-    const whMatted = wh - matte.top - matte.bottom;
+    const [wwMatted, whMatted] = windowWHMatted();
+    const dm = displayMatte();
     let factor = Math.min(
       wwMatted / bw, whMatted / bh,
     );
@@ -21,8 +21,8 @@ export const zoom = {
     const bhZoomed = bh * factor;
     const fw = Math.max((wwMatted - bwZoomed) / 2, 0);
     const fh = Math.max((whMatted - bhZoomed) / 2, 0);
-    const rawLeft = fw + matte.left;
-    const rawTop = fh + matte.top;
+    const rawLeft = fw + dm.left;
+    const rawTop = fh + dm.top;
     dom.gameplay.style.left = `${rawLeft / factor}px`;
     dom.gameplay.style.top = `${rawTop / factor}px`;
     buttons.zoomOut.classList.add('current');
@@ -40,22 +40,26 @@ export const zoom = {
     buttons.zoomIn.classList.add('current');
   },
   setCenter() {
-    const [ww, wh] = windowWH();
+    const [wwMatted, whMatted] = windowWHMatted();
     const dm = displayMatte();
-    const shiftX = (ww + dm.left - dm.right) / 2;
-    const shiftY = (wh + dm.top - dm.bottom) / 2;
+    const shiftX = wwMatted / 2 + dm.left;
+    const shiftY = whMatted / 2 + dm.top;
     zoom.center = {
       left: (scrollX + shiftX) / this.factor.current,
       top: (scrollY + shiftY) / this.factor.current,
     };
   },
-  applyCenter() {
+  applyCenter(adjustInitialView) {
+    const dm = displayMatte();
+    if (adjustInitialView) {
+      this.center.left += dm.left;
+      this.center.top += dm.top;
+    }
     const {left: cl, top: ct} = this.center;
     const fc = this.factor.current;
-    const [ww, wh] = windowWH();
-    const dm = displayMatte();
-    const shiftX = (ww + dm.left - dm.right) / 2;
-    const shiftY = (wh + dm.top - dm.bottom) / 2;
+    const [wwMatted, whMatted] = windowWHMatted();
+    const shiftX = wwMatted / 2 + dm.left;
+    const shiftY = whMatted / 2 + dm.top;
     scroll(cl * fc - shiftX, ct * fc - shiftY);
   },
 };
@@ -73,7 +77,7 @@ const obstructiveElements = qda('obstructive');
 function zoomGeneral(factor) {
   if (!zoom.factor.current) {
     zoom.factor.current = 1;
-    zoom.applyCenter();
+    zoom.applyCenter(true);
     return;
   }
   if (zoom.factor.current === factor) return;

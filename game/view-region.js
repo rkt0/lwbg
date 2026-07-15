@@ -1,8 +1,10 @@
 import {
-  sleep, sqrtStep, windowWH,
-  absoluteBoundingRect, boundingBox,
+  sleep, sqrtStep, absoluteBoundingRect, boundingBox,
 } from './utility.js';
 import {scrollBetter} from './scroll.js';
+import {
+  displayMatte, windowWHMatted,
+} from './display-matte.js';
 import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {anim} from './animation.js';
@@ -40,34 +42,44 @@ function trexMoveRegion() {
     absoluteBoundingRect(elementNew),
   );
 };
+
 export async function bringMoveIntoView() {
   const region = movePlanRegion();
   const padding = [216, 108];
-  const [ww, wh] = windowWH();
   const [ph, pv] = padding;
-  const current = {
-    left: scrollX, right: scrollX + ww,
-    top: scrollY, bottom: scrollY + wh,
-  };
-  const excess = [
-    (region.right - region.left) - ww + ph * 2,
-    (region.bottom - region.top) - wh + pv * 2,
-  ].map(x => Math.max(x, 0));
   const target = {
-    left: region.left - ph + excess[0] / 2,
-    right: region.right + ph - excess[0] / 2,
-    top: region.top - pv + excess[1] / 2,
-    bottom: region.bottom + pv - excess[1] / 2,
+    left: region.left - ph,
+    right: region.right + ph,
+    top: region.top - pv,
+    bottom: region.bottom + pv,
+  };
+  const [wwMatted, whMatted] = windowWHMatted();
+  const dm = displayMatte();
+  if (target.right - target.left > wwMatted) {
+    const midpoint = (target.left + target.right) / 2;
+    target.left = midpoint - wwMatted / 2;
+    target.right = midpoint + wwMatted / 2;
+  }
+  if (target.bottom - target.top > whMatted) {
+    const midpoint = (target.top + target.bottom) / 2;
+    target.top = midpoint - whMatted / 2;
+    target.bottom = midpoint + whMatted / 2;
+  }
+  const current = {
+    left: scrollX + dm.left,
+    right: scrollX + dm.left + wwMatted,
+    top: scrollY + dm.top,
+    bottom: scrollY + dm.top + whMatted,
   };
   const location = {
     left: Math.min(target.left, current.left),
     top: Math.min(target.top, current.top),
   };
   if (target.right > current.right) {
-    location.left = target.right - ww;
+    location.left = target.right - wwMatted;
   }
   if (target.bottom > current.bottom) {
-    location.top = target.bottom - wh;
+    location.top = target.bottom - whMatted;
   }
   const distance = Math.hypot(
     location.left - current.left,
