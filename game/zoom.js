@@ -1,7 +1,6 @@
-import {
-  qjs, qda, windowWH, cssFloat,
-} from './utility.js';
+import {qjs, qda, windowWH} from './utility.js';
 import {dom} from './dom.js';
+import {displayMatte} from './display-matte.js';
 
 export const zoom = {
   factor: {current: null, in: 2, outMax: 0.125},
@@ -71,14 +70,6 @@ const nonZoomElements = qda('non-zoom');
 const obstructiveElements = qda('obstructive');
 
 // Needed for zoom button click handlers
-function displayMatte() {
-  const matte = {};
-  const sides = ['top', 'right', 'bottom', 'left'];
-  for (const side of sides) {
-    matte[side] = cssFloat(`--matte-${side}`, 'body');
-  }
-  return matte;
-}
 function zoomGeneral(factor) {
   if (!zoom.factor.current) {
     zoom.factor.current = 1;
