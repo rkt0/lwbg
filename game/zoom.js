@@ -40,6 +40,25 @@ export const zoom = {
     zoomGeneral(this.factor.in);
     buttons.zoomIn.classList.add('current');
   },
+  setCenter() {
+    const [ww, wh] = windowWH();
+    const dm = displayMatte();
+    const shiftX = (ww + dm.left - dm.right) / 2;
+    const shiftY = (wh + dm.top - dm.bottom) / 2;
+    zoom.center = {
+      left: (scrollX + shiftX) / this.factor.current,
+      top: (scrollY + shiftY) / this.factor.current,
+    };
+  },
+  applyCenter() {
+    const {left: cl, top: ct} = this.center;
+    const fc = this.factor.current;
+    const [ww, wh] = windowWH();
+    const dm = displayMatte();
+    const shiftX = (ww + dm.left - dm.right) / 2;
+    const shiftY = (wh + dm.top - dm.bottom) / 2;
+    scroll(cl * fc - shiftX, ct * fc - shiftY);
+  },
 };
 
 // Element references
@@ -60,34 +79,19 @@ function displayMatte() {
   }
   return matte;
 }
-function applyZoomCenter() {
-  const {left: cl, top: ct} = zoom.center;
-  const fc = zoom.factor.current;
-  const [ww, wh] = windowWH();
-  const matte = displayMatte();
-  const offsetH = (ww + matte.left - matte.right) / 2;
-  const offsetV = (wh + matte.top - matte.bottom) / 2;
-  scroll(cl * fc - offsetH, ct * fc - offsetV);
-}
 function zoomGeneral(factor) {
   if (!zoom.factor.current) {
     zoom.factor.current = 1;
-    applyZoomCenter();
+    zoom.applyCenter();
     return;
   }
   if (zoom.factor.current === factor) return;
-  if (zoom.factor.current >= 1) {
-    const [ww, wh] = windowWH();
-    const left = scrollX + ww / 2;
-    const top = scrollY + wh / 2;
-    zoom.center.left = left / zoom.factor.current;
-    zoom.center.top = top / zoom.factor.current;
-  }
+  if (zoom.factor.current >= 1) zoom.setCenter();
   dom.gameplay.style.zoom = factor;
   dom.gameplay.style.left = null;
   dom.gameplay.style.top = null;
   zoom.factor.current = factor;
-  applyZoomCenter();
+  zoom.applyCenter();
   for (const element of nonZoomElements) {
     element.style.zoom = 1 / zoom.factor.current;
   }

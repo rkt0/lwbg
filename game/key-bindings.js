@@ -13,11 +13,23 @@ function clickIfOk(button) {
   click(button);
 }
 
-function toggleFullscreen() {
+async function toggleFullscreen() {
+  const isZoomedOut = (zoom.factor.current ?? 1) < 1;
+  if (!isZoomedOut) zoom.setCenter();
   const element = document.documentElement;
   if (!document.fullscreenElement) {
-    element?.requestFullscreen();
-  } else document.exitFullscreen();
+    await element?.requestFullscreen();
+  } else await document.exitFullscreen();
+  if (isZoomedOut) zoom.zoomOut();
+  else zoom.applyCenter();
+}
+
+function toggleTvMode() {
+  const isZoomedOut = (zoom.factor.current ?? 1) < 1;
+  if (!isZoomedOut) zoom.setCenter();
+  document.body.classList.toggle('tv-mode');
+  if (isZoomedOut) zoom.zoomOut();
+  else zoom.applyCenter();
 }
 
 // Do not use the ael utility function here;
@@ -76,7 +88,7 @@ document.addEventListener('keydown', (e) => {
       break;
     case 't':
       e.preventDefault();
-      document.body.classList.toggle('tv-mode');
+      toggleTvMode();
       break;
     case '-':
     case '=':
