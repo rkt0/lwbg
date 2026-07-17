@@ -104,6 +104,7 @@ async function endEditMode() {
     if (element === elements.banner) continue;
     anim.fade(element, 0, eTime);
   }
+  ui.hideButton('unroll-dice');
   dom.selected?.classList.remove('selected');
   if (edit.selected.species === 'human') {
     const button = dom.editKill[edit.selected.piece];
@@ -183,7 +184,6 @@ function changeDie(species, type) {
   replaceDieValue(species, type, changed);
 }
 for (const element of qda('edit-die')) {
-  if (element.dataset.js) continue;
   ael(element, 'mousedown', (e) => {
     const dieData = closestData(e);
     const [, species, type] = dieData.split('-');
@@ -194,7 +194,7 @@ ael(qjs('unroll-dice'), 'mousedown', () => {
   gp.clearRoll();
   const buttonsToHide = [
     'decline', 'ok-no-move', 'ok-trex-move',
-    'roll-display',
+    'roll-display', 'unroll-dice',
   ];
   for (const b of buttonsToHide) ui.hideButton(b);
   enableDiceEdit(false);
@@ -209,6 +209,7 @@ function enableDiceEdit(enable = true) {
     anim.fade(element, +enable, eTime);
   }
   if (!enable) return;
+  ui.showButton('unroll-dice');
   edit.dieCodes.movement =
     dieCode(gs.rollN, dice[gs.turn].movement);
   edit.dieCodes.continue =
