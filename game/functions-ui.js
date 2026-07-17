@@ -4,22 +4,21 @@ import {anim} from './animation.js';
 
 export const ui = {
   async showButton(identifier) {
-    const element = qjs(identifier);
-    element.style.display = '';
+    const button = element[identifier];
+    button.style.display = '';
     const aTime = anim.time.buttonSlide;
-    await anim.move(element, {left: '0px'}, aTime, {
-      easing: 'linear',
-    });
-    element.disabled = false;
+    const linear = {easing: 'linear'};
+    await anim.move(button, leftShow, aTime, linear);
+    button.disabled = false;
   },
   async hideButton(identifier) {
-    const element = qjs(identifier);
-    if (element.disabled) return;
-    element.disabled = true;
-    await anim.move(element, {
-      left: `-${cssInt('--button-width')}px`,
-    }, anim.time.buttonSlide, {easing: 'linear'});
-    element.style.display = 'none';
+    const button = element[identifier];
+    if (button.disabled) return;
+    button.disabled = true;
+    const aTime = anim.time.buttonSlide;
+    const linear = {easing: 'linear'};
+    await anim.move(button, leftHide, aTime, linear);
+    button.style.display = 'none';
   },
   async replaceButton(identifierOld, identifierNew) {
     await this.hideButton(identifierOld);
@@ -29,12 +28,11 @@ export const ui = {
     const speciesText =
       species === 'human' ? 'Humans' :
       species === 'trex' ? 'T-Rex' : 'Raptors';
-    const span = qjs('species-turn-text');
-    if (span.innerHTML === speciesText) return;
+    if (turnSpan.innerHTML === speciesText) return;
     const aTime = skipFx ? 0 : anim.time.turnFade;
-    await anim.fade(span, 0, aTime);
-    span.innerHTML = speciesText;
-    anim.fade(span, 1, aTime);
+    await anim.fade(turnSpan, 0, aTime);
+    turnSpan.innerHTML = speciesText;
+    anim.fade(turnSpan, 1, aTime);
   },
   displayRollResult(rollState, skipFx) {
     for (const die of Object.values(dom.dice)) {
@@ -89,4 +87,21 @@ export const ui = {
   },
 };
 
+// Initialize on first use; elements do not exist yet
 let humanClickableItems;
+
+// Element references
+const identifiers = [
+  'roll-button', 'roll-display', 'unroll-dice',
+  'ok-trex-move', 'ok-no-move', 'ok-ai-move',
+  'decline', 'cancel', 'confirm',
+];
+const element = Object.fromEntries(identifiers.map(
+  identifier => [identifier, qjs(identifier)]
+));
+const turnSpan = qjs('species-turn-text');
+
+// Other values
+const buttonWidth = cssInt('--button-width');
+const leftShow = {left: '0px'};
+const leftHide = {left: `-${buttonWidth}px`};
