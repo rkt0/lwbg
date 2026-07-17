@@ -25,13 +25,13 @@ export const edit = {
     this.on = true;
     this.gsPrevious = deepCopy(gs);
     message.hide();
-    dom.showMore.style.visibility = 'hidden';
     const hidden = [
       'roll-button', 'decline',
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',
     ];
     for (const x of hidden) await ui.hideButton(x);
-    anim.slide(elements.banner, 1, eTime);
+    await anim.slide(elements.banner, 1, eTime);
+    dom.showMore.style.visibility = 'hidden';
     for (const element of elements.trexButtons) {
       anim.fade(element, 1, eTime);
     }
