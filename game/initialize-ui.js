@@ -175,3 +175,15 @@ ael(qjs('gameplay-menu'), 'mousedown', (e) => {
   else if (js === 'zoom-default') zoom.zoomDefault();
   else if (js === 'zoom-in') zoom.zoomIn();
 });
+
+// Toggle button area click handler
+ael(qjs('toggle-button-area'), 'mousedown', (e) => {
+  const toggle = closestData(e, 'toggle');
+  if (toggle === 'audio') {
+    music.toggle();
+  } else if (toggle === 'fullscreen') {
+    zoom.toggleFullscreen();
+  } else if (toggle === 'tv-mode') {
+    zoom.toggleTvMode();
+  }
+});
