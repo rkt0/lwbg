@@ -92,7 +92,7 @@ button,
     var(--color-border);
 }
 
-.small-button {
+.small {
   width: var(--small-button-size);
   height: var(--small-button-size);
 }
