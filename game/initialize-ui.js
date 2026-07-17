@@ -1,5 +1,5 @@
 import {
-  qjs, qda, ael, click, rollDie,
+  qjs, qda, closestData, ael, click, rollDie,
 } from './utility.js';
 import {prng} from './prngs.js';
 import {dom} from './dom.js';
@@ -28,16 +28,16 @@ for (const button of qda('dormant', gameplayMenu)) {
 }
 
 // Simple gameplay menu click handlers
-ael(dom.showMore, 'mousedown', () => {
+function showMore() {
   moreMenu.show();
-});
-ael(qjs('ok-no-move'), 'mousedown', async () => {
+}
+async function okNoMove() {
   if (gs.phase === 'roll') return;
   message.hide();
   ui.hideButton('ok-no-move');
   await gp.endTurn();
-});
-ael(qjs('ok-ai-move'), 'mousedown', async () => {
+}
+async function okAiMove() {
   if (gs.phase !== 'select') return;
   gs.phase = 'think';
   ui.hideButton('ok-ai-move');
@@ -50,8 +50,8 @@ ael(qjs('ok-ai-move'), 'mousedown', async () => {
   mv.plan = decision[1];
   gs.phase = 'move';
   click(qjs('confirm'));
-});
-ael(qjs('decline'), 'mousedown', async () => {
+}
+async function decline() {
   if (gs.phase !== 'select' || !gs.je) return;
   message.hide();
   if (mv.toGo) {
@@ -63,8 +63,8 @@ ael(qjs('decline'), 'mousedown', async () => {
     ui.hideButton('decline');
     await gp.endTurn();
   }
-});
-ael(qjs('roll-button'), 'mousedown', async () => {
+}
+async function executeRoll() {
   if (gs.phase !== 'roll') return;
   gs.phase = 'execute';
   message.hide();
@@ -93,9 +93,17 @@ ael(qjs('roll-button'), 'mousedown', async () => {
       } else if (gs.je) gp.startJumpEnter();
     }, delay);
   }
-});
+}
+async function okTrexMove() {
+  if (gs.phase !== 'move') return;
+  gs.phase = 'execute';
+  ui.hideButton('ok-trex-move');
+  zoom.zoomDefault();
+  await bringMoveIntoView();
+  gp.moveTrex(gs.trex - 1, true);
+}
 
-// Needed for multiple click handlers
+// Needed for click handlers for cancel and confirm
 function clearVisibleMove() {
   message.hide();
   ui.hideButton('cancel');
@@ -110,17 +118,15 @@ function clearVisibleMove() {
   dom.path = [];
 }
 
-// Cancel button click handler
-ael(qjs('cancel'), 'mousedown', () => {
+// Click handlers for cancel and confirm
+function cancelMove() {
   if (gs.phase !== 'move') return;
   gs.phase = 'select';
   clearVisibleMove();
   gp.clearMoveObject();
   if (gs.je) gp.startJumpEnter();
-});
-
-// Confirm button click handler
-ael(qjs('confirm'), 'mousedown', async () => {
+}
+async function confirmMove() {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
   clearVisibleMove();
@@ -135,28 +141,7 @@ ael(qjs('confirm'), 'mousedown', async () => {
       await gp.moveRaptor(mv.selected, s, isLast);
     }
   }
-});
-
-// T-rex button click handler
-ael(qjs('ok-trex-move'), 'mousedown', async () => {
-  if (gs.phase !== 'move') return;
-  gs.phase = 'execute';
-  ui.hideButton('ok-trex-move');
-  zoom.zoomDefault();
-  await bringMoveIntoView();
-  gp.moveTrex(gs.trex - 1, true);
-});
-
-// Zoom button click handlers
-ael(qjs('zoom-out'), 'mousedown', () => {
-  zoom.zoomOut();
-});
-ael(qjs('zoom-default'), 'mousedown', () => {
-  zoom.zoomDefault();
-});
-ael(qjs('zoom-in'), 'mousedown', () => {
-  zoom.zoomIn();
-});
+}
 
 // Toggle button click handlers
 for (const button of qda('toggle-audio')) {
@@ -174,3 +159,19 @@ for (const button of qda('toggle-tv-mode')) {
     zoom.toggleTvMode();
   });
 }
+
+// Gameplay menu click handler
+ael(qjs('gameplay-menu'), 'mousedown', (e) => {
+  const js = closestData(e);
+  if (js === 'show-more') showMore();
+  else if (js === 'ok-no-move') okNoMove();
+  else if (js === 'ok-ai-move') okAiMove();
+  else if (js === 'ok-trex-move') okTrexMove();
+  else if (js === 'decline') decline();
+  else if (js === 'roll-button') executeRoll();
+  else if (js === 'cancel') cancelMove();
+  else if (js === 'confirm') confirmMove();
+  else if (js === 'zoom-out') zoom.zoomOut();
+  else if (js === 'zoom-default') zoom.zoomDefault();
+  else if (js === 'zoom-in') zoom.zoomIn();
+});
