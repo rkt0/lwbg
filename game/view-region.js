@@ -2,9 +2,7 @@ import {
   sleep, sqrtStep, absoluteBoundingRect, boundingBox,
 } from './utility.js';
 import {scrollBetter} from './scroll.js';
-import {
-  displayMatte, windowWHMatted,
-} from './display-matte.js';
+import {tvMatte} from './tv-matte.js';
 import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {anim} from './animation.js';
@@ -53,33 +51,33 @@ export async function bringMoveIntoView() {
     top: region.top - pv,
     bottom: region.bottom + pv,
   };
-  const [wwMatted, whMatted] = windowWHMatted();
-  const dm = displayMatte();
-  if (target.right - target.left > wwMatted) {
+  const [wwm, whm] = tvMatte.windowWHMatted();
+  const matte = tvMatte.current();
+  if (target.right - target.left > wwm) {
     const midpoint = (target.left + target.right) / 2;
-    target.left = midpoint - wwMatted / 2;
-    target.right = midpoint + wwMatted / 2;
+    target.left = midpoint - wwm / 2;
+    target.right = midpoint + wwm / 2;
   }
-  if (target.bottom - target.top > whMatted) {
+  if (target.bottom - target.top > whm) {
     const midpoint = (target.top + target.bottom) / 2;
-    target.top = midpoint - whMatted / 2;
-    target.bottom = midpoint + whMatted / 2;
+    target.top = midpoint - whm / 2;
+    target.bottom = midpoint + whm / 2;
   }
   const current = {
-    left: scrollX + dm.left,
-    right: scrollX + dm.left + wwMatted,
-    top: scrollY + dm.top,
-    bottom: scrollY + dm.top + whMatted,
+    left: scrollX + matte.left,
+    right: scrollX + matte.left + wwm,
+    top: scrollY + matte.top,
+    bottom: scrollY + matte.top + whm,
   };
   const location = {
     left: Math.min(target.left, current.left),
     top: Math.min(target.top, current.top),
   };
   if (target.right > current.right) {
-    location.left = target.right - wwMatted;
+    location.left = target.right - wwm;
   }
   if (target.bottom > current.bottom) {
-    location.top = target.bottom - whMatted;
+    location.top = target.bottom - whm;
   }
   const distance = Math.hypot(
     location.left - current.left,

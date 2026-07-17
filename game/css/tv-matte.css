@@ -7,7 +7,7 @@ body.tv-mode {
     var(--matte-bottom) var(--matte-left);
 }
 
-.display-matte {
+.tv-matte {
   position: fixed;
   background: var(--color-dark);
   height: 100vh;

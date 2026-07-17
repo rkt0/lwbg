@@ -1,7 +1,5 @@
 import {qjs, qda} from './utility.js';
-import {
-  displayMatte, windowWHMatted,
-} from './display-matte.js';
+import {tvMatte} from './tv-matte.js';
 import {dom} from './dom.js';
 
 export const zoom = {
@@ -10,19 +8,17 @@ export const zoom = {
   highlightBlinkIds: [],
   zoomOut() {
     const [bw, bh] = this.boardSize;
-    const [wwMatted, whMatted] = windowWHMatted();
-    const dm = displayMatte();
-    let factor = Math.min(
-      wwMatted / bw, whMatted / bh,
-    );
+    const [wwm, whm] = tvMatte.windowWHMatted();
+    const matte = tvMatte.current();
+    let factor = Math.min(wwm / bw, whm / bh);
     factor = Math.max(factor, this.factor.outMax);
     zoomGeneral(factor);
     const bwZoomed = bw * factor;
     const bhZoomed = bh * factor;
-    const fw = Math.max((wwMatted - bwZoomed) / 2, 0);
-    const fh = Math.max((whMatted - bhZoomed) / 2, 0);
-    const rawLeft = fw + dm.left;
-    const rawTop = fh + dm.top;
+    const fw = Math.max((wwm - bwZoomed) / 2, 0);
+    const fh = Math.max((whm - bhZoomed) / 2, 0);
+    const rawLeft = fw + matte.left;
+    const rawTop = fh + matte.top;
     dom.gameplay.style.left = `${rawLeft / factor}px`;
     dom.gameplay.style.top = `${rawTop / factor}px`;
     buttons.zoomOut.classList.add('current');
@@ -40,28 +36,59 @@ export const zoom = {
     buttons.zoomIn.classList.add('current');
   },
   setCenter() {
-    const [wwMatted, whMatted] = windowWHMatted();
-    const dm = displayMatte();
-    const shiftX = wwMatted / 2 + dm.left;
-    const shiftY = whMatted / 2 + dm.top;
+    const [wwm, whm] = tvMatte.windowWHMatted();
+    const matte = tvMatte.current();
+    const shiftX = wwm / 2 + matte.left;
+    const shiftY = whm / 2 + matte.top;
     zoom.center = {
       left: (scrollX + shiftX) / this.factor.current,
       top: (scrollY + shiftY) / this.factor.current,
     };
   },
   adjustCenterForMatte(direction) {
-    const dm = displayMatte();
-    this.center.left += dm.left * direction;
-    this.center.top += dm.top * direction;
+    const matte = tvMatte.current();
+    this.center.left += matte.left * direction;
+    this.center.top += matte.top * direction;
   },
   applyCenter() {
     const {left: cl, top: ct} = this.center;
     const fc = this.factor.current;
-    const [wwMatted, whMatted] = windowWHMatted();
-    const dm = displayMatte();
-    const shiftX = wwMatted / 2 + dm.left;
-    const shiftY = whMatted / 2 + dm.top;
+    const [wwm, whm] = tvMatte.windowWHMatted();
+    const matte = tvMatte.current();
+    const shiftX = wwm / 2 + matte.left;
+    const shiftY = whm / 2 + matte.top;
     scroll(cl * fc - shiftX, ct * fc - shiftY);
+  },
+  async toggleFullscreen() {
+    const isOutNow = (this.factor.current ?? 1) < 1;
+    if (!isOutNow) this.setCenter();
+    const element = document.documentElement;
+    if (!document.fullscreenElement) {
+      await element?.requestFullscreen();
+    } else await document.exitFullscreen();
+    if (isOutNow) this.zoomOut();
+    else this.applyCenter();
+    for (const icon of icons.fullscreen) {
+      icon.classList.toggle('inactive');
+    }
+  },
+  toggleTvMode() {
+    const isOutNow = (this.factor.current ?? 1) < 1;
+    if (!isOutNow) this.setCenter();
+    if (document.body.classList.contains('tv-mode')) {
+      // Adjust center before removing matte
+      this.adjustCenterForMatte(-1);
+      document.body.classList.remove('tv-mode');
+    } else {
+      // Adjust center after adding matte
+      document.body.classList.add('tv-mode');
+      this.adjustCenterForMatte(1);
+    }
+    if (isOutNow) this.zoomOut();
+    else this.applyCenter();
+    for (const icon of icons.tvMode) {
+      icon.classList.toggle('inactive');
+    }
   },
 };
 
@@ -73,6 +100,10 @@ const buttons = {
 };
 const nonZoomElements = qda('non-zoom');
 const obstructiveElements = qda('obstructive');
+const icons = {
+  fullscreen: qda('icon-fullscreen'),
+  tvMode: qda('icon-tv-mode'),
+};
 
 // Needed for zoom button click handlers
 function zoomGeneral(factor) {

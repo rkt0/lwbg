@@ -51,7 +51,7 @@ export const music = {
 };
 
 const element = qjs('music-player');
-const icons = qda('icon');
+const icons = qda('icon-audio');
 const tooRecent = 6;
 const recentIds = [];
 let nowPlaying = null;
@@ -108,6 +108,3 @@ const total = cdf[nTracks - 1];
 for (let i = 0; i < nTracks; i++) cdf[i] /= total;
 
 ael(element, 'ended', () => music.next());
-for (const button of qda('toggle-audio')) {
-  ael(button, 'mousedown', () => music.toggle());
-}
