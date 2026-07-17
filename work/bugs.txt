@@ -1,1 +1,2 @@
 backdrop filter fails sometimes after fade in
+show-more button disappears too soon on begin edit
