@@ -1,3 +1,4 @@
 backdrop filter fails sometimes after fade in
 show-more button disappears too soon on begin edit
 selected human space not shown when zoomed out
+leaving fullscreen via <Esc> breaks toggle state
