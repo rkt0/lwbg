@@ -37,24 +37,26 @@
   </div>
   <div data-js="gameplay-menu" data-non-zoom
     class="gameplay-menu">
-    <button type="button" data-js="show-more">
+    <button type="button" data-js="show-more"
+      title="More Actions">
       &bull; &bull; &bull;
     </button>
     <div class="zoom-display info">
       <div class="heading">Zoom</div>
       <div class="zoom-button-row">
         <button type="button" data-js="zoom-out"
-          class="zoom-button">
+          title="Zoom Out" class="zoom-button">
           <div class="zoom-indicator">&dtrif;</div>
           &ndash;
         </button>
         <button type="button" data-js="zoom-default"
+          title="Zoom Default"
           class="zoom-button current">
           <div class="zoom-indicator">&dtrif;</div>
           &bull;
         </button>
         <button type="button" data-js="zoom-in"
-          class="zoom-button">
+          title="Zoom In" class="zoom-button">
           <div class="zoom-indicator">&dtrif;</div>
           +
         </button>
@@ -184,15 +186,38 @@
     <span data-js="humans-saved"></span>
     of <span data-js="humans-total"></span>
   </div>
-  <button type="button" data-toggle-audio
-    data-non-zoom class="toggle-audio small-button">
-    <svg data-icon class="icon inactive">
-      <use href="img/sprite.svg#icon-audio-off"/>
-    </svg>
-    <svg data-icon class="icon">
-      <use href="img/sprite.svg#icon-audio-on"/>
-    </svg>
-  </button>
+  <div data-non-zoom class="toggle-button-area">
+    <button type="button" data-toggle-audio
+      title="Toggle Audio [m]"
+      class="toggle-audio small-button">
+      <svg data-icon class="icon inactive">
+        <use href="img/sprite.svg#icon-audio-off"/>
+      </svg>
+      <svg data-icon class="icon">
+        <use href="img/sprite.svg#icon-audio-on"/>
+      </svg>
+    </button>
+    <button type="button" data-toggle-fullscreen
+      title="Toggle Full-Screen Mode [f]"
+      class="toggle-fullscreen small-button">
+      <svg data-icon class="icon inactive">
+        <use href="img/sprite.svg#fullscreen-on"/>
+      </svg>
+      <svg data-icon class="icon">
+        <use href="img/sprite.svg#fullscreen-off"/>
+      </svg>
+    </button>
+    <button type="button" data-toggle-tv-mode
+      title="Toggle TV Mode [t]"
+      class="toggle-tv-mode small-button">
+      <svg data-icon class="icon inactive">
+        <use href="img/sprite.svg#tv-mode-on"/>
+      </svg>
+      <svg data-icon class="icon">
+        <use href="img/sprite.svg#tv-mode-off"/>
+      </svg>
+    </button>
+  </div>
   <div data-js="scrim" data-dormant data-non-zoom
     class="scrim full-screen">
   </div>
@@ -250,7 +275,7 @@
 </section>
 <section data-js="start" data-dormant class="start">
   <div data-js="start-options"
-    class="choices large-text">
+    class="start-options large-text">
     <button type="button" data-js="start-new">
       Start New Game
     </button>
@@ -258,13 +283,33 @@
       Load Saved Game
     </button>
     <button type="button" data-toggle-audio
-      class="toggle-audio">
-      Toggle Audio
+      title="Toggle Audio [m]"
+      class="toggle-audio narrow">
       <svg data-icon class="icon inactive">
         <use href="img/sprite.svg#icon-audio-off"/>
       </svg>
       <svg data-icon class="icon">
         <use href="img/sprite.svg#icon-audio-on"/>
+      </svg>
+    </button>
+    <button type="button" data-toggle-fullscreen
+      title="Toggle Full-Screen Mode [f]"
+      class="toggle-fullscreen narrow">
+      <svg data-icon class="icon inactive">
+        <use href="img/sprite.svg#fullscreen-on"/>
+      </svg>
+      <svg data-icon class="icon">
+        <use href="img/sprite.svg#fullscreen-off"/>
+      </svg>
+    </button>
+    <button type="button" data-toggle-tv-mode
+      title="Toggle TV Mode [t]"
+      class="toggle-tv-mode narrow">
+      <svg data-icon class="icon inactive">
+        <use href="img/sprite.svg#tv-mode-on"/>
+      </svg>
+      <svg data-icon class="icon">
+        <use href="img/sprite.svg#tv-mode-off"/>
       </svg>
     </button>
   </div>
@@ -352,7 +397,7 @@
       &#x1f571;
     </div>
     <button type="button" data-kill="" data-dormant
-      disabled class="kill small-button">
+      disabled title="Kill" class="kill small-button">
       &#x1f571;
     </button>
   </div>

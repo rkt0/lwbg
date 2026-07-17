@@ -11,35 +11,6 @@
   }
 }
 
-.toggle-audio {
-  .gameplay & {
-    position: fixed;
-    top: var(--matte-top, 0);
-    right: var(--matte-right, 0);
-    border-style: none none solid solid;
-    z-index: 4;
-
-    .icon {
-      --size: 24px;
-      width: var(--size);
-      height: var(--size);
-      margin: calc(
-        (var(--small-button-size) - var(--size)) / 2
-      );
-    }
-  }
-
-  .start & .icon:not(.inactive) {
-    display: inline;
-    width: 1em;
-    height: 1em;
-    vertical-align: middle;
-    position: relative;
-    top: -2.5px;
-    margin-left: 0.25em;
-  }
-}
-
 .message {
   position: fixed;
   top: var(--matte-top, 0);
@@ -71,4 +42,49 @@
   background: #5a5b5faa;
   backdrop-filter: blur(5px);
   z-index: 5;
+}
+
+.start-options {
+  display: grid;
+  place-content: center;
+  gap: var(--gap);
+  --lane: 78px;
+  grid-template-columns: repeat(3, var(--lane));
+  grid-template-rows: repeat(3, var(--lane));
+
+  button {
+    grid-column: 1 / -1;
+
+    &.narrow {
+      grid-column: span 1;
+      text-align: center;
+      display: grid;
+      place-content: center;
+
+      .icon:not(.inactive) {
+        --size: 1.25em;
+        width: var(--size);
+        height: var(--size);
+      }
+    }
+  }
+}
+
+.toggle-button-area {
+  position: fixed;
+  top: var(--matte-top, 0);
+  right: var(--matte-right, 0);
+  z-index: 4;
+
+  button {
+    border-style: none none solid solid;
+    display: grid;
+    place-content: center;
+
+    .icon {
+      --size: 24px;
+      width: var(--size);
+      height: var(--size);
+    }
+  }
 }
