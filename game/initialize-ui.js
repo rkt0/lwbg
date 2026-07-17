@@ -143,23 +143,6 @@ async function confirmMove() {
   }
 }
 
-// Toggle button click handlers
-for (const button of qda('toggle-audio')) {
-  ael(button, 'mousedown', () => {
-    music.toggle();
-  });
-}
-for (const button of qda('toggle-fullscreen')) {
-  ael(button, 'mousedown', () => {
-    zoom.toggleFullscreen();
-  });
-}
-for (const button of qda('toggle-tv-mode')) {
-  ael(button, 'mousedown', () => {
-    zoom.toggleTvMode();
-  });
-}
-
 // Gameplay menu click handler
 ael(qjs('gameplay-menu'), 'mousedown', (e) => {
   const js = closestData(e);

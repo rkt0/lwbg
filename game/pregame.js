@@ -6,6 +6,7 @@ import {dom} from './dom.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
 import {music} from './music.js';
+import {zoom} from './zoom.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
 import {control} from './control.js';
@@ -41,6 +42,16 @@ ael(dom.start, 'mousedown', (e) => {
   else if (js === 'load-saved') loadSaved();
   else if (js === 'load-overwrite') loadOverwrite();
   else if (js === 'load-copy') loadCopy();
+  else {
+    const toggle = closestData(e, 'toggle');
+    if (toggle === 'audio') {
+      music.toggle();
+    } else if (toggle === 'fullscreen') {
+      zoom.toggleFullscreen();
+    } else if (toggle === 'tv-mode') {
+      zoom.toggleTvMode();
+    }
+  }
 });
 
 // Start screen click handlers
