@@ -3,6 +3,7 @@ import {
 } from './utility.js';
 import {prng} from './prngs.js';
 import {dom} from './dom.js';
+import {music} from './music.js';
 import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
