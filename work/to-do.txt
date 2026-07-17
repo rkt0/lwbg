@@ -1,3 +1,2 @@
-event delegation for gameplay menu
 reorganize/rename gp and ui modules
 use literal utf-8 characters in html
