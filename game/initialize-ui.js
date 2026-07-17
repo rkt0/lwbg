@@ -3,12 +3,12 @@ import {
 } from './utility.js';
 import {prng} from './prngs.js';
 import {dom} from './dom.js';
-import {music} from './music.js';
 import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {gs, mv} from './game-objects.js';
 import {zoom} from './zoom.js';
+import {toggle} from './toggle.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {autoSave} from './auto-save.js';
@@ -161,12 +161,5 @@ ael(qjs('gameplay-menu'), 'mousedown', (e) => {
 
 // Toggle button area click handler
 ael(qjs('toggle-button-area'), 'mousedown', (e) => {
-  const toggle = closestData(e, 'toggle');
-  if (toggle === 'audio') {
-    music.toggle();
-  } else if (toggle === 'fullscreen') {
-    zoom.toggleFullscreen();
-  } else if (toggle === 'tv-mode') {
-    zoom.toggleTvMode();
-  }
+  toggle.handleClick(e);
 });

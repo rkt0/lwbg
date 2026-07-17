@@ -59,37 +59,6 @@ export const zoom = {
     const shiftY = whm / 2 + matte.top;
     scroll(cl * fc - shiftX, ct * fc - shiftY);
   },
-  async toggleFullscreen() {
-    const isOutNow = (this.factor.current ?? 1) < 1;
-    if (!isOutNow) this.setCenter();
-    const element = document.documentElement;
-    if (!document.fullscreenElement) {
-      await element?.requestFullscreen();
-    } else await document.exitFullscreen();
-    if (isOutNow) this.zoomOut();
-    else this.applyCenter();
-    for (const icon of icons.fullscreen) {
-      icon.classList.toggle('inactive');
-    }
-  },
-  toggleTvMode() {
-    const isOutNow = (this.factor.current ?? 1) < 1;
-    if (!isOutNow) this.setCenter();
-    if (document.body.classList.contains('tv-mode')) {
-      // Adjust center before removing matte
-      this.adjustCenterForMatte(-1);
-      document.body.classList.remove('tv-mode');
-    } else {
-      // Adjust center after adding matte
-      document.body.classList.add('tv-mode');
-      this.adjustCenterForMatte(1);
-    }
-    if (isOutNow) this.zoomOut();
-    else this.applyCenter();
-    for (const icon of icons.tvMode) {
-      icon.classList.toggle('inactive');
-    }
-  },
 };
 
 // Element references
@@ -100,10 +69,6 @@ const buttons = {
 };
 const nonZoomElements = qda('non-zoom');
 const obstructiveElements = qda('obstructive');
-const icons = {
-  fullscreen: qda('icon-fullscreen'),
-  tvMode: qda('icon-tv-mode'),
-};
 
 // Needed for zoom button click handlers
 function zoomGeneral(factor) {

@@ -3,6 +3,7 @@ import {ai} from './ai.js';
 import {music} from './music.js';
 import {gs, mv} from './game-objects.js';
 import {zoom} from './zoom.js';
+import {toggle} from './toggle.js';
 import {edit} from './edit-mode.js';
 import {moreMenu} from './more-menu.js';
 import {gp} from './functions-gameplay.js';
@@ -65,11 +66,11 @@ document.addEventListener('keydown', (e) => {
       break;
     case 'f':
       e.preventDefault();
-      zoom.toggleFullscreen();
+      toggle.fullscreen();
       break;
     case 't':
       e.preventDefault();
-      zoom.toggleTvMode();
+      toggle.tvMode();
       break;
     case '-':
     case '=':
