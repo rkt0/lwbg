@@ -1,2 +1,1 @@
 reorganize/rename gp and ui modules
-use literal utf-8 characters in html

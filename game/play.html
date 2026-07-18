@@ -26,12 +26,12 @@
       <button type="button" data-trex-change="-1"
         data-edit data-edit-general
         class="trex-edit small">
-        &#x2b06;
+        ⬆
       </button>
       <button type="button" data-trex-change="+1"
         data-edit data-edit-general
         class="trex-edit small">
-        &#x2b07;
+        ⬇
       </button>
     </div>
   </div>
@@ -39,25 +39,25 @@
     class="gameplay-menu">
     <button type="button" data-js="show-more"
       title="More Actions">
-      &bull; &bull; &bull;
+      • • •
     </button>
     <div class="zoom-display info">
       <div class="heading">Zoom</div>
       <div class="zoom-button-row">
         <button type="button" data-js="zoom-out"
           title="Zoom Out" class="zoom-button">
-          <div class="zoom-indicator">&dtrif;</div>
-          &ndash;
+          <div class="zoom-indicator">▾</div>
+          &minus;
         </button>
         <button type="button" data-js="zoom-default"
           title="Zoom Default"
           class="zoom-button current">
-          <div class="zoom-indicator">&dtrif;</div>
-          &bull;
+          <div class="zoom-indicator">▾</div>
+          •
         </button>
         <button type="button" data-js="zoom-in"
           title="Zoom In" class="zoom-button">
-          <div class="zoom-indicator">&dtrif;</div>
+          <div class="zoom-indicator">▾</div>
           +
         </button>
       </div>
@@ -116,12 +116,8 @@
       </div>
       <div data-js="die-trex-movement"
         class="die die-trex">
-        <div class="face" data-roll="0">
-          &#x2716;
-        </div>
-        <div class="face" data-roll="1">
-          &#x2b06;
-        </div>
+        <div class="face" data-roll="0">✖</div>
+        <div class="face" data-roll="1">⬆</div>
         <button type="button" data-edit
           data-edit-die data-obstructive
           class="edit-turn-die">
@@ -389,11 +385,11 @@
 <template id="human-piece">
   <div class="human-piece">
     <div class="human-component dead-marker">
-      &#x1f571;
+      🕱
     </div>
     <button type="button" data-kill="" data-dormant
       disabled title="Kill" class="kill small">
-      &#x1f571;
+      🕱
     </button>
   </div>
 </template>
@@ -450,11 +446,11 @@
 </template>
 <template id="no-jump-available">
   No human is in position to jump.<br>
-  Click &ldquo;OK&rdquo; to continue.
+  Click “OK” to continue.
 </template>
 <template id="no-enter-available">
   No raptor is in position to enter.<br>
-  Click &ldquo;OK&rdquo; to continue.
+  Click “OK” to continue.
 </template>
 <template id="not-adjacent">
   That space isn't adjacent.
@@ -470,11 +466,11 @@
   That's not the right landing spot.
 </template>
 <template id="jump-only-jump">
-  A roll of &ldquo;Jump&rdquo; can only be used
+  A roll of “Jump” can only be used
   to jump.
 </template>
 <template id="must-roll-jump">
-  Humans must roll &ldquo;Jump&rdquo; to jump.
+  Humans must roll “Jump” to jump.
 </template>
 <template id="no-return-start">
   You can't go back to the starting space.
@@ -496,11 +492,11 @@
   That's not the right building to enter.
 </template>
 <template id="enter-only-enter">
-  A roll of &ldquo;Enter&rdquo; can only be used
+  A roll of “Enter” can only be used
   to enter.
 </template>
 <template id="must-roll-enter">
-  Raptors must roll &ldquo;Enter&rdquo;
+  Raptors must roll “Enter”
   to enter.
 </template>
 <template id="raptor-occupied">
@@ -515,11 +511,11 @@
 </template>
 <template id="confirm-decline-jump">
   Are you sure you don't want to jump?<br>
-  Click &ldquo;Decline&rdquo; again to confirm.
+  Click “Decline” again to confirm.
 </template>
 <template id="confirm-decline-enter">
   Are you sure you don't want to enter?<br>
-  Click &ldquo;Decline&rdquo; again to confirm.
+  Click “Decline” again to confirm.
 </template>
 <audio data-js="music-player"></audio>
 <audio data-js="sfx-player"></audio>
