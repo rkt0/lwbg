@@ -11,6 +11,7 @@
   --jump-land-border-width: 3px;
   --board-border-width: 6px;
   --color-path: #a67e00;
+  --color-light: #ced0d4;
 }
 
 .full-board {
@@ -34,24 +35,24 @@
   height: var(--human-space-size);
   background: #929e74;
   border: solid var(--board-border-width)
-    var(--color-border);
+    var(--color-default, var(--color-border));
   border-radius: 50%;
+
+  .zoomed-out & {
+    --color-default: var(--color-light);
+  }
 
   &.move,
   &.selected {
     border-color: var(--color-selected);
   }
 
-  &.path:not(.selected) {
+  &.path {
     border-color: var(--color-path);
   }
 
   &.dead {
     display: none;
-  }
-
-  .zoomed-out & {
-    border-color: #fff;
   }
 }
 
@@ -66,15 +67,15 @@
 }
 
 .human-edge {
-  stroke: var(--color-border);
+  stroke: var(--color-default, var(--color-border));
   stroke-width: var(--board-border-width);
+
+  .zoomed-out & {
+    --color-default: var(--color-light);
+  }
 
   &.path {
     stroke: var(--color-path);
-  }
-
-  .zoomed-out & {
-    stroke: #fff;
   }
 }
 
