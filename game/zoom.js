@@ -59,6 +59,9 @@ export const zoom = {
     const shiftY = whm / 2 + matte.top;
     scroll(cl * fc - shiftX, ct * fc - shiftY);
   },
+  isZoomedOut() {
+    return (zoom.factor.current ?? 1) < 1;
+  },
 };
 
 // Element references

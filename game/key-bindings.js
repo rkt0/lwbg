@@ -43,6 +43,9 @@ document.addEventListener('keydown', (e) => {
       break;
     }
     case 'Escape':
+      // In case user holds Escape to leave fullscreen
+      if (!zoom.isZoomedOut()) zoom.setCenter();
+      // Falls through
     case 'x':
     case 'z':
       if (moreMenu.isActive()) {

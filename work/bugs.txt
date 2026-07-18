@@ -1,3 +1,2 @@
 backdrop filter fails sometimes after fade in
 selected human space not shown when zoomed out
-leaving fullscreen via <Esc> breaks toggle state
