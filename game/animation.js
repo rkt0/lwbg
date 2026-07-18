@@ -38,8 +38,7 @@ export const anim = {
     }, {duration, fill: 'forwards'}).finished;
     if (!to) element.style.display = 'none';
   },
-  isAnimated(x) {
-    const element = typeof x === 'object' ? x : qs(x);
+  isAnimated(element) {
     const animations = element.getAnimations();
     return animations.some((animation) => {
       return animation.playState === 'running';
