@@ -1,4 +1,3 @@
-import {qs} from "./utility.js";
 import {debug} from "./debug.js";
 
 export const anim = {
