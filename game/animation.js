@@ -8,8 +8,7 @@ export const anim = {
     decayRate: 0.5,
     timePerBounce: 4 * 1000 / 60,
   },
-  async fade(x, to, duration, options) {
-    const element = typeof x === 'object' ? x : qs(x);
+  async fade(element, to, duration, options) {
     const {
       display = 'block', easing = 'linear',
     } = options ?? {};
@@ -19,8 +18,7 @@ export const anim = {
     }, {duration, fill: 'forwards'}).finished;
     if (!to) element.style.display = 'none';
   },
-  async move(x, location, duration, options) {
-    const element = typeof x === 'object' ? x : qs(x);
+  async move(element, location, duration, options) {
     const {
       delay = 0, endDelay = 0, easing = 'ease-in-out',
     } = options ?? {};
@@ -28,8 +26,7 @@ export const anim = {
       duration, delay, endDelay, fill: 'forwards',
     }).finished;
   },
-  async slide(x, to, duration, options) {
-    const element = typeof x === 'object' ? x : qs(x);
+  async slide(element, to, duration, options) {
     const {
       display = '', easing = 'linear',
     } = options ?? {};
@@ -48,8 +45,7 @@ export const anim = {
       return animation.playState === 'running';
     });
   },
-  async bounce(x, settings) {
-    const element = typeof x === 'object' ? x : qs(x);
+  async bounce(element, settings) {
     const {
       maxDistance, decayRate, timePerBounce,
     } = settings;
