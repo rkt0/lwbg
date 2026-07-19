@@ -37,12 +37,6 @@ export const anim = {
     }, {duration, fill: 'forwards'}).finished;
     if (!to) element.style.display = 'none';
   },
-  async transform(element, xf, duration, options) {
-    const {easing = 'linear'} = options ?? {};
-    await element.animate({
-      transform: xf, easing,
-    }, {duration, fill: 'forwards'}).finished;
-  },
   isAnimated(element) {
     const animations = element.getAnimations();
     return animations.some((animation) => {
