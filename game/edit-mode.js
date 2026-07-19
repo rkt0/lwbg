@@ -30,8 +30,6 @@ export const edit = {
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',
     ];
     for (const x of hidden) await ui.hideButton(x);
-    await anim.slide(elements.banner, 1, eTime);
-    dom.showMore.style.visibility = 'hidden';
     for (const element of elements.trexButtons) {
       anim.fade(element, 1, eTime);
     }
@@ -41,7 +39,9 @@ export const edit = {
     if (gs.phase !== 'roll') enableDiceEdit();
     ui.humanItemsClickable(true);
     ui.raptorItemsClickable(true);
+    await anim.slide(elements.banner, 1, eTime);
     elements.banner.inert = false;
+    dom.showMore.style.visibility = 'hidden';
   },
 };
 
