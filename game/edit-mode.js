@@ -1,6 +1,5 @@
 import {
   qjs, qda, closestData, ael, click, sleep, deepCopy,
-  cssInt,
 } from './utility.js';
 import {dom} from './dom.js';
 import {dice} from './dice.js';
