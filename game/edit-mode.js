@@ -1,5 +1,6 @@
 import {
   qjs, qda, closestData, ael, click, sleep, deepCopy,
+  cssInt,
 } from './utility.js';
 import {dom} from './dom.js';
 import {dice} from './dice.js';
@@ -37,7 +38,10 @@ export const edit = {
     }
     if (gs.turn === 'over') {
       anim.fade(dom.gameOver, 0, eTime);
-    } else anim.fade(qjs('edit-turn'), 1, eTime);
+    } else {
+      // anim.fade(qjs('edit-turn'), 1, eTime);
+      showChangeButton(qjs('edit-turn'));
+    }
     if (gs.phase !== 'roll') enableDiceEdit();
     ui.humanItemsClickable(true);
     ui.raptorItemsClickable(true);
@@ -53,6 +57,7 @@ const elements = {
   all: qda('edit'),
   banner: qjs('edit-banner'),
   trexButtons: qda('trex-change'),
+  editTurnDie: [qjs('edit-turn'), ...qda('edit-die')],
 };
 
 // Banner
@@ -126,6 +131,24 @@ ael(qjs('confirm-edits'), 'mousedown', async () => {
   if (gs.turn !== 'human') gp.checkEatenByAnyRaptor();
   await autoSave.update(true);
 });
+
+// Move change buttons into and out of position
+const buttonWidth = cssInt('--button-width');
+const xfShow = [
+  `translate(calc(-100% - ${buttonWidth}px), -50%)`,
+  'translate(0, -50%)',
+];
+const xfHide = xfShow.toReversed();
+async function showChangeButton(element) {
+  element.style.display = '';
+  await anim.transform(element, xfShow, eTime);
+  element.disabled = false;
+}
+async function hideChangeButton(element) {
+  element.disabled = true;
+  await anim.transform(element, xfHide, eTime);
+  element.style.display = 'none';
+}
 
 // Used for editing both turn and dice
 function replaceDieValue(species, type, value) {
@@ -219,4 +242,7 @@ function enableDiceEdit(enable = true) {
 // Hide edit controls
 for (const element of elements.all) {
   element.style.display = 'none';
+}
+for (const element of elements.editTurnDie) {
+  // hideChangeButton(element);
 }
