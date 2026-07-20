@@ -25,15 +25,28 @@
 
   .edit-turn-die {
     position: absolute;
-    left: calc(100% + var(--change-button-offset));
+    left: 100%;
     top: 50%;
     transform: translateY(-50%);
     border-top-style: solid;
-    height: 48px;
+    border-left-style: solid;
+    --size: 48px;
+    height: var(--size);
+    width: var(--size);
+    background: #e08f55;
+    padding-top: 4px;
 
-    &.slim:not(:hover) {
-      width: 33px;
-      color: #0000;
+    &::before {
+      content: '↷';
+    }
+
+    &:hover {
+      width: auto;
+      padding: 0 0.5em;
+
+      &::before {
+        content: 'Change';
+      }
     }
   }
 }
@@ -86,7 +99,6 @@
 .turn-display {
   height: 78px;
   line-height: 1.0625;
-  --change-button-offset: var(--button-border-width);
   display: grid;
   place-content: center;
 }

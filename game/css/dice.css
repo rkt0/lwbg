@@ -12,7 +12,6 @@
   border: solid var(--die-border-width)
     var(--color-border);
   border-radius: 12px;
-  --change-button-offset: var(--die-border-width);
   color: #0000;
 
   &.rolled {

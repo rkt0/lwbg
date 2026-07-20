@@ -22,9 +22,6 @@ export const zoom = {
     dom.gameplay.style.left = `${rawLeft / factor}px`;
     dom.gameplay.style.top = `${rawTop / factor}px`;
     buttons.zoomOut.classList.add('current');
-    for (const element of obstructiveElements) {
-      element.classList.add('slim');
-    }
     dom.gameOver.classList.add('inactive');
   },
   zoomDefault() {
@@ -71,7 +68,6 @@ const buttons = {
   zoomIn: qjs('zoom-in'),
 };
 const nonZoomElements = qda('non-zoom');
-const obstructiveElements = qda('obstructive');
 
 // Needed for zoom button click handlers
 function zoomGeneral(factor) {
@@ -98,9 +94,6 @@ function zoomGeneral(factor) {
   );
   for (const button of Object.values(buttons)) {
     button.classList.remove('current');
-  }
-  for (const element of obstructiveElements) {
-    element.classList.remove('slim');
   }
   dom.gameOver.classList.remove('inactive');
 };
