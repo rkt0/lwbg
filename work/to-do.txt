@@ -1,1 +1,2 @@
 reorganize/rename gp and ui modules
+improve cancel behavior in edit mode
