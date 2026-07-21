@@ -34,8 +34,6 @@
     height: var(--size);
     width: var(--size);
     background: #e08f55;
-    /* --orange-alpha: #ff7e15 var(--fg-alpha); */
-    /* --orange-alpha: #ffa265 var(--fg-alpha); */
     --orange-alpha: #ff9145 var(--fg-alpha);
     background: color-mix(
       in srgb,
@@ -118,17 +116,10 @@
 }
 
 .cancel {
-  /* background: #f48178aa; */
-  /* background: #ff7971aa; */
-  /* background: #fb4c5aaa; */
-  /* background: #ff797aaa; */
   background: #ff6168aa;
 }
 
 .default-action {
-  /* background: #54b573aa; */
-  /* background: #04a06baa; */
-  /* background: #33b780aa; */
   background: #00b97caa;
 }
 
