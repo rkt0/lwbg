@@ -39,7 +39,7 @@
 }
 
 .scrim {
-  background: #5a5b5faa;
+  background: #6d6a68aa;
   backdrop-filter: var(--blur);
   z-index: 5;
 }
