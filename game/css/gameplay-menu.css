@@ -33,7 +33,6 @@
     --size: 48px;
     height: var(--size);
     width: var(--size);
-    background: #e08f55;
     --orange-alpha: #ff9145 var(--fg-alpha);
     background: color-mix(
       in srgb,
