@@ -104,10 +104,7 @@ async function okTrexMove() {
 }
 
 // Needed for click handlers for cancel and confirm
-function clearVisibleMove() {
-  message.hide();
-  ui.hideButton('cancel');
-  ui.hideButton('confirm');
+async function clearVisibleMove() {
   dom.selected?.classList.remove('selected');
   dom.selected = null;
   dom.move?.classList.remove('move');
@@ -116,14 +113,17 @@ function clearVisibleMove() {
     element.classList.remove('path');
   }
   dom.path = [];
+  message.hide();
+  ui.hideButton('confirm');
+  await ui.hideButton('cancel');
 }
 
 // Click handlers for cancel and confirm
-function cancelMove() {
+async function cancelMove() {
   if (gs.phase !== 'move') return;
   gs.phase = 'select';
-  clearVisibleMove();
   gp.clearMoveObject();
+  await clearVisibleMove();
   if (gs.je) gp.startJumpEnter();
 }
 async function confirmMove() {
