@@ -8,7 +8,11 @@
   --fg-alpha: 66.7%;
   --gray-alpha: #bdb8b4 var(--fg-alpha);
   --blue-alpha: #00adf0 var(--fg-alpha);
+  --orange-alpha: #ff9145 var(--fg-alpha);
   --color-jungle: #47650b;
+  --orange-over-jungle: color-mix(
+    in srgb, var(--orange-alpha), var(--color-jungle)
+  );
   --button-border: solid 3px var(--color-border);
   --gap: 1.5em;
   --bg-jungle: url("../img/bg/jungle.png");

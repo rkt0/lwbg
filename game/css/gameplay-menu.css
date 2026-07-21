@@ -33,11 +33,7 @@
     --size: 48px;
     height: var(--size);
     width: var(--size);
-    --orange-alpha: #ff9145 var(--fg-alpha);
-    background: color-mix(
-      in srgb,
-      var(--orange-alpha), var(--color-jungle)
-    );
+    background: var(--orange-over-jungle);
     padding-top: 4px;
 
     &::before {

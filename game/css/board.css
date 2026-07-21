@@ -119,7 +119,7 @@
 .raptor-entrance {
   stroke: var(--color-dino-space);
   stroke-width: 4px;
-  fill: #d69724;
+  fill: var(--orange-over-jungle);
   pointer-events: none;
 }
 
