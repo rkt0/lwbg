@@ -1,1 +1,2 @@
 backdrop filter fails sometimes after fade in
+decline appears too soon after clicking cancel
