@@ -1,14 +1,31 @@
 :root {
-  --color-dark: #16171a;
+  --color-dark: #17181b;
   --color-text: var(--color-dark);
   --color-border: var(--color-dark);
-  --color-selected: #fabf00;
+  /* --color-selected: #fabf00; */
+  --color-selected: #ffd300;
   --color-selected-fill:
     rgb(from var(--color-selected) r g b / 0.4);
-  --button-border-width: 3px;
-  --small-button-size: 36px;
+  /* --color-button: #009cf3; */
+  /* --color-button: #4da7fc; */
+  /* --color-button: #78a5de; */
+  /* --color-button: #4a7aaf; */
+  /* --color-button: #618fc6; */
+  /* --color-button: #2991e4; */
+  /* --color-info: #b1b3b6aa; */
+  /* --color-green: #00cb98aa; */
+  /* --color-red: #ff2f4eaa; */
+  --fg-alpha: 66.7%;
+  /* --gray-alpha: #a0a2a6 var(--fg-alpha); */
+  --gray-alpha: #b7b9bd var(--fg-alpha);
+  /* --blue-alpha: #4da7fc var(--fg-alpha); */
+  /* --blue-alpha: #00a1e0 var(--fg-alpha); */
+  --blue-alpha: #00adf0 var(--fg-alpha);
+  --color-jungle: #47650b;
+  --button-border: solid 3px var(--color-border);
   --gap: 1.5em;
-  --jungle: url("../img/bg/jungle.png");
+  --bg-jungle: url("../img/bg/jungle.png");
+  --blur: blur(5px);
 }
 
 @font-face {
@@ -30,7 +47,7 @@ body {
   image-rendering: pixelated;
 
   &.zoomed-out {
-    background-image: var(--jungle);
+    background-image: var(--bg-jungle);
     background-size: calc(512px * var(--bg-scale));
   }
 }
@@ -53,7 +70,7 @@ svg {
 }
 
 section {
-  background-image: var(--jungle);
+  background-image: var(--bg-jungle);
   position: fixed;
   box-sizing: border-box;
   width: 100%;
@@ -73,9 +90,20 @@ button {
   box-sizing: content-box;
   padding: 0px;
   outline: none;
-  background: #009cf3aa;
   color: inherit;
   font: inherit;
+  border: var(--button-border);
+  background: color-mix(
+    in srgb, var(--blue-alpha), transparent
+  );
+  backdrop-filter: blur(5px);
+
+  :where(.start, .control, .more-menu) & {
+    background: color-mix(
+      in srgb, var(--blue-alpha), var(--color-jungle)
+    );
+    backdrop-filter: none;
+  }
 }
 
 button:hover,
@@ -85,16 +113,27 @@ button:hover,
   color: #000;
 }
 
-button,
-.info {
-  backdrop-filter: blur(5px);
-  border: solid var(--button-border-width)
-    var(--color-border);
+.small {
+  --size: 36px;
+  width: var(--size);
+  height: var(--size);
 }
 
-.small {
-  width: var(--small-button-size);
-  height: var(--small-button-size);
+.info {
+  max-width: 450px;
+  padding: 1em 1.5em;
+  background: color-mix(
+    in srgb, var(--gray-alpha), transparent
+  );
+  border: var(--button-border);
+  backdrop-filter: blur(5px);
+
+  :where(.front, .start, .control, .more-menu) & {
+    background: color-mix(
+      in srgb, var(--gray-alpha), var(--color-jungle)
+    );
+    backdrop-filter: none;
+  }
 }
 
 .decision,
@@ -107,12 +146,6 @@ button,
     box-sizing: border-box;
     padding: 0.5em 1em;
   }
-}
-
-.info {
-  max-width: 450px;
-  padding: 1em 1.5em;
-  background: #b1b3b6aa;
 }
 
 p {

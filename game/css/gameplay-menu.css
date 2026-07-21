@@ -111,11 +111,18 @@
 }
 
 .cancel {
-  background: #ff2f4eaa;
+  /* background: #f48178aa; */
+  /* background: #ff7971aa; */
+  /* background: #fb4c5aaa; */
+  /* background: #ff797aaa; */
+  background: #ff6168aa;
 }
 
 .default-action {
-  background: #00cb98aa;
+  /* background: #54b573aa; */
+  /* background: #04a06baa; */
+  /* background: #33b780aa; */
+  background: #00b97caa;
 }
 
 .edit-banner {
@@ -130,9 +137,8 @@
     box-sizing: border-box;
     width: 183px;
     height: var(--button-height);
-    line-height: calc(var(--button-height) -
-      var(--button-border-width));
     border-style: none solid solid none;
     padding: 0;
+    place-content: center;
   }
 }
