@@ -17,7 +17,9 @@
   /* --color-red: #ff2f4eaa; */
   --fg-alpha: 66.7%;
   /* --gray-alpha: #a0a2a6 var(--fg-alpha); */
-  --gray-alpha: #b7b9bd var(--fg-alpha);
+  /* --gray-alpha: #b7b9bd var(--fg-alpha); */
+  /* --gray-alpha: #c1b7af var(--fg-alpha); */
+  --gray-alpha: #bdb8b4 var(--fg-alpha);
   /* --blue-alpha: #4da7fc var(--fg-alpha); */
   /* --blue-alpha: #00a1e0 var(--fg-alpha); */
   --blue-alpha: #00adf0 var(--fg-alpha);

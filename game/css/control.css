@@ -7,7 +7,6 @@
 
 .control-menu {
   width: auto;
-  background: #8d997a;
   backdrop-filter: none;
   padding: 1em;
 
@@ -19,7 +18,7 @@
     padding: 0.5em;
     min-width: 1.25em;
     background:
-      rgb(from var(--color-selected) r g b / 0.267);
+      rgb(from var(--color-selected) r g b / 0.2);
     margin-block: 6px 0;
   }
 

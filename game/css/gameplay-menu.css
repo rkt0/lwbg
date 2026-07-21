@@ -34,6 +34,13 @@
     height: var(--size);
     width: var(--size);
     background: #e08f55;
+    /* --orange-alpha: #ff7e15 var(--fg-alpha); */
+    /* --orange-alpha: #ffa265 var(--fg-alpha); */
+    --orange-alpha: #ff9145 var(--fg-alpha);
+    background: color-mix(
+      in srgb,
+      var(--orange-alpha), var(--color-jungle)
+    );
     padding-top: 4px;
 
     &::before {
@@ -123,6 +130,10 @@
   /* background: #04a06baa; */
   /* background: #33b780aa; */
   background: #00b97caa;
+}
+
+.unusual-action {
+  background: #dc79ffaa;
 }
 
 .edit-banner {
