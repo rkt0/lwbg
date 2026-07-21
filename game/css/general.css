@@ -16,7 +16,7 @@
   --button-border: solid 3px var(--color-border);
   --gap: 1.5em;
   --bg-jungle: url("../img/bg/jungle.png");
-  --blur: blur(5px);
+  --blur: blur(6px);
 }
 
 @font-face {
@@ -87,7 +87,7 @@ button {
   background: color-mix(
     in srgb, var(--blue-alpha), transparent
   );
-  backdrop-filter: blur(5px);
+  backdrop-filter: var(--blur);
 
   :where(.start, .control, .more-menu) & {
     background: color-mix(
@@ -117,7 +117,7 @@ button:hover,
     in srgb, var(--gray-alpha), transparent
   );
   border: var(--button-border);
-  backdrop-filter: blur(5px);
+  backdrop-filter: var(--blur);
 
   :where(.front, .start, .control, .more-menu) & {
     background: color-mix(
