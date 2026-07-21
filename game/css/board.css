@@ -134,7 +134,7 @@
   );
   border: solid var(--jump-land-border-width)
     var(--color-border);
-  background: #8c7899;
+  background: #aa9ead;
   pointer-events: none;
 }
 
