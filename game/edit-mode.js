@@ -15,7 +15,7 @@ export const edit = {
   clear() {
     this.on = false;
     this.gsPrevious = {};
-    this.selected = {species: null, piece: null};
+    this.cancelSelection();
     this.dieCodes = {movement: 0, continue: 0};
   },
   async begin() {
@@ -44,10 +44,10 @@ export const edit = {
     dom.showMore.style.visibility = 'hidden';
   },
   async cancelSelection() {
-    dom.selected.classList.remove('selected');
+    dom.selected?.classList.remove('selected');
     ui.humanItemsClickable(true);
     ui.raptorItemsClickable(true);
-    if (this.selected.species === 'human') {
+    if (this.selected?.species === 'human') {
       const piece = this.selected.piece;
       const button = dom.editKill[piece];
       button.disabled = true;
@@ -66,8 +66,7 @@ export const edit = {
       ui.hideButton('cancel'),
       sleep(anim.time.moveHuman / 6),
     ]);
-    this.selected.species = null;
-    this.selected.piece = null;
+    this.selected = {species: null, piece: null};
     await ui.hideButton('cancel');
   },
 };
@@ -133,12 +132,6 @@ async function endEditMode() {
     anim.fade(element, 0, eTime);
   }
   ui.hideButton('unroll-dice');
-  dom.selected?.classList.remove('selected');
-  if (edit.selected.species === 'human') {
-    const button = dom.editKill[edit.selected.piece];
-    button.disabled = true;
-    anim.fade(button, 0, eTime);
-  }
   edit.clear();
   dom.showMore.style.visibility = 'visible';
   await sleep(eTime);
