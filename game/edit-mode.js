@@ -48,8 +48,10 @@ export const edit = {
     ui.humanItemsClickable(true);
     ui.raptorItemsClickable(true);
     if (this.selected.species === 'human') {
-      const piece = edit.selected.piece;
-      anim.fade(dom.editKill[piece], 0, eTime);
+      const piece = this.selected.piece;
+      const button = dom.editKill[piece];
+      button.disabled = true;
+      anim.fade(button, 0, eTime);
     }
     // If edit.selected were always reset immediately,
     // then moving a human to a building (by edit)
