@@ -125,6 +125,7 @@
   top: calc(100% + 2 * var(--board-border-width));
   left: 50%;
   transform: translateX(-50%);
+  font-weight: normal;
 }
 
 @keyframes highlight-blink {
