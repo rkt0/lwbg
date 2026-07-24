@@ -4,25 +4,33 @@ import {anim} from './animation.js';
 
 export const ui = {
   async showButton(identifier) {
-    const button = element[identifier];
-    button.style.display = '';
+    const element = menuItem[identifier];
+    element.style.display = '';
     const aTime = anim.time.buttonSlide;
     const linear = {easing: 'linear'};
-    await anim.move(button, leftShow, aTime, linear);
-    button.disabled = false;
+    await anim.move(element, leftShow, aTime, linear);
+    if (this.isProperButton(element)) {
+      element.disabled = false;
+    }
   },
   async hideButton(identifier) {
-    const button = element[identifier];
-    if (button.disabled) return;
-    button.disabled = true;
+    const element = menuItem[identifier];
+    if (this.isProperButton(element)) {
+      if (element.disabled) return;
+      element.disabled = true;
+    }
     const aTime = anim.time.buttonSlide;
     const linear = {easing: 'linear'};
-    await anim.move(button, leftHide, aTime, linear);
-    button.style.display = 'none';
+    await anim.move(element, leftHide, aTime, linear);
+    element.style.display = 'none';
   },
   async replaceButton(identifierOld, identifierNew) {
     await this.hideButton(identifierOld);
     this.showButton(identifierNew);
+  },
+  isProperButton(element) {
+    const nn = element.nodeName.toLowerCase();
+    return nn === 'button';
   },
   async displayTurn(species, skipFx) {
     const speciesText =
@@ -94,9 +102,9 @@ let humanClickableItems;
 const identifiers = [
   'roll-button', 'roll-display', 'unroll-dice',
   'ok-trex-move', 'ok-no-move', 'ok-ai-move',
-  'decline', 'cancel', 'confirm',
+  'decline', 'cancel', 'confirm', 'turn-display',
 ];
-const element = Object.fromEntries(identifiers.map(
+const menuItem = Object.fromEntries(identifiers.map(
   identifier => [identifier, qjs(identifier)]
 ));
 const turnSpan = qjs('species-turn-text');

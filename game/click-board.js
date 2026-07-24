@@ -2,7 +2,6 @@ import {click} from './utility.js';
 import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {ai} from './ai.js';
-import {anim} from './animation.js';
 import {gs, mv} from './game-objects.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
@@ -154,36 +153,26 @@ function clickHumanPieceOnClickedSpace(space) {
     click(dom.humanPiece[gs.humans.indexOf(space)]);
   }
 }
-function clickHumanSpaceEditMode(space, isBldg) {
+async function clickHumanSpaceEditMode(
+  space, isBldg,
+) {
   if (edit.selected.species === 'raptor') return;
   if (!edit.selected.species) {
     return clickHumanPieceOnClickedSpace(space);
   }
   const piece = edit.selected.piece;
-  const aTime = anim.time.editControlFade;
-  if (gs.humans[piece] !== space) {
-    if (gp.nHumansOn(space) && !isBldg) return;
-    gp.moveHuman(piece, space, false);
-    const gameNoLongerOver = gs.turn === 'over' &&
-      ![bd.humanGoal, bd.humanDead].includes(space)
-    if (gameNoLongerOver) {
-      gs.turn = 'human';
-      gs.phase = 'roll';
-      ui.showButton('turn-display');
-      ui.displayTurn('human');
-    }
+  if (gs.humans[piece] === space) return;
+  if (gp.nHumansOn(space) && !isBldg) return;
+  gp.moveHuman(piece, space, false);
+  await edit.cancelSelection();
+  const gameNoLongerOver = gs.turn === 'over' &&
+    ![bd.humanGoal, bd.humanDead].includes(space)
+  if (gameNoLongerOver) {
+    gs.turn = 'human';
+    gs.phase = 'roll';
+    ui.displayTurn('human', true);
+    ui.showButton('turn-display');
   }
-  anim.fade(dom.editKill[piece], 0, aTime);
-  dom.selected.classList.remove('selected');
-  ui.raptorItemsClickable(true);
-  // If edit.selected were reset immediately,
-  // then moving a human to a building (by edit) that
-  // is occupied by a raptor would also then select 
-  // that raptor, so instead we insert a slight delay
-  setTimeout(() => {
-    edit.selected.species = null;
-    edit.selected.piece = null;
-  }, anim.time.moveHuman / 6);
 }
 
 // Needed for raptor space click handler
@@ -219,12 +208,8 @@ function clickRaptorSpaceEditMode(space) {
     return clickRaptorPieceOnClickedSpace(space);
   }
   const piece = edit.selected.piece;
-  if (gs.raptors[piece] !== space) {
-    if (gp.nRaptorsOn(space)) return;
-    gp.moveRaptor(piece, space, false, true);
-  }
-  dom.selected.classList.remove('selected');
-  ui.humanItemsClickable(true);
-  edit.selected.species = null;
-  edit.selected.piece = null;
+  if (gs.raptors[piece] === space) return;
+  if (gp.nRaptorsOn(space)) return;
+  gp.moveRaptor(piece, space, false, true);
+  edit.cancelSelection();
 }

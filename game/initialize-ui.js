@@ -15,6 +15,7 @@ import {autoSave} from './auto-save.js';
 import {message} from './message.js';
 import {bringMoveIntoView} from './view-region.js';
 import {moreMenu} from './more-menu.js';
+import {edit} from './edit-mode.js';
 
 // Set display to none on dormant elements
 for (const element of qda('dormant')) {
@@ -120,6 +121,10 @@ async function clearVisibleMove() {
 
 // Click handlers for cancel and confirm
 async function cancelMove() {
+  if (edit.on) {
+    edit.cancelSelection();
+    return;
+  }
   if (gs.phase !== 'move') return;
   gs.phase = 'select';
   gp.clearMoveObject();

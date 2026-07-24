@@ -43,6 +43,31 @@ export const edit = {
     elements.banner.inert = false;
     dom.showMore.style.visibility = 'hidden';
   },
+  async cancelSelection() {
+    dom.selected.classList.remove('selected');
+    ui.humanItemsClickable(true);
+    ui.raptorItemsClickable(true);
+    if (this.selected.species === 'human') {
+      const piece = edit.selected.piece;
+      anim.fade(dom.editKill[piece], 0, eTime);
+    }
+    // If edit.selected were always reset immediately,
+    // then moving a human to a building (by edit)
+    // that is occupied by a raptor would also then
+    // select that raptor, so instead we need
+    // a slight delay when a human has been selected
+    //
+    // The time taken by hiding the cancel button
+    // should be enough of a delay, but we also call
+    // a short sleep in parallel just to be safe
+    await Promise.all([
+      ui.hideButton('cancel'),
+      sleep(anim.time.moveHuman / 6),
+    ]);
+    this.selected.species = null;
+    this.selected.piece = null;
+    await ui.hideButton('cancel');
+  },
 };
 
 // Animation time for edit control fade
@@ -195,8 +220,9 @@ ael(qjs('unroll-dice'), 'mousedown', () => {
   gp.clearRoll();
   const buttonsToHide = [
     'decline', 'ok-no-move', 'ok-trex-move',
-    'roll-display', 'unroll-dice',
+    'roll-display', 'unroll-dice', 'cancel',
   ];
+  edit.cancelSelection();
   for (const b of buttonsToHide) ui.hideButton(b);
   enableDiceEdit(false);
 });

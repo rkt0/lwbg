@@ -101,6 +101,8 @@
   line-height: 1.0625;
   display: grid;
   place-content: center;
+  /* needed since it is already present */
+  left: 0;
 }
 
 .roll-display {

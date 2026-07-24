@@ -53,8 +53,7 @@ document.addEventListener('keydown', (e) => {
         moreMenu.hide();
       } else if (gp.isActive()) {
         e.preventDefault();
-        if (edit.on) return;
-        if (gs.phase === 'move') {
+        if (edit.on || gs.phase === 'move') {
           clickIfOk(qjs('cancel'));
         }
       }
