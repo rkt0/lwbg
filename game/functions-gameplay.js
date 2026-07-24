@@ -23,9 +23,8 @@ export const gp = {
     const nTotal = gs.humans.length;
     if (nSaved + nDead < nTotal) return;
     gs.turn = 'over';
-    // Set gs.phase to 'roll' so that 'over' state
-    // is treated as state with nothing rolled
-    gs.phase = 'roll';
+    // Treat 'over' state as if nothing rolled
+    this.clearRoll();
     await this.save();
     setTimeout(() => {
       qjs('humans-saved').innerHTML = nSaved;

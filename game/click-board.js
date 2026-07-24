@@ -169,7 +169,6 @@ async function clickHumanSpaceEditMode(
     ![bd.humanGoal, bd.humanDead].includes(space)
   if (gameNoLongerOver) {
     gs.turn = 'human';
-    gs.phase = 'roll';
     ui.displayTurn('human', true);
     ui.showButton('turn-display');
   }

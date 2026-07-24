@@ -1,5 +1,2 @@
 dead humans on top of matte
 game over on passive eat (in game and via edit)
-startJumpEnter triggers when game no longer over
-  (via edit) and jump was just rolled when
-  game over was triggered
