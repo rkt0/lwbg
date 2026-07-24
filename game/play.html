@@ -67,7 +67,8 @@
       Turn:<br>
       <span data-js="species-turn-text">&nbsp;</span>
       <button type="button" data-js="edit-turn"
-        data-edit class="edit-turn-die">
+        data-edit data-short="↷" data-long="Change"
+        class="edit-turn-die expandable">
       </button>
     </div>
     <button type="button" data-js="roll-button"
@@ -79,7 +80,8 @@
       <div data-js="die-human-movement"
         class="die die-human">
         <button type="button" data-edit data-edit-die
-          class="edit-turn-die">
+          data-short="↷" data-long="Change"
+          class="edit-turn-die expandable">
         </button>
       </div>
       <div data-js="die-human-continue"
@@ -87,13 +89,15 @@
         <div class="face" data-roll="0">Stop</div>
         <div class="face" data-roll="1">Go</div>
         <button type="button" data-edit data-edit-die
-          class="edit-turn-die">
+          data-short="↷" data-long="Change"
+          class="edit-turn-die expandable">
         </button>
       </div>
       <div data-js="die-raptor-movement"
         class="die die-raptor">
         <button type="button" data-edit data-edit-die
-          class="edit-turn-die">
+          data-short="↷" data-long="Change"
+          class="edit-turn-die expandable">
         </button>
       </div>
       <div data-js="die-raptor-continue"
@@ -101,7 +105,8 @@
         <div class="face" data-roll="0">Stop</div>
         <div class="face" data-roll="1">Go</div>
         <button type="button" data-edit data-edit-die
-          class="edit-turn-die">
+          data-short="↷" data-long="Change"
+          class="edit-turn-die expandable">
         </button>
       </div>
       <div data-js="die-trex-movement"
@@ -109,7 +114,8 @@
         <div class="face" data-roll="0">✖</div>
         <div class="face" data-roll="1">⬆</div>
         <button type="button" data-edit data-edit-die
-          class="edit-turn-die">
+          data-short="↷" data-long="Change"
+          class="edit-turn-die expandable">
         </button>
       </div>
     </div>
@@ -376,8 +382,8 @@
       🕱
     </div>
     <button type="button" data-kill="" data-dormant
-      disabled title="Kill" class="kill small">
-      🕱
+      data-short="🕱" data-long="Kill Human" disabled
+      class="kill small expandable">
     </button>
   </div>
 </template>

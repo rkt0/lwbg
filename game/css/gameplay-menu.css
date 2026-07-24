@@ -14,39 +14,27 @@
   .info {
     box-sizing: border-box;
     position: relative;
-    width: var(--button-width);
+    width: var(--size, var(--button-width));
     border-style: none solid solid none;
     padding: 0px;
   }
 
   button {
-    height: var(--button-height);
+    height: var(--size, var(--button-height));
   }
 
   .edit-turn-die {
     position: absolute;
     left: 100%;
     top: 50%;
+    --size: var(--full-height);
     transform: translateY(-50%);
-    border-top-style: solid;
-    border-left-style: solid;
-    --size: 48px;
-    height: var(--size);
-    width: var(--size);
+    border-style: solid;
     background: var(--orange-over-jungle);
     padding-top: 4px;
 
-    &::before {
-      content: '↷';
-    }
-
     &:hover {
-      width: auto;
-      padding: 0 0.5em;
-
-      &::before {
-        content: 'Change';
-      }
+      padding-top: 0;
     }
   }
 }

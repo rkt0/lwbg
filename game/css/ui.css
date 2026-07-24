@@ -88,3 +88,20 @@
     }
   }
 }
+
+.expandable {
+  --full-height: 48px;
+
+  &::before {
+    content: attr(data-short);
+  }
+
+  &:hover {
+    width: auto;
+    padding-inline: 0.5em;
+
+    &::before {
+      content: attr(data-long);
+    }
+  }
+}
