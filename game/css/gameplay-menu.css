@@ -122,5 +122,6 @@
     border-style: none solid solid none;
     padding: 0 1em;
     place-content: center;
+    line-height: 0.875;
   }
 }
