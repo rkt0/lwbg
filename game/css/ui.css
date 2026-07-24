@@ -94,14 +94,19 @@
 
   &::before {
     content: attr(data-short);
+    display: inline-block;
+    transform: translateY(var(--vertical-adjust, 0));
   }
 
   &:hover {
+    box-sizing: border-box;
+    height: var(--full-height);
     width: auto;
     padding-inline: 0.5em;
 
     &::before {
       content: attr(data-long);
+      transform: none;
     }
   }
 }

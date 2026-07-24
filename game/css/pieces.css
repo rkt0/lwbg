@@ -125,11 +125,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-weight: normal;
-  line-height: 1.58;
-
-  &:hover {
-    height: var(--full-height);
-  }
+  --vertical-adjust: 1.5px;
 }
 
 @keyframes highlight-blink {

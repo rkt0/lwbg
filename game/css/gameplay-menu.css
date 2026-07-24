@@ -31,11 +31,7 @@
     transform: translateY(-50%);
     border-style: solid;
     background: var(--orange-over-jungle);
-    padding-top: 4px;
-
-    &:hover {
-      padding-top: 0;
-    }
+    --vertical-adjust: 2px;
   }
 }
 
