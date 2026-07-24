@@ -22,9 +22,9 @@ document.addEventListener('keydown', (e) => {
     case ' ': {
       if (!gp.isActive()) return;
       e.preventDefault();
-      if (edit.on) return;
       let identifier;
-      if (gs.phase === 'select') {
+      if (edit.on) identifier = 'edit-confirm';
+      else if (gs.phase === 'select') {
         if (ai.control[gs.turn]) {
           identifier = 'ok-ai-move';
         }

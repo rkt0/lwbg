@@ -129,15 +129,14 @@
   top: var(--matte-top, 0);
   left: var(--matte-left, 0);
   display: grid;
-  grid-auto-flow: column;
+  grid-template-columns: repeat(3, 1fr);
   z-index: 4;
 
   .banner {
     box-sizing: border-box;
-    width: 183px;
     height: var(--button-height);
     border-style: none solid solid none;
-    padding: 0;
+    padding: 0 1em;
     place-content: center;
   }
 }

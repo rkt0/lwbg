@@ -141,12 +141,12 @@ async function endEditMode() {
   dom.showMore.style.visibility = 'visible';
   await sleep(eTime);
 }
-ael(qjs('cancel-edits'), 'mousedown', async () => {
+ael(qjs('edit-revert'), 'mousedown', async () => {
   const {gsPrevious} = edit;
   await endEditMode();
   await editGame(gsPrevious);
 });
-ael(qjs('confirm-edits'), 'mousedown', async () => {
+ael(qjs('edit-confirm'), 'mousedown', async () => {
   await endEditMode();
   await editGame(gs);
   if (gs.turn !== 'human') gp.checkEatenByAnyRaptor();
