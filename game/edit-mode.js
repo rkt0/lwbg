@@ -45,6 +45,7 @@ export const edit = {
   },
   async cancelSelection() {
     dom.selected?.classList.remove('selected');
+    dom.selected = null;
     ui.humanItemsClickable(true);
     ui.raptorItemsClickable(true);
     if (this.selected?.species === 'human') {
