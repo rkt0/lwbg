@@ -106,8 +106,7 @@ async function okTrexMove() {
 
 // Needed for click handlers for cancel and confirm
 async function clearVisibleMove() {
-  dom.selected?.classList.remove('selected');
-  dom.selected = null;
+  gp.select();
   dom.move?.classList.remove('move');
   dom.move = null;
   for (const element of dom.path) {

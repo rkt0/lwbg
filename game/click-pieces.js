@@ -50,8 +50,7 @@ export function clickRaptorPiece(piece) {
       if (checkNotEnterPosition(space)) return;
     }
     message.hide();
-    dom.selected = dom.raptorPiece[piece];
-    dom.raptorPiece[piece].classList.add('selected');
+    gp.select(dom.raptorPiece[piece]);
     mv.selected = piece;
     mv.plan = [space];
     mv.toGo = gs.je ? 1 : gs.rollN;
@@ -65,7 +64,7 @@ export function clickEditKill(piece) {
   const button = dom.editKill[piece];
   button.disabled = true;
   anim.fade(button, 0, anim.time.editControlFade);
-  dom.selected.classList.remove('selected');
+  gp.select();
   ui.raptorItemsClickable(true);
   edit.selected.species = null;
   edit.selected.piece = null;
@@ -106,8 +105,7 @@ function selectAppropriate(piece) {
   if (isBldg || space === bd.humanDead) {
     element = dom.humanPiece[piece];
   }
-  dom.selected = element;
-  element.classList.add('selected');
+  gp.select(element);
 }
 function clickHumanPieceEditMode(piece, space) {
   if (edit.selected.species === 'raptor') return;
@@ -137,8 +135,7 @@ function clickRaptorPieceEditMode(piece, space) {
   if (edit.selected.species === 'raptor') {
     return click(dom.raptorSpace[space]);
   }
-  dom.selected = dom.raptorPiece[piece];
-  dom.raptorPiece[piece].classList.add('selected');
+  gp.select(dom.raptorPiece[piece]);
   ui.humanItemsClickable(false);
   edit.selected.species = 'raptor';
   edit.selected.piece = piece;

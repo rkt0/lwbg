@@ -266,6 +266,11 @@ export const gp = {
     ui.humanItemsClickable(gs.turn === 'human');
     ui.raptorItemsClickable(gs.turn === 'raptor');
   },
+  select(element = null) {
+    dom.selected?.classList.remove('selected');
+    dom.selected = element;
+    dom.selected?.classList.add('selected');
+  },
   // async save() injected by auto-save.js
 };
 

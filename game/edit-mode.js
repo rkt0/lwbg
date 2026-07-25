@@ -44,8 +44,7 @@ export const edit = {
     dom.showMore.style.visibility = 'hidden';
   },
   async cancelSelection() {
-    dom.selected?.classList.remove('selected');
-    dom.selected = null;
+    gp.select();
     ui.humanItemsClickable(true);
     ui.raptorItemsClickable(true);
     if (this.selected?.species === 'human') {
