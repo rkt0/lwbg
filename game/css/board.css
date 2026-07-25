@@ -128,14 +128,12 @@
   box-sizing: border-box;
   width: var(--jump-land-width);
   height: var(--jump-land-height);
-  line-height: calc(
-    var(--jump-land-height) -
-    var(--jump-land-border-width) * 2
-  );
   border: solid var(--jump-land-border-width)
     var(--color-border);
   background: #aa9ead;
   pointer-events: none;
+  display: grid;
+  place-items: center;
 }
 
 .helo {
