@@ -19,6 +19,7 @@ export const dom = {
   faces: {},
   editKill: [],
   selected: null,
+  onSelected: null,
   move: null,
   path: [],
   variableImages: [],

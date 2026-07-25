@@ -18,16 +18,21 @@
   height: var(--human-piece-height);
   --color-highlight: #008b4bcc;
   z-index: 0;
+  --z-index-above: 2;
 
   &.selected {
     outline: solid var(--board-border-width)
       var(--color-selected);
-    z-index: 2;
+    z-index: var(--z-index-above);
+  }
+
+  &.on-selected {
+    z-index: var(--z-index-above);
   }
 
   &.dead {
     --color-highlight: #aaac;
-    z-index: 2;
+    z-index: var(--z-index-above);
   }
 
   .zoomed-out & {

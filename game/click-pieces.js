@@ -101,11 +101,13 @@ function checkNotJumpPosition(space) {
 function selectAppropriate(piece) {
   const space = gs.humans[piece];
   let element = dom.humanSpace[space];
+  let elementOn = dom.humanPiece[piece];
   const isBldg = bd.bldgHumanSpaces.includes(space);
   if (isBldg || space === bd.humanDead) {
-    element = dom.humanPiece[piece];
+    element = elementOn;
+    elementOn = null;
   }
-  gp.select(element);
+  gp.select(element, elementOn);
 }
 function clickHumanPieceEditMode(piece, space) {
   if (edit.selected.species === 'raptor') return;

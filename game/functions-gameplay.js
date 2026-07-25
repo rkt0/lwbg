@@ -266,10 +266,13 @@ export const gp = {
     ui.humanItemsClickable(gs.turn === 'human');
     ui.raptorItemsClickable(gs.turn === 'raptor');
   },
-  select(element = null) {
+  select(element = null, elementOn = null) {
     dom.selected?.classList.remove('selected');
+    dom.onSelected?.classList.remove('on-selected');
     dom.selected = element;
+    dom.onSelected = elementOn;
     dom.selected?.classList.add('selected');
+    dom.onSelected?.classList.add('on-selected');
   },
   // async save() injected by auto-save.js
 };
