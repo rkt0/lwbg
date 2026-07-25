@@ -2,7 +2,7 @@
   position: fixed;
   width: auto;
   padding: 1em 2em;
-  z-index: 4;
+  z-index: 6;
   inset: 0;
   place-self: center;
 
@@ -23,7 +23,7 @@
   padding: 12px;
   border-top-style: none;
   text-wrap: balance;
-  z-index: 4;
+  z-index: 7;
   display: grid;
   place-items: center;
 }
@@ -35,13 +35,13 @@
 .more-menu {
   display: grid;
   place-content: center;
-  z-index: 6;
+  z-index: 9;
 }
 
 .scrim {
   background: #6d6a68aa;
   backdrop-filter: var(--blur);
-  z-index: 5;
+  z-index: 8;
 }
 
 .start-options {

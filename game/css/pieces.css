@@ -45,7 +45,6 @@
   &.selected {
     outline: solid var(--board-border-width)
       var(--color-selected);
-    z-index: 2;
   }
 
   .zoomed-out & {

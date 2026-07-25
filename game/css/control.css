@@ -2,7 +2,7 @@
   background: none;
   grid-template: auto auto / auto auto;
   place-items: center;
-  z-index: 6;
+  z-index: 1;
 }
 
 .control-menu {
