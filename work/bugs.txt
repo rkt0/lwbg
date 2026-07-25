@@ -1,4 +1,3 @@
-dead humans on top of matte
 game over on passive eat (in game and via edit)
 kill button affected by zoom
 z-index of human when selection is shown on space
