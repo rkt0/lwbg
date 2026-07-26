@@ -1,2 +1,1 @@
 game over on passive eat (in game and via edit)
-kill button affected by zoom
