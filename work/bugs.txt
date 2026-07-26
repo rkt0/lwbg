@@ -1,1 +1,2 @@
 game over on passive eat (in game and via edit)
+t-rex turn can occur inappropriately after edit mode
