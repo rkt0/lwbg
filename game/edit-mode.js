@@ -8,7 +8,6 @@ import {anim} from './animation.js';
 import {gs} from './game-objects.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
-import {autoSave} from './auto-save.js';
 import {message} from './message.js';
 
 export const edit = {
@@ -145,7 +144,7 @@ ael(qjs('edit-confirm'), 'mousedown', async () => {
   await endEditMode();
   await editGame(gs);
   if (gs.turn !== 'human') gp.checkEatenByAnyRaptor();
-  await autoSave.update(true);
+  await gp.save(true);
 });
 
 // Used for editing both turn and dice

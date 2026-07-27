@@ -11,7 +11,6 @@ import {zoom} from './zoom.js';
 import {toggle} from './toggle.js';
 import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
-import {autoSave} from './auto-save.js';
 import {message} from './message.js';
 import {bringMoveIntoView} from './view-region.js';
 import {moreMenu} from './more-menu.js';
@@ -77,7 +76,7 @@ async function executeRoll() {
   );
   ui.displayRollResult(gs);
   gs.je = gs.rollN === 'Jump' || gs.rollN === 'Enter';
-  await autoSave.update();
+  await gp.save();
   const delay = anim.time.buttonSlide * 2 +
     anim.time.dieRoll + anim.time.dieRollDelay;
   if (gs.turn === 'trex') {

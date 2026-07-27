@@ -66,4 +66,6 @@ export const autoSave = {
 };
 
 // Inject into gameplay object
-gp.save = async () => await autoSave.update();
+gp.save = async (edited) => {
+  await autoSave.update(edited);
+};
