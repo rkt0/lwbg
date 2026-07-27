@@ -67,17 +67,19 @@ export const gp = {
     gs.phase = 'roll';
     gs.je = false;
   },
+  isTrexActive() {
+    return this.nHumansOn(bd.humanStart) > 0;
+  },
   nextTurnSpecies(forceStop) {
     if (!gs.turn) return bd.firstTurn;
     if (gs.turn === 'trex') return 'raptor';
     const stop = forceStop ?? !gs.rollGo;
-    const nOnStart = this.nHumansOn(bd.humanStart);
+    const firstDino = this.isTrexActive() ?
+      'trex' : 'raptor';
     if (gs.turn === 'human') {
-      if (stop) return nOnStart ? 'trex' : 'raptor';
-      return 'human';
+      return stop ? firstDino : 'human';
     }
-    if (stop) return 'human';
-    return nOnStart ? 'trex' : 'raptor';
+    return stop ? 'human' : firstDino;
   },
   async endTurn() {
     this.clearMoveObject();
@@ -128,6 +130,8 @@ export const gp = {
       delay: isNowDead ? anim.time.killHumanDelay : 0,
     });
     this.adjustHumanPositions();
+    // Only relevant in edit mode
+    this.checkEatenByAnyRaptor();
     if (isLast) await this.endTurn();
   },
   async moveRaptor(piece, space, isLast, silent) {
@@ -171,12 +175,7 @@ export const gp = {
       anim.bounce(dom.gameplay, settings);
     }
     gs.trex = space;
-    if (gs.trex === 0) {
-      for (const h of hPiecesOn(bd.humanStart)) {
-        this.moveHuman(h, bd.humanDead, false);
-        message.show('eaten-trex', true);
-      }
-    }
+    this.checkEatenByTrex();
     // Using isLast here too enables reuse of this
     // function for edit/load purposes
     if (isLast) await this.endTurn();
@@ -199,6 +198,13 @@ export const gp = {
     const [l, t] = pl[species][space];
     const location = {top: `${t}px`, left: `${l}px`};
     await anim.move(element, location, 0);
+  },
+  checkEatenByTrex() {
+    if (gs.trex > 0) return;
+    for (const h of hPiecesOn(bd.humanStart)) {
+      this.moveHuman(h, bd.humanDead, false);
+      message.show('eaten-trex', true);
+    }
   },
   checkEatenByAnyRaptor() {
     for (let r = 0; r < gs.raptors.length; r++) {
@@ -287,6 +293,9 @@ function hPiecesOn(space) {
   );
 }
 function checkEatenByRaptor(rPiece) {
+  if (gs.turn === 'human' || gs.turn === 'over') {
+    return;
+  }
   const rLoc = gs.raptors[rPiece];
   const hsIn = bd.humanSpacesInRaptorSpace[rLoc];
   for (const [hp, hs] of gs.humans.entries()) {

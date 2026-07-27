@@ -34,7 +34,7 @@ export const edit = {
     }
     if (gs.turn === 'over') {
       anim.fade(dom.gameOver, 0, eTime);
-    } else anim.fade(qjs('edit-turn'), 1, eTime);
+    } else this.showEditTurnButton();
     if (gs.phase !== 'roll') enableDiceEdit();
     ui.humanItemsClickable(true);
     ui.raptorItemsClickable(true);
@@ -67,6 +67,9 @@ export const edit = {
     ]);
     this.selected = {species: null, piece: null};
     await ui.hideButton('cancel');
+  },
+  showEditTurnButton() {
+    anim.fade(qjs('edit-turn'), 1, eTime);
   },
 };
 
@@ -104,6 +107,12 @@ async function editGame(gsNew) {
   Object.assign(gs, gsNew);
   gp.checkGameOver(true);
   if (gs.turn === 'over') return;
+  // Fix inappropriate T-rex turn state
+  if (gs.turn === 'trex' && !gp.isTrexActive()) {
+    gs.turn = 'raptor';
+    gp.clearRoll();
+    ui.replaceButton('roll-display', 'roll-button');
+  }
   ui.displayTurn(gs.turn);
   if (gs.phase === 'roll') {
     ui.replaceButton('roll-display', 'roll-button');
@@ -143,7 +152,6 @@ ael(qjs('edit-revert'), 'mousedown', async () => {
 ael(qjs('edit-confirm'), 'mousedown', async () => {
   await endEditMode();
   await editGame(gs);
-  if (gs.turn !== 'human') gp.checkEatenByAnyRaptor();
   await gp.save(true);
 });
 
@@ -167,6 +175,7 @@ ael(qjs('edit-turn'), 'mousedown', () => {
   const species = gp.nextTurnSpecies(true);
   gs.turn = species;
   ui.displayTurn(species, true);
+  if (species !== 'human') gp.checkEatenByAnyRaptor();
   if (gs.phase === 'roll') return;
   if (species === 'trex') gs.phase = 'move';
   if (species === 'raptor') gs.phase = 'select';

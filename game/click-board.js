@@ -163,6 +163,7 @@ async function clickHumanSpaceEditMode(
   const piece = edit.selected.piece;
   if (gs.humans[piece] === space) return;
   if (gp.nHumansOn(space) && !isBldg) return;
+  if (space === bd.humanStart && !gs.trex) return;
   gp.moveHuman(piece, space, false);
   await edit.cancelSelection();
   const gameNoLongerOver = gs.turn === 'over' &&
@@ -170,7 +171,8 @@ async function clickHumanSpaceEditMode(
   if (gameNoLongerOver) {
     gs.turn = 'human';
     ui.displayTurn('human', true);
-    ui.showButton('turn-display');
+    await ui.showButton('turn-display');
+    edit.showEditTurnButton();
   }
 }
 
@@ -209,6 +211,14 @@ function clickRaptorSpaceEditMode(space) {
   const piece = edit.selected.piece;
   if (gs.raptors[piece] === space) return;
   if (gp.nRaptorsOn(space)) return;
+  bd.humanStartRaptorSpace ??= bd.bldgRaptorSpaces[
+    bd.bldgHumanSpaces.indexOf(bd.humanStart)
+  ];
+  bd.humanGoalRaptorSpace ??= bd.bldgRaptorSpaces[
+    bd.bldgHumanSpaces.indexOf(bd.humanGoal)
+  ];
+  if (space === bd.humanStartRaptorSpace) return;
+  if (space === bd.humanGoalRaptorSpace) return;
   gp.moveRaptor(piece, space, false, true);
   edit.cancelSelection();
 }
