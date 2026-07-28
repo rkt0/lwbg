@@ -144,7 +144,7 @@
 .debug-labels {
   top: 0;
   pointer-events: none;
-  z-index: 3;
+  z-index: 4;
 }
 
 .human-space-labels {

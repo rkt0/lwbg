@@ -18,21 +18,24 @@
   height: var(--human-piece-height);
   --color-highlight: #008b4bcc;
   z-index: 0;
-  --z-index-above: 2;
+  --z-index-selected: 3;
 
   &.selected {
     outline: solid var(--board-border-width)
       var(--color-selected);
-    z-index: var(--z-index-above);
+    z-index: var(--z-index-selected);
   }
 
   &.on-selected {
-    z-index: var(--z-index-above);
+    z-index: var(--z-index-selected);
   }
 
   &.dead {
     --color-highlight: #aaac;
-    z-index: var(--z-index-above);
+  }
+
+  &.dead:not(.selected) {
+    z-index: 2;
   }
 
   .zoomed-out & {
