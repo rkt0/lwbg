@@ -4,7 +4,9 @@ import {
 import {anim} from './animation.js';
 
 export const message = {
+  suppress: false,
   show(templateId, append) {
+    if (this.suppress) return;
     const node = fromTemplate(templateId);
     if (append && element.dataset.appendable === '') {
       content.append(ce('br'), node);

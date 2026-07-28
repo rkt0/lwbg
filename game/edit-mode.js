@@ -24,6 +24,7 @@ export const edit = {
     this.on = true;
     this.gsPrevious = deepCopy(gs);
     message.hide();
+    message.suppress = true;
     const hidden = [
       'roll-button', 'decline',
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',
@@ -142,6 +143,7 @@ async function endEditMode() {
   ui.hideButton('unroll-dice');
   edit.clear();
   dom.showMore.style.visibility = 'visible';
+  message.suppress = false;
   await sleep(eTime);
 }
 ael(qjs('edit-revert'), 'mousedown', async () => {
