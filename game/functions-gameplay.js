@@ -85,7 +85,6 @@ export const gp = {
     this.clearMoveObject();
     if (gs.turn === 'human') {
       this.adjustHumanPositions();
-      if (!gs.rollGo) this.checkEatenByAnyRaptor();
     }
     await this.checkGameOver();
     await startNextTurn();
@@ -306,8 +305,10 @@ function checkEatenByRaptor(rPiece) {
 }
 async function startNextTurn() {
   const species = gp.nextTurnSpecies();
-  if (gs.turn === 'over') return;
   gs.turn = species;
+  gp.checkEatenByAnyRaptor();
+  await gp.checkGameOver();
+  if (gs.turn === 'over') return;
   gp.clearRoll();
   ui.replaceButton('roll-display', 'roll-button');
   ui.displayTurn(species);
