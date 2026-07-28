@@ -1,1 +1,2 @@
 selected human below dead human
+passive eat fails again
