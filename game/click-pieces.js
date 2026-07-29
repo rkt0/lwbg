@@ -4,7 +4,7 @@ import {bd} from './board-topology.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {gs, mv} from './game-objects.js';
-import {gp} from './functions-gameplay.js';
+import {gp} from './gameplay.js';
 import {ui} from './functions-ui.js';
 import {message} from './message.js';
 import {edit} from './edit-mode.js';

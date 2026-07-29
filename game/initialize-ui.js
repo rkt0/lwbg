@@ -10,7 +10,7 @@ import {gs, mv} from './game-objects.js';
 import {zoom} from './zoom.js';
 import {toggle} from './toggle.js';
 import {ui} from './functions-ui.js';
-import {gp} from './functions-gameplay.js';
+import {gp} from './gameplay.js';
 import {message} from './message.js';
 import {bringMoveIntoView} from './view-region.js';
 import {moreMenu} from './more-menu.js';

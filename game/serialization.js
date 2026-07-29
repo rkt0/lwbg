@@ -2,7 +2,7 @@ import {invertMap, fileContents} from './utility.js';
 import {ai} from './ai.js';
 import {pieces} from './pieces.js';
 import {gs} from './game-objects.js';
-import {gp} from './functions-gameplay.js';
+import {gp} from './gameplay.js';
 import {control} from './control.js';
 
 export const serialize = {

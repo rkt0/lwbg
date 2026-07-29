@@ -1,7 +1,7 @@
 import {closestData, ael} from './utility.js';
 import {dom} from './dom.js';
 import {pieces} from './pieces.js';
-import {gp} from './functions-gameplay.js';
+import {gp} from './gameplay.js';
 import {autoSave} from './auto-save.js';
 import {edit} from './edit-mode.js';
 import {
