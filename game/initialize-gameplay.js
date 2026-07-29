@@ -1,9 +1,10 @@
 import {closestData, ael} from './utility.js';
 import {dom} from './dom.js';
+import './initialize-board.js';
 import {pieces} from './pieces.js';
 import {gp} from './gameplay.js';
-import {autoSave} from './auto-save.js';
 import {edit} from './edit-mode.js';
+import {autoSave} from './auto-save.js';
 import {
   clickHumanSpace, clickRaptorSpace, clickBuilding,
 } from './click-board.js';
@@ -12,7 +13,6 @@ import {
   clickEditKill, clickEditTrex,
 } from './click-pieces.js';
 import {moreMenu} from './more-menu.js';
-import './initialize-board.js';
 
 // Make pieces
 pieces.makeAll();

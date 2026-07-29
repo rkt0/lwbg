@@ -1,9 +1,9 @@
 import {invertMap, fileContents} from './utility.js';
-import {ai} from './ai.js';
-import {pieces} from './pieces.js';
 import {gs} from './game-objects.js';
-import {gp} from './gameplay.js';
+import {pieces} from './pieces.js';
+import {ai} from './ai.js';
 import {control} from './control.js';
+import {gp} from './gameplay.js';
 
 export const serialize = {
   code: {signature: 'LWBG', logic: 0, format: 1},

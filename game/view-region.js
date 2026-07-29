@@ -1,12 +1,12 @@
 import {
   sleep, sqrtStep, absoluteBoundingRect, boundingBox,
 } from './utility.js';
+import {bd} from './board-topology.js';
+import {gs, mv, pl} from './game-objects.js';
+import {dom} from './dom.js';
 import {scrollBetter} from './scroll.js';
 import {tvMatte} from './tv-matte.js';
-import {dom} from './dom.js';
-import {bd} from './board-topology.js';
 import {anim} from './animation.js';
-import {gs, mv, pl} from './game-objects.js';
 
 function movePlanRegion() {
   if (gs.turn === 'trex') return trexMoveRegion();

@@ -1,14 +1,14 @@
 import {
   qjs, qda, closestData, ael, click, sleep, deepCopy,
 } from './utility.js';
+import {gs} from './game-objects.js';
 import {dom} from './dom.js';
 import {dice} from './dice.js';
-import {ai} from './ai.js';
 import {anim} from './animation.js';
-import {gs} from './game-objects.js';
+import {ai} from './ai.js';
+import {message} from './message.js';
 import {sb} from './sidebar.js';
 import {gp} from './gameplay.js';
-import {message} from './message.js';
 
 export const edit = {
   clear() {

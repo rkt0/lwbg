@@ -1,8 +1,8 @@
 import {
   qjs, qda, closestData, ael,
 } from './utility.js';
-import {ai} from './ai.js';
 import {anim} from './animation.js';
+import {ai} from './ai.js';
 
 export const control = {
   async show() {

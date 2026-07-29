@@ -2,18 +2,18 @@ import {
   qjs, qda, closestData, ael, click, rollDie,
 } from './utility.js';
 import {prng} from './prngs.js';
+import {gs, mv} from './game-objects.js';
 import {dom} from './dom.js';
 import {dice} from './dice.js';
-import {ai} from './ai.js';
-import {anim} from './animation.js';
-import {gs, mv} from './game-objects.js';
 import {zoom} from './zoom.js';
-import {sb} from './sidebar.js';
-import {gp} from './gameplay.js';
+import {anim} from './animation.js';
+import {ai} from './ai.js';
 import {message} from './message.js';
+import {sb} from './sidebar.js';
 import {bringMoveIntoView} from './view-region.js';
-import {moreMenu} from './more-menu.js';
+import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
+import {moreMenu} from './more-menu.js';
 
 // Set display to none on dormant elements
 for (const element of qda('dormant')) {

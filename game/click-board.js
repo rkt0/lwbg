@@ -1,11 +1,11 @@
 import {click} from './utility.js';
-import {dom} from './dom.js';
 import {bd} from './board-topology.js';
-import {ai} from './ai.js';
 import {gs, mv} from './game-objects.js';
+import {dom} from './dom.js';
+import {ai} from './ai.js';
 import {sb} from './sidebar.js';
-import {gp} from './gameplay.js';
 import {message} from './message.js';
+import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
 
 export function clickHumanSpace(space) {

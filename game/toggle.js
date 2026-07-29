@@ -1,8 +1,8 @@
 import {
   qjs, qda, closestData, ael,
 } from './utility.js';
-import {music} from './music.js';
 import {zoom} from './zoom.js';
+import {music} from './music.js';
 
 export const toggle = {
   fullscreen() {

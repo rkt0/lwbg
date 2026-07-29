@@ -1,12 +1,12 @@
 import {qjs, click} from './utility.js';
-import {ai} from './ai.js';
-import {music} from './music.js';
 import {gs, mv} from './game-objects.js';
 import {zoom} from './zoom.js';
+import {music} from './music.js';
+import {ai} from './ai.js';
 import {toggle} from './toggle.js';
+import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
 import {moreMenu} from './more-menu.js';
-import {gp} from './gameplay.js';
 
 function clickIfOk(button) {
   if (button.disabled) return;

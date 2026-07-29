@@ -1,6 +1,6 @@
 import {qjs, qda, ael, isNull} from './utility.js';
-import {debug} from './debug.js';
 import {prng} from './prngs.js';
+import {debug} from './debug.js';
 
 export const music = {
   audioOn: true,

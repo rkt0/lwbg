@@ -1,6 +1,6 @@
 import {qjs, qda} from './utility.js';
-import {tvMatte} from './tv-matte.js';
 import {dom} from './dom.js';
+import {tvMatte} from './tv-matte.js';
 
 export const zoom = {
   factor: {current: null, in: 2, outMax: 0.125},

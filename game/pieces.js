@@ -1,10 +1,10 @@
 import {
   qd, ce, fromTemplate, sequence, shuffle,
 } from './utility.js';
-import {dom} from './dom.js';
-import {debug} from './debug.js';
 import {prng} from './prngs.js';
 import {bd} from './board-topology.js';
+import {dom} from './dom.js';
+import {debug} from './debug.js';
 
 const {nHumanPieces, raptorStart} = bd;
 const nRaptorPieces = raptorStart.length;

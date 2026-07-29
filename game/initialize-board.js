@@ -1,14 +1,14 @@
 import {
   ce, cesvg, cssInt, cssIntWH, setSvgSize,
 } from './utility.js';
-import {dom} from './dom.js';
-import {debug} from './debug.js';
 import {bd} from './board-topology.js';
 import {geom} from './board-geometry.js';
+import {pl} from './game-objects.js';
 import {
   addBldgBgs, addEntrances, addJumps, addHelos,
 } from './building-appearance.js';
-import {pl} from './game-objects.js';
+import {dom} from './dom.js';
+import {debug} from './debug.js';
 import {zoom} from './zoom.js';
 
 // Get human edges from human paths

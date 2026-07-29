@@ -1,9 +1,9 @@
 import {
   deepCopy, appendToFile, copyFile,
 } from './utility.js';
+import {gs} from './game-objects.js';
 import {debug} from './debug.js';
 import {ai} from './ai.js';
-import {gs} from './game-objects.js';
 import {sb} from './sidebar.js';
 import {gp} from './gameplay.js';
 import {

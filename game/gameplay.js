@@ -1,14 +1,14 @@
 import {qjs, click} from './utility.js';
-import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {geom} from './board-geometry.js';
-import {ai} from './ai.js';
+import {gs, mv, pl} from './game-objects.js';
+import {dom} from './dom.js';
+import {zoom} from './zoom.js';
 import {anim} from './animation.js';
+import {ai} from './ai.js';
+import {message} from './message.js';
 import {sfx} from './sfx.js';
 import {sb} from './sidebar.js';
-import {gs, mv, pl} from './game-objects.js';
-import {zoom} from './zoom.js';
-import {message} from './message.js';
 
 export const gp = {
   nHumansOn(space) {

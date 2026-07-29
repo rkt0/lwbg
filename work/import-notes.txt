@@ -1,0 +1,58 @@
+# Level 0
+board-geometry.js
+board-topology.js
+game-objects.js
+prngs.js
+utility.js
+
+# Level 1
+building-appearance.js
+dom.js
+scroll.js
+tv-matte.js
+
+# Level 2
+debug.js
+dice.js
+zoom.js
+
+# Level 3
+animation.js
+initialize-board.js
+music.js
+pieces.js
+
+# Level 4
+ai.js
+message.js
+sfx.js
+sidebar.js
+toggle.js
+view-region.js
+
+# Level 5
+control.js
+gameplay.js
+
+# Level 6
+edit-mode.js
+serialization.js
+
+# Level 7
+auto-save.js
+click-board.js
+click-pieces.js
+
+# Level 8
+pregame.js
+
+# Level 9
+more-menu.js
+
+# Level A
+initialize-gameplay.js
+initialize-ui.js
+key-bindings.js
+
+# Level B
+main.js

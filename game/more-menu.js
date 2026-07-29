@@ -3,11 +3,11 @@ import {dom} from './dom.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
 import {pieces} from './pieces.js';
-import {gp} from './gameplay.js';
-import {autoSave} from './auto-save.js';
 import {message} from './message.js';
-import {edit} from './edit-mode.js';
 import {control} from './control.js';
+import {gp} from './gameplay.js';
+import {edit} from './edit-mode.js';
+import {autoSave} from './auto-save.js';
 import {showStartOptions} from './pregame.js';
 
 export const moreMenu = {
