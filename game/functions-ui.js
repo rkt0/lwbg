@@ -9,13 +9,13 @@ export const ui = {
     const aTime = anim.time.buttonSlide;
     const linear = {easing: 'linear'};
     await anim.move(element, leftShow, aTime, linear);
-    if (this.isProperButton(element)) {
+    if (isProperButton(element)) {
       element.disabled = false;
     }
   },
   async hideButton(identifier) {
     const element = menuItem[identifier];
-    if (this.isProperButton(element)) {
+    if (isProperButton(element)) {
       if (element.disabled) return;
       element.disabled = true;
     }
@@ -27,10 +27,6 @@ export const ui = {
   async replaceButton(identifierOld, identifierNew) {
     await this.hideButton(identifierOld);
     this.showButton(identifierNew);
-  },
-  isProperButton(element) {
-    const nn = element.nodeName.toLowerCase();
-    return nn === 'button';
   },
   async displayTurn(species, skipFx) {
     const speciesText =
@@ -113,3 +109,9 @@ const turnSpan = qjs('species-turn-text');
 const buttonWidth = cssInt('--button-width');
 const leftShow = {left: '0px'};
 const leftHide = {left: `-${buttonWidth}px`};
+
+// Helper function
+function isProperButton(element) {
+  const nn = element.nodeName.toLowerCase();
+  return nn === 'button';
+}

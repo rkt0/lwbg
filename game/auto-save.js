@@ -2,7 +2,9 @@ import {
   deepCopy, appendToFile, copyFile,
 } from './utility.js';
 import {debug} from './debug.js';
+import {ai} from './ai.js';
 import {gs} from './game-objects.js';
+import {ui} from './functions-ui.js';
 import {gp} from './functions-gameplay.js';
 import {
   serialize, deserialize, checkHeader,
@@ -61,7 +63,22 @@ export const autoSave = {
   async executeLoad(fhLoad) {
     await deserialize(fhLoad);
     this.gsPrevious = deepCopy(gs);
-    gp.handleLoad();
+    ui.displayTurn(gs.turn);
+    if (gs.phase === 'roll') {
+      ui.replaceButton('roll-display', 'roll-button');
+    } else ui.displayRollResult(gs, true);
+    if (ai.control[gs.turn] && gs.phase !== 'roll') {
+      ui.showButton('ok-ai-move');
+    } else {
+      ui.hideButton('ok-ai-move');
+      if (gs.je) gp.startJumpEnter();
+    }
+    if (gs.turn === 'trex' && gs.phase === 'move') {
+      if (gs.rollN) ui.showButton('ok-trex-move');
+      else ui.showButton('ok-no-move');
+    }
+    ui.humanItemsClickable(gs.turn === 'human');
+    ui.raptorItemsClickable(gs.turn === 'raptor');
   },
 };
 

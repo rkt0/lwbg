@@ -174,7 +174,12 @@ export const gp = {
       anim.bounce(dom.gameplay, settings);
     }
     gs.trex = space;
-    this.checkEatenByTrex();
+    if (gs.trex === 0) {
+      for (const h of hPiecesOn(bd.humanStart)) {
+        this.moveHuman(h, bd.humanDead, false);
+        message.show('eaten-trex', true);
+      }
+    }
     // Using isLast here too enables reuse of this
     // function for edit/load purposes
     if (isLast) await this.endTurn();
@@ -197,13 +202,6 @@ export const gp = {
     const [l, t] = pl[species][space];
     const location = {top: `${t}px`, left: `${l}px`};
     await anim.move(element, location, 0);
-  },
-  checkEatenByTrex() {
-    if (gs.trex > 0) return;
-    for (const h of hPiecesOn(bd.humanStart)) {
-      this.moveHuman(h, bd.humanDead, false);
-      message.show('eaten-trex', true);
-    }
   },
   checkEatenByAnyRaptor() {
     for (let r = 0; r < gs.raptors.length; r++) {
@@ -252,24 +250,6 @@ export const gp = {
       ui.hideButton('ok-ai-move');
       if (gs.je) this.startJumpEnter();
     }
-  },
-  handleLoad() {
-    ui.displayTurn(gs.turn);
-    if (gs.phase === 'roll') {
-      ui.replaceButton('roll-display', 'roll-button');
-    } else ui.displayRollResult(gs, true);
-    if (ai.control[gs.turn] && gs.phase !== 'roll') {
-      ui.showButton('ok-ai-move');
-    } else {
-      ui.hideButton('ok-ai-move');
-      if (gs.je) gp.startJumpEnter();
-    }
-    if (gs.turn === 'trex' && gs.phase === 'move') {
-      if (gs.rollN) ui.showButton('ok-trex-move');
-      else ui.showButton('ok-no-move');
-    }
-    ui.humanItemsClickable(gs.turn === 'human');
-    ui.raptorItemsClickable(gs.turn === 'raptor');
   },
   select(element = null, elementOn = null) {
     dom.selected?.classList.remove('selected');
