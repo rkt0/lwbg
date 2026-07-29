@@ -5,7 +5,7 @@ import {geom} from './board-geometry.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {sfx} from './sfx.js';
-import {ui} from './functions-ui.js';
+import {sb} from './sidebar.js';
 import {gs, mv, pl} from './game-objects.js';
 import {zoom} from './zoom.js';
 import {message} from './message.js';
@@ -30,8 +30,8 @@ export const gp = {
       qjs('humans-saved').innerHTML = nSaved;
       qjs('humans-total').innerHTML = nTotal;
       message.hide();
-      ui.hideButton('roll-display');
-      ui.hideButton('turn-display');
+      sb.hideButton('roll-display');
+      sb.hideButton('turn-display');
       if (zoom.factor.current < 1) return;
       anim.fade(dom.gameOver, 1, anim.time.menuFade, {
         display: '',
@@ -104,11 +104,11 @@ export const gp = {
     }
     if (nChoices) {
       mv.toGo = 1;
-      ui.showButton('decline');
+      sb.showButton('decline');
     } else {
       message.show(`no-${which}-available`);
       mv.toGo = -1;
-      ui.showButton('ok-no-move');
+      sb.showButton('ok-no-move');
     }
   },
   async moveHuman(piece, space, isLast) {
@@ -243,11 +243,11 @@ export const gp = {
     await this.save();
     if (ai.control[gs.turn] && gs.phase !== 'roll') {
       click(qjs('cancel'));
-      ui.hideButton('ok-no-move');
-      ui.hideButton('decline');
-      ui.showButton('ok-ai-move');
+      sb.hideButton('ok-no-move');
+      sb.hideButton('decline');
+      sb.showButton('ok-ai-move');
     } else {
-      ui.hideButton('ok-ai-move');
+      sb.hideButton('ok-ai-move');
       if (gs.je) this.startJumpEnter();
     }
   },
@@ -312,8 +312,8 @@ async function startNextTurn() {
   await gp.checkGameOver();
   if (gs.turn === 'over') return;
   gp.clearRoll();
-  ui.replaceButton('roll-display', 'roll-button');
-  ui.displayTurn(species);
+  sb.replaceButton('roll-display', 'roll-button');
+  sb.displayTurn(species);
   gp.humanItemsClickable(species === 'human');
   gp.raptorItemsClickable(species === 'raptor');
   await gp.save();

@@ -4,7 +4,7 @@ import {
 import {debug} from './debug.js';
 import {ai} from './ai.js';
 import {gs} from './game-objects.js';
-import {ui} from './functions-ui.js';
+import {sb} from './sidebar.js';
 import {gp} from './gameplay.js';
 import {
   serialize, deserialize, checkHeader,
@@ -63,19 +63,19 @@ export const autoSave = {
   async executeLoad(fhLoad) {
     await deserialize(fhLoad);
     this.gsPrevious = deepCopy(gs);
-    ui.displayTurn(gs.turn);
+    sb.displayTurn(gs.turn);
     if (gs.phase === 'roll') {
-      ui.replaceButton('roll-display', 'roll-button');
-    } else ui.displayRollResult(gs, true);
+      sb.replaceButton('roll-display', 'roll-button');
+    } else sb.displayRollResult(gs, true);
     if (ai.control[gs.turn] && gs.phase !== 'roll') {
-      ui.showButton('ok-ai-move');
+      sb.showButton('ok-ai-move');
     } else {
-      ui.hideButton('ok-ai-move');
+      sb.hideButton('ok-ai-move');
       if (gs.je) gp.startJumpEnter();
     }
     if (gs.turn === 'trex' && gs.phase === 'move') {
-      if (gs.rollN) ui.showButton('ok-trex-move');
-      else ui.showButton('ok-no-move');
+      if (gs.rollN) sb.showButton('ok-trex-move');
+      else sb.showButton('ok-no-move');
     }
     gp.humanItemsClickable(gs.turn === 'human');
     gp.raptorItemsClickable(gs.turn === 'raptor');

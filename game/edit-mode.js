@@ -6,7 +6,7 @@ import {dice} from './dice.js';
 import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {gs} from './game-objects.js';
-import {ui} from './functions-ui.js';
+import {sb} from './sidebar.js';
 import {gp} from './gameplay.js';
 import {message} from './message.js';
 
@@ -29,7 +29,7 @@ export const edit = {
       'roll-button', 'decline',
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',
     ];
-    for (const x of hidden) await ui.hideButton(x);
+    for (const x of hidden) await sb.hideButton(x);
     for (const element of elements.trexButtons) {
       anim.fade(element, 1, eTime);
     }
@@ -63,11 +63,11 @@ export const edit = {
     // should be enough of a delay, but we also call
     // a short sleep in parallel just to be safe
     await Promise.all([
-      ui.hideButton('cancel'),
+      sb.hideButton('cancel'),
       sleep(anim.time.moveHuman / 6),
     ]);
     this.selected = {species: null, piece: null};
-    await ui.hideButton('cancel');
+    await sb.hideButton('cancel');
   },
   showEditTurnButton() {
     anim.fade(qjs('edit-turn'), 1, eTime);
@@ -112,23 +112,23 @@ async function editGame(gsNew) {
   if (gs.turn === 'trex' && !gp.isTrexActive()) {
     gs.turn = 'raptor';
     gp.clearRoll();
-    ui.replaceButton('roll-display', 'roll-button');
+    sb.replaceButton('roll-display', 'roll-button');
   }
-  ui.displayTurn(gs.turn);
+  sb.displayTurn(gs.turn);
   if (gs.phase === 'roll') {
-    ui.replaceButton('roll-display', 'roll-button');
+    sb.replaceButton('roll-display', 'roll-button');
   } else if (rollResultChanged) {
-    ui.displayRollResult(gs, true);
+    sb.displayRollResult(gs, true);
   }
   if (ai.control[gs.turn] && gs.phase !== 'roll') {
-    ui.showButton('ok-ai-move');
+    sb.showButton('ok-ai-move');
   } else {
-    ui.hideButton('ok-ai-move');
+    sb.hideButton('ok-ai-move');
     if (gs.je) gp.startJumpEnter();
   }
   if (gs.turn === 'trex' && gs.phase === 'move') {
-    if (gs.rollN) ui.showButton('ok-trex-move');
-    else ui.showButton('ok-no-move');
+    if (gs.rollN) sb.showButton('ok-trex-move');
+    else sb.showButton('ok-no-move');
   }
   gp.humanItemsClickable(gs.turn === 'human');
   gp.raptorItemsClickable(gs.turn === 'raptor');
@@ -140,7 +140,7 @@ async function endEditMode() {
     if (element === elements.banner) continue;
     anim.fade(element, 0, eTime);
   }
-  ui.hideButton('unroll-dice');
+  sb.hideButton('unroll-dice');
   edit.clear();
   dom.showMore.style.visibility = 'visible';
   message.suppress = false;
@@ -176,7 +176,7 @@ function replaceDieValue(species, type, value) {
 ael(qjs('edit-turn'), 'mousedown', () => {
   const species = gp.nextTurnSpecies(true);
   gs.turn = species;
-  ui.displayTurn(species, true);
+  sb.displayTurn(species, true);
   if (species !== 'human') gp.checkEatenByAnyRaptor();
   if (gs.phase === 'roll') return;
   if (species === 'trex') gs.phase = 'move';
@@ -228,7 +228,7 @@ ael(qjs('unroll-dice'), 'mousedown', () => {
     'roll-display', 'unroll-dice', 'cancel',
   ];
   edit.cancelSelection();
-  for (const b of buttonsToHide) ui.hideButton(b);
+  for (const b of buttonsToHide) sb.hideButton(b);
   enableDiceEdit(false);
 });
 function dieCode(value, die) {
@@ -241,7 +241,7 @@ function enableDiceEdit(enable = true) {
     anim.fade(element, +enable, eTime);
   }
   if (!enable) return;
-  ui.showButton('unroll-dice');
+  sb.showButton('unroll-dice');
   edit.dieCodes.movement =
     dieCode(gs.rollN, dice[gs.turn].movement);
   edit.dieCodes.continue =

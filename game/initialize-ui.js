@@ -9,7 +9,7 @@ import {anim} from './animation.js';
 import {gs, mv} from './game-objects.js';
 import {zoom} from './zoom.js';
 import {toggle} from './toggle.js';
-import {ui} from './functions-ui.js';
+import {sb} from './sidebar.js';
 import {gp} from './gameplay.js';
 import {message} from './message.js';
 import {bringMoveIntoView} from './view-region.js';
@@ -22,9 +22,9 @@ for (const element of qda('dormant')) {
 }
 
 // Initialize dormant elements in gameplay menu
-const gameplayMenu = qjs('gameplay-menu');
+const gameplayMenu = qjs('sidebar');
 for (const button of qda('dormant', gameplayMenu)) {
-  ui.hideButton(button.dataset.js);
+  sb.hideButton(button.dataset.js);
 }
 
 // Simple gameplay menu click handlers
@@ -34,13 +34,13 @@ function showMore() {
 async function okNoMove() {
   if (gs.phase === 'roll') return;
   message.hide();
-  ui.hideButton('ok-no-move');
+  sb.hideButton('ok-no-move');
   await gp.endTurn();
 }
 async function okAiMove() {
   if (gs.phase !== 'select') return;
   gs.phase = 'think';
-  ui.hideButton('ok-ai-move');
+  sb.hideButton('ok-ai-move');
   const decision = ai.control[gs.turn](gs, prng.ai);
   if (!decision.length) {
     await gp.endTurn();
@@ -60,7 +60,7 @@ async function decline() {
     }`);
     mv.toGo--;
   } else {
-    ui.hideButton('decline');
+    sb.hideButton('decline');
     await gp.endTurn();
   }
 }
@@ -74,7 +74,7 @@ async function executeRoll() {
   gs.rollGo = gs.turn === 'trex' ? 0 : rollDie(
     dice[gs.turn].continue, prng.dice[gs.turn]
   );
-  ui.displayRollResult(gs);
+  sb.displayRollResult(gs);
   gs.je = gs.rollN === 'Jump' || gs.rollN === 'Enter';
   await gp.save();
   const delay = anim.time.buttonSlide * 2 +
@@ -82,14 +82,14 @@ async function executeRoll() {
   if (gs.turn === 'trex') {
     setTimeout(() => {
       gs.phase = 'move';
-      if (gs.rollN) ui.showButton('ok-trex-move');
-      else ui.showButton('ok-no-move');
+      if (gs.rollN) sb.showButton('ok-trex-move');
+      else sb.showButton('ok-no-move');
     }, delay);
   } else {
     setTimeout(() => {
       gs.phase = 'select';
       if (ai.control[gs.turn]) {
-        ui.showButton('ok-ai-move');
+        sb.showButton('ok-ai-move');
       } else if (gs.je) gp.startJumpEnter();
     }, delay);
   }
@@ -97,7 +97,7 @@ async function executeRoll() {
 async function okTrexMove() {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
-  ui.hideButton('ok-trex-move');
+  sb.hideButton('ok-trex-move');
   zoom.zoomDefault();
   await bringMoveIntoView();
   gp.moveTrex(gs.trex - 1, true);
@@ -113,8 +113,8 @@ async function clearVisibleMove() {
   }
   dom.path = [];
   message.hide();
-  ui.hideButton('confirm');
-  await ui.hideButton('cancel');
+  sb.hideButton('confirm');
+  await sb.hideButton('cancel');
 }
 
 // Click handlers for cancel and confirm
@@ -147,7 +147,7 @@ async function confirmMove() {
 }
 
 // Gameplay menu click handler
-ael(qjs('gameplay-menu'), 'mousedown', (e) => {
+ael(qjs('sidebar'), 'mousedown', (e) => {
   const js = closestData(e);
   if (js === 'show-more') showMore();
   else if (js === 'ok-no-move') okNoMove();

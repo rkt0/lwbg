@@ -3,7 +3,7 @@ import {dom} from './dom.js';
 import {bd} from './board-topology.js';
 import {ai} from './ai.js';
 import {gs, mv} from './game-objects.js';
-import {ui} from './functions-ui.js';
+import {sb} from './sidebar.js';
 import {gp} from './gameplay.js';
 import {message} from './message.js';
 import {edit} from './edit-mode.js';
@@ -46,7 +46,7 @@ export function clickHumanSpace(space) {
       edge.classList.add('path');
     }
     if (isBldg) mv.toGo = 0; else mv.toGo--;
-    if (!mv.toGo) ui.showButton('confirm');
+    if (!mv.toGo) sb.showButton('confirm');
   }
 }
 
@@ -89,7 +89,7 @@ export function clickRaptorSpace(space) {
     dom.move.classList.add('move');
     mv.plan.push(space);
     mv.toGo--;
-    if (!mv.toGo) ui.showButton('confirm');
+    if (!mv.toGo) sb.showButton('confirm');
   }
 }
 
@@ -170,8 +170,8 @@ async function clickHumanSpaceEditMode(
     ![bd.humanGoal, bd.humanDead].includes(space)
   if (gameNoLongerOver) {
     gs.turn = 'human';
-    ui.displayTurn('human', true);
-    await ui.showButton('turn-display');
+    sb.displayTurn('human', true);
+    await sb.showButton('turn-display');
     edit.showEditTurnButton();
   }
 }

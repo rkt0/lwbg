@@ -4,7 +4,7 @@
   --zoom-button-size: 36px;
 }
 
-.gameplay-menu {
+.sidebar {
   position: fixed;
   top: var(--matte-top, 0);
   left: var(--matte-left, 0);

@@ -5,7 +5,7 @@ import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {gs, mv} from './game-objects.js';
 import {gp} from './gameplay.js';
-import {ui} from './functions-ui.js';
+import {sb} from './sidebar.js';
 import {message} from './message.js';
 import {edit} from './edit-mode.js';
 
@@ -30,7 +30,7 @@ export function clickHumanPiece(piece) {
     mv.selected = piece;
     mv.plan = [space];
     mv.toGo = gs.je ? 1 : gs.rollN;
-    ui.replaceButton('decline', 'cancel');
+    sb.replaceButton('decline', 'cancel');
     gs.phase = 'move';
   }
 }
@@ -54,7 +54,7 @@ export function clickRaptorPiece(piece) {
     mv.selected = piece;
     mv.plan = [space];
     mv.toGo = gs.je ? 1 : gs.rollN;
-    ui.replaceButton('decline', 'cancel');
+    sb.replaceButton('decline', 'cancel');
     gs.phase = 'move';
   }
 }
@@ -68,7 +68,7 @@ export function clickEditKill(piece) {
   gp.raptorItemsClickable(true);
   edit.selected.species = null;
   edit.selected.piece = null;
-  ui.hideButton('cancel');
+  sb.hideButton('cancel');
 }
 
 export function clickEditTrex(change, absolute) {
@@ -118,7 +118,7 @@ function clickHumanPieceEditMode(piece, space) {
   gp.raptorItemsClickable(false);
   edit.selected.species = 'human';
   edit.selected.piece = piece;
-  ui.showButton('cancel');
+  sb.showButton('cancel');
   if (space === bd.humanDead) return;
   const button = dom.editKill[piece];
   button.disabled = false;
@@ -141,5 +141,5 @@ function clickRaptorPieceEditMode(piece, space) {
   gp.humanItemsClickable(false);
   edit.selected.species = 'raptor';
   edit.selected.piece = piece;
-  ui.showButton('cancel');
+  sb.showButton('cancel');
 }

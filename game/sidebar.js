@@ -2,7 +2,7 @@ import {qjs, cssInt} from './utility.js';
 import {dom} from './dom.js';
 import {anim} from './animation.js';
 
-export const ui = {
+export const sb = {
   async showButton(identifier) {
     const element = menuItem[identifier];
     element.style.display = '';
