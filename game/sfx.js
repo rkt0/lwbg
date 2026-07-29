@@ -1,5 +1,4 @@
-import {qjs} from './utility.js';
-import {rollDie} from './utility.js';
+import {qjs, rollDie} from './utility.js';
 import {prng} from './prngs.js';
 import {music} from './music.js';
 
