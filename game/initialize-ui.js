@@ -8,7 +8,6 @@ import {ai} from './ai.js';
 import {anim} from './animation.js';
 import {gs, mv} from './game-objects.js';
 import {zoom} from './zoom.js';
-import {toggle} from './toggle.js';
 import {sb} from './sidebar.js';
 import {gp} from './gameplay.js';
 import {message} from './message.js';

@@ -1,4 +1,6 @@
-import {qda, closestData, ael} from './utility.js';
+import {
+  qjs, qda, closestData, ael,
+} from './utility.js';
 import {music} from './music.js';
 import {zoom} from './zoom.js';
 
