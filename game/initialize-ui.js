@@ -21,13 +21,12 @@ for (const element of qda('dormant')) {
   element.style.display = 'none';
 }
 
-// Initialize dormant elements in gameplay menu
-const gameplayMenu = qjs('sidebar');
-for (const button of qda('dormant', gameplayMenu)) {
+// Initialize dormant elements in sidebar
+for (const button of qda('dormant', sb.element)) {
   sb.hideButton(button.dataset.js);
 }
 
-// Simple gameplay menu click handlers
+// Simple sidebar click handlers
 function showMore() {
   moreMenu.show();
 }
@@ -146,8 +145,8 @@ async function confirmMove() {
   }
 }
 
-// Gameplay menu click handler
-ael(qjs('sidebar'), 'mousedown', (e) => {
+// Sidebar click handler
+ael(sb.element, 'mousedown', (e) => {
   const js = closestData(e);
   if (js === 'show-more') showMore();
   else if (js === 'ok-no-move') okNoMove();

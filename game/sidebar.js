@@ -3,6 +3,7 @@ import {dom} from './dom.js';
 import {anim} from './animation.js';
 
 export const sb = {
+  element: qjs('sidebar'),
   async showButton(identifier) {
     const element = menuItem[identifier];
     element.style.display = '';
