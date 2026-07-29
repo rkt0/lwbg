@@ -160,8 +160,3 @@ ael(sb.element, 'mousedown', (e) => {
   else if (js === 'zoom-default') zoom.zoomDefault();
   else if (js === 'zoom-in') zoom.zoomIn();
 });
-
-// Toggle button area click handler
-ael(qjs('toggle-button-area'), 'mousedown', (e) => {
-  toggle.handleClick(e);
-});

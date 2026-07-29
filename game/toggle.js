@@ -42,6 +42,11 @@ const icons = {
   tvMode: qda('icon-tv-mode'),
 };
 
+// Gameplay toggle button area click handler
+ael(qjs('toggle-button-area'), 'mousedown', (e) => {
+  toggle.handleClick(e);
+});
+
 // Required since user can leave fullscreen via Escape
 ael(document, 'fullscreenchange', () => {
   if (zoom.isZoomedOut()) zoom.zoomOut();
