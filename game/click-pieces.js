@@ -65,7 +65,7 @@ export function clickEditKill(piece) {
   button.disabled = true;
   anim.fade(button, 0, anim.time.editControlFade);
   gp.select();
-  ui.raptorItemsClickable(true);
+  gp.raptorItemsClickable(true);
   edit.selected.species = null;
   edit.selected.piece = null;
   ui.hideButton('cancel');
@@ -115,7 +115,7 @@ function clickHumanPieceEditMode(piece, space) {
     return click(dom.humanSpace[space]);
   }
   selectAppropriate(piece);
-  ui.raptorItemsClickable(false);
+  gp.raptorItemsClickable(false);
   edit.selected.species = 'human';
   edit.selected.piece = piece;
   ui.showButton('cancel');
@@ -138,7 +138,7 @@ function clickRaptorPieceEditMode(piece, space) {
     return click(dom.raptorSpace[space]);
   }
   gp.select(dom.raptorPiece[piece]);
-  ui.humanItemsClickable(false);
+  gp.humanItemsClickable(false);
   edit.selected.species = 'raptor';
   edit.selected.piece = piece;
   ui.showButton('cancel');

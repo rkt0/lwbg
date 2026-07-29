@@ -70,29 +70,7 @@ export const ui = {
       }
     }, delay);
   },
-  humanItemsClickable(clickable) {
-    const value = clickable ? 'auto' : 'none';
-    humanClickableItems ??= [
-      ...dom.humanSpace, ...dom.humanPiece,
-    ];
-    for (const item of humanClickableItems) {
-      if (!item.classList.contains('building')) {
-        item.style.pointerEvents = value;
-      }
-    }
-  },
-  raptorItemsClickable(clickable) {
-    dom.board.style.pointerEvents =
-      clickable ? 'visibleFill' : 'none';
-    const valuePieces = clickable ? 'auto' : 'none';
-    for (const element of dom.raptorPiece) {
-      element.style.pointerEvents = valuePieces;
-    }
-  },
 };
-
-// Initialize on first use; elements do not exist yet
-let humanClickableItems;
 
 // Element references
 const identifiers = [

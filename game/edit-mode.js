@@ -37,16 +37,16 @@ export const edit = {
       anim.fade(dom.gameOver, 0, eTime);
     } else this.showEditTurnButton();
     if (gs.phase !== 'roll') enableDiceEdit();
-    ui.humanItemsClickable(true);
-    ui.raptorItemsClickable(true);
+    gp.humanItemsClickable(true);
+    gp.raptorItemsClickable(true);
     await anim.slide(elements.banner, 1, eTime);
     elements.banner.inert = false;
     dom.showMore.style.visibility = 'hidden';
   },
   async cancelSelection() {
     gp.select();
-    ui.humanItemsClickable(true);
-    ui.raptorItemsClickable(true);
+    gp.humanItemsClickable(true);
+    gp.raptorItemsClickable(true);
     if (this.selected?.species === 'human') {
       const piece = this.selected.piece;
       const button = dom.editKill[piece];
@@ -130,8 +130,8 @@ async function editGame(gsNew) {
     if (gs.rollN) ui.showButton('ok-trex-move');
     else ui.showButton('ok-no-move');
   }
-  ui.humanItemsClickable(gs.turn === 'human');
-  ui.raptorItemsClickable(gs.turn === 'raptor');
+  gp.humanItemsClickable(gs.turn === 'human');
+  gp.raptorItemsClickable(gs.turn === 'raptor');
 }
 async function endEditMode() {
   elements.banner.inert = true;

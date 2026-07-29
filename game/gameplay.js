@@ -259,8 +259,30 @@ export const gp = {
     dom.selected?.classList.add('selected');
     dom.onSelected?.classList.add('on-selected');
   },
+  humanItemsClickable(clickable) {
+    const value = clickable ? 'auto' : 'none';
+    humanClickableItems ??= [
+      ...dom.humanSpace, ...dom.humanPiece,
+    ];
+    for (const item of humanClickableItems) {
+      if (!item.classList.contains('building')) {
+        item.style.pointerEvents = value;
+      }
+    }
+  },
+  raptorItemsClickable(clickable) {
+    dom.board.style.pointerEvents =
+      clickable ? 'visibleFill' : 'none';
+    const valuePieces = clickable ? 'auto' : 'none';
+    for (const element of dom.raptorPiece) {
+      element.style.pointerEvents = valuePieces;
+    }
+  },
   // async save() injected by auto-save.js
 };
+
+// Initialize on first use; elements do not exist yet
+let humanClickableItems;
 
 // Element references
 const scrim = qjs('scrim');
@@ -292,8 +314,8 @@ async function startNextTurn() {
   gp.clearRoll();
   ui.replaceButton('roll-display', 'roll-button');
   ui.displayTurn(species);
-  ui.humanItemsClickable(species === 'human');
-  ui.raptorItemsClickable(species === 'raptor');
+  gp.humanItemsClickable(species === 'human');
+  gp.raptorItemsClickable(species === 'raptor');
   await gp.save();
 }
 async function resetPieces() {

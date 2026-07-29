@@ -77,8 +77,8 @@ export const autoSave = {
       if (gs.rollN) ui.showButton('ok-trex-move');
       else ui.showButton('ok-no-move');
     }
-    ui.humanItemsClickable(gs.turn === 'human');
-    ui.raptorItemsClickable(gs.turn === 'raptor');
+    gp.humanItemsClickable(gs.turn === 'human');
+    gp.raptorItemsClickable(gs.turn === 'raptor');
   },
 };
 
