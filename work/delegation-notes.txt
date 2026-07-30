@@ -1,0 +1,15 @@
+# Elements with event listeners that could be absorbed
+# into gameplay element event listener
+sidebar
+  edit-turn
+  edit-die (x6)
+  unroll-dice
+edit-banner
+  edit-revert
+  edit-confirm
+gameplay-message
+toggle-button-area
+
+# Other possible tasks
+gameplay-message mousenter/mouseleave events via css
+refactor event listener for manual-save-help
