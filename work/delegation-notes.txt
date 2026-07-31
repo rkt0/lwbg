@@ -11,5 +11,4 @@ gameplay-message
 toggle-button-area
 
 # Other possible tasks
-gameplay-message mousenter/mouseleave events via css
 refactor event listener for manual-save-help

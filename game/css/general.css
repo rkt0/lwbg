@@ -17,6 +17,8 @@
   --gap: 1.5em;
   --bg-jungle: url("../img/bg/jungle.png");
   --blur: blur(6px);
+  --hover-shadow: inset 0px 0px 0px 999px #0003;
+  --hover-shadow-text: #000;
 }
 
 @font-face {
@@ -98,11 +100,10 @@ button {
   }
 }
 
-button:hover,
-.hover-darken:hover {
-  box-shadow: inset 0px 0px 0px 999px #0003;
+button:hover {
+  box-shadow: var(--hover-shadow);
+  color: var(--hover-shadow-text);
   cursor: pointer;
-  color: #000;
 }
 
 .small {

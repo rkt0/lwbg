@@ -9,39 +9,21 @@ export const message = {
     if (this.suppress) return;
     const node = fromTemplate(templateId);
     if (append && element.dataset.appendable === '') {
-      content.append(ce('br'), node);
-    } else content.replaceChildren(node);
+      element.append(ce('br'), node);
+    } else element.replaceChildren(node);
     if (append) element.dataset.appendable = '';
-    content.style.visibility = 'visible';
+    element.classList.remove('being-hidden');
     anim.slide(element, 1, anim.time.messageSlide);
   },
   hide() {
     if (element.style.display === 'none') return;
     if (anim.isAnimated(element)) return;
-    content.style.visibility = 'hidden';
-    hider.style.display = 'none';
+    element.classList.add('being-hidden');
     delete element.dataset.appendable;
     anim.slide(element, 0, anim.time.messageSlide);
   },
 };
 
 const element = qjs('gameplay-message');
-const content = qjs('content', element);
-const hider = qjs('hider', element);
 
-function mouseover(inbound) {
-  if (anim.isAnimated(element)) return;
-  content.style.visibility =
-    inbound ? 'hidden' : 'visible';
-  hider.style.display = inbound ? '' : 'none';
-}
-
-ael(element, 'mousedown', () => {
-  message.hide();
-});
-ael(element, 'mouseenter', () => {
-  mouseover(true);
-});
-ael(element, 'mouseleave', () => {
-  mouseover(false);
-});
+ael(element, 'mousedown', () => message.hide());

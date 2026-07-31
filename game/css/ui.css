@@ -26,10 +26,19 @@
   z-index: 6;
   display: grid;
   place-items: center;
-}
 
-.hider {
-  position: absolute;
+  &:hover,
+  &.being-hidden {
+    box-shadow: var(--hover-shadow);
+    color: transparent;
+    cursor: pointer;
+
+    &::before {
+      content: "Hide Message";
+      position: absolute;
+      color: var(--hover-shadow-text);
+    }
+  }
 }
 
 .more-menu {
