@@ -18,7 +18,7 @@ export const control = {
       };
     });
   },
-  change(species, level) {
+  async change(species, level) {
     const buttons = levelButtons[species];
     // Use Object.values() to include buttons[-1]
     for (const button of Object.values(buttons)) {
@@ -30,8 +30,8 @@ export const control = {
     if (!continueButton.disabled) return;
     const {human, raptor} = ai.control;
     if (human === null || raptor === null) return;
+    await anim.fade(continueButton, 1, aTime);
     continueButton.disabled = false;
-    anim.fade(continueButton, 1, aTime);
   },
 };
 
