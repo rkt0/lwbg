@@ -27,8 +27,7 @@
   display: grid;
   place-items: center;
 
-  &:hover,
-  &.being-hidden {
+  &:hover {
     box-shadow: var(--hover-shadow);
     color: transparent;
     cursor: pointer;

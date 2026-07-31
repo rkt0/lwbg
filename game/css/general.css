@@ -100,7 +100,7 @@ button {
   }
 }
 
-button:hover {
+button:enabled:hover {
   box-shadow: var(--hover-shadow);
   color: var(--hover-shadow-text);
   cursor: pointer;
