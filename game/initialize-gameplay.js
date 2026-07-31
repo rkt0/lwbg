@@ -25,17 +25,19 @@ await gp.initializeObjects();
 autoSave.clear();
 edit.clear();
 
+// Helper function to identify clicked element
+function clicked(element, event) {
+  return element.contains(event.target);
+}
+
 // Add gameplay click handlers
 ael(dom.gameplay, 'mousedown', (e) => {
-  if (moreMenu.element.contains(e.target)) {
-    return moreMenu.handleClick(e);
-  }
-  if (message.element.contains(e.target)) {
-    return message.hide();
-  }
-  if (toggle.gameplayAreaElement.contains(e.target)) {
-    return toggle.handleClick(e);
-  }
+  const clickedMore = clicked(moreMenu.element, e);
+  if (clickedMore) return moreMenu.handleClick(e);
+  const clickedMessage = clicked(message.element, e);
+  if (clickedMessage) return message.hide();
+  const clickedToggle = clicked(toggle.area, e);
+  if (clickedToggle) return toggle.handleClick(e);
   const killData = closestData(e, 'kill');
   if (killData) return clickEditKill(+killData);
   const rpData = closestData(e, 'raptor-piece');

@@ -5,7 +5,7 @@ import {zoom} from './zoom.js';
 import {music} from './music.js';
 
 export const toggle = {
-  gameplayAreaElement: qjs('toggle-button-area'),
+  area: qjs('toggle-button-area'),
   fullscreen() {
     if (!zoom.isZoomedOut()) zoom.setCenter();
     if (!document.fullscreenElement) {
