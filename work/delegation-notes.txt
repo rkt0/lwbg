@@ -4,9 +4,6 @@ sidebar
   edit-turn
   edit-die (x6)
   unroll-dice
-edit-banner
-  edit-revert
-  edit-confirm
 
 # Other possible tasks
 refactor event listener for manual-save-help

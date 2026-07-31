@@ -11,6 +11,7 @@ import {sb} from './sidebar.js';
 import {gp} from './gameplay.js';
 
 export const edit = {
+  bannerElement: qjs('edit-banner'),
   clear() {
     this.on = false;
     this.gsPrevious = {};
@@ -39,8 +40,8 @@ export const edit = {
     if (gs.phase !== 'roll') enableDiceEdit();
     gp.humanItemsClickable(true);
     gp.raptorItemsClickable(true);
-    await anim.slide(elements.banner, 1, eTime);
-    elements.banner.inert = false;
+    await anim.slide(this.bannerElement, 1, eTime);
+    this.bannerElement.inert = false;
     dom.showMore.style.visibility = 'hidden';
   },
   async cancelSelection() {
@@ -72,6 +73,11 @@ export const edit = {
   showEditTurnButton() {
     anim.fade(qjs('edit-turn'), 1, eTime);
   },
+  handleBannerClick(e) {
+    const js = closestData(e);
+    if (js === 'edit-revert') revertEdits();
+    else if (js === 'edit-confirm') confirmEdits();
+  },
 };
 
 // Animation time for edit control fade
@@ -80,7 +86,6 @@ const eTime = anim.time.editControlFade;
 // Element references
 const elements = {
   all: qda('edit'),
-  banner: qjs('edit-banner'),
   trexButtons: qda('trex-change'),
   editTurnDie: [qjs('edit-turn'), ...qda('edit-die')],
 };
@@ -134,10 +139,10 @@ async function editGame(gsNew) {
   gp.raptorItemsClickable(gs.turn === 'raptor');
 }
 async function endEditMode() {
-  elements.banner.inert = true;
-  anim.slide(elements.banner, 0, eTime);
+  edit.bannerElement.inert = true;
+  anim.slide(edit.bannerElement, 0, eTime);
   for (const element of elements.all) {
-    if (element === elements.banner) continue;
+    if (element === edit.bannerElement) continue;
     anim.fade(element, 0, eTime);
   }
   sb.hideButton('unroll-dice');
@@ -146,16 +151,16 @@ async function endEditMode() {
   message.suppress = false;
   await sleep(eTime);
 }
-ael(qjs('edit-revert'), 'mousedown', async () => {
+async function revertEdits() {
   const {gsPrevious} = edit;
   await endEditMode();
   await editGame(gsPrevious);
-});
-ael(qjs('edit-confirm'), 'mousedown', async () => {
+}
+async function confirmEdits() {
   await endEditMode();
   await editGame(gs);
   await gp.save(true);
-});
+}
 
 // Used for editing both turn and dice
 function replaceDieValue(species, type, value) {

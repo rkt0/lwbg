@@ -32,12 +32,14 @@ function clicked(element, event) {
 
 // Add gameplay click handlers
 ael(dom.gameplay, 'mousedown', (e) => {
-  const clickedMore = clicked(moreMenu.element, e);
-  if (clickedMore) return moreMenu.handleClick(e);
-  const clickedMessage = clicked(message.element, e);
-  if (clickedMessage) return message.hide();
-  const clickedToggle = clicked(toggle.area, e);
-  if (clickedToggle) return toggle.handleClick(e);
+  const isEditBanner = clicked(edit.bannerElement, e);
+  if (isEditBanner) return edit.handleBannerClick(e);
+  const isMoreMenu = clicked(moreMenu.element, e);
+  if (isMoreMenu) return moreMenu.handleClick(e);
+  const isMessage = clicked(message.element, e);
+  if (isMessage) return message.hide();
+  const isToggle = clicked(toggle.areaElement, e);
+  if (isToggle) return toggle.handleClick(e);
   const killData = closestData(e, 'kill');
   if (killData) return clickEditKill(+killData);
   const rpData = closestData(e, 'raptor-piece');
