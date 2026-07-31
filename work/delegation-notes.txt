@@ -7,7 +7,6 @@ sidebar
 edit-banner
   edit-revert
   edit-confirm
-gameplay-message
 
 # Other possible tasks
 refactor event listener for manual-save-help
