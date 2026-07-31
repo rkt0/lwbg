@@ -2,6 +2,7 @@ import {closestData, ael} from './utility.js';
 import {dom} from './dom.js';
 import './initialize-board.js';
 import {pieces} from './pieces.js';
+import {message} from './message.js';
 import {toggle} from './toggle.js';
 import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
@@ -28,6 +29,9 @@ edit.clear();
 ael(dom.gameplay, 'mousedown', (e) => {
   if (moreMenu.element.contains(e.target)) {
     return moreMenu.handleClick(e);
+  }
+  if (message.element.contains(e.target)) {
+    return message.hide();
   }
   if (toggle.gameplayAreaElement.contains(e.target)) {
     return toggle.handleClick(e);
