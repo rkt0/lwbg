@@ -5,6 +5,7 @@ import {zoom} from './zoom.js';
 import {music} from './music.js';
 
 export const toggle = {
+  gameplayAreaElement: qjs('toggle-button-area'),
   fullscreen() {
     if (!zoom.isZoomedOut()) zoom.setCenter();
     if (!document.fullscreenElement) {
@@ -43,11 +44,6 @@ const icons = {
   fullscreen: qda('icon-fullscreen'),
   tvMode: qda('icon-tv-mode'),
 };
-
-// Gameplay toggle button area click handler
-ael(qjs('toggle-button-area'), 'mousedown', (e) => {
-  toggle.handleClick(e);
-});
 
 // Required since user can leave fullscreen via Escape
 ael(document, 'fullscreenchange', () => {

@@ -8,7 +8,6 @@ edit-banner
   edit-revert
   edit-confirm
 gameplay-message
-toggle-button-area
 
 # Other possible tasks
 refactor event listener for manual-save-help

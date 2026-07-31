@@ -2,6 +2,7 @@ import {closestData, ael} from './utility.js';
 import {dom} from './dom.js';
 import './initialize-board.js';
 import {pieces} from './pieces.js';
+import {toggle} from './toggle.js';
 import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
 import {autoSave} from './auto-save.js';
@@ -27,6 +28,9 @@ edit.clear();
 ael(dom.gameplay, 'mousedown', (e) => {
   if (moreMenu.element.contains(e.target)) {
     return moreMenu.handleClick(e);
+  }
+  if (toggle.gameplayAreaElement.contains(e.target)) {
+    return toggle.handleClick(e);
   }
   const killData = closestData(e, 'kill');
   if (killData) return clickEditKill(+killData);
