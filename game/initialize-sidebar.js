@@ -1,5 +1,5 @@
 import {
-  qjs, qda, closestData, ael, click, rollDie,
+  qjs, qda, closestData, click, rollDie,
 } from './utility.js';
 import {prng} from './prngs.js';
 import {gs, mv} from './game-objects.js';
