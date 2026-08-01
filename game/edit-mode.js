@@ -87,7 +87,6 @@ const eTime = anim.time.editControlFade;
 const elements = {
   all: qda('edit'),
   trexButtons: qda('trex-change'),
-  editTurnDie: [qjs('edit-turn'), ...qda('edit-die')],
 };
 
 // Banner
