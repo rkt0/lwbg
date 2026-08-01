@@ -1,9 +1,8 @@
 # Elements with event listeners that could be absorbed
-# into gameplay element event listener
-sidebar
-  edit-turn
-  edit-die (x6)
-  unroll-dice
+# into sidebar event listener
+edit-turn
+edit-die (x6)
+unroll-dice
 
 # Other possible tasks
 refactor event listener for manual-save-help

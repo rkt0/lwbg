@@ -51,7 +51,7 @@ more-menu.js
 
 # Level A
 initialize-gameplay.js
-initialize-ui.js
+initialize-sidebar.js
 key-bindings.js
 
 # Level B
