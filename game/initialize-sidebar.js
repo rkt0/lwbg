@@ -15,20 +15,12 @@ import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
 import {moreMenu} from './more-menu.js';
 
-// Set display to none on dormant elements
-for (const element of qda('dormant')) {
-  element.style.display = 'none';
-}
-
 // Initialize dormant elements in sidebar
 for (const button of qda('dormant', sb.element)) {
   sb.hideButton(button.dataset.js);
 }
 
 // Simple sidebar click handlers
-function showMore() {
-  moreMenu.show();
-}
 async function okNoMove() {
   if (gs.phase === 'roll') return;
   message.hide();
@@ -144,10 +136,10 @@ async function confirmMove() {
   }
 }
 
-// Sidebar click handler
-ael(sb.element, 'mousedown', (e) => {
+// Inject into sidebar object
+sb.handleClick = (e) => {
   const js = closestData(e);
-  if (js === 'show-more') showMore();
+  if (js === 'show-more') moreMenu.show();
   else if (js === 'ok-no-move') okNoMove();
   else if (js === 'ok-ai-move') okAiMove();
   else if (js === 'ok-trex-move') okTrexMove();
@@ -158,4 +150,4 @@ ael(sb.element, 'mousedown', (e) => {
   else if (js === 'zoom-out') zoom.zoomOut();
   else if (js === 'zoom-default') zoom.zoomDefault();
   else if (js === 'zoom-in') zoom.zoomIn();
-});
+};

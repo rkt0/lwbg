@@ -71,6 +71,7 @@ export const sb = {
       }
     }, delay);
   },
+  // handleClick(e) injected by initialize-sidebar.js
 };
 
 // Element references

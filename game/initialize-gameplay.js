@@ -3,6 +3,7 @@ import {dom} from './dom.js';
 import './initialize-board.js';
 import {pieces} from './pieces.js';
 import {message} from './message.js';
+import {sb} from './sidebar.js';
 import {toggle} from './toggle.js';
 import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
@@ -40,6 +41,8 @@ ael(dom.gameplay, 'mousedown', (e) => {
   if (isMessage) return message.hide();
   const isToggle = clicked(toggle.areaElement, e);
   if (isToggle) return toggle.handleClick(e);
+  const isSidebar = clicked(sb.element, e);
+  if (isSidebar) return sb.handleClick(e);
   const killData = closestData(e, 'kill');
   if (killData) return clickEditKill(+killData);
   const rpData = closestData(e, 'raptor-piece');
