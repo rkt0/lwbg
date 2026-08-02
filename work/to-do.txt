@@ -1,3 +1,4 @@
 reorganize/rename gp and ui modules
+fix repetition in html
 reorganize/rename css
 fix weird horizontal line in jungle image
