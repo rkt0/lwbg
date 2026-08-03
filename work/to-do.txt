@@ -5,3 +5,4 @@ reconsider use of switch-case
 reorganize/rename css
 fix weird horizontal line in jungle image
 change name of html file
+clean up exports
