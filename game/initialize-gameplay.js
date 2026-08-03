@@ -51,8 +51,8 @@ ael(dom.gameplay, 'mousedown', (e) => {
   if (hpData) return clickHumanPiece(+hpData);
   const tsData = closestData(e, 'trex-space');
   if (tsData) return clickEditTrex(+tsData, true);
-  const tcData = closestData(e, 'trex-change');
-  if (tcData) return clickEditTrex(+tcData);
+  const tdData = closestData(e, 'trex-delta');
+  if (tdData) return clickEditTrex(+tdData);
   const bldgData = closestData(e, 'building');
   if (bldgData) return clickBuilding(+bldgData);
   const hsData = closestData(e, 'human-space');

@@ -17,7 +17,8 @@ import {moreMenu} from './more-menu.js';
 
 // Initialize dormant elements in sidebar
 for (const button of qda('dormant', sb.element)) {
-  sb.hideButton(button.dataset.js);
+  const {js} = button.dataset;
+  if (js) sb.hideButton(button.dataset.js);
 }
 
 // Simple sidebar click handlers
@@ -138,13 +139,16 @@ async function confirmMove() {
 
 // Inject into sidebar object
 sb.handleClick = (e) => {
+  const change = closestData(e, 'change');
+  if (change) return edit.handleChange(change);
   const js = closestData(e);
   if (js === 'show-more') moreMenu.show();
+  else if (js === 'roll-button') executeRoll();
+  else if (js === 'ok-trex-move') okTrexMove();
   else if (js === 'ok-no-move') okNoMove();
   else if (js === 'ok-ai-move') okAiMove();
-  else if (js === 'ok-trex-move') okTrexMove();
   else if (js === 'decline') decline();
-  else if (js === 'roll-button') executeRoll();
+  else if (js === 'unroll-dice') edit.unrollDice();
   else if (js === 'cancel') cancelMove();
   else if (js === 'confirm') confirmMove();
   else if (js === 'zoom-out') zoom.zoomOut();

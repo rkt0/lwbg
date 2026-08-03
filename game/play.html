@@ -23,12 +23,12 @@
     <img src="img/trex/shadow-trex.png"
       class="trex-component shadow">
     <div class="trex-button-area">
-      <button type="button" data-trex-change="-1"
-        data-edit class="trex-edit small">
+      <button type="button" data-dormant
+        data-trex-delta="-1" class="trex-edit small">
         ⬆
       </button>
-      <button type="button" data-trex-change="+1"
-        data-edit class="trex-edit small">
+      <button type="button" data-dormant
+        data-trex-delta="+1" class="trex-edit small">
         ⬇
       </button>
     </div>
@@ -64,8 +64,9 @@
       class="turn-display info">
       Turn:<br>
       <span data-js="species-turn-text">&nbsp;</span>
-      <button type="button" data-js="edit-turn"
-        data-edit data-short="↷" data-long="Change"
+      <button type="button" data-dormant
+        data-change="turn"
+        data-short="↷" data-long="Change"
         class="edit-turn-die expandable">
       </button>
     </div>
@@ -77,7 +78,8 @@
       class="roll-display info">
       <div data-js="die-human-movement"
         class="die die-human">
-        <button type="button" data-edit data-edit-die
+        <button type="button" data-dormant
+          data-change="die-human-movement"
           data-short="↷" data-long="Change"
           class="edit-turn-die expandable">
         </button>
@@ -86,14 +88,16 @@
         class="die die-human">
         <div class="face" data-roll="0">Stop</div>
         <div class="face" data-roll="1">Go</div>
-        <button type="button" data-edit data-edit-die
+        <button type="button" data-dormant
+          data-change="die-human-continue"
           data-short="↷" data-long="Change"
           class="edit-turn-die expandable">
         </button>
       </div>
       <div data-js="die-raptor-movement"
         class="die die-raptor">
-        <button type="button" data-edit data-edit-die
+        <button type="button" data-dormant
+          data-change="die-raptor-movement"
           data-short="↷" data-long="Change"
           class="edit-turn-die expandable">
         </button>
@@ -102,7 +106,8 @@
         class="die die-raptor">
         <div class="face" data-roll="0">Stop</div>
         <div class="face" data-roll="1">Go</div>
-        <button type="button" data-edit data-edit-die
+        <button type="button" data-dormant
+          data-change="die-raptor-continue"
           data-short="↷" data-long="Change"
           class="edit-turn-die expandable">
         </button>
@@ -111,7 +116,8 @@
         class="die die-trex">
         <div class="face" data-roll="0">✖</div>
         <div class="face" data-roll="1">⬆</div>
-        <button type="button" data-edit data-edit-die
+        <button type="button" data-dormant
+          data-change="die-trex-movement"
           data-short="↷" data-long="Change"
           class="edit-turn-die expandable">
         </button>
@@ -146,8 +152,8 @@
       Confirm
     </button>
   </div>
-  <div data-js="edit-banner" data-non-zoom data-edit
-    inert class="edit-banner">
+  <div data-js="edit-banner" inert data-dormant
+    data-non-zoom class="edit-banner">
     <div class="info banner">
       Edit Mode On
     </div>
@@ -375,7 +381,7 @@
     <div class="human-component dead-marker">
       🕱
     </div>
-    <button type="button" data-kill="" data-dormant
+    <button type="button" data-dormant data-kill=""
       data-short="🕱" data-long="Kill Human" disabled
       class="kill small expandable">
     </button>

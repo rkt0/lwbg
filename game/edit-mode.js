@@ -1,5 +1,5 @@
 import {
-  qjs, qda, closestData, ael, click, sleep, deepCopy,
+  qjs, qd, qda, closestData, click, sleep, deepCopy,
 } from './utility.js';
 import {gs} from './game-objects.js';
 import {dom} from './dom.js';
@@ -31,7 +31,7 @@ export const edit = {
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',
     ];
     for (const x of hidden) await sb.hideButton(x);
-    for (const element of elements.trexButtons) {
+    for (const element of trexButtons) {
       anim.fade(element, 1, eTime);
     }
     if (gs.turn === 'over') {
@@ -71,12 +71,27 @@ export const edit = {
     await sb.hideButton('cancel');
   },
   showEditTurnButton() {
-    anim.fade(qjs('edit-turn'), 1, eTime);
+    anim.fade(changeTurnButton, 1, eTime);
+  },
+  unrollDice() {
+    gp.clearRoll();
+    const buttonsToHide = [
+      'decline', 'ok-no-move', 'ok-trex-move',
+      'roll-display', 'unroll-dice', 'cancel',
+    ];
+    this.cancelSelection();
+    for (const b of buttonsToHide) sb.hideButton(b);
+    enableDiceEdit(false);
   },
   handleBannerClick(e) {
     const js = closestData(e);
     if (js === 'edit-revert') revertEdits();
     else if (js === 'edit-confirm') confirmEdits();
+  },
+  handleChange(change) {
+    if (change === 'turn') return changeTurn();
+    const [, species, type] = change.split('-');
+    changeDie(species, type);
   },
 };
 
@@ -84,10 +99,10 @@ export const edit = {
 const eTime = anim.time.editControlFade;
 
 // Element references
-const elements = {
-  all: qda('edit'),
-  trexButtons: qda('trex-change'),
-};
+const changeButtons = qda('change');
+const changeTurnButton = qd('change="turn"');
+const trexButtons = qda('trex-delta');
+const toFade = [...trexButtons, ...changeButtons];
 
 // Banner
 async function editGame(gsNew) {
@@ -140,8 +155,7 @@ async function editGame(gsNew) {
 async function endEditMode() {
   edit.bannerElement.inert = true;
   anim.slide(edit.bannerElement, 0, eTime);
-  for (const element of elements.all) {
-    if (element === edit.bannerElement) continue;
+  for (const element of toFade) {
     anim.fade(element, 0, eTime);
   }
   sb.hideButton('unroll-dice');
@@ -161,7 +175,7 @@ async function confirmEdits() {
   await gp.save(true);
 }
 
-// Used for editing both turn and dice
+// Used for changing both turn and dice
 function replaceDieValue(species, type, value) {
   const name = `${species}-${type}`;
   const faces = Object.values(dom.faces[name]);
@@ -176,8 +190,8 @@ function replaceDieValue(species, type, value) {
   }
 }
 
-// Turn
-ael(qjs('edit-turn'), 'mousedown', () => {
+// Change turn
+function changeTurn() {
   const species = gp.nextTurnSpecies(true);
   gs.turn = species;
   sb.displayTurn(species, true);
@@ -203,9 +217,9 @@ ael(qjs('edit-turn'), 'mousedown', () => {
       die.classList.remove('rolled', 'no-animation');
     }
   }
-});
+}
 
-// Dice
+// Change dice
 function changeDie(species, type) {
   const die = dice[species][type];
   const current = die[edit.dieCodes[type]];
@@ -218,30 +232,14 @@ function changeDie(species, type) {
   const changed = die[edit.dieCodes[type]];
   replaceDieValue(species, type, changed);
 }
-for (const element of qda('edit-die')) {
-  ael(element, 'mousedown', (e) => {
-    const dieData = closestData(e);
-    const [, species, type] = dieData.split('-');
-    changeDie(species, type);
-  });
-}
-ael(qjs('unroll-dice'), 'mousedown', () => {
-  gp.clearRoll();
-  const buttonsToHide = [
-    'decline', 'ok-no-move', 'ok-trex-move',
-    'roll-display', 'unroll-dice', 'cancel',
-  ];
-  edit.cancelSelection();
-  for (const b of buttonsToHide) sb.hideButton(b);
-  enableDiceEdit(false);
-});
 function dieCode(value, die) {
   if (value === null || !die) return 0;
   // Max to return 0 instead of -1 if not found
   return Math.max(die.lastIndexOf(value), 0);
 }
 function enableDiceEdit(enable = true) {
-  for (const element of qda('edit-die')) {
+  for (const element of changeButtons) {
+    if (element === changeTurnButton) continue;
     anim.fade(element, +enable, eTime);
   }
   if (!enable) return;
@@ -251,8 +249,3 @@ function enableDiceEdit(enable = true) {
   edit.dieCodes.continue =
     dieCode(gs.rollGo, dice[gs.turn].continue);
 };
-
-// Hide edit controls
-for (const element of elements.all) {
-  element.style.display = 'none';
-}
