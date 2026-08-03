@@ -1,4 +1,3 @@
-reorganize/rename gp and ui modules
 fix repetition in html
 reconsider data-js attributes, e.g., roll-button
 reconsider use of switch-case
