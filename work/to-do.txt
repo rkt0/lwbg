@@ -1,4 +1,5 @@
 reorganize/rename gp and ui modules
 fix repetition in html
+reconsider data-js attributes, e.g., roll-button
 reorganize/rename css
 fix weird horizontal line in jungle image
