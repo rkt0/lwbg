@@ -1,4 +1,6 @@
-import {qjs, closestData, aelo} from './utility.js';
+import {
+  qjs, closestData, waitForClick,
+} from './utility.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
@@ -70,7 +72,8 @@ async function savePoint() {
   moreOptions.inert = true;
   await anim.fade(moreOptions, 0, aTime);
   await anim.fade(saveHelp, 1, aTime, {display: ''});
-  aelo(saveHelp, 'mousedown', () => manualSave());
+  await waitForClick(saveHelp);
+  manualSave();
 }
 async function controlInGame() {
   await moreMenu.hide(false);

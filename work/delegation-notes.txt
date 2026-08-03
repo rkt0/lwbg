@@ -1,2 +1,0 @@
-# Other possible tasks
-refactor event listener for manual-save-help

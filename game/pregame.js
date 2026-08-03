@@ -129,7 +129,7 @@ async function hideStartOptions() {
 async function showStartMessage(templateId) {
   const node = fromTemplate(templateId);
   message.replaceChildren(node);
-  anim.fade(message, 1, aTime);
+  await anim.fade(message, 1, aTime);
   await waitForClick(dom.start);
 }
 function hideStartMessage() {
