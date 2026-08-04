@@ -13,7 +13,7 @@ import {autoSave} from './auto-save.js';
 
 export async function showStartOptions(time = aTime) {
   autoSave.clear();
-  await anim.fade(message, 0, time);
+  await anim.fade(help, 0, time);
   options.inert = false;
   anim.fade(options, 1, time, {display: ''});
 }
@@ -24,7 +24,7 @@ const aTime = anim.time.menuFade;
 // Element references
 const front = qjs('front');
 const options = qjs('start-options');
-const message = qjs('start-message');
+const help = qjs('start-help');
 const fork = qjs('start-fork');
 
 // Add title screen click handler
@@ -50,27 +50,27 @@ async function startNew() {
   await hideStartOptions();
   await control.show();
   if (debug.skipAutoSave) return startGame();
-  await showStartMessage('save-introduction');
+  await showStartHelp('save-introduction');
   try {
     await autoSave.createFile();
   }
   catch {
     return showStartOptions();
   }
-  await showStartMessage('save-created');
+  await showStartHelp('save-created');
   startGame();
 }
 async function loadSaved() {
   if (debug.skipAutoSave) return;
   await hideStartOptions();
-  await showStartMessage('load-introduction');
-  hideStartMessage();
+  await showStartHelp('load-introduction');
+  hideStartHelp();
   try {
     await autoSave.selectFileToLoad();
   }
   catch (error) {
     if (error.message === 'invalid file') {
-      await showStartMessage('load-invalid-file');
+      await showStartHelp('load-invalid-file');
     }
     return showStartOptions();
   }
@@ -79,21 +79,21 @@ async function loadSaved() {
 async function loadOverwrite() {
   autoSave.fh = autoSave.fhLoad;
   await hideFork();
-  await showStartMessage(`overwrite-granted-${
+  await showStartHelp(`overwrite-granted-${
     await autoSave.checkPermission(true)
   }`);
   startGame(true);
 }
 async function loadCopy() {
   await hideFork();
-  await showStartMessage('save-introduction');
+  await showStartHelp('save-introduction');
   try {
     await autoSave.createFile(true);
   }
   catch {
     return showStartOptions();
   }
-  await showStartMessage('save-created');
+  await showStartHelp('save-created');
   startGame(true);
 }
 
@@ -101,12 +101,12 @@ async function loadCopy() {
 async function startGame(load) {
   const okToSave = await autoSave.checkPermission();
   if (!okToSave) {
-    await hideStartMessage();
+    await hideStartHelp();
     return showStartOptions();
   }
   if (load) await autoSave.executeLoad(autoSave.fh);
   await anim.fade(dom.start, 0, aTime);
-  hideStartMessage();
+  hideStartHelp();
   anim.fade(dom.gameplay, 1, aTime);
   gp.initializeView();
   if (load) {
@@ -126,14 +126,14 @@ async function hideStartOptions() {
   options.inert = true;
   await anim.fade(options, 0, aTime);
 }
-async function showStartMessage(templateId) {
+async function showStartHelp(templateId) {
   const node = fromTemplate(templateId);
-  message.replaceChildren(node);
-  await anim.fade(message, 1, aTime);
+  help.replaceChildren(node);
+  await anim.fade(help, 1, aTime);
   await waitForClick(dom.start);
 }
-function hideStartMessage() {
-  anim.fade(message, 0, aTime);
+function hideStartHelp() {
+  anim.fade(help, 0, aTime);
 }
 function showFork() {
   fork.inert = false;

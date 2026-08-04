@@ -27,7 +27,7 @@ export const edit = {
     message.hide();
     message.suppress = true;
     const hidden = [
-      'roll-button', 'decline',
+      'roll-dice', 'decline',
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',
     ];
     for (const x of hidden) await sb.hideButton(x);
@@ -131,11 +131,11 @@ async function editGame(gsNew) {
   if (gs.turn === 'trex' && !gp.isTrexActive()) {
     gs.turn = 'raptor';
     gp.clearRoll();
-    sb.replaceButton('roll-display', 'roll-button');
+    sb.replaceButton('roll-display', 'roll-dice');
   }
   sb.displayTurn(gs.turn);
   if (gs.phase === 'roll') {
-    sb.replaceButton('roll-display', 'roll-button');
+    sb.replaceButton('roll-display', 'roll-dice');
   } else if (rollResultChanged) {
     sb.displayRollResult(gs, true);
   }

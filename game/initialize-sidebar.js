@@ -55,7 +55,7 @@ async function decline() {
     await gp.endTurn();
   }
 }
-async function executeRoll() {
+async function rollDice() {
   if (gs.phase !== 'roll') return;
   gs.phase = 'execute';
   message.hide();
@@ -143,7 +143,7 @@ sb.handleClick = (e) => {
   if (change) return edit.handleChange(change);
   const js = closestData(e);
   if (js === 'show-more') moreMenu.show();
-  else if (js === 'roll-button') executeRoll();
+  else if (js === 'roll-dice') rollDice();
   else if (js === 'ok-trex-move') okTrexMove();
   else if (js === 'ok-no-move') okNoMove();
   else if (js === 'ok-ai-move') okAiMove();

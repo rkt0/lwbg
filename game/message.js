@@ -2,7 +2,7 @@ import {qjs, ce, fromTemplate} from './utility.js';
 import {anim} from './animation.js';
 
 export const message = {
-  element: qjs('gameplay-message'),
+  element: qjs('message'),
   suppress: false,
   async show(templateId, append) {
     if (this.suppress) return;

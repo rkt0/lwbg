@@ -1,5 +1,4 @@
 fix repetition in html
-reconsider data-js attributes, e.g., roll-button
 reconsider use of switch-case
 reorganize/rename css
 fix weird horizontal line in jungle image

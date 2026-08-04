@@ -32,7 +32,7 @@ document.addEventListener('keydown', (e) => {
           identifier = 'ok-no-move';
         }
       } else if (gs.phase === 'roll') {
-        identifier = 'roll-button';
+        identifier = 'roll-dice';
       } else if (gs.phase === 'move') {
         if (gs.turn === 'trex') {
           identifier = gs.rollN ?

@@ -60,7 +60,7 @@ export const sb = {
         type === 'movement' ? rollN : rollGo;
       dom.faces[name][value].style.display = 'block';
     }
-    this.replaceButton('roll-button', 'roll-display');
+    this.replaceButton('roll-dice', 'roll-display');
     const delay = skipFx ? 0 :
       anim.time.buttonSlide * 2 +
       anim.time.dieRollDelay;
@@ -76,7 +76,7 @@ export const sb = {
 
 // Element references
 const identifiers = [
-  'roll-button', 'roll-display', 'unroll-dice',
+  'roll-dice', 'roll-display', 'unroll-dice',
   'ok-trex-move', 'ok-no-move', 'ok-ai-move',
   'decline', 'cancel', 'confirm', 'turn-display',
 ];
