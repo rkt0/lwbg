@@ -1,5 +1,5 @@
 import {
-  qjs, qda, closestData, click, rollDie,
+  qjs, closestData, click, rollDie,
 } from './utility.js';
 import {prng} from './prngs.js';
 import {gs, mv} from './game-objects.js';
@@ -15,13 +15,11 @@ import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
 import {moreMenu} from './more-menu.js';
 
-// Initialize dormant elements in sidebar
-for (const button of qda('dormant', sb.element)) {
-  const {js} = button.dataset;
-  if (js) sb.hideButton(button.dataset.js);
+// Hide non-active elements in sidebar
+for (const element of sb.element.children) {
+  if ('active' in element.dataset) continue;
+  sb.hideButton(element.dataset.js);
 }
-
-// Simple sidebar click handlers
 async function okNoMove() {
   if (gs.phase === 'roll') return;
   message.hide();

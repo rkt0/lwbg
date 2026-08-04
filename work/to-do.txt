@@ -1,4 +1,16 @@
 fix repetition in html
+  zoom buttons
+  change buttons
+  dice
+  sidebar (including roll, excluding show-more)
+  [?] edit banner buttons
+  toggle buttons (both places)
+  [?] more-menu buttons
+  [?] quit-options buttons
+  [?] start-fork buttons
+  control-menu areas
+  ai-level buttons
+  [?] tv-matte
 reconsider use of switch-case
 reorganize/rename css
 fix weird horizontal line in jungle image
