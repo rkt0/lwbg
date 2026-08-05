@@ -1,4 +1,4 @@
-import {qjs, qda} from './utility.js';
+import {qjs, qda, fromTemplate} from './utility.js';
 import {dom} from './dom.js';
 import {tvMatte} from './tv-matte.js';
 
@@ -21,16 +21,16 @@ export const zoom = {
     const rawTop = fh + matte.top;
     dom.gameplay.style.left = `${rawLeft / factor}px`;
     dom.gameplay.style.top = `${rawTop / factor}px`;
-    buttons.zoomOut.classList.add('current');
+    buttons.out.classList.add('current');
     dom.gameOver.classList.add('inactive');
   },
   zoomDefault() {
     zoomGeneral(1);
-    buttons.zoomDefault.classList.add('current');
+    buttons.default.classList.add('current');
   },
   zoomIn() {
     zoomGeneral(this.factor.in);
-    buttons.zoomIn.classList.add('current');
+    buttons.in.classList.add('current');
   },
   setCenter() {
     const [wwm, whm] = tvMatte.windowWHMatted();
@@ -61,14 +61,6 @@ export const zoom = {
   },
 };
 
-// Element references
-const buttons = {
-  zoomOut: qjs('zoom-out'),
-  zoomDefault: qjs('zoom-default'),
-  zoomIn: qjs('zoom-in'),
-};
-const nonZoomElements = qda('non-zoom');
-
 // Needed for zoom button click handlers
 function zoomGeneral(factor) {
   if (!zoom.factor.current) {
@@ -97,3 +89,21 @@ function zoomGeneral(factor) {
   }
   dom.gameOver.classList.remove('inactive');
 };
+
+// Initialize buttons
+const zoomLevels = qjs('zoom-levels');
+const buttons = {};
+for (const item of zoomLevels.children) {
+  const button = fromTemplate('zoom-button', true);
+  const level = item.value;
+  button.dataset.js = `zoom-${level}`;
+  button.title = `Zoom ${
+    level.replace(/^./g, x => x.toUpperCase())
+  }`;
+  button.append(item.textContent);
+  buttons[level] = button;
+  zoomLevels.replaceChild(button, item);
+}
+
+// Other element references
+const nonZoomElements = qda('non-zoom');

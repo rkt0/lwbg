@@ -35,23 +35,10 @@
     </button>
     <div data-active class="zoom-display info">
       <div class="heading">Zoom</div>
-      <div class="zoom-button-row">
-        <button type="button" data-js="zoom-out"
-          title="Zoom Out" class="zoom-button">
-          <div class="zoom-indicator">▾</div>
-          &minus;
-        </button>
-        <button type="button" data-js="zoom-default"
-          title="Zoom Default"
-          class="zoom-button">
-          <div class="zoom-indicator">▾</div>
-          •
-        </button>
-        <button type="button" data-js="zoom-in"
-          title="Zoom In" class="zoom-button">
-          <div class="zoom-indicator">▾</div>
-          +
-        </button>
+      <div data-js="zoom-levels" class="zoom-levels">
+        <data value="out">&minus;</data>
+        <data value="default">•</data>
+        <data value="in">+</data>
       </div>
     </div>
     <div data-js="turn-display" data-active
@@ -365,6 +352,12 @@
 </template>
 <template id="ai-level-button">
   <button type="button" data-control-level="">
+  </button>
+</template>
+<template id="zoom-button">
+  <button type="button" data-js=""
+    title="" class="zoom-button">
+    <div class="zoom-indicator">▾</div>
   </button>
 </template>
 <template id="debug-labels">

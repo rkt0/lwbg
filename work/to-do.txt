@@ -1,5 +1,4 @@
 fix repetition in html
-  zoom buttons
   change buttons
   dice
   toggle buttons (both places)
@@ -11,6 +10,7 @@ fix repetition in html
   [?] start-fork buttons
   [?] tv-matte
 eliminate use of word "area"
+use word "panel" for element that groups buttons
 cache template items
 change innerHTML to textContent
 reconsider use of switch-case
