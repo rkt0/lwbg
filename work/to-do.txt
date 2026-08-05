@@ -2,13 +2,13 @@ fix repetition in html
   zoom buttons
   change buttons
   dice
-  sidebar (including roll, excluding show-more)
-  [?] edit banner buttons
   toggle buttons (both places)
+  control-menu areas
+  [?] sidebar (including roll, excluding show-more)
+  [?] edit banner buttons
   [?] more-menu buttons
   [?] quit-options buttons
   [?] start-fork buttons
-  control-menu areas
   [?] tv-matte
 eliminate use of word "area"
 cache template items
