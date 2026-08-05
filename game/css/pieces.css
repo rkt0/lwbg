@@ -115,7 +115,7 @@
   }
 }
 
-.trex-button-area {
+.trex-edit {
   height: var(--trex-piece-height);
   width: fit-content;
   display: flex;

@@ -22,15 +22,9 @@
       class="trex-component base">
     <img src="img/trex/shadow-trex.png"
       class="trex-component shadow">
-    <div class="trex-button-area">
-      <button type="button" data-dormant
-        data-trex-delta="-1" class="trex-edit small">
-        ⬆
-      </button>
-      <button type="button" data-dormant
-        data-trex-delta="+1" class="trex-edit small">
-        ⬇
-      </button>
+    <div data-js="trex-edit" class="trex-edit">
+      <data value="-1">⬆</data>
+      <data value="+1">⬇</data>
     </div>
   </div>
   <div data-js="sidebar" data-non-zoom
@@ -388,6 +382,12 @@
 </template>
 <template id="raptor-piece">
   <div class="raptor-piece"></div>
+</template>
+<template id="trex-button">
+  <button type="button" data-dormant
+    data-trex-delta="" class="small">
+    ⬆
+  </button>
 </template>
 <template id="debug-labels">
   <div class="full-board large-text debug-labels">

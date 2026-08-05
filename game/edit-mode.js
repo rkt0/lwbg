@@ -1,5 +1,6 @@
 import {
-  qjs, qd, qda, closestData, click, sleep, deepCopy,
+  qjs, qd, qda, closestData, fromTemplate, click,
+  sleep, deepCopy,
 } from './utility.js';
 import {gs} from './game-objects.js';
 import {dom} from './dom.js';
@@ -94,15 +95,6 @@ export const edit = {
     changeDie(species, type);
   },
 };
-
-// Animation time for edit control fade
-const eTime = anim.time.editControlFade;
-
-// Element references
-const changeButtons = qda('change');
-const changeTurnButton = qd('change="turn"');
-const trexButtons = qda('trex-delta');
-const toFade = [...trexButtons, ...changeButtons];
 
 // Banner
 async function editGame(gsNew) {
@@ -249,3 +241,22 @@ function enableDiceEdit(enable = true) {
   edit.dieCodes.continue =
     dieCode(gs.rollGo, dice[gs.turn].continue);
 };
+
+// Initialize buttons
+const trexEdit = qjs('trex-edit');
+const trexButtons = [];
+for (const item of trexEdit.children) {
+  const button = fromTemplate('trex-button', true);
+  button.dataset.trexDelta = item.value;
+  button.textContent = item.textContent;
+  trexEdit.replaceChild(button, item);
+  trexButtons.push(button);
+}
+
+// Animation time for edit control fade
+const eTime = anim.time.editControlFade;
+
+// Other element references
+const changeButtons = qda('change');
+const changeTurnButton = qd('change="turn"');
+const toFade = [...trexButtons, ...changeButtons];

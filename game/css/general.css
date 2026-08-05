@@ -58,7 +58,8 @@ svg {
   display: block;
 }
 
-.inactive {
+.inactive,
+data {
   display: none;
 }
 
