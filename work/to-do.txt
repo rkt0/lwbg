@@ -9,7 +9,6 @@ fix repetition in html
   [?] quit-options buttons
   [?] start-fork buttons
   control-menu areas
-  ai-level buttons
   [?] tv-matte
 eliminate use of word "area"
 cache template items

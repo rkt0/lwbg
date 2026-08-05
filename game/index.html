@@ -322,20 +322,7 @@
       Manual Control
     </button>
     <div>Computer Level</div>
-    <div class="ai-levels">
-      <button type="button" data-control-level="0">
-        0
-      </button>
-      <button type="button" data-control-level="1">
-        1
-      </button>
-      <button type="button" data-control-level="2">
-        2
-      </button>
-      <button type="button" data-control-level="3">
-        3
-      </button>
-    </div>
+    <div data-ai-levels class="ai-levels"></div>
   </div>
   <div data-control-species="raptor"
     class="control-menu info">
@@ -345,20 +332,7 @@
       Manual Control
     </button>
     <div>Computer Level</div>
-    <div class="ai-levels">
-      <button type="button" data-control-level="0">
-        0
-      </button>
-      <button type="button" data-control-level="1">
-        1
-      </button>
-      <button type="button" data-control-level="2">
-        2
-      </button>
-      <button type="button" data-control-level="3">
-        3
-      </button>
-    </div>
+    <div data-ai-levels class="ai-levels"></div>
   </div>
   <button type="button" data-js="control-continue" 
     disabled class="control-continue large-text">
@@ -387,6 +361,10 @@
   <button type="button" data-dormant
     data-trex-delta="" class="small">
     ⬆
+  </button>
+</template>
+<template id="ai-level-button">
+  <button type="button" data-control-level="">
   </button>
 </template>
 <template id="debug-labels">

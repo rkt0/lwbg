@@ -1,5 +1,5 @@
 import {
-  qjs, qda, closestData, ael,
+  qjs, qd, qda, closestData, ael, fromTemplate,
 } from './utility.js';
 import {anim} from './animation.js';
 import {ai} from './ai.js';
@@ -35,21 +35,34 @@ export const control = {
   },
 };
 
+// Initialize control buttons
+const levelButtons = {};
+for (const menu of qda('control-species')) {
+  const species = menu.dataset.controlSpecies;
+  const buttons = []
+  buttons[-1] = qd('control-level', menu);
+  const aiLevels = qd('ai-levels', menu);
+  for (const level of ai.level[species].keys()) {
+    const button = fromTemplate(
+      'ai-level-button', true,
+    );
+    button.dataset.controlLevel = level;
+    button.textContent = level;
+    buttons.push(button);
+    aiLevels.append(button);
+  }
+  levelButtons[species] = buttons;
+}
+
+// Must be in this scope
 let finish;
 
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
 
-// Element references
+// Other element references
 const section = qjs('control');
 const continueButton = qjs('control-continue');
-const levelButtons = {};
-for (const area of qda('control-species')) {
-  const species = area.dataset.controlSpecies;
-  const buttons = qda('control-level', area);
-  buttons[-1] = buttons.shift();
-  levelButtons[species] = buttons;
-}
 
 // Add player control screen click handler
 ael(section, 'mousedown', (e) => {
