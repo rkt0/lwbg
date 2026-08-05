@@ -251,33 +251,36 @@
     <button type="button" data-js="load-saved">
       Load Saved Game
     </button>
-    <button type="button" data-toggle="audio"
-      title="Toggle Audio [m]" class="narrow">
-      <svg data-icon-audio class="icon inactive">
-        <use href="img/sprite.svg#icon-audio-off"/>
-      </svg>
-      <svg data-icon-audio class="icon">
-        <use href="img/sprite.svg#icon-audio-on"/>
-      </svg>
-    </button>
-    <button type="button" data-toggle="fullscreen"
-      title="Toggle Full-Screen [f]" class="narrow">
-      <svg data-icon-fullscreen class="icon inactive">
-        <use href="img/sprite.svg#fullscreen-on"/>
-      </svg>
-      <svg data-icon-fullscreen class="icon">
-        <use href="img/sprite.svg#fullscreen-off"/>
-      </svg>
-    </button>
-    <button type="button" data-toggle="tv-mode"
-      title="Toggle TV Mode [t]" class="narrow">
-      <svg data-icon-tv-mode class="icon inactive">
-        <use href="img/sprite.svg#tv-mode-on"/>
-      </svg>
-      <svg data-icon-tv-mode class="icon">
-        <use href="img/sprite.svg#tv-mode-off"/>
-      </svg>
-    </button>
+    <data value="m">Audio</data>
+    <data value="f">Full-Screen</data>
+    <data value="t">TV Mode</data>
+    <!-- <button type="button" data-toggle="audio" -->
+    <!--   title="Toggle Audio [m]" class="narrow"> -->
+    <!--   <svg data-icon-audio class="icon inactive"> -->
+    <!--     <use href="img/sprite.svg#icon-audio-off"/> -->
+    <!--   </svg> -->
+    <!--   <svg data-icon-audio class="icon"> -->
+    <!--     <use href="img/sprite.svg#icon-audio-on"/> -->
+    <!--   </svg> -->
+    <!-- </button> -->
+    <!-- <button type="button" data-toggle="fullscreen" -->
+    <!--   title="Toggle Full-Screen [f]" class="narrow"> -->
+    <!--   <svg data-icon-fullscreen class="icon inactive"> -->
+    <!--     <use href="img/sprite.svg#fullscreen-on"/> -->
+    <!--   </svg> -->
+    <!--   <svg data-icon-fullscreen class="icon"> -->
+    <!--     <use href="img/sprite.svg#fullscreen-off"/> -->
+    <!--   </svg> -->
+    <!-- </button> -->
+    <!-- <button type="button" data-toggle="tv-mode" -->
+    <!--   title="Toggle TV Mode [t]" class="narrow"> -->
+    <!--   <svg data-icon-tv-mode class="icon inactive"> -->
+    <!--     <use href="img/sprite.svg#tv-mode-on"/> -->
+    <!--   </svg> -->
+    <!--   <svg data-icon-tv-mode class="icon"> -->
+    <!--     <use href="img/sprite.svg#tv-mode-off"/> -->
+    <!--   </svg> -->
+    <!-- </button> -->
   </div>
   <div data-js="start-help" data-dormant class="info">
   </div>
@@ -358,6 +361,13 @@
   <button type="button" data-js=""
     title="" class="zoom-button">
     <div class="zoom-indicator">▾</div>
+  </button>
+</template>
+<template id="toggle-button">
+  <button type="button" data-toggle=""
+    title="" class="">
+    <svg class="icon inactive"><use href=""/></svg>
+    <svg class="icon"><use href=""/></svg>
   </button>
 </template>
 <template id="debug-labels">

@@ -1,4 +1,4 @@
-import {qjs, qda, ael, isNull} from './utility.js';
+import {qjs, ael, isNull} from './utility.js';
 import {prng} from './prngs.js';
 import {debug} from './debug.js';
 
@@ -44,14 +44,10 @@ export const music = {
     if (this.audioOn) element.pause();
     else element.play();
     this.audioOn = !this.audioOn;
-    for (const icon of icons) {
-      icon.classList.toggle('inactive');
-    }
   },
 };
 
 const element = qjs('music-player');
-const icons = qda('icon-audio');
 const tooRecent = 6;
 const recentIds = [];
 let nowPlaying = null;

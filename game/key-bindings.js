@@ -60,7 +60,7 @@ document.addEventListener('keydown', (e) => {
       break;
     case 'm':
       e.preventDefault();
-      music.toggle();
+      toggle.audio();
       break;
     case 'K':
       e.preventDefault();

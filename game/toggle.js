@@ -6,6 +6,12 @@ import {music} from './music.js';
 
 export const toggle = {
   areaElement: qjs('toggle-button-area'),
+  audio() {
+    music.toggle();
+    for (const icon of icons.audio) {
+      icon.classList.toggle('inactive');
+    }
+  },
   fullscreen() {
     if (!zoom.isZoomedOut()) zoom.setCenter();
     if (!document.fullscreenElement) {
@@ -33,16 +39,10 @@ export const toggle = {
   },
   handleClick(e) {
     const what = closestData(e, 'toggle');
-    if (what === 'audio') music.toggle();
+    if (what === 'audio') this.audio();
     else if (what === 'fullscreen') this.fullscreen();
     else if (what === 'tv-mode') this.tvMode();
   },
-};
-
-// Element references
-const icons = {
-  fullscreen: qda('icon-fullscreen'),
-  tvMode: qda('icon-tv-mode'),
 };
 
 // Required since user can leave fullscreen via Escape
@@ -56,3 +56,10 @@ ael(document, 'fullscreenchange', () => {
     navigator.keyboard.lock(['Escape']);
   } else navigator.keyboard.unlock();
 });
+
+// Element references
+const icons = {
+  audio: qda('icon-audio'),
+  fullscreen: qda('icon-fullscreen'),
+  tvMode: qda('icon-tv-mode'),
+};
