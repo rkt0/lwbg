@@ -63,3 +63,6 @@ const icons = {
   fullscreen: qda('icon-fullscreen'),
   tvMode: qda('icon-tv-mode'),
 };
+
+// Audio should be on by default
+toggle.audio();

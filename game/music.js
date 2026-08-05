@@ -3,7 +3,8 @@ import {prng} from './prngs.js';
 import {debug} from './debug.js';
 
 export const music = {
-  audioOn: true,
+  audioOn: false,
+  allowed: false,
   next(skipCurrent, any) {
     const {cycle, startAt} = debug.music;
     if (cycle) {
@@ -42,7 +43,10 @@ export const music = {
   },
   toggle() {
     if (this.audioOn) element.pause();
-    else element.play();
+    else {
+      if (element.src) element.play();
+      else if (this.allowed) this.next();
+    }
     this.audioOn = !this.audioOn;
   },
 };

@@ -32,7 +32,8 @@ aelo(front, 'mousedown', async () => {
   addWarningBeforeUnload();
   await anim.fade(front, 0, aTime);
   anim.fade(dom.start, 1, aTime, {display: ''});
-  music.next();
+  music.allowed = true;
+  if (music.audioOn) music.next();
 });
 
 // Add start screen click handlers
