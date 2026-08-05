@@ -79,7 +79,7 @@ document.addEventListener('keydown', (e) => {
     case '0': {
       if (!gp.isActive()) return;
       e.preventDefault();
-      const isNowOutOrIn = zoom.factor.current !== 1;
+      const isNowOutOrIn = zoom.factorCurrent !== 1;
       if (isNowOutOrIn) zoom.zoomDefault();
       else if (e.key === '-') zoom.zoomOut();
       else if (e.key === '=') zoom.zoomIn();

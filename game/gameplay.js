@@ -32,7 +32,7 @@ export const gp = {
       message.hide();
       sb.hideButton('roll-display');
       sb.hideButton('turn-display');
-      if (zoom.factor.current < 1) return;
+      if (zoom.factorCurrent < 1) return;
       anim.fade(dom.gameOver, 1, anim.time.menuFade, {
         display: '',
       });
@@ -221,7 +221,7 @@ export const gp = {
     zoom.zoomDefault();
     zoom.center.left = geom.initialViewCenter[0];
     zoom.center.top = geom.initialViewCenter[1];
-    zoom.factor.current = null;
+    zoom.factorCurrent = null;
     // Call again to apply zoom center
     zoom.zoomDefault();
   },

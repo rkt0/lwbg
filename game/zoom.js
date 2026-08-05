@@ -3,15 +3,14 @@ import {dom} from './dom.js';
 import {tvMatte} from './tv-matte.js';
 
 export const zoom = {
-  factor: {current: null, in: 2, outMax: 0.125},
+  factorCurrent: null,
   center: {},
-  highlightBlinkIds: [],
   zoomOut() {
     const [bw, bh] = this.boardSize;
     const [wwm, whm] = tvMatte.windowWHMatted();
     const matte = tvMatte.current();
     let factor = Math.min(wwm / bw, whm / bh);
-    factor = Math.max(factor, this.factor.outMax);
+    factor = Math.max(factor, factorOutMax);
     zoomGeneral(factor);
     const bwZoomed = bw * factor;
     const bhZoomed = bh * factor;
@@ -29,7 +28,7 @@ export const zoom = {
     buttons.default.classList.add('current');
   },
   zoomIn() {
-    zoomGeneral(this.factor.in);
+    zoomGeneral(factorIn);
     buttons.in.classList.add('current');
   },
   setCenter() {
@@ -38,8 +37,8 @@ export const zoom = {
     const shiftX = wwm / 2 + matte.left;
     const shiftY = whm / 2 + matte.top;
     zoom.center = {
-      left: (scrollX + shiftX) / this.factor.current,
-      top: (scrollY + shiftY) / this.factor.current,
+      left: (scrollX + shiftX) / this.factorCurrent,
+      top: (scrollY + shiftY) / this.factorCurrent,
     };
   },
   adjustCenterForMatte(direction) {
@@ -49,7 +48,7 @@ export const zoom = {
   },
   applyCenter() {
     const {left: cl, top: ct} = this.center;
-    const fc = this.factor.current;
+    const fc = this.factorCurrent;
     const [wwm, whm] = tvMatte.windowWHMatted();
     const matte = tvMatte.current();
     const shiftX = wwm / 2 + matte.left;
@@ -57,27 +56,31 @@ export const zoom = {
     scroll(cl * fc - shiftX, ct * fc - shiftY);
   },
   isZoomedOut() {
-    return (zoom.factor.current ?? 1) < 1;
+    return (zoom.factorCurrent ?? 1) < 1;
   },
 };
 
+// Zoom factors
+const factorIn = 2;
+const factorOutMax = 0.125;
+
 // Needed for zoom button click handlers
 function zoomGeneral(factor) {
-  if (!zoom.factor.current) {
-    zoom.factor.current = 1;
+  if (!zoom.factorCurrent) {
+    zoom.factorCurrent = 1;
     zoom.adjustCenterForMatte(1);
     zoom.applyCenter();
     return;
   }
-  if (zoom.factor.current === factor) return;
-  if (zoom.factor.current >= 1) zoom.setCenter();
+  if (zoom.factorCurrent === factor) return;
+  if (zoom.factorCurrent >= 1) zoom.setCenter();
   dom.gameplay.style.zoom = factor;
   dom.gameplay.style.left = null;
   dom.gameplay.style.top = null;
-  zoom.factor.current = factor;
+  zoom.factorCurrent = factor;
   zoom.applyCenter();
   for (const element of nonZoomElements) {
-    element.style.zoom = 1 / zoom.factor.current;
+    element.style.zoom = 1 / zoom.factorCurrent;
   }
   const isOut = factor < 1;
   document.body.classList.toggle('zoomed-out', isOut);
