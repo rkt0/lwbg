@@ -1,5 +1,5 @@
 import {
-  qjs, qd, qda, closestData, fromTemplate, click,
+  qjs, qd, closestData, fromTemplate, click,
   sleep, deepCopy,
 } from './utility.js';
 import {gs} from './game-objects.js';
@@ -242,7 +242,7 @@ function enableDiceEdit(enable = true) {
     dieCode(gs.rollGo, dice[gs.turn].continue);
 };
 
-// Initialize buttons
+// Initialize T-rex buttons
 const trexEdit = qjs('trex-edit');
 const trexButtons = [];
 for (const item of trexEdit.children) {
@@ -253,10 +253,22 @@ for (const item of trexEdit.children) {
   trexButtons.push(button);
 }
 
+// Initialize change buttons
+const changeButtons = [];
+function makeChangeButton(parent, change) {
+  const button = fromTemplate('change-button', true);
+  button.dataset.change = change;
+  parent.append(button);
+  changeButtons.push(button);
+}
+makeChangeButton(qjs('turn-display'), 'turn');
+for (const die of qjs('roll-display').children) {
+  makeChangeButton(die, die.dataset.js);
+}
+
 // Animation time for edit control fade
 const eTime = anim.time.editControlFade;
 
 // Other element references
-const changeButtons = qda('change');
 const changeTurnButton = qd('change="turn"');
 const toFade = [...trexButtons, ...changeButtons];

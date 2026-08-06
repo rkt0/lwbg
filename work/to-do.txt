@@ -1,5 +1,4 @@
 fix repetition in html
-  change buttons
   dice
   [?] sidebar (including roll, excluding show-more)
   [?] edit banner buttons
