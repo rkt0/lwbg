@@ -35,6 +35,18 @@ export const control = {
   },
 };
 
+// Initialize control menus
+const section = qjs('control');
+const continueButton = qjs('control-continue');
+for (const item of section.children) {
+  if (item === continueButton) continue;
+  const menu = fromTemplate('control-menu', true);
+  const {value, textContent} = item;
+  menu.dataset.controlSpecies = value;
+  menu.firstElementChild.textContent = textContent;
+  section.replaceChild(menu, item);
+}
+
 // Initialize control buttons
 const levelButtons = {};
 for (const menu of qda('control-species')) {
@@ -59,10 +71,6 @@ let finish;
 
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
-
-// Other element references
-const section = qjs('control');
-const continueButton = qjs('control-continue');
 
 // Add player control screen click handler
 ael(section, 'mousedown', (e) => {

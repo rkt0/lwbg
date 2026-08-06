@@ -1,7 +1,6 @@
 fix repetition in html
   change buttons
   dice
-  control-menu areas
   [?] sidebar (including roll, excluding show-more)
   [?] edit banner buttons
   [?] more-menu buttons

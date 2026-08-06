@@ -247,26 +247,8 @@
 </section>
 <section data-js="control" inert data-dormant
   class="control">
-  <div data-control-species="human"
-    class="control-menu info">
-    <div class="heading large-text">Humans</div>
-    <button type="button" data-control-level="-1"
-      class="manual-control">
-      Manual Control
-    </button>
-    <div>Computer Level</div>
-    <div data-ai-levels class="ai-levels"></div>
-  </div>
-  <div data-control-species="raptor"
-    class="control-menu info">
-    <div class="heading large-text">Raptors</div>
-    <button type="button" data-control-level="-1"
-      class="manual-control">
-      Manual Control
-    </button>
-    <div>Computer Level</div>
-    <div data-ai-levels class="ai-levels"></div>
-  </div>
+  <data value="human">Humans</data>
+  <data value="raptor">Raptors</data>
   <button type="button" data-js="control-continue" 
     disabled class="control-continue large-text">
     Continue
@@ -295,6 +277,18 @@
     data-trex-delta="" class="small">
     ⬆
   </button>
+</template>
+<template id="control-menu">
+  <div data-control-species=""
+    class="control-menu info">
+    <div class="heading large-text"></div>
+    <button type="button" data-control-level="-1"
+      class="manual-control">
+      Manual Control
+    </button>
+    <div>Computer Level</div>
+    <div data-ai-levels class="ai-levels"></div>
+  </div>
 </template>
 <template id="ai-level-button">
   <button type="button" data-control-level="">
