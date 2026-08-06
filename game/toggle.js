@@ -1,6 +1,7 @@
 import {
-  qjs, qda, closestData, ael,
+  qjs, closestData, ael, fromTemplate, camelFromKebab,
 } from './utility.js';
+import {dom} from './dom.js';
 import {zoom} from './zoom.js';
 import {music} from './music.js';
 
@@ -57,12 +58,29 @@ ael(document, 'fullscreenchange', () => {
   } else navigator.keyboard.unlock();
 });
 
-// Element references
-const icons = {
-  audio: qda('icon-audio'),
-  fullscreen: qda('icon-fullscreen'),
-  tvMode: qda('icon-tv-mode'),
-};
+// Initialize buttons
+const icons = {};
+const itemGroup = fromTemplate('toggle-button-group');
+for (const item of itemGroup.children) {
+  const button = fromTemplate('toggle-button', true);
+  const {value} = item;
+  button.dataset.toggle = value;
+  button.title = `Toggle ${item.textContent}`;
+  for (const svg of button.children) {
+    svg.dataset[camelFromKebab(`icon-${value}`)] = '';
+    const use = svg.firstElementChild;
+    const urlPartial = use.getAttribute('href');
+    const url = urlPartial.replace('#', `#${value}`);
+    use.setAttribute('href', url);
+  }
+  button.classList.add('small');
+  const buttonClone = button.cloneNode(true);
+  icons[camelFromKebab(value)] = [
+    ...button.children, ...buttonClone.children,
+  ];
+  toggle.areaElement.append(button);
+  dom.startOptions.append(buttonClone);
+}
 
 // Audio should be on by default
 toggle.audio();

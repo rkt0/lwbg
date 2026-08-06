@@ -3,6 +3,7 @@ import {qjs, qd} from './utility.js';
 export const dom = {
   gameplay: qjs('gameplay'),
   start: qjs('start'),
+  startOptions: qjs('start-options'),
   board: qjs('board'),
   debugLabelSvg: [],
   raptorSpaceGroup: qjs('raptor-space-group'),

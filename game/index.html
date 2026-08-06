@@ -159,36 +159,6 @@
   </div>
   <div data-js="toggle-button-area" data-non-zoom
     class="toggle-button-area">
-    <data value="audio">Audio [m]</data>
-    <data value="fullscreen">Full Screen [f]</data>
-    <data value="tv-mode">TV Mode [t]</data>
-    <button type="button" data-toggle="audio"
-      title="Toggle Audio [m]" class="small">
-      <svg data-icon-audio class="icon inactive">
-        <use href="img/sprite.svg#audio-on"/>
-      </svg>
-      <svg data-icon-audio class="icon">
-        <use href="img/sprite.svg#audio-off"/>
-      </svg>
-    </button>
-    <button type="button" data-toggle="fullscreen"
-      title="Toggle Full Screen [f]" class="small">
-      <svg data-icon-fullscreen class="icon inactive">
-        <use href="img/sprite.svg#fullscreen-on"/>
-      </svg>
-      <svg data-icon-fullscreen class="icon">
-        <use href="img/sprite.svg#fullscreen-off"/>
-      </svg>
-    </button>
-    <button type="button" data-toggle="tv-mode"
-      title="Toggle TV Mode [t]" class="small">
-      <svg data-icon-tv-mode class="icon inactive">
-        <use href="img/sprite.svg#tv-mode-on"/>
-      </svg>
-      <svg data-icon-tv-mode class="icon">
-        <use href="img/sprite.svg#tv-mode-off"/>
-      </svg>
-    </button>
   </div>
   <div data-js="scrim" data-dormant data-non-zoom
     class="scrim cover">
@@ -253,36 +223,6 @@
     </button>
     <button type="button" data-js="load-saved">
       Load Saved Game
-    </button>
-    <data value="audio">Audio [m]</data>
-    <data value="fullscreen">Full Screen [f]</data>
-    <data value="tv-mode">TV Mode [t]</data>
-    <button type="button" data-toggle="audio"
-      title="Toggle Audio [m]" class="narrow">
-      <svg data-icon-audio class="icon inactive">
-        <use href="img/sprite.svg#audio-on"/>
-      </svg>
-      <svg data-icon-audio class="icon">
-        <use href="img/sprite.svg#audio-off"/>
-      </svg>
-    </button>
-    <button type="button" data-toggle="fullscreen"
-      title="Toggle Full Screen [f]" class="narrow">
-      <svg data-icon-fullscreen class="icon inactive">
-        <use href="img/sprite.svg#fullscreen-on"/>
-      </svg>
-      <svg data-icon-fullscreen class="icon">
-        <use href="img/sprite.svg#fullscreen-off"/>
-      </svg>
-    </button>
-    <button type="button" data-toggle="tv-mode"
-      title="Toggle TV Mode [t]" class="narrow">
-      <svg data-icon-tv-mode class="icon inactive">
-        <use href="img/sprite.svg#tv-mode-on"/>
-      </svg>
-      <svg data-icon-tv-mode class="icon">
-        <use href="img/sprite.svg#tv-mode-off"/>
-      </svg>
     </button>
   </div>
   <div data-js="start-help" data-dormant class="info">
@@ -366,11 +306,20 @@
     <div class="zoom-indicator">▾</div>
   </button>
 </template>
+<template id="toggle-button-group">
+  <data value="audio">Audio [m]</data>
+  <data value="fullscreen">Full Screen [f]</data>
+  <data value="tv-mode">TV Mode [t]</data>
+</template>
 <template id="toggle-button">
   <button type="button" data-toggle=""
     title="" class="">
-    <svg class="icon inactive"><use href=""/></svg>
-    <svg class="icon"><use href=""/></svg>
+    <svg class="icon inactive">
+      <use href="img/sprite.svg#-on"/>
+    </svg>
+    <svg class="icon">
+      <use href="img/sprite.svg#-off"/>
+    </svg>
   </button>
 </template>
 <template id="debug-labels">

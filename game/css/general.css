@@ -99,18 +99,18 @@ button {
     );
     backdrop-filter: none;
   }
+
+  :where(.gameplay) &.small {
+    --size: 36px;
+    width: var(--size);
+    height: var(--size);
+  }
 }
 
 button:enabled:hover {
   box-shadow: var(--hover-shadow);
   color: var(--hover-shadow-text);
   cursor: pointer;
-}
-
-.small {
-  --size: 36px;
-  width: var(--size);
-  height: var(--size);
 }
 
 .info {

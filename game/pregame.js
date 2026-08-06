@@ -14,8 +14,8 @@ import {autoSave} from './auto-save.js';
 export async function showStartOptions(time = aTime) {
   autoSave.clear();
   await anim.fade(help, 0, time);
-  options.inert = false;
-  anim.fade(options, 1, time, {display: ''});
+  dom.startOptions.inert = false;
+  anim.fade(dom.startOptions, 1, time, {display: ''});
 }
 
 // Animation time for menu fade
@@ -23,7 +23,6 @@ const aTime = anim.time.menuFade;
 
 // Element references
 const front = qjs('front');
-const options = qjs('start-options');
 const help = qjs('start-help');
 const fork = qjs('start-fork');
 
@@ -124,8 +123,8 @@ async function startGame(load) {
 
 // UI helper functions
 async function hideStartOptions() {
-  options.inert = true;
-  await anim.fade(options, 0, aTime);
+  dom.startOptions.inert = true;
+  await anim.fade(dom.startOptions, 0, aTime);
 }
 async function showStartHelp(templateId) {
   const node = fromTemplate(templateId);

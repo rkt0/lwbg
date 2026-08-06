@@ -63,7 +63,7 @@
   button {
     grid-column: 1 / -1;
 
-    &.narrow {
+    &.small {
       grid-column: span 1;
       text-align: center;
       display: grid;
