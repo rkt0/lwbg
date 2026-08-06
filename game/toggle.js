@@ -67,7 +67,6 @@ for (const item of itemGroup.children) {
   button.dataset.toggle = value;
   button.title = `Toggle ${item.textContent}`;
   for (const svg of button.children) {
-    svg.dataset[camelFromKebab(`icon-${value}`)] = '';
     const use = svg.firstElementChild;
     const urlPartial = use.getAttribute('href');
     const url = urlPartial.replace('#', `#${value}`);
