@@ -98,13 +98,12 @@ const zoomLevels = qjs('zoom-levels');
 const buttons = {};
 for (const item of zoomLevels.children) {
   const button = fromTemplate('zoom-button', true);
-  const level = item.value;
-  button.dataset.js = `zoom-${level}`;
+  button.dataset.js = `zoom-${item.value}`;
   button.title = `Zoom ${
-    level.replace(/^./g, x => x.toUpperCase())
+    item.value.replace(/^./, x => x.toUpperCase())
   }`;
   button.append(item.textContent);
-  buttons[level] = button;
+  buttons[item.value] = button;
   zoomLevels.replaceChild(button, item);
 }
 
