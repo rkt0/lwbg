@@ -1,10 +1,3 @@
-fix repetition in html
-  [?] sidebar (including roll, excluding show-more)
-  [?] edit banner buttons
-  [?] more-menu buttons
-  [?] quit-options buttons
-  [?] start-fork buttons
-  [?] tv-matte
 cache template items
 change innerHTML to textContent
 reconsider use of switch-case
