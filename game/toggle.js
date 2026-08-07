@@ -6,7 +6,7 @@ import {zoom} from './zoom.js';
 import {music} from './music.js';
 
 export const toggle = {
-  areaElement: qjs('toggle-button-area'),
+  groupElement: qjs('toggle-button-group'),
   audio() {
     music.toggle();
     for (const icon of icons.audio) {
@@ -77,7 +77,7 @@ for (const item of itemGroup.children) {
   icons[camelFromKebab(value)] = [
     ...button.children, ...buttonClone.children,
   ];
-  toggle.areaElement.append(button);
+  toggle.groupElement.append(button);
   dom.startOptions.append(buttonClone);
 }
 

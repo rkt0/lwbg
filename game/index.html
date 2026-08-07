@@ -35,7 +35,8 @@
     </button>
     <div data-active class="zoom-display info">
       <div class="heading">Zoom</div>
-      <div data-js="zoom-levels" class="zoom-levels">
+      <div data-js="zoom-button-group"
+        class="zoom-button-group">
         <data value="out">&minus;</data>
         <data value="default">•</data>
         <data value="in">+</data>
@@ -43,8 +44,7 @@
     </div>
     <div data-js="turn-display" data-active
       class="turn-display info">
-      Turn:<br>
-      <span data-js="species-turn-text">&nbsp;</span>
+      Turn:<br><span data-js="turn-text">&nbsp;</span>
     </div>
     <div data-js="roll-display"
       class="roll-display info">
@@ -106,8 +106,8 @@
     <span data-js="humans-saved"></span>
     of <span data-js="humans-total"></span>
   </div>
-  <div data-js="toggle-button-area" data-non-zoom
-    class="toggle-button-area">
+  <div data-js="toggle-button-group" data-non-zoom
+    class="toggle-button-group">
   </div>
   <div data-js="scrim" data-dormant data-non-zoom
     class="scrim cover">

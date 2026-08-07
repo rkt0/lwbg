@@ -83,7 +83,7 @@ const identifiers = [
 const menuItem = Object.fromEntries(identifiers.map(
   identifier => [identifier, qjs(identifier)]
 ));
-const turnSpan = qjs('species-turn-text');
+const turnSpan = qjs('turn-text');
 
 // Other values
 const buttonWidth = cssInt('--button-width');

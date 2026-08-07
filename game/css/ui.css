@@ -78,7 +78,7 @@
   }
 }
 
-.toggle-button-area {
+.toggle-button-group {
   position: fixed;
   top: var(--matte-top, 0);
   right: var(--matte-right, 0);

@@ -94,9 +94,9 @@ function zoomGeneral(factor) {
 };
 
 // Initialize buttons
-const zoomLevels = qjs('zoom-levels');
+const zoomButtonGroup = qjs('zoom-button-group');
 const buttons = {};
-for (const item of zoomLevels.children) {
+for (const item of zoomButtonGroup.children) {
   const button = fromTemplate('zoom-button', true);
   button.dataset.js = `zoom-${item.value}`;
   button.title = `Zoom ${
@@ -104,7 +104,7 @@ for (const item of zoomLevels.children) {
   }`;
   button.append(item.textContent);
   buttons[item.value] = button;
-  zoomLevels.replaceChild(button, item);
+  zoomButtonGroup.replaceChild(button, item);
 }
 
 // Other element references

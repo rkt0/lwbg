@@ -5,8 +5,6 @@ fix repetition in html
   [?] quit-options buttons
   [?] start-fork buttons
   [?] tv-matte
-eliminate use of word "area"
-use word "panel" for element that groups buttons
 cache template items
 change innerHTML to textContent
 reconsider use of switch-case

@@ -47,7 +47,7 @@
   }
 }
 
-.zoom-levels {
+.zoom-button-group {
   display: grid;
   grid-auto-flow: column;
 
