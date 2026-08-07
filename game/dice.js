@@ -1,4 +1,6 @@
-import {qjs, qda, ce, cssInt} from './utility.js';
+import {
+  qjs, qda, ce, fromTemplate, cssInt,
+} from './utility.js';
 import {dom} from './dom.js';
 
 export const dice = {
@@ -15,33 +17,40 @@ export const dice = {
   },
 };
 
-// Add existing element references to dom object
+// Initialize dice
+function makeFace(value, text) {
+  const face = fromTemplate('face', true);
+  face.dataset.roll = value;
+  face.append(text ?? value);
+  return face;
+}
 for (const [species, sObj] of Object.entries(dice)) {
-  for (const type of Object.keys(sObj)) {
+  for (const [type, values] of Object.entries(sObj)) {
     const name = `${species}-${type}`;
-    dom.dice[name] = qjs(`die-${name}`);
+    const die = fromTemplate('die', true);
+    die.dataset.js = `die-${name}`;
+    die.classList.add(`die-${species}`);
+    const facesTemplate =
+      fromTemplate(`die-${species}-faces`) ??
+      fromTemplate(`die-${type}-faces`);
+    if (facesTemplate) {
+      const items = [...facesTemplate.children];
+      die.append(...items.map(item => makeFace(
+        item.value, item.textContent,
+      )));
+    } else {
+      const unique = [...new Set(values)];
+      die.append(...unique.map(u => makeFace(u)));
+    }
+    dom.dice[name] = die;
     dom.faces[name] = {};
-    for (const face of qda('roll', dom.dice[name])) {
+    for (const face of die.children) {
       dom.faces[name][face.dataset.roll] = face;
     }
   }
 }
-
-// Make faces for human and raptor movement dice
-for (const species of Object.keys(dice)) {
-  if (species === 'trex') continue;
-  const name = `${species}-movement`;
-  const dieElement = dom.dice[name];
-  const values = [...new Set(dice[species].movement)];
-  for (const value of values) {
-    const face = ce('div');
-    face.classList.add('face');
-    face.dataset.roll = value;
-    face.append(value);
-    dieElement.append(face);
-    dom.faces[name][value] = face;
-  }
-}
+const rollDisplay = qjs('roll-display');
+rollDisplay.append(...Object.values(dom.dice));
 
 // Squeeze all faces and set display to none
 const dieWidth = cssInt('--die-content-width');

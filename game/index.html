@@ -48,27 +48,6 @@
     </div>
     <div data-js="roll-display"
       class="roll-display info">
-      <div data-js="die-human-movement"
-        class="die die-human">
-      </div>
-      <div data-js="die-human-continue"
-        class="die die-human">
-        <div class="face" data-roll="0">Stop</div>
-        <div class="face" data-roll="1">Go</div>
-      </div>
-      <div data-js="die-raptor-movement"
-        class="die die-raptor">
-      </div>
-      <div data-js="die-raptor-continue"
-        class="die die-raptor">
-        <div class="face" data-roll="0">Stop</div>
-        <div class="face" data-roll="1">Go</div>
-      </div>
-      <div data-js="die-trex-movement"
-        class="die die-trex">
-        <div class="face" data-roll="0">✖</div>
-        <div class="face" data-roll="1">⬆</div>
-      </div>
     </div>
     <button type="button" data-js="roll-dice"
       class="default-action">
@@ -269,6 +248,20 @@
     title="" class="zoom-button">
     <div class="zoom-indicator">▾</div>
   </button>
+</template>
+<template id="die">
+  <div data-js="" class="die"></div>
+</template>
+<template id="face">
+  <div class="face" data-roll=""></div>
+</template>
+<template id="die-continue-faces">
+  <data value="0">Stop</data>
+  <data value="1">Go</data>
+</template>
+<template id="die-trex-faces">
+  <data value="0">✖</data>
+  <data value="1">⬆</data>
 </template>
 <template id="change-button">
   <button type="button" data-dormant data-change=""

@@ -49,7 +49,9 @@ export function cesvg(...args) {
   return document.createElementNS(uri, ...args);
 }
 export function fromTemplate(id, oneElement) {
-  const {content} = document.getElementById(id);
+  const template = document.getElementById(id);
+  if (!template) return;
+  const {content} = template;
   const node = content.cloneNode(true);
   if (oneElement) return node.firstElementChild;
   return node;
