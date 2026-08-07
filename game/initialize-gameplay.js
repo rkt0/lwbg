@@ -39,7 +39,7 @@ ael(dom.gameplay, 'mousedown', (e) => {
   if (isMoreMenu) return moreMenu.handleClick(e);
   const isMessage = clicked(message.element, e);
   if (isMessage) return message.hide();
-  const isToggle = clicked(toggle.areaElement, e);
+  const isToggle = clicked(toggle.groupElement, e);
   if (isToggle) return toggle.handleClick(e);
   const isSidebar = clicked(sb.element, e);
   if (isSidebar) return sb.handleClick(e);
