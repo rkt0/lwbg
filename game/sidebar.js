@@ -33,10 +33,10 @@ export const sb = {
     const speciesText =
       species === 'human' ? 'Humans' :
       species === 'trex' ? 'T-Rex' : 'Raptors';
-    if (turnSpan.innerHTML === speciesText) return;
+    if (turnSpan.textContent === speciesText) return;
     const aTime = skipFx ? 0 : anim.time.turnFade;
     await anim.fade(turnSpan, 0, aTime);
-    turnSpan.innerHTML = speciesText;
+    turnSpan.textContent = speciesText;
     anim.fade(turnSpan, 1, aTime);
   },
   displayRollResult(rollState, skipFx) {

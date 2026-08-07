@@ -27,8 +27,8 @@ export const gp = {
     this.clearRoll();
     await this.save();
     setTimeout(() => {
-      qjs('humans-saved').innerHTML = nSaved;
-      qjs('humans-total').innerHTML = nTotal;
+      qjs('humans-saved').textContent = nSaved;
+      qjs('humans-total').textContent = nTotal;
       message.hide();
       sb.hideButton('roll-display');
       sb.hideButton('turn-display');
