@@ -1,5 +1,4 @@
 cache template items
-change innerHTML to textContent
 reconsider use of switch-case
 reorganize/rename css
 fix weird horizontal line in jungle image
