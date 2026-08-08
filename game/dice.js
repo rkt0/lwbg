@@ -1,6 +1,5 @@
-import {
-  qjs, qda, ce, fromTemplate, cssInt,
-} from './utility.js';
+import {qjs, qda, cssInt} from './utility.js';
+import {template} from './template.js';
 import {dom} from './dom.js';
 
 export const dice = {
@@ -19,7 +18,7 @@ export const dice = {
 
 // Initialize dice
 function makeFace(value, text) {
-  const face = fromTemplate('face', true);
+  const face = template('face');
   face.dataset.roll = value;
   face.append(text ?? value);
   return face;
@@ -27,14 +26,14 @@ function makeFace(value, text) {
 for (const [species, sObj] of Object.entries(dice)) {
   for (const [type, values] of Object.entries(sObj)) {
     const name = `${species}-${type}`;
-    const die = fromTemplate('die', true);
+    const die = template('die');
     die.dataset.js = `die-${name}`;
     die.classList.add(`die-${species}`);
     const facesTemplate =
-      fromTemplate(`die-${species}-faces`) ??
-      fromTemplate(`die-${type}-faces`);
+      template(`die-${species}-faces`) ??
+      template(`die-${type}-faces`);
     if (facesTemplate) {
-      const items = [...facesTemplate.children];
+      const items = facesTemplate;
       die.append(...items.map(item => makeFace(
         item.value, item.textContent,
       )));

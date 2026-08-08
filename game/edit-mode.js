@@ -1,7 +1,7 @@
 import {
-  qjs, qd, closestData, fromTemplate, click,
-  sleep, deepCopy,
+  qjs, qd, closestData, click, sleep, deepCopy,
 } from './utility.js';
+import {template} from './template.js';
 import {gs} from './game-objects.js';
 import {dom} from './dom.js';
 import {dice} from './dice.js';
@@ -246,7 +246,7 @@ function enableDiceEdit(enable = true) {
 const trexEdit = qjs('trex-edit');
 const trexButtons = [];
 for (const item of trexEdit.children) {
-  const button = fromTemplate('trex-button', true);
+  const button = template('trex-button');
   button.dataset.trexDelta = item.value;
   button.textContent = item.textContent;
   trexEdit.replaceChild(button, item);
@@ -256,7 +256,7 @@ for (const item of trexEdit.children) {
 // Initialize change buttons
 const changeButtons = [];
 function makeChangeButton(parent, change) {
-  const button = fromTemplate('change-button', true);
+  const button = template('change-button');
   button.dataset.change = change;
   parent.append(button);
   changeButtons.push(button);

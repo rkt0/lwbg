@@ -1,6 +1,7 @@
 import {
-  qd, ce, fromTemplate, sequence, shuffle,
+  qd, ce, sequence, shuffle,
 } from './utility.js';
+import {template} from './template.js';
 import {prng} from './prngs.js';
 import {bd} from './board-topology.js';
 import {dom} from './dom.js';
@@ -98,7 +99,7 @@ function addRaptorImgs() {
 }
 
 function makeHumanPiece(p) {
-  const element = fromTemplate('human-piece', true);
+  const element = template('human-piece');
   element.dataset.humanPiece = p;
   dom.gameplay.append(element);
   dom.humanPiece.push(element);
@@ -107,7 +108,7 @@ function makeHumanPiece(p) {
   dom.editKill.push(killButton);
 }
 function makeRaptorPiece(p) {
-  const element = fromTemplate('raptor-piece', true);
+  const element = template('raptor-piece');
   element.dataset.raptorPiece = p;
   dom.gameplay.append(element);
   dom.raptorPiece.push(element);

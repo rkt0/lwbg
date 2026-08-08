@@ -1,6 +1,7 @@
 import {
-  qjs, closestData, ael, fromTemplate, camelFromKebab,
+  qjs, closestData, ael, camelFromKebab,
 } from './utility.js';
+import {template} from './template.js';
 import {dom} from './dom.js';
 import {zoom} from './zoom.js';
 import {music} from './music.js';
@@ -60,9 +61,8 @@ ael(document, 'fullscreenchange', () => {
 
 // Initialize buttons
 const icons = {};
-const itemGroup = fromTemplate('toggle-button-group');
-for (const item of itemGroup.children) {
-  const button = fromTemplate('toggle-button', true);
+for (const item of template('toggle-button-group')) {
+  const button = template('toggle-button');
   const {value} = item;
   button.dataset.toggle = value;
   button.title = `Toggle ${item.textContent}`;

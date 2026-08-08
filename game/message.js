@@ -1,4 +1,5 @@
-import {qjs, ce, fromTemplate} from './utility.js';
+import {qjs, ce} from './utility.js';
+import {template} from './template.js';
 import {anim} from './animation.js';
 
 export const message = {
@@ -6,7 +7,7 @@ export const message = {
   suppress: false,
   async show(templateId, append) {
     if (this.suppress) return;
-    const node = fromTemplate(templateId);
+    const node = template(templateId, true);
     const {appendable} = this.element.dataset;
     if (append && appendable === '') {
       this.element.append(ce('br'), node);

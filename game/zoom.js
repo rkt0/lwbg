@@ -1,4 +1,5 @@
-import {qjs, qda, fromTemplate} from './utility.js';
+import {qjs, qda} from './utility.js';
+import {template} from './template.js';
 import {dom} from './dom.js';
 import {tvMatte} from './tv-matte.js';
 
@@ -97,7 +98,7 @@ function zoomGeneral(factor) {
 const zoomButtonGroup = qjs('zoom-button-group');
 const buttons = {};
 for (const item of zoomButtonGroup.children) {
-  const button = fromTemplate('zoom-button', true);
+  const button = template('zoom-button');
   button.dataset.js = `zoom-${item.value}`;
   button.title = `Zoom ${
     item.value.replace(/^./, x => x.toUpperCase())

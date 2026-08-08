@@ -1,7 +1,8 @@
 import {
-  qjs, closestData, ael, aelo, fromTemplate,
+  qjs, closestData, ael, aelo,
   waitForClick, addWarningBeforeUnload,
 } from './utility.js';
+import {template} from './template.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
@@ -127,8 +128,7 @@ async function hideStartOptions() {
   await anim.fade(dom.startOptions, 0, aTime);
 }
 async function showStartHelp(templateId) {
-  const node = fromTemplate(templateId);
-  help.replaceChildren(node);
+  help.replaceChildren(template(templateId, true));
   await anim.fade(help, 1, aTime);
   await waitForClick(dom.start);
 }

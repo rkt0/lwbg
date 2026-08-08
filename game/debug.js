@@ -1,4 +1,5 @@
-import {cesvg, fromTemplate} from './utility.js';
+import {cesvg} from './utility.js';
+import {template} from './template.js';
 import {dom} from './dom.js';
 
 export const debug = {
@@ -15,7 +16,7 @@ export const debug = {
   // Cycle music starting at specified track
   music: {cycle: false, startAt: 0},
   makeLabels(kind, points) {
-    const div = fromTemplate('debug-labels', true);
+    const div = template('debug-labels');
     div.classList.add(`${kind}-labels`);
     dom.gameplay.append(div);
     const svg = cesvg('svg');

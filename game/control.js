@@ -1,6 +1,7 @@
 import {
-  qjs, qd, qda, closestData, ael, fromTemplate,
+  qjs, qd, qda, closestData, ael,
 } from './utility.js';
+import {template} from './template.js';
 import {anim} from './animation.js';
 import {ai} from './ai.js';
 
@@ -40,7 +41,7 @@ const section = qjs('control');
 const continueButton = qjs('control-continue');
 for (const item of section.children) {
   if (item === continueButton) continue;
-  const menu = fromTemplate('control-menu', true);
+  const menu = template('control-menu');
   const {value, textContent} = item;
   menu.dataset.controlSpecies = value;
   menu.firstElementChild.textContent = textContent;
@@ -55,9 +56,7 @@ for (const menu of qda('control-species')) {
   buttons[-1] = qd('control-level', menu);
   const aiLevels = qd('ai-levels', menu);
   for (const level of ai.level[species].keys()) {
-    const button = fromTemplate(
-      'ai-level-button', true,
-    );
+    const button = template('ai-level-button');
     button.dataset.controlLevel = level;
     button.textContent = level;
     buttons.push(button);

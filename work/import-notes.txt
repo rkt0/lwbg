@@ -3,6 +3,7 @@ board-geometry.js
 board-topology.js
 game-objects.js
 prngs.js
+template.js
 utility.js
 
 # Level 1
