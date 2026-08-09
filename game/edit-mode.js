@@ -85,15 +85,19 @@ export const edit = {
     enableDiceEdit(false);
   },
   handleBannerClick(e) {
-    const js = closestData(e);
-    if (js === 'edit-revert') revertEdits();
-    else if (js === 'edit-confirm') confirmEdits();
+    dispatch[closestData(e)]?.();
   },
   handleChange(change) {
     if (change === 'turn') return changeTurn();
     const [, species, type] = change.split('-');
     changeDie(species, type);
   },
+};
+
+// Dispatch table for banner click handler
+const dispatch = {
+  ['edit-revert']: revertEdits,
+  ['edit-confirm']: confirmEdits,
 };
 
 // Banner
