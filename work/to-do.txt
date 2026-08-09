@@ -1,4 +1,4 @@
-reconsider use of switch-case
+fix two awkward if-else chains in key-bindings.js
 reorganize/rename css
 fix weird horizontal line in jungle image
 clean up utility module
