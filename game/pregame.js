@@ -38,13 +38,17 @@ aelo(front, 'mousedown', async () => {
 
 // Add start screen click handlers
 ael(dom.start, 'mousedown', (e) => {
-  const js = closestData(e);
-  if (js === 'start-new') startNew();
-  else if (js === 'load-saved') loadSaved();
-  else if (js === 'load-overwrite') loadOverwrite();
-  else if (js === 'load-copy') loadCopy();
-  else toggle.handleClick(e);
+  const handler = dispatch[closestData(e)];
+  if (handler) handler(); else toggle.handleClick(e);
 });
+
+// Dispatch table for start screen click handler
+const dispatch = {
+  ['start-new']: startNew,
+  ['load-saved']: loadSaved,
+  ['load-overwrite']: loadOverwrite,
+  ['load-copy']: loadCopy,
+};
 
 // Start screen click handlers
 async function startNew() {
