@@ -41,10 +41,6 @@ export const toggle = {
   },
   handleClick(e) {
     dispatch[closestData(e, 'toggle')]?.();
-    // const what = closestData(e, 'toggle');
-    // if (what === 'audio') this.audio();
-    // else if (what === 'fullscreen') this.fullscreen();
-    // else if (what === 'tv-mode') this.tvMode();
   },
 };
 
