@@ -135,7 +135,7 @@ async function confirmMove() {
   }
 }
 
-// Inject into sidebar object
+// Dispatch table for click handler
 const dispatch = {
   ['show-more']: () => moreMenu.show(),
   ['roll-dice']: rollDice,
@@ -150,6 +150,8 @@ const dispatch = {
   ['zoom-default']: () => zoom.zoomDefault(),
   ['zoom-in']: () => zoom.zoomIn(),
 };
+
+// Inject into sidebar object
 sb.handleClick = (e) => {
   const change = closestData(e, 'change');
   if (change) edit.handleChange(change);
