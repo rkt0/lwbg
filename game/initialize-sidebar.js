@@ -136,20 +136,22 @@ async function confirmMove() {
 }
 
 // Inject into sidebar object
+const dispatch = {
+  ['show-more']: () => moreMenu.show(),
+  ['roll-dice']: rollDice,
+  ['ok-trex-move']: okTrexMove,
+  ['ok-no-move']: okNoMove,
+  ['ok-ai-move']: okAiMove,
+  ['decline']: decline,
+  ['unroll-dice']: () => edit.unrollDice(),
+  ['cancel']: cancelMove,
+  ['confirm']: confirmMove,
+  ['zoom-out']: () => zoom.zoomOut(),
+  ['zoom-default']: () => zoom.zoomDefault(),
+  ['zoom-in']: () => zoom.zoomIn(),
+};
 sb.handleClick = (e) => {
   const change = closestData(e, 'change');
-  if (change) return edit.handleChange(change);
-  const js = closestData(e);
-  if (js === 'show-more') moreMenu.show();
-  else if (js === 'roll-dice') rollDice();
-  else if (js === 'ok-trex-move') okTrexMove();
-  else if (js === 'ok-no-move') okNoMove();
-  else if (js === 'ok-ai-move') okAiMove();
-  else if (js === 'decline') decline();
-  else if (js === 'unroll-dice') edit.unrollDice();
-  else if (js === 'cancel') cancelMove();
-  else if (js === 'confirm') confirmMove();
-  else if (js === 'zoom-out') zoom.zoomOut();
-  else if (js === 'zoom-default') zoom.zoomDefault();
-  else if (js === 'zoom-in') zoom.zoomIn();
+  if (change) edit.handleChange(change);
+  else dispatch[closestData(e)]?.();
 };
