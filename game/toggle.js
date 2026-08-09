@@ -40,11 +40,19 @@ export const toggle = {
     }
   },
   handleClick(e) {
-    const what = closestData(e, 'toggle');
-    if (what === 'audio') this.audio();
-    else if (what === 'fullscreen') this.fullscreen();
-    else if (what === 'tv-mode') this.tvMode();
+    dispatch[closestData(e, 'toggle')]?.();
+    // const what = closestData(e, 'toggle');
+    // if (what === 'audio') this.audio();
+    // else if (what === 'fullscreen') this.fullscreen();
+    // else if (what === 'tv-mode') this.tvMode();
   },
+};
+
+// Dispatch table for click handler
+const dispatch = {
+  ['audio']: () => toggle.audio(),
+  ['fullscreen']: () => toggle.fullscreen(),
+  ['tv-mode']: () => toggle.tvMode(),
 };
 
 // Required since user can leave fullscreen via Escape
