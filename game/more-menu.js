@@ -34,17 +34,7 @@ export const moreMenu = {
     }
   },
   handleClick(e) {
-    const js = closestData(e);
-    if (js === 'show-quit') showQuit();
-    else if (js === 'abort-quit') this.hide();
-    else if (js === 'confirm-quit') confirmQuit();
-    else if (js === 'hide-more') this.hide();
-    else if (js === 'save-point') savePoint();
-    else if (js === 'change-control') controlInGame();
-    else if (js === 'begin-edit') {
-      this.hide();
-      edit.begin();
-    }
+    dispatch[closestData(e)]?.();
   },
 };
 
@@ -100,3 +90,18 @@ async function confirmQuit() {
   showStartOptions(0);
   anim.fade(dom.start, 1, aTime, {display: ''});
 }
+function beginEdit() {
+  moreMenu.hide();
+  edit.begin();
+}
+
+// Dispatch table for click handler
+const dispatch = {
+  ['show-quit']: showQuit,
+  ['abort-quit']: () => moreMenu.hide(),
+  ['confirm-quit']: confirmQuit,
+  ['hide-more']: () => moreMenu.hide(),
+  ['save-point']: savePoint,
+  ['change-control']: controlInGame,
+  ['begin-edit']: beginEdit,
+};
