@@ -15,7 +15,7 @@ import {showStartOptions} from './pregame.js';
 export const moreMenu = {
   element: qjs('more-menu'),
   isActive() {
-    return this.element.style.display === 'block';
+    return this.element.style.display !== 'none';
   },
   async show() {
     gp.interrupt();

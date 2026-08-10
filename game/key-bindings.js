@@ -8,82 +8,87 @@ import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
 import {moreMenu} from './more-menu.js';
 
+// Helper function
 function clickIfOk(button) {
   if (button.disabled) return;
   if (button.closest('[inert]')) return;
   click(button);
 }
 
+// Key handlers
+function handleConfirmKey() {
+  if (!gp.isActive()) return;
+  let js;
+  if (edit.on) js = 'edit-confirm';
+  else switch (gs.phase) {
+    case 'select':
+      if (ai.control[gs.turn]) js = 'ok-ai-move';
+      else if (gs.je && mv.toGo === -1) {
+        js = 'ok-no-move';
+      }
+      break;
+    case 'roll':
+      js = 'roll-dice';
+      break;
+    case 'move':
+      if (gs.turn === 'trex') {
+        js = gs.rollN ? 'ok-trex-move' : 'ok-no-move';
+      } else if (!mv.toGo) js = 'confirm';
+      break;
+  }
+  if (js) clickIfOk(qjs(js));
+}
+function handleCancelKey() {
+  if (moreMenu.isActive()) moreMenu.hide();
+  if (!gp.isActive()) return;
+  else if (edit.on || gs.phase === 'move') {
+    clickIfOk(qjs('cancel'));
+  }
+}
+function handleEscapeKey() {
+  // In case user holds Escape to leave fullscreen
+  if (!zoom.isZoomedOut()) zoom.setCenter();
+  handleCancelKey();
+}
+function handleZoomKey(e) {
+  if (!gp.isActive()) return;
+  if (zoom.factorCurrent !== 1) zoom.zoomDefault();
+  else dispatchZoomKey[e.key]?.();
+}
+
+// Dispatch table for zoom handler
+const dispatchZoomKey = {
+  '-': () => zoom.zoomOut(),
+  '_': () => zoom.zoomOut(),
+  '=': () => zoom.zoomIn(),
+  '+': () => zoom.zoomIn(),
+};
+
+// Dispatch table for key handler
+const dispatch = {
+  'Enter': handleConfirmKey,
+  ' ': handleConfirmKey,
+  'Escape': handleEscapeKey,
+  'Backspace': handleCancelKey,
+  'm': () => toggle.audio(),
+  'f': () => toggle.fullscreen(),
+  't': () => toggle.tvMode(),
+  '>': () => music.next(true, false),
+  '?': () => music.next(true, true),
+  '0': handleZoomKey,
+  ')': handleZoomKey,
+  '-': handleZoomKey,
+  '_': handleZoomKey,
+  '=': handleZoomKey,
+  '+': handleZoomKey,
+};
+
 // Do not use the ael utility function here;
 // ael always calls .preventDefault()
 document.addEventListener('keydown', (e) => {
-  switch (e.key) {
-    case 'Enter':
-    case ' ': {
-      if (!gp.isActive()) return;
-      e.preventDefault();
-      let identifier;
-      if (edit.on) identifier = 'edit-confirm';
-      else if (gs.phase === 'select') {
-        if (ai.control[gs.turn]) {
-          identifier = 'ok-ai-move';
-        }
-        else if (gs.je && mv.toGo === -1) {
-          identifier = 'ok-no-move';
-        }
-      } else if (gs.phase === 'roll') {
-        identifier = 'roll-dice';
-      } else if (gs.phase === 'move') {
-        if (gs.turn === 'trex') {
-          identifier = gs.rollN ?
-            'ok-trex-move' : 'ok-no-move';
-        } else if (!mv.toGo) identifier = 'confirm';
-      }
-      if (identifier) clickIfOk(qjs(identifier));
-      break;
-    }
-    case 'Escape':
-      // In case user holds Escape to leave fullscreen
-      if (!zoom.isZoomedOut()) zoom.setCenter();
-      // Falls through
-    case 'x':
-    case 'z':
-      if (moreMenu.isActive()) {
-        e.preventDefault();
-        moreMenu.hide();
-      } else if (gp.isActive()) {
-        e.preventDefault();
-        if (edit.on || gs.phase === 'move') {
-          clickIfOk(qjs('cancel'));
-        }
-      }
-      break;
-    case 'm':
-      e.preventDefault();
-      toggle.audio();
-      break;
-    case 'K':
-      e.preventDefault();
-      music.next(true, !e.altKey);
-      break;
-    case 'f':
-      e.preventDefault();
-      toggle.fullscreen();
-      break;
-    case 't':
-      e.preventDefault();
-      toggle.tvMode();
-      break;
-    case '-':
-    case '=':
-    case '0': {
-      if (!gp.isActive()) return;
-      e.preventDefault();
-      const isNowOutOrIn = zoom.factorCurrent !== 1;
-      if (isNowOutOrIn) zoom.zoomDefault();
-      else if (e.key === '-') zoom.zoomOut();
-      else if (e.key === '=') zoom.zoomIn();
-      break;
-    }
+  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  if (e.key in dispatch) {
+    e.preventDefault();
+    dispatch[e.key](e);
   }
 });
