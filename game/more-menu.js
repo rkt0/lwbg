@@ -97,11 +97,11 @@ function beginEdit() {
 
 // Dispatch table for click handler
 const dispatch = {
-  ['show-quit']: showQuit,
-  ['abort-quit']: () => moreMenu.hide(),
-  ['confirm-quit']: confirmQuit,
-  ['hide-more']: () => moreMenu.hide(),
-  ['save-point']: savePoint,
-  ['change-control']: controlInGame,
-  ['begin-edit']: beginEdit,
+  'show-quit': showQuit,
+  'abort-quit': () => moreMenu.hide(),
+  'confirm-quit': confirmQuit,
+  'hide-more': () => moreMenu.hide(),
+  'save-point': savePoint,
+  'change-control': controlInGame,
+  'begin-edit': beginEdit,
 };

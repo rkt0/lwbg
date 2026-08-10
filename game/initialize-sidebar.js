@@ -137,18 +137,18 @@ async function confirmMove() {
 
 // Dispatch table for click handler
 const dispatch = {
-  ['show-more']: () => moreMenu.show(),
-  ['roll-dice']: rollDice,
-  ['ok-trex-move']: okTrexMove,
-  ['ok-no-move']: okNoMove,
-  ['ok-ai-move']: okAiMove,
-  ['decline']: decline,
-  ['unroll-dice']: () => edit.unrollDice(),
-  ['cancel']: cancelMove,
-  ['confirm']: confirmMove,
-  ['zoom-out']: () => zoom.zoomOut(),
-  ['zoom-default']: () => zoom.zoomDefault(),
-  ['zoom-in']: () => zoom.zoomIn(),
+  'show-more': () => moreMenu.show(),
+  'roll-dice': rollDice,
+  'ok-trex-move': okTrexMove,
+  'ok-no-move': okNoMove,
+  'ok-ai-move': okAiMove,
+  'decline': decline,
+  'unroll-dice': () => edit.unrollDice(),
+  'cancel': cancelMove,
+  'confirm': confirmMove,
+  'zoom-out': () => zoom.zoomOut(),
+  'zoom-default': () => zoom.zoomDefault(),
+  'zoom-in': () => zoom.zoomIn(),
 };
 
 // Inject into sidebar object

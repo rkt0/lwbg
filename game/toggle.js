@@ -46,9 +46,9 @@ export const toggle = {
 
 // Dispatch table for click handler
 const dispatch = {
-  ['audio']: () => toggle.audio(),
-  ['fullscreen']: () => toggle.fullscreen(),
-  ['tv-mode']: () => toggle.tvMode(),
+  'audio': () => toggle.audio(),
+  'fullscreen': () => toggle.fullscreen(),
+  'tv-mode': () => toggle.tvMode(),
 };
 
 // Required since user can leave fullscreen via Escape

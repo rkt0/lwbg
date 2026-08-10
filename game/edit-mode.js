@@ -96,8 +96,8 @@ export const edit = {
 
 // Dispatch table for banner click handler
 const dispatch = {
-  ['edit-revert']: revertEdits,
-  ['edit-confirm']: confirmEdits,
+  'edit-revert': revertEdits,
+  'edit-confirm': confirmEdits,
 };
 
 // Banner

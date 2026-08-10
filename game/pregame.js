@@ -44,10 +44,10 @@ ael(dom.start, 'mousedown', (e) => {
 
 // Dispatch table for start screen click handler
 const dispatch = {
-  ['start-new']: startNew,
-  ['load-saved']: loadSaved,
-  ['load-overwrite']: loadOverwrite,
-  ['load-copy']: loadCopy,
+  'start-new': startNew,
+  'load-saved': loadSaved,
+  'load-overwrite': loadOverwrite,
+  'load-copy': loadCopy,
 };
 
 // Start screen click handlers
