@@ -1,1 +1,2 @@
 T-rex no-move button misaligned vertically
+message flickers back to full message during hide
