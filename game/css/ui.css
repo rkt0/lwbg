@@ -45,6 +45,10 @@
       color: var(--hover-shadow-text);
     }
   }
+
+  &.being-hidden {
+    color: transparent;
+  }
 }
 
 .more-menu {
