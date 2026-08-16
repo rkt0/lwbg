@@ -17,13 +17,13 @@ export const message = {
     await anim.slide(this.element, 1, aTime);
     this.element.inert = false;
   },
-  hide() {
+  async hide() {
     if (this.element.style.display === 'none') return;
     if (anim.isAnimated(this.element)) return;
     this.element.inert = true;
     this.element.classList.add('being-hidden');
     delete this.element.dataset.appendable;
-    anim.slide(this.element, 0, aTime);
+    await anim.slide(this.element, 0, aTime);
   },
 };
 

@@ -129,7 +129,7 @@ async function editGame(gsNew) {
     gp.clearRoll();
     sb.replaceButton('roll-display', 'roll-dice');
   }
-  sb.displayTurn(gs.turn);
+  sb.displayTurn(gs.turn, true);
   if (gs.phase === 'roll') {
     sb.replaceButton('roll-display', 'roll-dice');
   } else if (rollResultChanged) {

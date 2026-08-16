@@ -183,17 +183,19 @@ export function setSvgSize(svg, size) {
   svg.setAttribute('height', size[1]);
 }
 
-export function cssInt(property, where = ':root') {
-  const style = getComputedStyle(qs(where));
+export function cssInt(property, where) {
+  const element = where ?? document.documentElement;
+  const style = getComputedStyle(element);
   const value = style.getPropertyValue(property);
   return parseInt(value || 0);
 }
-export function cssIntWH(stem, where = ':root') {
+export function cssIntWH(stem, where) {
   const dims = ['width', 'height'];
   return dims.map(x => cssInt(`${stem}-${x}`, where));
 }
-export function cssFloat(property, where = ':root') {
-  const style = getComputedStyle(qs(where));
+export function cssFloat(property, where) {
+  const element = where ?? document.documentElement;
+  const style = getComputedStyle(element);
   const value = style.getPropertyValue(property);
   return parseFloat(value || 0);
 }

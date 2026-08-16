@@ -1,9 +1,15 @@
+.hud {
+  background: none;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .game-over {
   position: fixed;
   width: auto;
   padding: 1em 2em;
-  z-index: 6;
-  inset: 0;
+  z-index: 1;
+  inset: var(--matte, 0);
   place-self: center;
 
   .heading {
@@ -23,9 +29,10 @@
   padding: 12px;
   border-top-style: none;
   text-wrap: balance;
-  z-index: 6;
   display: grid;
   place-items: center;
+  pointer-events: auto;
+  z-index: 1;
 
   &:hover {
     box-shadow: var(--hover-shadow);
@@ -43,13 +50,14 @@
 .more-menu {
   display: grid;
   place-content: center;
-  z-index: 8;
+  pointer-events: auto;
+  z-index: 3;
 }
 
 .scrim {
   background: #6d6a68aa;
   backdrop-filter: var(--blur);
-  z-index: 7;
+  z-index: 2;
 }
 
 .start-options {
@@ -79,12 +87,18 @@
 }
 
 .toggle-button-group {
-  position: fixed;
-  top: var(--matte-top, 0);
-  right: var(--matte-right, 0);
-  z-index: 5;
+  position: absolute;
+  margin: var(--matte, 0);
+  top: 0;
+  right: 0;
+  pointer-events: auto;
+  z-index: 0;
+  --button-size: 39px;
 
   button {
+    box-sizing: border-box;
+    width: var(--button-size);
+    height: var(--button-size);
     border-style: none none solid solid;
     display: grid;
     place-content: center;

@@ -6,6 +6,8 @@ import {debug} from './debug.js';
 import {anim} from './animation.js';
 import {pieces} from './pieces.js';
 import {message} from './message.js';
+import {sb} from './sidebar.js';
+import {toggle} from './toggle.js';
 import {control} from './control.js';
 import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
@@ -81,8 +83,19 @@ async function showQuit() {
 }
 async function confirmQuit() {
   quitOptions.inert = true;
+  dom.gameplay.inert = true;
   await moreMenu.hide();
+  await Promise.all([
+    sb.hide(),
+    toggle.hideGroup(),
+    message.hide(),
+    anim.fade(dom.gameOver, 0, aTime),
+  ]);
+  dom.hud.style.display = 'none';
   await anim.fade(dom.gameplay, 0, aTime);
+  sb.reset();
+  gp.clearMoveObject();
+  gp.clearVisibleMove();
   gp.initializeObjects();
   gp.initializeView();
   pieces.shuffleFeatures();

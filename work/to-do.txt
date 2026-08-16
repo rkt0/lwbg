@@ -2,5 +2,4 @@ reorganize/rename css
 fix weird horizontal line in jungle image
 clean up utility module
 investigate suspicious music.next behavior
-investigate spacing issue with zoom indicator on minus
 skipFx everywhere or nowhere

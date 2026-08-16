@@ -1,5 +1,5 @@
 import {qda} from './utility.js';
-import './initialize-sidebar.js';
+import './initialize-hud.js';
 import './initialize-gameplay.js';
 import './key-bindings.js';
 

@@ -80,9 +80,6 @@ function zoomGeneral(factor) {
   dom.gameplay.style.top = null;
   zoom.factorCurrent = factor;
   zoom.applyCenter();
-  for (const element of nonZoomElements) {
-    element.style.zoom = 1 / zoom.factorCurrent;
-  }
   const isOut = factor < 1;
   document.body.classList.toggle('zoomed-out', isOut);
   document.body.style.setProperty(
@@ -107,6 +104,3 @@ for (const item of zoomButtonGroup.children) {
   buttons[item.value] = button;
   zoomButtonGroup.replaceChild(button, item);
 }
-
-// Other element references
-const nonZoomElements = qda('non-zoom');

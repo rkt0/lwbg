@@ -7,6 +7,7 @@ import {dom} from './dom.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
 import {music} from './music.js';
+import {sb} from './sidebar.js';
 import {toggle} from './toggle.js';
 import {control} from './control.js';
 import {gp} from './gameplay.js';
@@ -112,18 +113,23 @@ async function startGame(load) {
   if (load) await autoSave.executeLoad(autoSave.fh);
   await anim.fade(dom.start, 0, aTime);
   hideStartHelp();
-  anim.fade(dom.gameplay, 1, aTime);
-  gp.initializeView();
-  if (load) {
-    gp.interrupt(0);
-    await control.show();
-    gp.resume();
-    gp.handleControlChange();
-  } else {
+  dom.hud.style.display = '';
+  if (load) gp.interrupt(0);
+  else {
     // Save first to record player control
     await gp.save();
-    gp.endTurn();
+    gp.endTurn(true);
   }
+  const ready = anim.fade(dom.gameplay, 1, aTime);
+  gp.initializeView();
+  if (load) {
+    await Promise.all([ready, control.show()]);
+    gp.resume();
+    gp.handleControlChange();
+  } else await ready;
+  sb.show();
+  toggle.showGroup();
+  dom.gameplay.inert = false;
 }
 
 // UI helper functions

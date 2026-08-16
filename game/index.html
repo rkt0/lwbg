@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="css/control.css">
 <link rel="icon" type="image/png" sizes="64x64"
   href="img/icon/icon-64.png">
-<section data-js="gameplay" data-dormant
+<section data-js="gameplay" inert data-dormant
   class="gameplay full-board">
   <svg data-js="board">
     <g data-js="raptor-space-group"></g>
@@ -27,8 +27,9 @@
       <data value="+1">⬇</data>
     </div>
   </div>
-  <div data-js="sidebar" data-non-zoom
-    class="sidebar">
+</section>
+<section data-js="hud" data-dormant class="hud">
+  <div data-js="sidebar" class="sidebar">
     <button type="button" data-js="show-more"
       data-active title="More Actions">
       • • •
@@ -50,7 +51,7 @@
       class="roll-display info">
     </div>
     <button type="button" data-js="roll-dice"
-      class="default-action">
+      data-active class="default-action">
       Roll
     </button>
     <button type="button" data-js="ok-trex-move"
@@ -82,8 +83,11 @@
       Confirm
     </button>
   </div>
+  <div data-js="toggle-button-group"
+    class="toggle-button-group">
+  </div>
   <div data-js="edit-banner" inert data-dormant
-    data-non-zoom class="edit-banner">
+    class="edit-banner">
     <div class="info banner">
       Edit Mode On
     </div>
@@ -97,22 +101,19 @@
     </button>
   </div>
   <div data-js="message" inert data-dormant
-    data-non-zoom class="message info">
+    class="message info">
   </div>
-  <div data-js="game-over" data-dormant data-non-zoom
+  <div data-js="game-over" data-dormant
     class="game-over info">
     <div class="heading large-text">Game Over</div>
     Humans Saved:<br>
     <span data-js="humans-saved"></span>
     of <span data-js="humans-total"></span>
   </div>
-  <div data-js="toggle-button-group" data-non-zoom
-    class="toggle-button-group">
-  </div>
-  <div data-js="scrim" data-dormant data-non-zoom
+  <div data-js="scrim" data-dormant
     class="scrim cover">
   </div>
-  <div data-js="more-menu" data-dormant data-non-zoom
+  <div data-js="more-menu" data-dormant
     class="more-menu cover">
     <div data-js="more-options" inert data-dormant
       class="choices">

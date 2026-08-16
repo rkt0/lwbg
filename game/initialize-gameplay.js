@@ -2,9 +2,6 @@ import {closestData, ael} from './utility.js';
 import {dom} from './dom.js';
 import './initialize-board.js';
 import {pieces} from './pieces.js';
-import {message} from './message.js';
-import {sb} from './sidebar.js';
-import {toggle} from './toggle.js';
 import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
 import {autoSave} from './auto-save.js';
@@ -15,7 +12,6 @@ import {
   clickHumanPiece, clickRaptorPiece,
   clickEditKill, clickEditTrex,
 } from './click-pieces.js';
-import {moreMenu} from './more-menu.js';
 
 // Make pieces
 pieces.makeAll();
@@ -26,23 +22,8 @@ await gp.initializeObjects();
 autoSave.clear();
 edit.clear();
 
-// Helper function to identify clicked element
-function clicked(element, event) {
-  return element.contains(event.target);
-}
-
 // Add gameplay click handlers
 ael(dom.gameplay, 'mousedown', (e) => {
-  const isEditBanner = clicked(edit.bannerElement, e);
-  if (isEditBanner) return edit.handleBannerClick(e);
-  const isMoreMenu = clicked(moreMenu.element, e);
-  if (isMoreMenu) return moreMenu.handleClick(e);
-  const isMessage = clicked(message.element, e);
-  if (isMessage) return message.hide();
-  const isToggle = clicked(toggle.groupElement, e);
-  if (isToggle) return toggle.handleClick(e);
-  const isSidebar = clicked(sb.element, e);
-  if (isSidebar) return sb.handleClick(e);
   const killData = closestData(e, 'kill');
   if (killData) return clickEditKill(+killData);
   const rpData = closestData(e, 'raptor-piece');

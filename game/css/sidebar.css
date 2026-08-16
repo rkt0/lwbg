@@ -5,10 +5,12 @@
 }
 
 .sidebar {
-  position: fixed;
-  top: var(--matte-top, 0);
-  left: var(--matte-left, 0);
-  z-index: 5;
+  position: absolute;
+  margin: var(--matte, 0);
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+  z-index: 0;
 
   button,
   .info {
@@ -110,11 +112,11 @@
 
 .edit-banner {
   position: fixed;
-  top: var(--matte-top, 0);
-  left: var(--matte-left, 0);
+  margin: var(--matte, 0);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  z-index: 6;
+  pointer-events: auto;
+  z-index: 1;
 
   .banner {
     box-sizing: border-box;

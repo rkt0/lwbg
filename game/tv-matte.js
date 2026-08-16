@@ -6,7 +6,7 @@ export const tvMatte = {
     const sides = ['top', 'right', 'bottom', 'left'];
     for (const side of sides) {
       const prop = `--matte-${side}`;
-      matte[side] = cssFloat(prop, 'body');
+      matte[side] = cssFloat(prop, document.body);
     }
     return matte;
   },

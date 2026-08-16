@@ -1,13 +1,29 @@
 import {
-  qjs, closestData, ael, camelFromKebab,
+  qjs, closestData, ael, camelFromKebab, cssInt,
 } from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
 import {zoom} from './zoom.js';
+import {anim} from './animation.js';
 import {music} from './music.js';
 
 export const toggle = {
   groupElement: qjs('toggle-button-group'),
+  async showGroup() {
+    this.groupElement.style.display = '';
+    await anim.move(this.groupElement, {
+      right: '0px',
+    }, anim.time.buttonSlide, {easing: 'linear'});
+    this.groupElement.inert = false;
+  },
+  async hideGroup() {
+    this.groupElement.inert = true;
+    await anim.move(this.groupElement, {
+      // right: `-${groupWidth}px`,
+      right: `-${groupWidth}px`,
+    }, anim.time.buttonSlide, {easing: 'linear'});
+    this.groupElement.style.display = 'none';
+  },
   audio() {
     music.toggle();
     for (const icon of icons.audio) {
@@ -51,6 +67,11 @@ const dispatch = {
   'tv-mode': () => toggle.tvMode(),
 };
 
+// Other values
+const groupWidth = cssInt(
+  '--button-size', toggle.groupElement,
+);
+
 // Required since user can leave fullscreen via Escape
 ael(document, 'fullscreenchange', () => {
   if (zoom.isZoomedOut()) zoom.zoomOut();
@@ -87,3 +108,6 @@ for (const item of template('toggle-button-group')) {
 
 // Audio should be on by default
 toggle.audio();
+
+// Hide toggle button group
+toggle.hideGroup();

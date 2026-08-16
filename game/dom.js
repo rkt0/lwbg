@@ -2,6 +2,7 @@ import {qjs, qd} from './utility.js';
 
 export const dom = {
   gameplay: qjs('gameplay'),
+  hud: qjs('hud'),
   start: qjs('start'),
   startOptions: qjs('start-options'),
   board: qjs('board'),

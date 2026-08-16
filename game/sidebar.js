@@ -4,12 +4,22 @@ import {anim} from './animation.js';
 
 export const sb = {
   element: qjs('sidebar'),
+  async show() {
+    const {element} = this;
+    element.style.display = '';
+    await anim.move(element, leftShow, bTime, linear);
+    element.inert = false;
+  },
+  async hide() {
+    const {element} = this;
+    element.inert = true;
+    await anim.move(element, leftHide, bTime, linear);
+    element.style.display = 'none';
+  },
   async showButton(identifier) {
     const element = menuItem[identifier];
     element.style.display = '';
-    const aTime = anim.time.buttonSlide;
-    const linear = {easing: 'linear'};
-    await anim.move(element, leftShow, aTime, linear);
+    await anim.move(element, leftShow, bTime, linear);
     if (isProperButton(element)) {
       element.disabled = false;
     }
@@ -20,14 +30,20 @@ export const sb = {
       if (element.disabled) return;
       element.disabled = true;
     }
-    const aTime = anim.time.buttonSlide;
-    const linear = {easing: 'linear'};
-    await anim.move(element, leftHide, aTime, linear);
+    await anim.move(element, leftHide, bTime, linear);
     element.style.display = 'none';
   },
   async replaceButton(identifierOld, identifierNew) {
     await this.hideButton(identifierOld);
     this.showButton(identifierNew);
+  },
+  reset() {
+    const items = Object.entries(menuItem);
+    for (const [js, element] of items) {
+      if ('active' in element.dataset) {
+        this.showButton(js);
+      } else this.hideButton(js);
+    }
   },
   async displayTurn(species, skipFx) {
     const speciesText =
@@ -62,8 +78,7 @@ export const sb = {
     }
     this.replaceButton('roll-dice', 'roll-display');
     const delay = skipFx ? 0 :
-      anim.time.buttonSlide * 2 +
-      anim.time.dieRollDelay;
+      bTime * 2 + anim.time.dieRollDelay;
     setTimeout(() => {
       for (const die of diceToRoll) {
         die.classList.add('rolled');
@@ -71,7 +86,6 @@ export const sb = {
       }
     }, delay);
   },
-  // handleClick(e) injected by initialize-sidebar.js
 };
 
 // Element references
@@ -89,6 +103,8 @@ const turnSpan = qjs('turn-text');
 const buttonWidth = cssInt('--button-width');
 const leftShow = {left: '0px'};
 const leftHide = {left: `-${buttonWidth}px`};
+const bTime = anim.time.buttonSlide;
+const linear = {easing: 'linear'};
 
 // Helper function
 function isProperButton(element) {

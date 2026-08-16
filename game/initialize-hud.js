@@ -1,5 +1,5 @@
 import {
-  qjs, closestData, click, rollDie,
+  qjs, closestData, ael, click, rollDie,
 } from './utility.js';
 import {prng} from './prngs.js';
 import {gs, mv} from './game-objects.js';
@@ -10,16 +10,17 @@ import {anim} from './animation.js';
 import {ai} from './ai.js';
 import {message} from './message.js';
 import {sb} from './sidebar.js';
+import {toggle} from './toggle.js';
 import {bringMoveIntoView} from './view-region.js';
 import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
 import {moreMenu} from './more-menu.js';
 
-// Hide non-active elements in sidebar
-for (const element of sb.element.children) {
-  if ('active' in element.dataset) continue;
-  sb.hideButton(element.dataset.js);
-}
+// Show/hide elements and sidebar itself
+sb.reset();
+sb.hide();
+
+// Simple click handlers
 async function okNoMove() {
   if (gs.phase === 'roll') return;
   message.hide();
@@ -92,20 +93,6 @@ async function okTrexMove() {
   gp.moveTrex(gs.trex - 1, true);
 }
 
-// Needed for click handlers for cancel and confirm
-async function clearVisibleMove() {
-  gp.select();
-  dom.move?.classList.remove('move');
-  dom.move = null;
-  for (const element of dom.path) {
-    element.classList.remove('path');
-  }
-  dom.path = [];
-  message.hide();
-  sb.hideButton('confirm');
-  await sb.hideButton('cancel');
-}
-
 // Click handlers for cancel and confirm
 async function cancelMove() {
   if (edit.on) {
@@ -115,13 +102,13 @@ async function cancelMove() {
   if (gs.phase !== 'move') return;
   gs.phase = 'select';
   gp.clearMoveObject();
-  await clearVisibleMove();
+  await gp.clearVisibleMove();
   if (gs.je) gp.startJumpEnter();
 }
 async function confirmMove() {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
-  clearVisibleMove();
+  gp.clearVisibleMove();
   zoom.zoomDefault();
   const end = mv.plan[mv.plan.length - 1];
   await bringMoveIntoView();
@@ -135,8 +122,8 @@ async function confirmMove() {
   }
 }
 
-// Dispatch table for click handler
-const dispatch = {
+// Dispatch table for sidebar click handler
+const dispatchSidebar = {
   'show-more': () => moreMenu.show(),
   'roll-dice': rollDice,
   'ok-trex-move': okTrexMove,
@@ -151,9 +138,21 @@ const dispatch = {
   'zoom-in': () => zoom.zoomIn(),
 };
 
-// Inject into sidebar object
-sb.handleClick = (e) => {
+function clicked(element, event) {
+  return element.contains(event.target);
+}
+
+// Add click handlers
+ael(dom.hud, 'mousedown', (e) => {
+  const isEditBanner = clicked(edit.bannerElement, e);
+  if (isEditBanner) return edit.handleBannerClick(e);
+  const isMoreMenu = clicked(moreMenu.element, e);
+  if (isMoreMenu) return moreMenu.handleClick(e);
+  const isMessage = clicked(message.element, e);
+  if (isMessage) return message.hide();
+  const isToggle = clicked(toggle.groupElement, e);
+  if (isToggle) return toggle.handleClick(e);
   const change = closestData(e, 'change');
-  if (change) edit.handleChange(change);
-  else dispatch[closestData(e)]?.();
-};
+  if (change) return edit.handleChange(change);
+  dispatchSidebar[closestData(e)]?.();
+});
