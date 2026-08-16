@@ -1,4 +1,4 @@
-import {qjs, cssInt} from './utility.js';
+import {qjs, cssInt, sleep} from './utility.js';
 import {dom} from './dom.js';
 import {anim} from './animation.js';
 
@@ -35,7 +35,7 @@ export const sb = {
   },
   async replaceButton(identifierOld, identifierNew) {
     await this.hideButton(identifierOld);
-    this.showButton(identifierNew);
+    await this.showButton(identifierNew);
   },
   reset() {
     const items = Object.entries(menuItem);
@@ -55,7 +55,7 @@ export const sb = {
     turnSpan.textContent = speciesText;
     anim.fade(turnSpan, 1, aTime);
   },
-  displayRollResult(rollState, immediate) {
+  async displayRollResult(rollState, immediate) {
     for (const die of Object.values(dom.dice)) {
       die.style.display = 'none';
       die.classList.remove('rolled', 'no-animation');
@@ -76,17 +76,15 @@ export const sb = {
         type === 'movement' ? rollN : rollGo;
       dom.faces[name][value].style.display = 'block';
     }
-    this.replaceButton('roll-dice', 'roll-display');
-    const delay = immediate ? 0 :
-      bTime * 2 + anim.time.dieRollDelay;
-    setTimeout(() => {
-      for (const die of diceToRoll) {
-        die.classList.add('rolled');
-        if (immediate) {
-          die.classList.add('no-animation');
-        }
-      }
-    }, delay);
+    this.replaceButton(
+      'roll-dice', 'roll-display',
+    );
+    const dieClasses = ['rolled'];
+    if (immediate) dieClasses.push('no-animation');
+    else await sleep(anim.time.dieRollDelay);
+    for (const die of diceToRoll) {
+      die.classList.add(...dieClasses);
+    }
   },
 };
 
