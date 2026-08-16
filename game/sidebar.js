@@ -45,17 +45,17 @@ export const sb = {
       } else this.hideButton(js);
     }
   },
-  async displayTurn(species, skipFx) {
+  async displayTurn(species, immediate) {
     const speciesText =
       species === 'human' ? 'Humans' :
       species === 'trex' ? 'T-Rex' : 'Raptors';
     if (turnSpan.textContent === speciesText) return;
-    const aTime = skipFx ? 0 : anim.time.turnFade;
+    const aTime = immediate ? 0 : anim.time.turnFade;
     await anim.fade(turnSpan, 0, aTime);
     turnSpan.textContent = speciesText;
     anim.fade(turnSpan, 1, aTime);
   },
-  displayRollResult(rollState, skipFx) {
+  displayRollResult(rollState, immediate) {
     for (const die of Object.values(dom.dice)) {
       die.style.display = 'none';
       die.classList.remove('rolled', 'no-animation');
@@ -77,12 +77,14 @@ export const sb = {
       dom.faces[name][value].style.display = 'block';
     }
     this.replaceButton('roll-dice', 'roll-display');
-    const delay = skipFx ? 0 :
+    const delay = immediate ? 0 :
       bTime * 2 + anim.time.dieRollDelay;
     setTimeout(() => {
       for (const die of diceToRoll) {
         die.classList.add('rolled');
-        if (skipFx) die.classList.add('no-animation');
+        if (immediate) {
+          die.classList.add('no-animation');
+        }
       }
     }, delay);
   },

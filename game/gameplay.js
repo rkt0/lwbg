@@ -93,13 +93,13 @@ export const gp = {
     }
     return stop ? 'human' : firstDino;
   },
-  async endTurn(skipFx) {
+  async endTurn(immediate) {
     this.clearMoveObject();
     if (gs.turn === 'human') {
       this.adjustHumanPositions();
     }
     await this.checkGameOver();
-    await startNextTurn(skipFx);
+    await startNextTurn(immediate);
   },
   startJumpEnter() {
     let nChoices = 0;
@@ -172,16 +172,16 @@ export const gp = {
     checkEatenByRaptor(piece);
     if (isLast) await this.endTurn();
   },
-  async moveTrex(space, isLast, skipFx) {
+  async moveTrex(space, isLast, silent) {
     const [l, t] = pl.trex[space];
-    if (!skipFx) {
+    if (!silent) {
       if (gs.trex === 1) sfx.trexRoar();
       else sfx.trexStomp();
     }
     const location = {top: `${t}px`, left: `${l}px`};
     const aTime = anim.time.moveTrex;
     await anim.move(dom.trexPiece, location, aTime);
-    if (!skipFx) {
+    if (!silent) {
       const settings = anim.trexScreenBounce;
       anim.bounce(dom.gameplay, settings);
     }
@@ -319,7 +319,7 @@ function checkEatenByRaptor(rPiece) {
     message.show('eaten-raptor', true);
   }
 }
-async function startNextTurn(skipFx) {
+async function startNextTurn(immediate) {
   const species = gp.nextTurnSpecies();
   gs.turn = species;
   gp.checkEatenByAnyRaptor();
@@ -327,7 +327,7 @@ async function startNextTurn(skipFx) {
   if (gs.turn === 'over') return;
   gp.clearRoll();
   sb.replaceButton('roll-display', 'roll-dice');
-  sb.displayTurn(species, skipFx);
+  sb.displayTurn(species, immediate);
   gp.humanItemsClickable(species === 'human');
   gp.raptorItemsClickable(species === 'raptor');
   await gp.save();
