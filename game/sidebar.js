@@ -3,20 +3,8 @@ import {dom} from './dom.js';
 import {anim} from './animation.js';
 
 export const sb = {
-  element: qjs('sidebar'),
-  async show() {
-    const {element} = this;
-    element.style.display = '';
-    await anim.move(element, leftShow, bTime, linear);
-    element.inert = false;
-  },
-  async hide() {
-    const {element} = this;
-    element.inert = true;
-    await anim.move(element, leftHide, bTime, linear);
-    element.style.display = 'none';
-  },
-  async showButton(identifier) {
+  async show(identifier) {
+    if (!identifier) return showSidebar();
     const element = menuItem[identifier];
     element.style.display = '';
     await anim.move(element, leftShow, bTime, linear);
@@ -24,7 +12,8 @@ export const sb = {
       element.disabled = false;
     }
   },
-  async hideButton(identifier) {
+  async hide(identifier) {
+    if (!identifier) return hideSidebar();
     const element = menuItem[identifier];
     if (isProperButton(element)) {
       if (element.disabled) return;
@@ -34,15 +23,14 @@ export const sb = {
     element.style.display = 'none';
   },
   async replaceButton(identifierOld, identifierNew) {
-    await this.hideButton(identifierOld);
-    await this.showButton(identifierNew);
+    await this.hide(identifierOld);
+    await this.show(identifierNew);
   },
   reset() {
     const items = Object.entries(menuItem);
     for (const [js, element] of items) {
-      if ('active' in element.dataset) {
-        this.showButton(js);
-      } else this.hideButton(js);
+      if ('active' in element.dataset) this.show(js);
+      else this.hide(js);
     }
   },
   async displayTurn(species, immediate) {
@@ -89,6 +77,7 @@ export const sb = {
 };
 
 // Element references
+const sbElement = qjs('sidebar');
 const identifiers = [
   'roll-dice', 'roll-display', 'unroll-dice',
   'ok-trex-move', 'ok-no-move', 'ok-ai-move',
@@ -106,8 +95,18 @@ const leftHide = {left: `-${buttonWidth}px`};
 const bTime = anim.time.buttonSlide;
 const linear = {easing: 'linear'};
 
-// Helper function
+// Helper functions
 function isProperButton(element) {
   const nn = element.nodeName.toLowerCase();
   return nn === 'button';
+}
+async function showSidebar() {
+  sbElement.style.display = '';
+  await anim.move(sbElement, leftShow, bTime, linear);
+  sbElement.inert = false;
+}
+async function hideSidebar() {
+  sbElement.inert = true;
+  await anim.move(sbElement, leftHide, bTime, linear);
+  sbElement.style.display = 'none';
 }

@@ -68,14 +68,14 @@ export const autoSave = {
       sb.replaceButton('roll-display', 'roll-dice');
     } else sb.displayRollResult(gs, true);
     if (ai.control[gs.turn] && gs.phase !== 'roll') {
-      sb.showButton('ok-ai-move');
+      sb.show('ok-ai-move');
     } else {
-      sb.hideButton('ok-ai-move');
+      sb.hide('ok-ai-move');
       if (gs.je) gp.startJumpEnter();
     }
     if (gs.turn === 'trex' && gs.phase === 'move') {
-      if (gs.rollN) sb.showButton('ok-trex-move');
-      else sb.showButton('ok-no-move');
+      if (gs.rollN) sb.show('ok-trex-move');
+      else sb.show('ok-no-move');
     }
     gp.humanItemsClickable(gs.turn === 'human');
     gp.raptorItemsClickable(gs.turn === 'raptor');

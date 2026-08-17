@@ -24,13 +24,13 @@ sb.hide();
 async function okNoMove() {
   if (gs.phase === 'roll') return;
   message.hide();
-  sb.hideButton('ok-no-move');
+  sb.hide('ok-no-move');
   await gp.endTurn();
 }
 async function okAiMove() {
   if (gs.phase !== 'select') return;
   gs.phase = 'think';
-  sb.hideButton('ok-ai-move');
+  sb.hide('ok-ai-move');
   const decision = ai.control[gs.turn](gs, prng.ai);
   if (!decision.length) {
     await gp.endTurn();
@@ -50,7 +50,7 @@ async function decline() {
     }`);
     mv.toGo--;
   } else {
-    sb.hideButton('decline');
+    sb.hide('decline');
     await gp.endTurn();
   }
 }
@@ -72,22 +72,21 @@ async function rollDice() {
   if (gs.turn === 'trex') {
     setTimeout(() => {
       gs.phase = 'move';
-      if (gs.rollN) sb.showButton('ok-trex-move');
-      else sb.showButton('ok-no-move');
+      if (gs.rollN) sb.show('ok-trex-move');
+      else sb.show('ok-no-move');
     }, delay);
   } else {
     setTimeout(() => {
       gs.phase = 'select';
-      if (ai.control[gs.turn]) {
-        sb.showButton('ok-ai-move');
-      } else if (gs.je) gp.startJumpEnter();
+      if (ai.control[gs.turn]) sb.show('ok-ai-move');
+      else if (gs.je) gp.startJumpEnter();
     }, delay);
   }
 }
 async function okTrexMove() {
   if (gs.phase !== 'move') return;
   gs.phase = 'execute';
-  sb.hideButton('ok-trex-move');
+  sb.hide('ok-trex-move');
   zoom.zoomDefault();
   await bringMoveIntoView();
   gp.moveTrex(gs.trex - 1, true);

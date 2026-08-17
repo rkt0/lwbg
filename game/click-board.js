@@ -46,7 +46,7 @@ export function clickHumanSpace(space) {
       edge.classList.add('path');
     }
     if (isBldg) mv.toGo = 0; else mv.toGo--;
-    if (!mv.toGo) sb.showButton('confirm');
+    if (!mv.toGo) sb.show('confirm');
   }
 }
 
@@ -89,7 +89,7 @@ export function clickRaptorSpace(space) {
     dom.move.classList.add('move');
     mv.plan.push(space);
     mv.toGo--;
-    if (!mv.toGo) sb.showButton('confirm');
+    if (!mv.toGo) sb.show('confirm');
   }
 }
 
@@ -171,7 +171,7 @@ async function clickHumanSpaceEditMode(
   if (gameNoLongerOver) {
     gs.turn = 'human';
     sb.displayTurn('human', true);
-    await sb.showButton('turn-display');
+    await sb.show('turn-display');
     edit.showEditTurnButton();
   }
 }

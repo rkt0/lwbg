@@ -68,7 +68,7 @@ export function clickEditKill(piece) {
   gp.raptorItemsClickable(true);
   edit.selected.species = null;
   edit.selected.piece = null;
-  sb.hideButton('cancel');
+  sb.hide('cancel');
 }
 
 export function clickEditTrex(change, absolute) {
@@ -118,7 +118,7 @@ function clickHumanPieceEditMode(piece, space) {
   gp.raptorItemsClickable(false);
   edit.selected.species = 'human';
   edit.selected.piece = piece;
-  sb.showButton('cancel');
+  sb.show('cancel');
   if (space === bd.humanDead) return;
   const button = dom.editKill[piece];
   button.disabled = false;
@@ -141,5 +141,5 @@ function clickRaptorPieceEditMode(piece, space) {
   gp.humanItemsClickable(false);
   edit.selected.species = 'raptor';
   edit.selected.piece = piece;
-  sb.showButton('cancel');
+  sb.show('cancel');
 }

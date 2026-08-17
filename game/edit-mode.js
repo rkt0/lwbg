@@ -31,7 +31,7 @@ export const edit = {
       'roll-dice', 'decline',
       'ok-trex-move', 'ok-no-move', 'ok-ai-move',
     ];
-    for (const x of hidden) await sb.hideButton(x);
+    for (const x of hidden) await sb.hide(x);
     for (const element of trexButtons) {
       anim.fade(element, 1, eTime);
     }
@@ -65,11 +65,11 @@ export const edit = {
     // should be enough of a delay, but we also call
     // a short sleep in parallel just to be safe
     await Promise.all([
-      sb.hideButton('cancel'),
+      sb.hide('cancel'),
       sleep(anim.time.moveHuman / 6),
     ]);
     this.selected = {species: null, piece: null};
-    await sb.hideButton('cancel');
+    await sb.hide('cancel');
   },
   showEditTurnButton() {
     anim.fade(changeTurnButton, 1, eTime);
@@ -81,7 +81,7 @@ export const edit = {
       'roll-display', 'unroll-dice', 'cancel',
     ];
     this.cancelSelection();
-    for (const b of buttonsToHide) sb.hideButton(b);
+    for (const b of buttonsToHide) sb.hide(b);
     enableDiceEdit(false);
   },
   handleBannerClick(e) {
@@ -136,14 +136,14 @@ async function editGame(gsNew) {
     sb.displayRollResult(gs, true);
   }
   if (ai.control[gs.turn] && gs.phase !== 'roll') {
-    sb.showButton('ok-ai-move');
+    sb.show('ok-ai-move');
   } else {
-    sb.hideButton('ok-ai-move');
+    sb.hide('ok-ai-move');
     if (gs.je) gp.startJumpEnter();
   }
   if (gs.turn === 'trex' && gs.phase === 'move') {
-    if (gs.rollN) sb.showButton('ok-trex-move');
-    else sb.showButton('ok-no-move');
+    if (gs.rollN) sb.show('ok-trex-move');
+    else sb.show('ok-no-move');
   }
   gp.humanItemsClickable(gs.turn === 'human');
   gp.raptorItemsClickable(gs.turn === 'raptor');
@@ -154,7 +154,7 @@ async function endEditMode() {
   for (const element of toFade) {
     anim.fade(element, 0, eTime);
   }
-  sb.hideButton('unroll-dice');
+  sb.hide('unroll-dice');
   edit.clear();
   dom.showMore.style.visibility = 'visible';
   message.suppress = false;
@@ -239,7 +239,7 @@ function enableDiceEdit(enable = true) {
     anim.fade(element, +enable, eTime);
   }
   if (!enable) return;
-  sb.showButton('unroll-dice');
+  sb.show('unroll-dice');
   edit.dieCodes.movement =
     dieCode(gs.rollN, dice[gs.turn].movement);
   edit.dieCodes.continue =

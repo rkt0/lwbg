@@ -30,8 +30,8 @@ export const gp = {
       qjs('humans-saved').textContent = nSaved;
       qjs('humans-total').textContent = nTotal;
       message.hide();
-      sb.hideButton('roll-display');
-      sb.hideButton('turn-display');
+      sb.hide('roll-display');
+      sb.hide('turn-display');
       if (zoom.factorCurrent < 1) return;
       anim.fade(dom.gameOver, 1, anim.time.menuFade, {
         display: '',
@@ -65,8 +65,8 @@ export const gp = {
     }
     dom.path = [];
     message.hide();
-    sb.hideButton('confirm');
-    await sb.hideButton('cancel');
+    sb.hide('confirm');
+    await sb.hide('cancel');
   },
   clearMoveObject() {
     mv.selected = null;
@@ -116,11 +116,11 @@ export const gp = {
     }
     if (nChoices) {
       mv.toGo = 1;
-      sb.showButton('decline');
+      sb.show('decline');
     } else {
       message.show(`no-${which}-available`);
       mv.toGo = -1;
-      sb.showButton('ok-no-move');
+      sb.show('ok-no-move');
     }
   },
   async moveHuman(piece, space, isLast) {
@@ -257,11 +257,11 @@ export const gp = {
     await this.save();
     if (ai.control[gs.turn] && gs.phase !== 'roll') {
       click(qjs('cancel'));
-      sb.hideButton('ok-no-move');
-      sb.hideButton('decline');
-      sb.showButton('ok-ai-move');
+      sb.hide('ok-no-move');
+      sb.hide('decline');
+      sb.show('ok-ai-move');
     } else {
-      sb.hideButton('ok-ai-move');
+      sb.hide('ok-ai-move');
       if (gs.je) this.startJumpEnter();
     }
   },
