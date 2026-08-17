@@ -22,7 +22,7 @@ export const sb = {
     await anim.move(element, leftHide, bTime, linear);
     element.style.display = 'none';
   },
-  async replaceButton(identifierOld, identifierNew) {
+  async replace(identifierOld, identifierNew) {
     await this.hide(identifierOld);
     await this.show(identifierNew);
   },
@@ -64,9 +64,7 @@ export const sb = {
         type === 'movement' ? rollN : rollGo;
       dom.faces[name][value].style.display = 'block';
     }
-    this.replaceButton(
-      'roll-dice', 'roll-display',
-    );
+    this.replace('roll-dice', 'roll-display');
     const dieClasses = ['rolled'];
     if (immediate) dieClasses.push('no-animation');
     else await sleep(anim.time.dieRollDelay);

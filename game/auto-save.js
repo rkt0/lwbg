@@ -65,7 +65,7 @@ export const autoSave = {
     this.gsPrevious = deepCopy(gs);
     sb.displayTurn(gs.turn);
     if (gs.phase === 'roll') {
-      sb.replaceButton('roll-display', 'roll-dice');
+      sb.replace('roll-display', 'roll-dice');
     } else sb.displayRollResult(gs, true);
     if (ai.control[gs.turn] && gs.phase !== 'roll') {
       sb.show('ok-ai-move');

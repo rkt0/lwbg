@@ -127,11 +127,11 @@ async function editGame(gsNew) {
   if (gs.turn === 'trex' && !gp.isTrexActive()) {
     gs.turn = 'raptor';
     gp.clearRoll();
-    sb.replaceButton('roll-display', 'roll-dice');
+    sb.replace('roll-display', 'roll-dice');
   }
   sb.displayTurn(gs.turn, true);
   if (gs.phase === 'roll') {
-    sb.replaceButton('roll-display', 'roll-dice');
+    sb.replace('roll-display', 'roll-dice');
   } else if (rollResultChanged) {
     sb.displayRollResult(gs, true);
   }
