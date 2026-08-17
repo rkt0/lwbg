@@ -326,7 +326,7 @@ async function startNextTurn(immediate) {
   await gp.checkGameOver();
   if (gs.turn === 'over') return;
   gp.clearRoll();
-  sb.replaceButton('roll-display', 'roll-dice');
+  sb.replace('roll-display', 'roll-dice');
   sb.displayTurn(species, immediate);
   gp.humanItemsClickable(species === 'human');
   gp.raptorItemsClickable(species === 'raptor');
