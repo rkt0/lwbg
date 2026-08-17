@@ -5,52 +5,42 @@ export function qd(attr, parent = document) {
   const selector = `[data-${attr}]`;
   return parent.querySelector(selector);
 }
+export function qdv(attr, value, parent = document) {
+  const selector = `[data-${attr}="${value}"]`;
+  return parent.querySelector(selector);
+}
 export function qda(attr, parent = document) {
   const selector = `[data-${attr}]`;
   return [...parent.querySelectorAll(selector)];
 }
-
 export function closestData(event, attr = 'js') {
   const selector = `[data-${attr}]`;
   const element = event.target.closest(selector);
   return element?.dataset[camelFromKebab(attr)];
 }
 
-export function ael(element, type, fn) {
+export function qs(selector, parent = document) {
+  return parent.querySelector(selector);
+}
+export function qsa(selector, parent = document) {
+  return [...parent.querySelectorAll(selector)];
+}
+export function ael(x, type, fn) {
+  const element = typeof x === 'object' ? x : qs(x);
   const f = (e) => {
     e.preventDefault();
     fn.bind(element, e)();
   };
   element.addEventListener(type, f);
 }
-export function aelo(element, type, fn) {
+export function aelo(x, type, fn) {
+  const element = typeof x === 'object' ? x : qs(x);
   const f = (e) => {
     e.preventDefault();
     fn.bind(element, e)();
   };
   element.addEventListener(type, f, {once: true});
 }
-
-export function waitForClick(x, type = 'mousedown') {
-  const element = typeof x === 'object' ? x : qs(x);
-  return new Promise((resolve) => {
-    aelo(element, type, resolve);
-  });
-}
-export function addWarningBeforeUnload() {
-  ael(window, 'beforeunload', (e) => {
-    e.preventDefault();
-    e.returnValue = '';
-  });
-}
-
-export function click(x, type = 'mousedown') {
-  const element = typeof x === 'object' ? x : qs(x);
-  element.dispatchEvent(new MouseEvent(type, {
-    bubbles: true, cancelable: true,
-  }));
-}
-
 export function ce(...args) {
   return document.createElement(...args);
 }
@@ -58,10 +48,37 @@ export function cesvg(...args) {
   const uri = 'http://www.w3.org/2000/svg';
   return document.createElementNS(uri, ...args);
 }
+export function fromTemplate(id, oneElement) {
+  const template = document.getElementById(id);
+  if (!template) return;
+  const {content} = template;
+  const node = content.cloneNode(true);
+  if (oneElement) return node.firstElementChild;
+  return node;
+}
+export function click(x, type = 'mousedown') {
+  const element = typeof x === 'object' ? x : qs(x);
+  element.dispatchEvent(new MouseEvent(type, {
+    bubbles: true, cancelable: true,
+  }));
+}
+export function waitForClick(x, type = 'mousedown') {
+  const element = typeof x === 'object' ? x : qs(x);
+  return new Promise((resolve) => {
+    aelo(element, type, resolve);
+  });
+}
 
 export function sleep(delay) {
   return new Promise((resolve) => {
     setTimeout(() => resolve(), delay);
+  });
+}
+
+export function addWarningBeforeUnload() {
+  ael(window, 'beforeunload', (e) => {
+    e.preventDefault();
+    e.returnValue = '';
   });
 }
 
@@ -74,6 +91,7 @@ export function isNull(x) {
 export function sequence(n) {
   return new Array(n).fill().map((_, i) => i);
 }
+
 export function invertMap(source) {
   const values = source.values();
   const valuesUnique = new Set(values);
@@ -102,6 +120,11 @@ export function arrayCumSum(arr) {
 
 export function camelFromKebab(str) {
   return str.replace(/-./g, x => x[1].toUpperCase());
+}
+export function kebabFromCamel(str) {
+  return str.replace(
+    /[A-Z]/g, x => `-${x.toLowerCase()}`,
+  );
 }
 
 export function sqrtStep(t) {
@@ -211,4 +234,17 @@ export async function copyFile(fhSource, fhDest) {
   const writable = await fhDest.createWritable();
   await writable.write(contents);
   await writable.close();
+}
+
+// Encode array of one-byte integers to base64
+// and keep a specified number of characters
+export function base64(codeArr, nKeep) {
+  const str = String.fromCharCode(...codeArr);
+  return btoa(str).substring(0, nKeep);
+}
+
+// Decode base64 into array of one-byte integers
+export function base256(base64string) {
+  const arr = atob(base64string).split('');
+  return arr.map(x => x.charCodeAt(0));
 }
