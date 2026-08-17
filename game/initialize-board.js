@@ -1,5 +1,6 @@
 import {
-  ce, cesvg, cssInt, cssIntWH, setSvgSize,
+  ce, cesvg, cssValue, cssValueWH, cssValueSides, 
+  setSvgSize,
 } from './utility.js';
 import {bd} from './board-topology.js';
 import {geom} from './board-geometry.js';
@@ -58,12 +59,7 @@ for (let s = 0; s < bd.nRaptorSpaces; s++) {
 }
 
 // Extra space at edges of board
-const extraSpace = {
-  left: null, top: null, bottom: null, right: null,
-};
-for (const side of Object.keys(extraSpace)) {
-  extraSpace[side] = cssInt(`--extra-space-${side}`);
-}
+const extraSpace = cssValueSides('--extra-space');
 function addExtraSpace(pts, full) {
   for (const point of pts) {
     if (!point) continue;
@@ -113,7 +109,7 @@ if (debug.boardLabels.raptorSpace) {
 
 // Make human spaces
 addExtraSpace(geom.humanSpaces);
-const humanSpaceSize = cssInt('--human-space-size');
+const humanSpaceSize = cssValue('--human-space-size');
 for (const [s, pt] of geom.humanSpaces.entries()) {
   const div = ce('div');
   div.classList.add('human-space');
@@ -145,7 +141,7 @@ for (const edge of bd.humanEdges) {
 
 // Make T-rex spaces
 addExtraSpace(geom.trexSpaces);
-const trexSpaceSize = cssInt('--trex-space-size');
+const trexSpaceSize = cssValue('--trex-space-size');
 for (const [s, pt] of geom.trexSpaces.entries()) {
   const div = ce('div');
   div.classList.add('trex-space');
@@ -215,7 +211,7 @@ addHelos(dom.gameplay, geom.heloCorners);
 
 // Additional piece layout adjustments
 for (const species of Object.keys(pl)) {
-  const pieceSize = cssIntWH(`--${species}-piece`);
+  const pieceSize = cssValueWH(`--${species}-piece`);
   const offset = pieceSize.map(t => t / 2);
   if (species === 'trex') offset[0] = 0;
   for (const point of pl[species]) {
@@ -225,10 +221,10 @@ for (const species of Object.keys(pl)) {
   pl[species].ps = [...pieceSize];
 }
 pl.trex[0][0] -= pl.trex.ps[0] / 2;
-pl.human.margin = cssInt('--board-border-width');
+pl.human.margin = cssValue('--board-border-width');
 
 // Set dimensions of board and debug labels
-zoom.boardSize = cssIntWH('--raw-board');
+zoom.boardSize = cssValueWH('--raw-board');
 addExtraSpace([zoom.boardSize], true);
 setSvgSize(dom.board, zoom.boardSize);
 for (const svg of dom.debugLabelSvg) {

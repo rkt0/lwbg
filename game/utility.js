@@ -183,21 +183,36 @@ export function setSvgSize(svg, size) {
   svg.setAttribute('height', size[1]);
 }
 
-export function cssInt(property, where) {
-  const element = where ?? document.documentElement;
+export function cssValue(property, {
+  element = document.documentElement, float = false,
+} = {}) {
   const style = getComputedStyle(element);
-  const value = style.getPropertyValue(property);
-  return parseInt(value || 0);
+  const raw = style.getPropertyValue(property) || 0;
+  return float ? parseFloat(raw) : parseInt(raw);
 }
-export function cssIntWH(stem, where) {
-  const dims = ['width', 'height'];
-  return dims.map(x => cssInt(`${stem}-${x}`, where));
-}
-export function cssFloat(property, where) {
-  const element = where ?? document.documentElement;
+export function cssValueWH(propertyStem, {
+  element = document.documentElement, float = false,
+} = {}) {
   const style = getComputedStyle(element);
-  const value = style.getPropertyValue(property);
-  return parseFloat(value || 0);
+  const dimensions = ['width', 'height'];
+  return dimensions.map(dimension => {
+    const property = `${propertyStem}-${dimension}`;
+    const raw = style.getPropertyValue(property) || 0;
+    return float ? parseFloat(raw) : parseInt(raw);
+  });
+}
+export function cssValueSides(propertyStem, {
+  element = document.documentElement, float = false,
+} = {}) {
+  const style = getComputedStyle(element);
+  const sides = ['top', 'right', 'bottom', 'left'];
+  return Object.fromEntries(sides.map(side => {
+    const property = `${propertyStem}-${side}`;
+    const raw = style.getPropertyValue(property) || 0;
+    return [
+      side, float ? parseFloat(raw) : parseInt(raw),
+    ];
+  }));
 }
 
 export async function fileContents(fh, splitLines) {

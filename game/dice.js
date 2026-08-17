@@ -1,4 +1,4 @@
-import {qjs, qda, cssInt} from './utility.js';
+import {qjs, qda, cssValue} from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
 
@@ -52,7 +52,7 @@ const rollDisplay = qjs('roll-display');
 rollDisplay.append(...Object.values(dom.dice));
 
 // Squeeze all faces and set display to none
-const dieWidth = cssInt('--die-content-width');
+const dieWidth = cssValue('--die-content-width');
 async function initializeFace(face) {
   await document.fonts.ready;
   const copy = face.cloneNode(true);

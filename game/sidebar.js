@@ -1,4 +1,4 @@
-import {qjs, cssInt, sleep} from './utility.js';
+import {qjs, cssValue, sleep} from './utility.js';
 import {dom} from './dom.js';
 import {anim} from './animation.js';
 
@@ -87,7 +87,7 @@ const menuItem = Object.fromEntries(identifiers.map(
 const turnSpan = qjs('turn-text');
 
 // Other values
-const buttonWidth = cssInt('--button-width');
+const buttonWidth = cssValue('--button-width');
 const leftShow = {left: '0px'};
 const leftHide = {left: `-${buttonWidth}px`};
 const bTime = anim.time.buttonSlide;

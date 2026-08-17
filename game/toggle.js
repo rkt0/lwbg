@@ -1,5 +1,5 @@
 import {
-  qjs, closestData, ael, camelFromKebab, cssInt,
+  qjs, closestData, ael, camelFromKebab, cssValue,
 } from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
@@ -68,9 +68,9 @@ const dispatch = {
 };
 
 // Other values
-const groupWidth = cssInt(
-  '--button-size', toggle.groupElement,
-);
+const groupWidth = cssValue('--button-size', {
+  element: toggle.groupElement,
+});
 
 // Required since user can leave fullscreen via Escape
 ael(document, 'fullscreenchange', () => {

@@ -1,4 +1,4 @@
-import {ce, cesvg, cssIntWH} from './utility.js';
+import {ce, cesvg, cssValueWH} from './utility.js';
 
 export function addBldgBgs(svg) {
   for (const [i, pattern] of patternList.entries()) {
@@ -79,7 +79,7 @@ for (let i = 0; i < nRays; i++) {
   );
 }
 
-const jumpDimensions = cssIntWH('--jump-land');
+const jumpDimensions = cssValueWH('--jump-land');
 const jumpOffset = jumpDimensions.map(t => t / 2);
 function addJumpMarker(container, point, text) {
   const div = ce('div');

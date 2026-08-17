@@ -1,14 +1,10 @@
-import {windowWH, cssFloat} from './utility.js';
+import {windowWH, cssValueSides} from './utility.js';
 
 export const tvMatte = {
   current() {
-    const matte = {};
-    const sides = ['top', 'right', 'bottom', 'left'];
-    for (const side of sides) {
-      const prop = `--matte-${side}`;
-      matte[side] = cssFloat(prop, document.body);
-    }
-    return matte;
+    return cssValueSides('--matte', {
+      element: document.body, float: true,
+    })
   },
   windowWHMatted() {
     const [ww, wh] = windowWH();
