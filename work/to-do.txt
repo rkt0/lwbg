@@ -2,4 +2,4 @@ reorganize/rename css
 fix weird horizontal line in jungle image
 clean up utility module
 investigate suspicious music.next behavior
-improve sidebar method names
+combine cssInt and cssFloat
