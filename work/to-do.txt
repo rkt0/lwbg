@@ -2,3 +2,4 @@ reorganize/rename css
 fix weird horizontal line in jungle image
 clean up utility module
 investigate suspicious music.next behavior
+look for remaining callback structures
