@@ -1,6 +1,6 @@
 import {
-  qjs, closestData, ael, aelo,
-  waitForClick, addWarningBeforeUnload,
+  qjs, closestData, ael, waitForClick,
+  addWarningBeforeUnload,
 } from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
