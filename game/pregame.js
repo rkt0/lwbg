@@ -20,6 +20,15 @@ export async function showStartOptions(time = aTime) {
   anim.fade(dom.startOptions, 1, time, {display: ''});
 }
 
+export async function initializeFront() {
+  await waitForClick(front);
+  addWarningBeforeUnload();
+  await anim.fade(front, 0, aTime);
+  anim.fade(dom.start, 1, aTime, {display: ''});
+  music.allowed = true;
+  if (music.audioOn) music.next();
+}
+
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
 
@@ -27,15 +36,6 @@ const aTime = anim.time.menuFade;
 const front = qjs('front');
 const help = qjs('start-help');
 const fork = qjs('start-fork');
-
-// Add title screen click handler
-aelo(front, 'mousedown', async () => {
-  addWarningBeforeUnload();
-  await anim.fade(front, 0, aTime);
-  anim.fade(dom.start, 1, aTime, {display: ''});
-  music.allowed = true;
-  if (music.audioOn) music.next();
-});
 
 // Add start screen click handlers
 ael(dom.start, 'mousedown', (e) => {

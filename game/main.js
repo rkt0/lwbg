@@ -1,8 +1,10 @@
 import {qda} from './utility.js';
-import './initialize-hud.js';
+import {initializeFront} from './pregame.js';
 import './initialize-gameplay.js';
+import './initialize-hud.js';
 import './key-bindings.js';
 
+initializeFront();
 for (const element of qda('dormant')) {
   element.style.display = 'none';
 }
