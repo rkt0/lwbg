@@ -31,8 +31,9 @@ export function aelo(element, type, fn) {
   element.addEventListener(type, f, {once: true});
 }
 
-export function waitForClick(x, type = 'mousedown') {
-  const element = typeof x === 'object' ? x : qs(x);
+export function waitForClick(
+  element, type = 'mousedown',
+) {
   return new Promise((resolve) => {
     aelo(element, type, resolve);
   });
@@ -44,8 +45,7 @@ export function addWarningBeforeUnload() {
   });
 }
 
-export function click(x, type = 'mousedown') {
-  const element = typeof x === 'object' ? x : qs(x);
+export function click(element, type = 'mousedown') {
   element.dispatchEvent(new MouseEvent(type, {
     bubbles: true, cancelable: true,
   }));
@@ -137,8 +137,7 @@ export function windowWH() {
   const {innerWidth, innerHeight} = window;
   return [innerWidth, innerHeight];
 }
-export function absoluteBoundingRect(x) {
-  const element = typeof x === 'object' ? x : qs(x);
+export function absoluteBoundingRect(element) {
   const rect = element.getBoundingClientRect();
   return {
     left: rect.left + scrollX,
@@ -156,8 +155,9 @@ export function boundingBox(...rects) {
   };
 }
 export function setSvgSize(svg, size) {
-  svg.setAttribute('width', size[0]);
-  svg.setAttribute('height', size[1]);
+  const [width, height] = size;
+  svg.setAttribute('width', width);
+  svg.setAttribute('height', height);
 }
 
 export function cssValue(property, {
