@@ -52,7 +52,7 @@ more-menu.js
 
 # Level A
 initialize-gameplay.js
-initialize-sidebar.js
+initialize-hud.js
 key-bindings.js
 
 # Level B
