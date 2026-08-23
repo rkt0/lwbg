@@ -1,4 +1,5 @@
-import {closestData, ael} from './utility.js';
+import {closestData} from './utility.js';
+import {atClick} from './mouse-events.js';
 import {dom} from './dom.js';
 import './initialize-board.js';
 import {pieces} from './pieces.js';
@@ -23,7 +24,7 @@ autoSave.clear();
 edit.clear();
 
 // Add gameplay click handlers
-ael(dom.gameplay, 'mousedown', (e) => {
+atClick(dom.gameplay, (e) => {
   const killData = closestData(e, 'kill');
   if (killData) return clickEditKill(+killData);
   const rpData = closestData(e, 'raptor-piece');

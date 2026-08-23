@@ -1,6 +1,7 @@
 import {
-  qjs, closestData, ael, click, rollDie,
+  qjs, closestData, rollDie,
 } from './utility.js';
+import {click, atClick} from './mouse-events.js';
 import {prng} from './prngs.js';
 import {gs, mv} from './game-objects.js';
 import {dom} from './dom.js';
@@ -142,7 +143,7 @@ function clicked(element, event) {
 }
 
 // Add click handlers
-ael(dom.hud, 'mousedown', (e) => {
+atClick(dom.hud, (e) => {
   const isEditBanner = clicked(edit.bannerElement, e);
   if (isEditBanner) return edit.handleBannerClick(e);
   const isMoreMenu = clicked(moreMenu.element, e);

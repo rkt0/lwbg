@@ -1,7 +1,8 @@
 import {
-  qjs, closestData, ael, waitForClick,
-  addWarningBeforeUnload,
+  qjs, closestData, addWarningBeforeUnload,
 } from './utility.js';
+import {atClick} from './mouse-events.js';
+import {waitForClick} from './mouse-events.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
@@ -38,7 +39,7 @@ const help = qjs('start-help');
 const fork = qjs('start-fork');
 
 // Add start screen click handlers
-ael(dom.start, 'mousedown', (e) => {
+atClick(dom.start, (e) => {
   const handler = dispatch[closestData(e)];
   if (handler) handler(); else toggle.handleClick(e);
 });

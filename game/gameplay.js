@@ -1,4 +1,5 @@
-import {qjs, click} from './utility.js';
+import {qjs} from './utility.js';
+import {click} from './mouse-events.js';
 import {bd} from './board-topology.js';
 import {geom} from './board-geometry.js';
 import {gs, mv, pl} from './game-objects.js';

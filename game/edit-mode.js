@@ -1,6 +1,7 @@
 import {
-  qjs, qd, closestData, click, sleep, deepCopy,
+  qjs, qd, closestData, sleep, deepCopy,
 } from './utility.js';
+import {click} from './mouse-events.js';
 import {template} from './template.js';
 import {gs} from './game-objects.js';
 import {dom} from './dom.js';

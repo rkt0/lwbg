@@ -1,4 +1,5 @@
-import {qjs, click} from './utility.js';
+import {qjs} from './utility.js';
+import {click} from './mouse-events.js';
 import {gs, mv} from './game-objects.js';
 import {zoom} from './zoom.js';
 import {music} from './music.js';

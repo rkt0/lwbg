@@ -1,6 +1,5 @@
-import {
-  qjs, closestData, waitForClick,
-} from './utility.js';
+import {qjs, closestData} from './utility.js';
+import {waitForClick} from './mouse-events.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';

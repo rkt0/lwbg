@@ -24,25 +24,11 @@ export function ael(element, type, fn, options = {}) {
   element.addEventListener(type, f, options);
 }
 
-export function waitForClick(
-  element, type = 'mousedown',
-) {
-  return new Promise((resolve) => {
-    ael(element, type, resolve, {once: true});
-  });
-}
-
 export function addWarningBeforeUnload() {
   ael(window, 'beforeunload', (e) => {
     e.preventDefault();
     e.returnValue = '';
   });
-}
-
-export function click(element, type = 'mousedown') {
-  element.dispatchEvent(new MouseEvent(type, {
-    bubbles: true, cancelable: true,
-  }));
 }
 
 export function ce(...args) {

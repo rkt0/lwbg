@@ -1,6 +1,7 @@
 import {
-  qjs, qd, qda, closestData, ael,
+  qjs, qd, qda, closestData,
 } from './utility.js';
+import {atClick} from './mouse-events.js';
 import {template} from './template.js';
 import {anim} from './animation.js';
 import {ai} from './ai.js';
@@ -72,7 +73,7 @@ let finish;
 const aTime = anim.time.menuFade;
 
 // Add player control screen click handler
-ael(section, 'mousedown', (e) => {
+atClick(section, (e) => {
   if (continueButton.contains(e.target)) {
     return finish();
   }

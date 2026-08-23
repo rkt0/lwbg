@@ -1,4 +1,4 @@
-import {click} from './utility.js';
+import {click} from './mouse-events.js';
 import {bd} from './board-topology.js';
 import {gs, mv} from './game-objects.js';
 import {dom} from './dom.js';
