@@ -16,28 +16,22 @@ export function closestData(event, attr = 'js') {
   return element?.dataset[camelFromKebab(attr)];
 }
 
-export function ael(element, type, fn) {
+export function ael(element, type, fn, options = {}) {
   const f = (e) => {
     e.preventDefault();
     fn.bind(element, e)();
   };
-  element.addEventListener(type, f);
-}
-export function aelo(element, type, fn) {
-  const f = (e) => {
-    e.preventDefault();
-    fn.bind(element, e)();
-  };
-  element.addEventListener(type, f, {once: true});
+  element.addEventListener(type, f, options);
 }
 
 export function waitForClick(
   element, type = 'mousedown',
 ) {
   return new Promise((resolve) => {
-    aelo(element, type, resolve);
+    ael(element, type, resolve, {once: true});
   });
 }
+
 export function addWarningBeforeUnload() {
   ael(window, 'beforeunload', (e) => {
     e.preventDefault();
