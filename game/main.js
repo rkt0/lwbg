@@ -4,6 +4,8 @@ import './initialize-gameplay.js';
 import './initialize-hud.js';
 import './key-bindings.js';
 
+import './mouse-events.js';
+
 initializeFront();
 for (const element of qda('dormant')) {
   element.style.display = 'none';

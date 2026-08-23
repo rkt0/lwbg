@@ -2,6 +2,7 @@
 board-geometry.js
 board-topology.js
 game-objects.js
+mouse-events.js
 prngs.js
 template.js
 utility.js
