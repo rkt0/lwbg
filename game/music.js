@@ -1,4 +1,4 @@
-import {qjs, ael, isNull} from './utility.js';
+import {qjs, isNull} from './utility.js';
 import {prng} from './prngs.js';
 import {debug} from './debug.js';
 
@@ -12,7 +12,7 @@ export const music = {
       else play((nowPlaying + 1) % nTracks);
       return;
     }
-    if (!isNull(nowPlaying) && ! skipCurrent) {
+    if (!isNull(nowPlaying) && !skipCurrent) {
       if (recentIds.length === tooRecent) {
         recentIds.shift();
       }
@@ -107,4 +107,4 @@ for (let i = 1; i < nTracks; i++) {
 const total = cdf[nTracks - 1];
 for (let i = 0; i < nTracks; i++) cdf[i] /= total;
 
-ael(element, 'ended', () => music.next());
+element.addEventListener('ended', () => music.next());

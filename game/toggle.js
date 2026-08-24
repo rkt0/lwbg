@@ -1,5 +1,5 @@
 import {
-  qjs, closestData, ael, camelFromKebab, cssValue,
+  qjs, closestData, camelFromKebab, cssValue,
 } from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
@@ -73,7 +73,7 @@ const groupWidth = cssValue('--button-size', {
 });
 
 // Required since user can leave fullscreen via Escape
-ael(document, 'fullscreenchange', () => {
+document.addEventListener('fullscreenchange', () => {
   if (zoom.isZoomedOut()) zoom.zoomOut();
   else zoom.applyCenter();
   for (const icon of icons.fullscreen) {

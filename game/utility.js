@@ -16,16 +16,8 @@ export function closestData(event, attr = 'js') {
   return element?.dataset[camelFromKebab(attr)];
 }
 
-export function ael(element, type, fn, options = {}) {
-  const f = (e) => {
-    e.preventDefault();
-    fn.call(element, e);
-  };
-  element.addEventListener(type, f, options);
-}
-
 export function addWarningBeforeUnload() {
-  ael(window, 'beforeunload', (e) => {
+  globalThis.addEventListener('beforeunload', (e) => {
     e.preventDefault();
     e.returnValue = '';
   });
