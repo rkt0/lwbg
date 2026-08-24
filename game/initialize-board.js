@@ -1,5 +1,5 @@
 import {
-  cesvg, cssValue, cssValueWH, cssValueSides, 
+  svgElement, cssValue, cssValueWH, cssValueSides, 
   setSvgSize,
 } from './utility.js';
 import {template} from './template.js';
@@ -94,7 +94,7 @@ for (const space of Object.keys(geom.adjustRaptor)) {
 
 // Make raptor spaces
 for (const [s, pts] of raptorSpacePoints.entries()) {
-  const element = cesvg('polygon');
+  const element = svgElement('polygon');
   element.setAttribute('points', pts.join(' '));
   element.classList.add('raptor-space');
   element.dataset.raptorSpace = s;
@@ -129,12 +129,14 @@ if (debug.boardLabels.humanSpace)  {
 
 // Make human edges
 for (const edge of bd.humanEdges) {
-  const line = cesvg('line');
-  const points = edge.map(i => geom.humanSpaces[i]);
-  line.setAttribute('x1', points[0][0]);
-  line.setAttribute('y1', points[0][1]);
-  line.setAttribute('x2', points[1][0]);
-  line.setAttribute('y2', points[1][1]);
+  const line = svgElement('line');
+  const [
+    [x1, y1], [x2, y2],
+  ] = edge.map(i => geom.humanSpaces[i]);
+  line.setAttribute('x1', x1);
+  line.setAttribute('y1', y1);
+  line.setAttribute('x2', x2);
+  line.setAttribute('y2', y2);
   line.classList.add('human-edge');
   dom.board.append(line);
   dom.humanEdge[edge.join('-')] = line;
@@ -166,11 +168,14 @@ pl.trex[0] = [...pl.raptor[bd.bldgRaptorSpaces[
 
 // Make T-rex edges
 for (let i = 0; i < bd.trexStart; i++) {
-  const line = cesvg('line');
-  line.setAttribute('x1', geom.trexSpaces[i][0]);
-  line.setAttribute('y1', geom.trexSpaces[i][1]);
-  line.setAttribute('x2', geom.trexSpaces[i + 1][0]);
-  line.setAttribute('y2', geom.trexSpaces[i + 1][1]);
+  const line = svgElement('line');
+  const [
+    [x1, y1], [x2, y2],
+  ] = geom.trexSpaces.slice(i, i + 2);
+  line.setAttribute('x1', x1);
+  line.setAttribute('y1', y1);
+  line.setAttribute('x2', x2);
+  line.setAttribute('y2', y2);
   line.classList.add('trex-edge');
   dom.board.append(line);
 }
@@ -188,12 +193,12 @@ for (const [i, bg] of geom.bldgBgId.entries()) {
   // Remove existing regular human space
   dom.humanSpace[hSpace].remove();
   // First make polygon with background only
-  const background = cesvg('polygon');
+  const background = svgElement('polygon');
   background.setAttribute('points', pts.join(' '));
   const fill = `url(#bldg-bg-${bg})`;
   background.setAttribute('fill', fill);
   // Then make clickable polygon on top
-  const clickable = cesvg('polygon');
+  const clickable = svgElement('polygon');
   clickable.setAttribute('points', pts.join(' '));
   clickable.setAttribute('fill', '#0000');
   clickable.classList.add('building');

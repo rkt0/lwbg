@@ -1,4 +1,4 @@
-import {cesvg} from './utility.js';
+import {svgElement} from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
 
@@ -19,11 +19,11 @@ export const debug = {
     const div = template('debug-labels');
     div.classList.add(`${kind}-labels`);
     dom.gameplay.append(div);
-    const svg = cesvg('svg');
+    const svg = svgElement('svg');
     for (const [i, point] of points.entries()) {
       if (!point) continue;
       const [x, y] = point;
-      const element = cesvg('text');
+      const element = svgElement('text');
       element.setAttribute('x', x);
       element.setAttribute('y', y);
       element.textContent = i;

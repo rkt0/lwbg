@@ -1,4 +1,4 @@
-import {cesvg, cssValueWH} from './utility.js';
+import {svgElement, cssValueWH} from './utility.js';
 import {template} from './template.js';
 
 export function addBldgBgs(svg) {
@@ -9,13 +9,13 @@ export function addBldgBgs(svg) {
 }
 
 export function addEntrances(svg, centers) {
-  for (const center of centers) {
-    const element = cesvg('polygon');
+  for (const [centerX, centerY] of centers) {
+    const element = svgElement('polygon');
     element.classList.add('raptor-entrance');
-    const pts = entranceMarkerShape.map(
-      pt => [pt[0] + center[0], pt[1] + center[1]]
-    );
-    element.setAttribute('points', pts.join(' '));
+    const points = entranceMarkerShape.map(
+      ([x, y]) => [x + centerX, y + centerY]
+    ).join(' ');
+    element.setAttribute('points', points);
     svg.append(element);
   }
 }
@@ -38,13 +38,13 @@ export function addHelos(container, corners) {
   }
 }
 
-function makePattern(src, dimensions) {
-  const pattern = cesvg('pattern');
-  pattern.setAttribute('width', dimensions[0]);
-  pattern.setAttribute('height', dimensions[1]);
+function makePattern(src, [width, height]) {
+  const pattern = svgElement('pattern');
+  pattern.setAttribute('width', width);
+  pattern.setAttribute('height', height);
   const units = 'userSpaceOnUse';
   pattern.setAttribute('patternUnits', units);
-  const image = cesvg('image');
+  const image = svgElement('image');
   image.setAttribute('href', `img/bldg/${src}`);
   pattern.append(image);
   return pattern;
