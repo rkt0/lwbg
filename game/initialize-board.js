@@ -1,7 +1,8 @@
 import {
-  ce, cesvg, cssValue, cssValueWH, cssValueSides, 
+  cesvg, cssValue, cssValueWH, cssValueSides, 
   setSvgSize,
 } from './utility.js';
+import {template} from './template.js';
 import {bd} from './board-topology.js';
 import {geom} from './board-geometry.js';
 import {pl} from './game-objects.js';
@@ -110,15 +111,16 @@ if (debug.boardLabels.raptorSpace) {
 // Make human spaces
 addExtraSpace(geom.humanSpaces);
 const humanSpaceSize = cssValue('--human-space-size');
-for (const [s, pt] of geom.humanSpaces.entries()) {
-  const div = ce('div');
-  div.classList.add('human-space');
-  div.style.left = `${pt[0] - humanSpaceSize / 2}px`;
-  div.style.top = `${pt[1] - humanSpaceSize / 2}px`;
-  div.dataset.humanSpace = s;
-  dom.gameplay.append(div);
-  dom.humanSpace.push(div);
-  pl.human.push([...pt]);
+for (const [
+  space, [x, y],
+] of geom.humanSpaces.entries()) {
+  const element = template('human-space');
+  element.style.left = `${x - humanSpaceSize / 2}px`;
+  element.style.top = `${y - humanSpaceSize / 2}px`;
+  element.dataset.humanSpace = space;
+  dom.gameplay.append(element);
+  dom.humanSpace.push(element);
+  pl.human.push([x, y]);
 }
 dom.humanSpace[bd.humanDead].classList.add('dead');
 if (debug.boardLabels.humanSpace)  {
@@ -142,15 +144,16 @@ for (const edge of bd.humanEdges) {
 // Make T-rex spaces
 addExtraSpace(geom.trexSpaces);
 const trexSpaceSize = cssValue('--trex-space-size');
-for (const [s, pt] of geom.trexSpaces.entries()) {
-  const div = ce('div');
-  div.classList.add('trex-space');
-  div.style.left = `${pt[0] - trexSpaceSize / 2}px`;
-  div.style.top = `${pt[1] - trexSpaceSize / 2}px`;
-  div.dataset.trexSpace = s;
-  dom.gameplay.append(div);
-  dom.trexSpace.push(div);
-  pl.trex.push([pt[0] + trexSpaceSize / 2, pt[1]]);
+for (const [
+  space, [x, y],
+] of geom.trexSpaces.entries()) {
+  const element = template('trex-space');
+  element.style.left = `${x - trexSpaceSize / 2}px`;
+  element.style.top = `${y - trexSpaceSize / 2}px`;
+  element.dataset.trexSpace = space;
+  dom.gameplay.append(element);
+  dom.trexSpace.push(element);
+  pl.trex.push([x + trexSpaceSize / 2, y]);
 }
 dom.trexSpace[0].remove();
 dom.trexSpace[0] = null;

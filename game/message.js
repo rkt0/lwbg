@@ -1,4 +1,4 @@
-import {qjs, ce} from './utility.js';
+import {qjs} from './utility.js';
 import {template} from './template.js';
 import {anim} from './animation.js';
 
@@ -10,7 +10,8 @@ export const message = {
     const node = template(templateId, true);
     const {appendable} = this.element.dataset;
     if (append && appendable === '') {
-      this.element.append(ce('br'), node);
+      const brElement = document.createElement('br')
+      this.element.append(brElement, node);
     } else this.element.replaceChildren(node);
     if (append) this.element.dataset.appendable = '';
     this.element.classList.remove('being-hidden');

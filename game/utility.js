@@ -23,9 +23,6 @@ export function addWarningBeforeUnload() {
   });
 }
 
-export function ce(...args) {
-  return document.createElement(...args);
-}
 export function cesvg(...args) {
   const uri = 'http://www.w3.org/2000/svg';
   return document.createElementNS(uri, ...args);

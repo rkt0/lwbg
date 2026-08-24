@@ -1,6 +1,4 @@
-import {
-  qd, ce, sequence, shuffle,
-} from './utility.js';
+import {qd, sequence, shuffle} from './utility.js';
 import {template} from './template.js';
 import {prng} from './prngs.js';
 import {bd} from './board-topology.js';
@@ -66,10 +64,10 @@ function addHumanImgs() {
   const {feature} = pieces.human;
   for (const [f, ids] of Object.entries(feature)) {
     for (const [piece, id] of ids.entries()) {
-      const imgB = ce('img');
+      const imgB = document.createElement('img');
       imgB.src = `img/human/${f}/${f}-${id}.png`;
       imgB.classList.add('human-component', f);
-      const imgS = ce('img');
+      const imgS = document.createElement('img');
       imgS.src = `img/human/shadow/shadow-${f}${
         f === 'hat' ? `_${hatShadow[id]}` : ''
       }.png`;
@@ -87,10 +85,10 @@ function addRaptorImgs() {
       idS = debug.raptorPlacement.shape;
       idC = debug.raptorPlacement.color;
     }
-    const imgB = ce('img');
+    const imgB = document.createElement('img');
     imgB.src = `img/raptor/raptor-${idS}-${idC}.png`;
-    imgB.classList.add('raptor-component', 'base');
-    const imgS = ce('img');
+    imgB.classList.add('raptor-component');
+    const imgS = document.createElement('img');
     imgS.src = `img/raptor/shadow-raptor-${idS}.png`;
     imgS.classList.add('raptor-component', 'shadow');
     dom.raptorPiece[piece].append(imgB, imgS);

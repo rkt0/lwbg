@@ -1,4 +1,5 @@
-import {ce, cesvg, cssValueWH} from './utility.js';
+import {cesvg, cssValueWH} from './utility.js';
+import {template} from './template.js';
 
 export function addBldgBgs(svg) {
   for (const [i, pattern] of patternList.entries()) {
@@ -30,12 +31,10 @@ export function addJumps(container, markers) {
 
 export function addHelos(container, corners) {
   for (const [l, t] of corners) {
-    const img = ce('img');
-    img.src = 'img/helo/helo.png';
-    img.classList.add('helo');
-    img.style.left = `${l}px`;
-    img.style.top = `${t}px`;
-    container.append(img);
+    const element = template('helo');
+    element.style.left = `${l}px`;
+    element.style.top = `${t}px`;
+    container.append(element);
   }
 }
 
@@ -79,13 +78,11 @@ for (let i = 0; i < nRays; i++) {
   );
 }
 
-const jumpDimensions = cssValueWH('--jump-land');
-const jumpOffset = jumpDimensions.map(t => t / 2);
-function addJumpMarker(container, point, text) {
-  const div = ce('div');
-  div.classList.add('jump-land-marker');
-  div.append(text);
-  div.style.left = `${point[0] - jumpOffset[0]}px`;
-  div.style.top = `${point[1] - jumpOffset[1]}px`;
-  container.append(div);
+const [jumpW, jumpH] = cssValueWH('--jump-land');
+function addJumpMarker(container, [x, y], text) {
+  const element = template('jump-land-marker');
+  element.append(text);
+  element.style.left = `${x - jumpW / 2}px`;
+  element.style.top = `${y - jumpH / 2}px`;
+  container.append(element);
 }
