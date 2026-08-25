@@ -7,28 +7,25 @@ export const anim = {
     decayRate: 0.5,
     timePerBounce: 4 * 1000 / 60,
   },
-  async fade(element, to, duration, options) {
-    const {
-      display = 'block', easing = 'linear',
-    } = options ?? {};
+  async fade(element, to, duration, {
+    display = 'block', easing = 'linear',
+  } = {}) {
     if (to) element.style.display = display;
     await element.animate({
       opacity: [1 - to, to], easing,
     }, {duration, fill: 'forwards'}).finished;
     if (!to) element.style.display = 'none';
   },
-  async move(element, location, duration, options) {
-    const {
-      delay = 0, endDelay = 0, easing = 'ease-in-out',
-    } = options ?? {};
+  async move(element, location, duration, {
+    delay = 0, endDelay = 0, easing = 'ease-in-out',
+  } = {}) {
     await element.animate({...location, easing}, {
       duration, delay, endDelay, fill: 'forwards',
     }).finished;
   },
-  async slide(element, to, duration, options) {
-    const {
-      display = '', easing = 'linear',
-    } = options ?? {};
+  async slide(element, to, duration, {
+    display = '', easing = 'linear',
+  } = {}) {
     const xf = ['translateY(-100%)', 'translateY(0)'];
     if (to) element.style.display = display;
     else xf.reverse();
@@ -43,10 +40,9 @@ export const anim = {
       return animation.playState === 'running';
     });
   },
-  async bounce(element, settings) {
-    const {
-      maxDistance, decayRate, timePerBounce,
-    } = settings;
+  async bounce(element, {
+    maxDistance, decayRate, timePerBounce,
+  }) {
     const distances = [0];
     let d = maxDistance;
     let duration = 0;
