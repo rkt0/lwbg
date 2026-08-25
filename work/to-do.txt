@@ -6,3 +6,4 @@ look for remaining callback structures
 reconsider ce approach to creating elements
 refactor piece img element creation
 clean up serialization module
+clean up toggle module
