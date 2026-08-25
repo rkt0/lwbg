@@ -1,4 +1,4 @@
-import {qjs, qda} from './utility.js';
+import {qjs} from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
 import {tvMatte} from './tv-matte.js';

@@ -5,6 +5,3 @@ investigate suspicious music.next behavior
 look for remaining callback structures
 reconsider ce approach to creating elements
 refactor piece img element creation
-clean up serialization module
-clean up toggle module
-clean up zoom module

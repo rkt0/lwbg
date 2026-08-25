@@ -19,7 +19,6 @@ export const toggle = {
   async hideGroup() {
     this.groupElement.inert = true;
     await anim.move(this.groupElement, {
-      // right: `-${groupWidth}px`,
       right: `-${groupWidth}px`,
     }, anim.time.buttonSlide, {easing: 'linear'});
     this.groupElement.style.display = 'none';
