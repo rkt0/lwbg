@@ -84,8 +84,7 @@ const dispatch = {
   '+': handleZoomKey,
 };
 
-// Do not use the ael utility function here;
-// ael always calls .preventDefault()
+// Add key handler
 document.addEventListener('keydown', (e) => {
   if (e.altKey || e.ctrlKey || e.metaKey) return;
   if (e.key in dispatch) {
