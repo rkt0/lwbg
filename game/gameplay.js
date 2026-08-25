@@ -1,4 +1,4 @@
-import {qjs} from './utility.js';
+import {qjs, sleep} from './utility.js';
 import {click} from './mouse-events.js';
 import {bd} from './board-topology.js';
 import {geom} from './board-geometry.js';
@@ -19,6 +19,7 @@ export const gp = {
     return gs.raptors.filter(x => x === space).length;
   },
   async checkGameOver(immediate) {
+    if (gs.turn === 'over' && !immediate) return;
     const nSaved = this.nHumansOn(bd.humanGoal);
     const nDead = this.nHumansOn(bd.humanDead);
     const nTotal = gs.humans.length;
@@ -27,17 +28,18 @@ export const gp = {
     // Treat 'over' state as if nothing rolled
     this.clearRoll();
     await this.save();
-    setTimeout(() => {
-      qjs('humans-saved').textContent = nSaved;
-      qjs('humans-total').textContent = nTotal;
-      message.hide();
-      sb.hide('roll-display');
-      sb.hide('turn-display');
-      if (zoom.factorCurrent < 1) return;
-      anim.fade(dom.gameOver, 1, anim.time.menuFade, {
-        display: '',
-      });
-    }, immediate ? 0 : anim.time.gameOverDelay);
+    if (!immediate) {
+      await sleep(anim.time.gameOverDelay);
+    }
+    qjs('humans-saved').textContent = nSaved;
+    qjs('humans-total').textContent = nTotal;
+    message.hide();
+    sb.hide('roll-display');
+    sb.hide('turn-display');
+    if (zoom.factorCurrent < 1) return;
+    anim.fade(dom.gameOver, 1, anim.time.menuFade, {
+      display: '',
+    });
   },
   adjustHumanPositions() {
     const bldgs = [...bd.bldgHumanSpaces];
@@ -100,6 +102,7 @@ export const gp = {
       this.adjustHumanPositions();
     }
     await this.checkGameOver();
+    if (gs.turn === 'over') return;
     await startNextTurn(immediate);
   },
   startJumpEnter() {

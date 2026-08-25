@@ -1,5 +1,5 @@
 import {
-  qjs, closestData, rollDie,
+  qjs, closestData, sleep, rollDie,
 } from './utility.js';
 import {click, atClick} from './mouse-events.js';
 import {prng} from './prngs.js';
@@ -65,23 +65,17 @@ async function rollDice() {
   gs.rollGo = gs.turn === 'trex' ? 0 : rollDie(
     dice[gs.turn].continue, prng.dice[gs.turn]
   );
-  sb.displayRollResult(gs);
+  await sb.displayRollResult(gs);
   gs.je = gs.rollN === 'Jump' || gs.rollN === 'Enter';
   await gp.save();
-  const delay = anim.time.buttonSlide * 2 +
-    anim.time.dieRoll + anim.time.dieRollDelay;
+  await sleep(anim.time.dieRoll);
   if (gs.turn === 'trex') {
-    setTimeout(() => {
-      gs.phase = 'move';
-      if (gs.rollN) sb.show('ok-trex-move');
-      else sb.show('ok-no-move');
-    }, delay);
+    gs.phase = 'move';
+    sb.show(gs.rollN ? 'ok-trex-move' : 'ok-no-move');
   } else {
-    setTimeout(() => {
-      gs.phase = 'select';
-      if (ai.control[gs.turn]) sb.show('ok-ai-move');
-      else if (gs.je) gp.startJumpEnter();
-    }, delay);
+    gs.phase = 'select';
+    if (ai.control[gs.turn]) sb.show('ok-ai-move');
+    else if (gs.je) gp.startJumpEnter();
   }
 }
 async function okTrexMove() {

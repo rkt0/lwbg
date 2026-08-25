@@ -64,7 +64,7 @@ export const sb = {
         type === 'movement' ? rollN : rollGo;
       dom.faces[name][value].style.display = 'block';
     }
-    this.replace('roll-dice', 'roll-display');
+    await this.replace('roll-dice', 'roll-display');
     const dieClasses = ['rolled'];
     if (immediate) dieClasses.push('no-animation');
     else await sleep(anim.time.dieRollDelay);
