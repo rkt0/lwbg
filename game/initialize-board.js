@@ -31,32 +31,32 @@ bd.bldgRaptorSpaces = bd.bldgHumanSpaces.map(
 // Get lists of move choices
 bd.humanChoices = {move: [], jump: []};
 for (let s = 0; s < bd.nHumanSpaces; s++) {
-  const mChoices = new Set();
-  const jChoices = new Set();
-  for (const edge of bd.humanEdges) {
-    if (edge[0] === s) mChoices.add(edge[1]);
-    if (edge[1] === s) mChoices.add(edge[0]);
+  const moveChoices = new Set();
+  const jumpChoices = new Set();
+  for (const [s0, s1] of bd.humanEdges) {
+    if (s0 === s) moveChoices.add(s1);
+    if (s1 === s) moveChoices.add(s0);
   }
-  for (const jump of bd.humanJumps) {
-    if (jump[0] === s) jChoices.add(jump[1]);
+  for (const [sJump, sLand] of bd.humanJumps) {
+    if (sJump === s) jumpChoices.add(sLand);
   }
-  bd.humanChoices.move.push(mChoices);
-  bd.humanChoices.jump.push(jChoices);
+  bd.humanChoices.move.push(moveChoices);
+  bd.humanChoices.jump.push(jumpChoices);
 }
 bd.raptorChoices = {move: [], enter: []};
 for (let s = 0; s < bd.nRaptorSpaces; s++) {
-  const mChoices = new Set();
-  const eChoices = new Set();
-  for (const edge of bd.raptorEdges) {
-    if (edge[0] === s) mChoices.add(edge[1]);
-    if (edge[1] === s) mChoices.add(edge[0]);
+  const moveChoices = new Set();
+  const enterChoices = new Set();
+  for (const [s0, s1] of bd.raptorEdges) {
+    if (s0 === s) moveChoices.add(s1);
+    if (s1 === s) moveChoices.add(s0);
   }
-  for (const enter of bd.raptorEntrances) {
-    if (enter[0] === s) eChoices.add(enter[1]);
-    if (enter[1] === s) mChoices.add(enter[0]);
+  for (const [sOut, sIn] of bd.raptorEntrances) {
+    if (sOut === s) enterChoices.add(sIn);
+    if (sIn === s) moveChoices.add(sOut);
   }
-  bd.raptorChoices.move.push(mChoices);
-  bd.raptorChoices.enter.push(eChoices);
+  bd.raptorChoices.move.push(moveChoices);
+  bd.raptorChoices.enter.push(enterChoices);
 }
 
 // Extra space at edges of board

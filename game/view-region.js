@@ -10,11 +10,10 @@ import {anim} from './animation.js';
 
 function movePlanRegion() {
   if (gs.turn === 'trex') return trexMoveRegion();
-  const corners = mv.plan.map(x => pl[gs.turn][x]);
+  const corners = mv.plan.map(s => pl[gs.turn][s]);
   const [pw, ph] = pl[gs.turn].ps;
-  const regions = corners.map(x => ({
-    left: x[0], right: x[0] + pw,
-    top: x[1], bottom: x[1] + ph,
+  const regions = corners.map(([x, y]) => ({
+    left: x, right: x + pw, top: y, bottom: y + ph,
   }));
   return boundingBox(...regions);
 };
