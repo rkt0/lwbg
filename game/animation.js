@@ -11,17 +11,19 @@ export const anim = {
     display = 'block', easing = 'linear',
   } = {}) {
     if (to) element.style.display = display;
-    await element.animate({
-      opacity: [1 - to, to], easing,
-    }, {duration, fill: 'forwards'}).finished;
+    const keyframes = {opacity: [1 - to, to], easing};
+    const options = {duration};
+    const final = {opacity: to};
+    await persist(element, keyframes, options, final);
     if (!to) element.style.display = 'none';
   },
   async move(element, location, duration, {
     delay = 0, endDelay = 0, easing = 'ease-in-out',
   } = {}) {
-    await element.animate({...location, easing}, {
-      duration, delay, endDelay, fill: 'forwards',
-    }).finished;
+    const keyframes = {...location, easing};
+    const options = {duration, delay, endDelay};
+    const final = {...location};
+    await persist(element, keyframes, options, final);
   },
   async slide(element, to, duration, {
     display = '', easing = 'linear',
@@ -29,9 +31,10 @@ export const anim = {
     const xf = ['translateY(-100%)', 'translateY(0)'];
     if (to) element.style.display = display;
     else xf.reverse();
-    await element.animate({
-      transform: xf, easing,
-    }, {duration, fill: 'forwards'}).finished;
+    const keyframes = {transform: xf, easing};
+    const options = {duration};
+    const final = {transform: xf.at(-1)};
+    await persist(element, keyframes, options, final);
     if (!to) element.style.display = 'none';
   },
   isAnimated(element) {
@@ -57,6 +60,7 @@ export const anim = {
   },
 };
 
+// Animation times
 const baseTime = 300 / (debug.animationSpeed || 1);
 const multiplier = {
   menuFade: 1,
@@ -84,6 +88,26 @@ for (const [key, m] of Object.entries(multiplier)) {
   anim.time[key] = m * baseTime;
 }
 
+// Helper function to animate, persist, and cancel
+async function persist(
+  element, keyframes, options, final = {},
+) {
+  const opts = {...options, fill: 'forwards'};
+  const animation = element.animate(keyframes, opts);
+  await animation.finished;
+  try {
+    animation.commitStyles();
+  } catch {
+    const entries = Object.entries(final);
+    for (const [property, value] of entries) {
+      element.style[property] = value;
+    }
+  } finally {
+    animation.cancel();
+  }
+}
+
+// Add style properties
 const html = document.documentElement;
 const toCss = {
   dieRoll: '--die-roll-time',
