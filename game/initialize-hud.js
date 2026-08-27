@@ -68,7 +68,6 @@ async function rollDice() {
   await sb.displayRollResult(gs);
   gs.je = gs.rollN === 'Jump' || gs.rollN === 'Enter';
   await gp.save();
-  await sleep(anim.time.dieRoll);
   if (gs.turn === 'trex') {
     gs.phase = 'move';
     sb.show(gs.rollN ? 'ok-trex-move' : 'ok-no-move');

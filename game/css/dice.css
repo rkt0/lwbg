@@ -12,21 +12,6 @@
   border: solid var(--die-border-width)
     var(--color-border);
   border-radius: 12px;
-  color: #0000;
-
-  &.rolled {
-    transform: rotate(2turn);
-    color: var(--color-text);
-    transition-property: transform, color;
-    transition-duration: var(--die-roll-time), calc(
-      var(--die-roll-time) - var(--die-roll-delay)
-    );
-    transition-delay: 0s, var(--die-roll-delay);
-
-    &.no-animation {
-      transition-property: none;
-    }
-  }
 }
 
 .die-human {

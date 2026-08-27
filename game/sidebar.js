@@ -46,10 +46,11 @@ export const sb = {
   async displayRollResult(rollState, immediate) {
     for (const die of Object.values(dom.dice)) {
       die.style.display = 'none';
-      die.classList.remove('rolled', 'no-animation');
+      anim.cancelAll(die);
     }
     const {turn, rollN, rollGo} = rollState;
     const diceToRoll = [];
+    const facesToShow = [];
     for (const type of ['movement', 'continue']) {
       const name = `${turn}-${type}`;
       const die = dom.dice[name];
@@ -60,17 +61,25 @@ export const sb = {
       for (const face of faces) {
         face.style.display = 'none';
       }
-      const value =
-        type === 'movement' ? rollN : rollGo;
-      dom.faces[name][value].style.display = 'block';
+      const r = type === 'movement' ? rollN : rollGo;
+      facesToShow.push(dom.faces[name][r]);
     }
     await this.replace('roll-dice', 'roll-display');
-    const dieClasses = ['rolled'];
-    if (immediate) dieClasses.push('no-animation');
-    else await sleep(anim.time.dieRollDelay);
+    const {
+      dieDelay = 0, dieSpin = 0, faceDelay = 0,
+    } = immediate ? {} : anim.time;
+    await sleep(dieDelay);
+    const animations = [];
+    const spins = anim.dieSpinCount;
     for (const die of diceToRoll) {
-      die.classList.add(...dieClasses);
+      animations.push(anim.roll(die, spins, dieSpin));
     }
+    await sleep(faceDelay);
+    const faceFade = dieSpin - faceDelay;
+    for (const face of facesToShow) {
+      animations.push(anim.fade(face, 1, faceFade));
+    }
+    await Promise.all(animations);
   },
 };
 

@@ -7,6 +7,7 @@ export const anim = {
     decayRate: 0.5,
     timePerBounce: 4 * 1000 / 60,
   },
+  dieSpinCount: 2,
   async fade(element, to, duration, {
     display = 'block', easing = 'linear',
   } = {}) {
@@ -37,11 +38,15 @@ export const anim = {
     await persist(element, keyframes, options, final);
     if (!to) element.style.display = 'none';
   },
-  isAnimated(element) {
-    const animations = element.getAnimations();
+  isAnimated(element, options = {subtree: false}) {
+    const animations = element.getAnimations(options);
     return animations.some((animation) => {
       return animation.playState === 'running';
     });
+  },
+  cancelAll(element, options = {subtree: true}) {
+    const animations = element.getAnimations(options);
+    for (const a of animations) a.cancel();
   },
   async bounce(element, {
     maxDistance, decayRate, timePerBounce,
@@ -58,6 +63,13 @@ export const anim = {
     const top = distances.map((d) => `-${d}px`);
     await element.animate({top}, {duration}).finished;
   },
+  async roll(element, turns, duration, {
+    easing = 'ease',
+  } = {}) {
+    await element.animate({
+      transform: `rotate(${turns}turn)`,
+    }, {duration, easing, fill: "forwards"}).finished;
+  },
 };
 
 // Animation times
@@ -69,9 +81,9 @@ const multiplier = {
   messageSlide: 1,
   gameOverDelay: 6,
   editControlFade: 0.5,
-  dieRollDelay: 1,
-  dieRoll: 3,
-  dieResultDelay: 1.5,
+  dieDelay: 1,
+  dieSpin: 3,
+  faceDelay: 1.5,
   moveHuman: 1,
   moveRaptor: 1.5,
   moveTrex: 1,
@@ -110,8 +122,6 @@ async function persist(
 // Add style properties
 const html = document.documentElement;
 const toCss = {
-  dieRoll: '--die-roll-time',
-  dieResultDelay: '--die-roll-delay',
   highlightBlink: '--highlight-blink-time',
 };
 for (const [key, cssProp] of Object.entries(toCss)) {

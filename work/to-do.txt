@@ -2,5 +2,6 @@ reorganize/rename css
 fix weird horizontal line in jungle image
 clean up utility module
 investigate suspicious music.next behavior
-handle die roll animations in javascript
+handle zoomed-out blink animations in javascript
+fix sb.show and sb.hide in no-op situations
 check animation easing issues
