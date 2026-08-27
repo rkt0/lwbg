@@ -1,5 +1,5 @@
 import {
-  qjs, closestData, sleep, rollDie,
+  qjs, closestData, rollDie,
 } from './utility.js';
 import {click, atClick} from './mouse-events.js';
 import {prng} from './prngs.js';
@@ -7,7 +7,6 @@ import {gs, mv} from './game-objects.js';
 import {dom} from './dom.js';
 import {dice} from './dice.js';
 import {zoom} from './zoom.js';
-import {anim} from './animation.js';
 import {ai} from './ai.js';
 import {message} from './message.js';
 import {sb} from './sidebar.js';
