@@ -1,7 +1,5 @@
-import {
-  qjs, closestData, rollDie,
-} from './utility.js';
-import {click, atClick} from './mouse-events.js';
+import {closestData, rollDie} from './utility.js';
+import {atClick} from './mouse-events.js';
 import {prng} from './prngs.js';
 import {gs, mv} from './game-objects.js';
 import {dom} from './dom.js';
@@ -39,7 +37,7 @@ async function okAiMove() {
   mv.selected = decision[0];
   mv.plan = decision[1];
   gs.phase = 'move';
-  click(qjs('confirm'));
+  confirmMove();
 }
 async function decline() {
   if (gs.phase !== 'select' || !gs.je) return;
