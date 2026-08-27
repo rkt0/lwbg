@@ -3,3 +3,4 @@ fix weird horizontal line in jungle image
 clean up utility module
 investigate suspicious music.next behavior
 handle die roll animations in javascript
+check animation easing issues
