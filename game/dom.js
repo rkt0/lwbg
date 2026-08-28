@@ -16,7 +16,6 @@ export const dom = {
   raptorPiece: [],
   trexPiece: qd('trex-piece'),
   gameOver: qjs('game-over'),
-  showMore: qjs('show-more'),
   dice: {},
   faces: {},
   editKill: [],

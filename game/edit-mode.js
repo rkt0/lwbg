@@ -44,7 +44,7 @@ export const edit = {
     gp.raptorItemsClickable(true);
     await anim.slide(this.bannerElement, 1, eTime);
     this.bannerElement.inert = false;
-    dom.showMore.style.visibility = 'hidden';
+    sb.changeShowMoreButtonVisibility(false);
   },
   async cancelSelection() {
     gp.select();
@@ -157,7 +157,7 @@ async function endEditMode() {
   }
   sb.hide('unroll-dice');
   edit.clear();
-  dom.showMore.style.visibility = 'visible';
+  sb.changeShowMoreButtonVisibility(true);
   message.suppress = false;
   await sleep(eTime);
 }

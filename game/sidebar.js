@@ -5,7 +5,9 @@ import {anim} from './animation.js';
 export const sb = {
   async show(identifier) {
     if (!identifier) return showSidebar();
-    const element = menuItem[identifier];
+    const {element, current} = menuItem[identifier];
+    if (current) return;
+    menuItem[identifier].current = true;
     element.style.display = '';
     await anim.move(element, leftShow, bTime, linear);
     if (isProperButton(element)) {
@@ -14,7 +16,9 @@ export const sb = {
   },
   async hide(identifier) {
     if (!identifier) return hideSidebar();
-    const element = menuItem[identifier];
+    const {element, current} = menuItem[identifier];
+    if (!current) return;
+    menuItem[identifier].current = false;
     if (isProperButton(element)) {
       if (element.disabled) return;
       element.disabled = true;
@@ -26,10 +30,18 @@ export const sb = {
     await this.hide(identifierOld);
     await this.show(identifierNew);
   },
+  changeShowMoreButtonVisibility(setting) {
+    const {element} = menuItem['show-more'];
+    const value = setting ? 'visible' : 'hidden';
+    element.style.visibility = value;
+    element.disabled = !setting;
+  },
   reset() {
-    const items = Object.entries(menuItem);
-    for (const [js, element] of items) {
-      if ('active' in element.dataset) this.show(js);
+    const entries = Object.entries(menuItem);
+    for (const [js, item] of entries) {
+      // Set current to ensure that show/hide will run
+      item.current = !item.initial;
+      if (item.initial) this.show(js);
       else this.hide(js);
     }
   },
@@ -85,15 +97,16 @@ export const sb = {
 
 // Element references
 const sbElement = qjs('sidebar');
-const identifiers = [
-  'roll-dice', 'roll-display', 'unroll-dice',
-  'ok-trex-move', 'ok-no-move', 'ok-ai-move',
-  'decline', 'cancel', 'confirm', 'turn-display',
-];
-const menuItem = Object.fromEntries(identifiers.map(
-  identifier => [identifier, qjs(identifier)]
-));
 const turnSpan = qjs('turn-text');
+
+// Menu item element references and status
+const menuItem = {};
+for (const element of sbElement.children) {
+  const {js} = element.dataset;
+  if (!js) continue;
+  const initial = 'initial' in element.dataset;
+  menuItem[js] = {element, initial};
+}
 
 // Other values
 const buttonWidth = cssValue('--button-width');

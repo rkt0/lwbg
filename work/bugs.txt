@@ -1,3 +1,2 @@
 errors when loading game in game-over state
-delay after die roll before button appears
 errors related to promises when calling editGame
