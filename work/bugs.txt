@@ -1,2 +1,1 @@
 errors when loading game in game-over state
-errors related to promises when calling editGame

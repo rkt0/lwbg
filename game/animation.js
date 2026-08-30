@@ -38,13 +38,13 @@ export const anim = {
     await persist(element, keyframes, options, final);
     if (!to) element.style.display = 'none';
   },
-  isAnimated(element, options = {subtree: false}) {
+  isAnimated(element, options = {}) {
     const animations = element.getAnimations(options);
     return animations.some((animation) => {
       return animation.playState === 'running';
     });
   },
-  cancelAll(element, options = {subtree: true}) {
+  cancelAll(element, options = {}) {
     const animations = element.getAnimations(options);
     for (const a of animations) a.cancel();
   },
