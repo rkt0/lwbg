@@ -63,6 +63,12 @@ export const autoSave = {
   async executeLoad(fhLoad) {
     await deserialize(fhLoad);
     this.gsPrevious = deepCopy(gs);
+    gp.humanItemsClickable(gs.turn === 'human');
+    gp.raptorItemsClickable(gs.turn === 'raptor');
+    if (gs.turn === 'over') {
+      sb.hide('roll-dice');
+      return gp.checkGameOver(true);
+    }
     sb.displayTurn(gs.turn);
     if (gs.phase === 'roll') {
       sb.replace('roll-display', 'roll-dice');
@@ -77,8 +83,6 @@ export const autoSave = {
       if (gs.rollN) sb.show('ok-trex-move');
       else sb.show('ok-no-move');
     }
-    gp.humanItemsClickable(gs.turn === 'human');
-    gp.raptorItemsClickable(gs.turn === 'raptor');
   },
 };
 

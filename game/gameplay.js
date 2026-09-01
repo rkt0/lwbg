@@ -36,7 +36,7 @@ export const gp = {
     message.hide();
     sb.hide('roll-display');
     sb.hide('turn-display');
-    if (zoom.factorCurrent < 1) return;
+    if ((zoom.factorCurrent ?? 1) < 1) return;
     anim.fade(dom.gameOver, 1, anim.time.menuFade, {
       display: '',
     });
