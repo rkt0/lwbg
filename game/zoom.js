@@ -2,6 +2,7 @@ import {qjs} from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
 import {tvMatte} from './tv-matte.js';
+import {anim} from './animation.js';
 
 export const zoom = {
   factorCurrent: null,
@@ -81,6 +82,7 @@ function zoomGeneral(factor) {
   zoom.factorCurrent = factor;
   zoom.applyCenter();
   const isOut = factor < 1;
+  anim.blinkPieces(isOut);
   document.body.classList.toggle('zoomed-out', isOut);
   document.body.style.setProperty(
     '--bg-scale', factor,

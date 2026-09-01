@@ -16,7 +16,6 @@ tv-matte.js
 # Level 2
 debug.js
 dice.js
-zoom.js
 
 # Level 3
 animation.js
@@ -29,12 +28,13 @@ ai.js
 message.js
 sfx.js
 sidebar.js
-toggle.js
 view-region.js
+zoom.js
 
 # Level 5
 control.js
 gameplay.js
+toggle.js
 
 # Level 6
 edit-mode.js

@@ -1,4 +1,5 @@
-import {debug} from "./debug.js";
+import {dom} from './dom.js';
+import {debug} from './debug.js';
 
 export const anim = {
   time: {},
@@ -70,6 +71,16 @@ export const anim = {
       transform: `rotate(${turns}turn)`,
     }, {duration, easing, fill: "forwards"}).finished;
   },
+  blinkPieces(on) {
+    blinkPieceElements ??= [
+      ...dom.humanPiece,
+      ...dom.raptorPiece,
+      dom.trexPiece,
+    ];
+    for (const element of blinkPieceElements) {
+      setBlinkAnimation(element, on);
+    }
+  },
 };
 
 // Animation times
@@ -119,12 +130,27 @@ async function persist(
   }
 }
 
-// Add style properties
-const html = document.documentElement;
-const toCss = {
-  highlightBlink: '--highlight-blink-time',
-};
-for (const [key, cssProp] of Object.entries(toCss)) {
-  const seconds = anim.time[key] / 1000;
-  html.style.setProperty(cssProp, `${seconds}s`);
+// Blink animation references
+const blinks = new Map();
+let blinkPieceElements;
+
+// Blink animation for single element
+function makeBlinkAnimation(element) {
+  const keyframes = {backgroundColor: [
+    'var(--color-highlight)',
+    'transparent',
+  ]};
+  const options = {
+    duration: anim.time.highlightBlink,
+    iterations: Infinity,
+    easing: 'steps(2, jump-none)',
+  };
+  return element.animate(keyframes, options);
+}
+function setBlinkAnimation(element, on) {
+  if (!on) return blinks.get(element)?.cancel();
+  const animation = blinks.getOrInsertComputed(
+    element, makeBlinkAnimation,
+  );
+  animation.play();
 }
