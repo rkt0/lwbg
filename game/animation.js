@@ -3,12 +3,6 @@ import {debug} from './debug.js';
 
 export const anim = {
   time: {},
-  trexScreenBounce: {
-    maxDistance: 64,
-    decayRate: 0.5,
-    timePerBounce: 4 * 1000 / 60,
-  },
-  dieSpinCount: 2,
   async fade(element, to, duration, {
     display = 'block', easing = 'linear',
   } = {}) {
@@ -49,9 +43,11 @@ export const anim = {
     const animations = element.getAnimations(options);
     for (const a of animations) a.cancel();
   },
-  async bounce(element, {
-    maxDistance, decayRate, timePerBounce,
-  }) {
+  async bounce(element = dom.gameplay, {
+    maxDistance = 64,
+    decayRate = 0.5,
+    timePerBounce = 4 * 1000 / 60,
+  } = {}) {
     const distances = [0];
     let d = maxDistance;
     let duration = 0;
@@ -64,8 +60,8 @@ export const anim = {
     const top = distances.map((d) => `-${d}px`);
     await element.animate({top}, {duration}).finished;
   },
-  async roll(element, turns, duration, {
-    easing = 'ease',
+  async roll(element, duration, {
+    turns = 2, easing = 'ease',
   } = {}) {
     await element.animate({
       transform: `rotate(${turns}turn)`,
@@ -137,8 +133,7 @@ let blinkPieceElements;
 // Blink animation for single element
 function makeBlinkAnimation(element) {
   const keyframes = {backgroundColor: [
-    'var(--color-highlight)',
-    'transparent',
+    'var(--color-highlight)', 'transparent',
   ]};
   const options = {
     duration: anim.time.highlightBlink,

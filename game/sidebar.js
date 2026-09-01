@@ -82,9 +82,8 @@ export const sb = {
     } = immediate ? {} : anim.time;
     await sleep(dieDelay);
     const animations = [];
-    const spins = anim.dieSpinCount;
     for (const die of diceToRoll) {
-      animations.push(anim.roll(die, spins, dieSpin));
+      animations.push(anim.roll(die, dieSpin));
     }
     await sleep(faceDelay);
     const faceFade = dieSpin - faceDelay;

@@ -185,10 +185,7 @@ export const gp = {
     const location = {top: `${t}px`, left: `${l}px`};
     const aTime = anim.time.moveTrex;
     await anim.move(dom.trexPiece, location, aTime);
-    if (!silent) {
-      const settings = anim.trexScreenBounce;
-      anim.bounce(dom.gameplay, settings);
-    }
+    if (!silent) anim.bounce();
     gs.trex = space;
     if (gs.trex === 0) {
       for (const h of hPiecesOn(bd.humanStart)) {
