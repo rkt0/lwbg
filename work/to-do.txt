@@ -1,6 +1,5 @@
 reorganize/rename css
 fix weird horizontal line in jungle image
 investigate suspicious music.next behavior
-check animation easing issues
 refactor animation module
 refactor modules to use default exports

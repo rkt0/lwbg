@@ -13,19 +13,19 @@ export const anim = {
     display = 'block', easing = 'linear',
   } = {}) {
     if (to) element.style.display = display;
-    const keyframes = {opacity: [1 - to, to], easing};
-    const options = {duration};
+    const keyframes = {opacity: [1 - to, to]};
+    const options = {duration, easing};
     const final = {opacity: to};
     await persist(element, keyframes, options, final);
     if (!to) element.style.display = 'none';
   },
-  async move(element, location, duration, {
+  async move(element, where, duration, {
     delay = 0, endDelay = 0, easing = 'ease-in-out',
   } = {}) {
-    const keyframes = {...location, easing};
-    const options = {duration, delay, endDelay};
-    const final = {...location};
-    await persist(element, keyframes, options, final);
+    const options = {
+      duration, delay, endDelay, easing,
+    };
+    await persist(element, where, options, where);
   },
   async slide(element, to, duration, {
     display = '', easing = 'linear',
@@ -33,8 +33,8 @@ export const anim = {
     const xf = ['translateY(-100%)', 'translateY(0)'];
     if (to) element.style.display = display;
     else xf.reverse();
-    const keyframes = {transform: xf, easing};
-    const options = {duration};
+    const keyframes = {transform: xf};
+    const options = {duration, easing};
     const final = {transform: xf.at(-1)};
     await persist(element, keyframes, options, final);
     if (!to) element.style.display = 'none';
