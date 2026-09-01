@@ -1,4 +1,4 @@
-import {smoothStep, lerp} from "./utility.js";
+import {smoothStep, lerp} from './utility.js';
 
 export function scrollBetter(
   location, duration, options,

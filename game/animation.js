@@ -65,7 +65,7 @@ export const anim = {
   } = {}) {
     await element.animate({
       transform: `rotate(${turns}turn)`,
-    }, {duration, easing, fill: "forwards"}).finished;
+    }, {duration, easing, fill: 'forwards'}).finished;
   },
   blinkPieces(on) {
     blinkPieceElements ??= [
