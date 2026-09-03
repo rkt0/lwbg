@@ -1,4 +1,4 @@
-import {qjs, isNull} from './utility.js';
+import {qjs, qd, isNull} from './utility.js';
 import {prng} from './prngs.js';
 import {debug} from './debug.js';
 
@@ -56,8 +56,11 @@ const tooRecent = 6;
 const recentIds = [];
 let nowPlaying = null;
 function play(id) {
-  music.element.src = playlist[id].src;
+  const {src, title, artist} = playlist[id];
+  music.element.src = src;
   music.element.play();
+  songElement.textContent = title;
+  artistElement.textContent = artist;
   nowPlaying = id;
 };
 
@@ -69,6 +72,7 @@ class Track {
     this.title = title;
     this.freqWeight = Math.exp(-0.5 * quality);
     this.heavy = heavy;
+    this.artist = 'Kevin MacLeod';
   }
 }
 const playlist = [
@@ -106,6 +110,9 @@ for (let i = 1; i < nTracks; i++) {
 }
 const total = cdf[nTracks - 1];
 for (let i = 0; i < nTracks; i++) cdf[i] /= total;
+
+const songElement = qd('song');
+const artistElement = qd('artist');
 
 music.element.addEventListener('ended', () => {
   music.next();

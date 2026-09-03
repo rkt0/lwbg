@@ -212,22 +212,27 @@
   class="audio-panel">
   <div class="info">
     <div class="heading">
-      <div class="song">Some Song</div>
-      <div class="artist">by Kevin MacLeod</div>
+      <div data-song class="large-text"></div>
+      <div data-artist></div>
     </div>
     <audio data-js="music-player" muted controls>
     </audio>
     <div class="choices">
-      <button type="button">Next Track</button>
-      <button type="button">Choose Track</button>
-      <button type="button">Hide Panel</button>
-      <button type="button">SFX Panel</button>
+      <button type="button" data-js="next-track">
+        Next Track
+      </button>
+      <button type="button" data-js="choose-track">
+        Choose Track
+      </button>
+      <button type="button" data-js="hide-music">
+        Hide Panel
+      </button>
+      <button type="button" data-js="show-sfx">
+        SFX Panel
+      </button>
     </div>
   </div>
-  <!-- <div class="info"> -->
-    <!-- <div class="heading">Sound Effects</div> -->
-    <audio data-js="sfx-player" muted></audio>
-  <!-- </div> -->
+  <audio data-js="sfx-player" muted></audio>
 </section>
 <div class="tv-matte top"></div>
 <div class="tv-matte bottom"></div>

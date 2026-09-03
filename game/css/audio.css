@@ -3,10 +3,6 @@
   place-items: center;
   z-index: 2;
 
-  /* .heading { */
-  /*   margin-bottom: 1em; */
-  /* } */
-
   .choices {
     margin-block: 0.5em;
     grid-template-columns: repeat(2, 1fr);
