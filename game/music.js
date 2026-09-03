@@ -58,10 +58,10 @@ let nowPlaying = null;
 function play(id) {
   const {src, title, artist} = playlist[id];
   music.element.src = src;
-  music.element.play();
   songElement.textContent = title;
   artistElement.textContent = artist;
   nowPlaying = id;
+  if (music.audioOn) music.element.play();
 };
 
 class Track {
