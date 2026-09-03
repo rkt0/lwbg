@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="css/dice.css">
 <link rel="stylesheet" href="css/tv-matte.css">
 <link rel="stylesheet" href="css/control.css">
+<link rel="stylesheet" href="css/audio.css">
 <link rel="icon" type="image/png" sizes="64x64"
   href="img/icon/icon-64.png">
 <section data-js="gameplay" inert data-dormant
@@ -123,6 +124,9 @@
       <button type="button" data-js="save-point">
         Create New Save Point
       </button>
+      <button type="button" data-js="music-info">
+        Show Music Info
+      </button>
       <button type="button" data-js="begin-edit">
         Edit (Cheat)
       </button>
@@ -203,6 +207,27 @@
     disabled class="control-continue large-text">
     Continue
   </button>
+</section>
+<section data-js="audio-panel" inert data-dormant
+  class="audio-panel">
+  <div class="info">
+    <div class="heading">
+      <div class="song">Some Song</div>
+      <div class="artist">by Kevin MacLeod</div>
+    </div>
+    <audio data-js="music-player" muted controls>
+    </audio>
+    <div class="choices">
+      <button type="button">Next Track</button>
+      <button type="button">Choose Track</button>
+      <button type="button">Hide Panel</button>
+      <button type="button">SFX Panel</button>
+    </div>
+  </div>
+  <!-- <div class="info"> -->
+    <!-- <div class="heading">Sound Effects</div> -->
+    <audio data-js="sfx-player" muted></audio>
+  <!-- </div> -->
 </section>
 <div class="tv-matte top"></div>
 <div class="tv-matte bottom"></div>
@@ -419,8 +444,6 @@
   Are you sure you don't want to enter?<br>
   Click “Decline” again to confirm.
 </template>
-<audio data-js="music-player"></audio>
-<audio data-js="sfx-player"></audio>
 <script src="lib/seedrandom.min.js"></script>
 <script type="module" src="main.js"></script>
 </html>

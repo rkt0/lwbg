@@ -3,6 +3,7 @@ import {prng} from './prngs.js';
 import {debug} from './debug.js';
 
 export const music = {
+  element: qjs('music-player'),
   audioOn: false,
   allowed: false,
   next(skipCurrent, any) {
@@ -41,23 +42,22 @@ export const music = {
     }
     play(nextId);
   },
-  toggle() {
-    if (this.audioOn) element.pause();
-    else {
+  reconcilePlayPauseState() {
+    if (!this.allowed) return;
+    const {element} = this;
+    if (this.audioOn) {
       if (element.src) element.play();
-      else if (this.allowed) this.next();
-    }
-    this.audioOn = !this.audioOn;
+      else this.next();
+    } else element.pause();
   },
 };
 
-const element = qjs('music-player');
 const tooRecent = 6;
 const recentIds = [];
 let nowPlaying = null;
 function play(id) {
-  element.src = playlist[id].src;
-  element.play();
+  music.element.src = playlist[id].src;
+  music.element.play();
   nowPlaying = id;
 };
 
@@ -107,4 +107,6 @@ for (let i = 1; i < nTracks; i++) {
 const total = cdf[nTracks - 1];
 for (let i = 0; i < nTracks; i++) cdf[i] /= total;
 
-element.addEventListener('ended', () => music.next());
+music.element.addEventListener('ended', () => {
+  music.next();
+});

@@ -5,6 +5,7 @@ export const dom = {
   hud: qjs('hud'),
   start: qjs('start'),
   startOptions: qjs('start-options'),
+  audioPanel: qjs('audio-panel'),
   board: qjs('board'),
   debugLabelSvg: [],
   raptorSpaceGroup: qjs('raptor-space-group'),

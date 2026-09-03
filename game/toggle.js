@@ -6,6 +6,7 @@ import {dom} from './dom.js';
 import {zoom} from './zoom.js';
 import {anim} from './animation.js';
 import {music} from './music.js';
+import {sfx} from './sfx.js';
 
 export const toggle = {
   groupElement: qjs('toggle-button-group'),
@@ -24,10 +25,8 @@ export const toggle = {
     this.groupElement.style.display = 'none';
   },
   audio() {
-    music.toggle();
-    for (const icon of icons.audio) {
-      icon.classList.toggle('inactive');
-    }
+    music.element.muted = !music.element.muted;
+    // Also see volumechange event listener
   },
   fullscreen() {
     if (!zoom.isZoomedOut()) zoom.setCenter();
@@ -71,6 +70,34 @@ const groupWidth = cssValue('--button-size', {
   element: toggle.groupElement,
 });
 
+// Required since user can change audio via controls
+const audioElements = [music.element, sfx.element];
+function handleVolumeChange() {
+  for (const element of audioElements) {
+    element.muted = this.muted;
+    element.volume = this.volume;
+    element.blur();
+  }
+  music.audioOn = !this.muted && this.volume > 0;
+  music.reconcilePlayPauseState();
+  for (const icon of icons.audio) {
+    const isOnIcon = icon.dataset.stateIcon === 'on';
+    const makeInactive = isOnIcon !== music.audioOn;
+    icon.classList.toggle('inactive', makeInactive);
+  }
+}
+for (const element of audioElements) {
+  element.addEventListener(
+    'volumechange', handleVolumeChange,
+  );
+}
+music.element.addEventListener('play', function() {
+  this.muted = false;
+});
+music.element.addEventListener('pause', function() {
+  this.muted = true;
+});
+
 // Required since user can leave fullscreen via Escape
 document.addEventListener('fullscreenchange', () => {
   if (zoom.isZoomedOut()) zoom.zoomOut();
@@ -93,8 +120,10 @@ for (const item of template('toggle-button-group')) {
   for (const svg of button.children) {
     const use = svg.firstElementChild;
     const urlPartial = use.getAttribute('href');
+    const which = urlPartial.split('-').at(-1);
     const url = urlPartial.replace('#', `#${value}`);
     use.setAttribute('href', url);
+    svg.dataset.stateIcon = which;
   }
   button.classList.add('small');
   const buttonClone = button.cloneNode(true);

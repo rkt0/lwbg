@@ -56,6 +56,11 @@
   place-content: center;
   pointer-events: auto;
   z-index: 3;
+
+  .choices {
+    /* grid-template: repeat(3, 1fr) / repeat(2, 1fr); */
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .scrim {

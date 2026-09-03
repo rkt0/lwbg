@@ -3,6 +3,7 @@ import {prng} from './prngs.js';
 import {music} from './music.js';
 
 export const sfx = {
+  element: qjs('sfx-player'),
   trexRoar() {
     play(trexSounds.roar);
   },
@@ -10,17 +11,17 @@ export const sfx = {
     play(trexSounds.stomp);
   },
   raptor() {
+    const {element} = this;
     if (element.src && !element.ended) return;
     const id = rollDie(raptorIds, prng.sfx);
     play(raptorSounds[id]);
   },
 };
 
-const element = qjs('sfx-player');
 function play(sound) {
   if (!music.audioOn) return;
-  element.src = sound.src;
-  element.play();
+  sfx.element.src = sound.src;
+  sfx.element.play();
 };
 
 class SoundEffect {

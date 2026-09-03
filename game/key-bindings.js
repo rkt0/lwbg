@@ -1,9 +1,10 @@
 import {qjs} from './utility.js';
 import {click} from './mouse-events.js';
 import {gs, mv} from './game-objects.js';
-import {zoom} from './zoom.js';
 import {music} from './music.js';
 import {ai} from './ai.js';
+import {zoom} from './zoom.js';
+import {audioPanel} from './audio-panel.js';
 import {toggle} from './toggle.js';
 import {gp} from './gameplay.js';
 import {edit} from './edit-mode.js';
@@ -82,6 +83,9 @@ const dispatch = {
   '_': handleZoomKey,
   '=': handleZoomKey,
   '+': handleZoomKey,
+
+  'x': () => audioPanel.show(),
+  'q': () => audioPanel.hide(),
 };
 
 // Add key handler

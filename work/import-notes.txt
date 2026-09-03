@@ -37,6 +37,7 @@ gameplay.js
 toggle.js
 
 # Level 6
+audio-panel.js
 edit-mode.js
 serialization.js
 

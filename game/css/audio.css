@@ -1,0 +1,22 @@
+.audio-panel {
+  background: none;
+  place-items: center;
+  z-index: 2;
+
+  /* .heading { */
+  /*   margin-bottom: 1em; */
+  /* } */
+
+  .choices {
+    margin-block: 0.5em;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+audio {
+  display: block;
+  width: 450px; /* should match max of info */
+  margin-block: 1em 1.5em;
+  filter:
+    invert(0.95) hue-rotate(-15deg) saturate(0.4);
+}
