@@ -211,11 +211,9 @@
 <section data-js="audio-panel" inert data-dormant
   class="audio-panel">
   <div class="scrim cover"></div>
-  <div class="info">
-    <div class="heading">
-      <div data-song class="large-text">&nbsp;</div>
-      <div data-artist>&nbsp;</div>
-    </div>
+  <div data-js="music-panel" class="music-panel info">
+    <div data-song class="large-text">&nbsp;</div>
+    <div data-artist>&nbsp;</div>
     <audio data-js="music-player" muted controls>
     </audio>
     <div class="choices">
@@ -225,11 +223,21 @@
       <button type="button" data-js="choose-track">
         Choose Track
       </button>
-      <button type="button" data-js="hide-music">
+      <button type="button" data-js="hide-audio">
         Hide Panel
       </button>
       <button type="button" data-js="show-sfx">
         SFX Panel
+      </button>
+    </div>
+  </div>
+  <div data-js="playlist-panel" inert data-dormant
+    class="playlist-panel info">
+    <div class="large-text">Choose Music Track</div>
+    <div data-js="playlist" class="playlist"></div>
+    <div class="choices">
+      <button type="button" data-js="hide-playlist">
+        Return to Music Panel
       </button>
     </div>
   </div>
@@ -328,6 +336,9 @@
       <use href="img/sprite.svg#-off"/>
     </svg>
   </button>
+</template>
+<template id="track">
+  <div data-track="" class="track"></div>
 </template>
 <template id="debug-labels">
   <div class="full-board large-text debug-labels">

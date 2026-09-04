@@ -6,11 +6,11 @@
   .scrim {
     z-index: -1;
   }
+}
 
-  .choices {
-    margin-block: 0.5em;
-    grid-template-columns: repeat(2, 1fr);
-  }
+.music-panel > .choices {
+  margin-block: 0.5em;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 audio {
@@ -19,4 +19,28 @@ audio {
   margin-block: 1em 1.5em;
   filter:
     invert(0.95) hue-rotate(-15deg) saturate(0.4);
+}
+
+.playlist-panel {
+  position: fixed;
+  max-width: unset;
+  z-index: 1;
+  inset: var(--matte, 0);
+  place-self: center;
+}
+
+.playlist {
+  margin-block: 0.375em 0.875em;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.track {
+  padding: calc(1em / 6) 0.5em;
+
+  &:hover {
+    box-shadow: var(--hover-shadow);
+    color: var(--hover-shadow-text);
+    cursor: pointer;
+  }
 }
