@@ -18,25 +18,28 @@ export const music = {
   element: qjs('music-player'),
   audioOn: false,
   allowed: false,
-  next() {
+  next(skipCurrent, any) {
     const {cycle, startAt} = debug.music;
     if (cycle) {
       if (isNull(nowPlaying)) play(startAt);
       else play((nowPlaying + 1) % nTracks);
       return;
     }
-    if (!isNull(nowPlaying)) {
+    if (!isNull(nowPlaying) && !skipCurrent) {
       if (recentIds.length === tooRecent) {
         recentIds.shift();
       }
       recentIds.push(nowPlaying);
     }
+    const avoid = [...recentIds];
+    if (skipCurrent) avoid.push(nowPlaying);
     let nextId, okNext;
     while (!okNext) {
       const rand = prng.music();
       nextId = 0;
       while (cdf[nextId] < rand) nextId++;
-      if (recentIds.includes(nextId)) continue;
+      if (any && nextId !== nowPlaying) break;
+      if (avoid.includes(nextId)) continue;
       const half = Math.floor(tooRecent / 2);
       const l = recentIds.length;
       const nHeavy = recentIds.filter((e) => {
