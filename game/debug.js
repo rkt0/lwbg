@@ -14,7 +14,7 @@ export const debug = {
   // Speed up animations (set to false or number > 1)
   animationSpeed: false,
   // Cycle music starting at specified track
-  music: {cycle: false, startAt: 0},
+  music: {cycle: false, start: 0},
   makeLabels(kind, points) {
     const div = template('debug-labels');
     div.classList.add(`${kind}-labels`);
