@@ -19,9 +19,8 @@ export const music = {
   audioOn: false,
   allowed: false,
   next() {
-    updateRecentIds();
-    const id = nextTrackId();
-    play(id);
+    updateRecent();
+    play(nextTrack());
     // const {cycle, startAt} = debug.music;
     // if (cycle) {
     //   if (isNull(nowPlaying)) play(startAt);
@@ -91,28 +90,26 @@ export const music = {
 };
 
 // Configuration settings
-const tooRecent = 6;
+const nRecent = 6;
 // const heavyStartScript = [false, true, true, false];
 // const heavyRunMax = 2;
 
 // State
-const recentIds = [];
+const recent = [];
 let nowPlaying;
 
 // Helper functions
-function updateRecentIds() {
+function updateRecent() {
   if (nowPlaying == null) return;
-  recentIds.push(nowPlaying);
-  if (recentIds.length > tooRecent) recentIds.shift();
+  recent.push(nowPlaying);
+  if (recent.length > nRecent) recent.shift();
 }
 function nextTrackRequiredHeavy() {
-  const l = recentIds.length;
+  const l = recent.length;
   if (!l) return false;
-  const half = Math.floor(tooRecent / 2);
+  const half = Math.floor(nRecent / 2);
   if (l >= half * 2) return;
-  const nHeavy = recentIds.filter((id) => {
-    return music.playlist[id].heavy;
-  }).length;
+  const nHeavy = recent.filter(t => t.heavy).length;
   if (nHeavy === half) return false;
   if (l - nHeavy === half) return true;
   // if (recentIds.length in heavyStartScript) {
@@ -126,29 +123,30 @@ function nextTrackRequiredHeavy() {
   // const lastHeavyStatus = lastFewHeavyStatus.pop();
   // if (lastFewHeavyStatus.every(x => x === lastHeavyStatus)) return !lastHeavyStatus;
 }
-function nextTrackId() {
+function nextTrack() {
   if (debug.music.cycle) {
     if (nowPlaying == null) return debug.music.start;
     return (nowPlaying + 1) % nTracks;
   }
   const requiredHeavy = nextTrackRequiredHeavy();
-  let id;
+  let track;
   while (true) {
     const rand = prng.music();
-    id = 0;
+    let id = 0;
     while (cdf[id] < rand) id++;
-    if (recentIds.includes(id)) continue;
-    const {heavy} = music.playlist[id];
+    track = music.playlist[id];
+    if (recent.includes(track)) continue;
+    const {heavy} = track;
     if (heavy === (requiredHeavy ?? heavy)) break;
   }
-  return id;
+  return track;
 }
-function play(id) {
-  const {src, title, artist} = music.playlist[id];
+function play(track) {
+  const {src, title, artist} = track;
   music.element.src = src;
   songElement.textContent = title;
   artistElement.textContent = artist;
-  nowPlaying = id;
+  nowPlaying = track;
   if (music.audioOn) music.element.play();
 };
 
