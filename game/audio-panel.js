@@ -45,7 +45,10 @@ qjs('trex-sounds').append(...trexSoundElements);
 
 // Create raptor sound effect list
 const raptorSoundElements = [];
-for (const {title} of sfx.raptorSounds) {
+const sorted = sfx.raptorSounds.toSorted((a, b) => {
+  return b.freqWeight - a.freqWeight;
+});
+for (const {title} of sorted) {
   const element = template('sound');
   element.dataset.sound = title;
   raptorSoundElements.push(element);
