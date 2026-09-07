@@ -2,6 +2,7 @@ import {qjs, closestData} from './utility.js';
 import {atClick} from './mouse-events.js';
 import {template} from './template.js';
 import {music} from './music.js';
+import {sfx} from './sfx.js';
 
 export const audioPanel = {
   show() {
@@ -19,9 +20,9 @@ export const audioPanel = {
 const section = qjs('audio-panel');
 const musicPanel = qjs('music-panel');
 const playlistPanel = qjs('playlist-panel');
-const playlist = qjs('playlist');
+const sfxPanel = qjs('sfx-panel');
 
-// Create song list
+// Create playlist
 const tracks = [];
 for (const [id, track] of music.playlist.entries()) {
   const element = template('track');
@@ -29,7 +30,27 @@ for (const [id, track] of music.playlist.entries()) {
   element.textContent = track.title;
   tracks.push(element);
 }
-playlist.append(...tracks);
+qjs('playlist').append(...tracks);
+
+// Create T-rex sound effect list
+const trexEntries = Object.entries(sfx.trexSounds);
+const trexSoundElements = [];
+for (const [name, {title}] of trexEntries) {
+  const element = template('sound');
+  element.dataset.sound = title;
+  element.textContent = name;
+  trexSoundElements.push(element);
+}
+qjs('trex-sounds').append(...trexSoundElements);
+
+// Create raptor sound effect list
+const raptorSoundElements = [];
+for (const {title} of sfx.raptorSounds) {
+  const element = template('sound');
+  element.dataset.sound = title;
+  raptorSoundElements.push(element);
+}
+qjs('raptor-sounds').append(...raptorSoundElements);
 
 // Needed for click handler
 function showMusicPanel() {
@@ -46,13 +67,26 @@ function showPlaylist() {
   playlistPanel.inert = false;
 }
 function hidePlaylist() {
-  showMusicPanel();
   playlistPanel.inert = true;
   playlistPanel.style.display = 'none';
+  showMusicPanel();
 }
 function playChosenTrack(id) {
   music.next(music.playlist[id]);
   hidePlaylist();
+}
+function showSfxPanel() {
+  hideMusicPanel();
+  sfxPanel.style.display = '';
+  sfxPanel.inert = false;
+}
+function hideSfxPanel() {
+  sfxPanel.inert = true;
+  sfxPanel.style.display = 'none';
+  showMusicPanel();
+}
+function playChosenSound(id) {
+  console.log(id);
 }
 
 // Dispatch table for click handler
@@ -61,11 +95,15 @@ const dispatch = {
   'choose-track': showPlaylist,
   'hide-audio': () => audioPanel.hide(),
   'hide-playlist': hidePlaylist,
+  'show-sfx': showSfxPanel,
+  'hide-sfx': hideSfxPanel,
 };
 
 // Click handler
 atClick(section, (e) => {
   const trackId = closestData(e, 'track');
   if (trackId) return playChosenTrack(trackId);
+  const soundId = closestData(e, 'sound');
+  if (soundId) return playChosenSound(soundId);
   dispatch[closestData(e)]?.();;
 });
