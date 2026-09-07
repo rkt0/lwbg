@@ -17,9 +17,11 @@ export const music = {
   element: qjs('music-player'),
   audioOn: false,
   allowed: false,
-  next() {
+  offScript: false,
+  next(chosenTrack) {
+    if (chosenTrack) this.offScript = true;
     updateRecent();
-    play(nextTrack());
+    play(chosenTrack ?? nextTrack());
   },
   reconcilePlayPauseState() {
     if (!this.allowed) return;
@@ -59,7 +61,7 @@ export const music = {
 
 // Configuration settings
 const nRecent = 6;
-const heavyStartScript = [false, true, true, false];
+const heavyScript = [false, true, true, false];
 const heavyRunMax = 2;
 
 // State
@@ -76,10 +78,11 @@ function updateRecent() {
   if (recent.length > nRecent) recent.shift();
 }
 function nextTrackRequiredHeavy() {
-  if (recent.length in heavyStartScript) {
-    return heavyStartScript[recent.length];
+  const nRecent = recent.length;
+  if (!music.offScript && (nRecent in heavyScript)) {
+    return heavyScript[nRecent];
   }
-  if (recent.length < heavyRunMax) return;
+  if (nRecent < heavyRunMax) return;
   const possibleHeavyRun =
     recent.slice(-heavyRunMax).map(t => t.heavy);
   const runEnd = possibleHeavyRun.pop();

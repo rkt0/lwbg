@@ -50,6 +50,10 @@ function hidePlaylist() {
   playlistPanel.inert = true;
   playlistPanel.style.display = 'none';
 }
+function playChosenTrack(id) {
+  music.next(music.playlist[id]);
+  hidePlaylist();
+}
 
 // Dispatch table for click handler
 const dispatch = {
@@ -61,7 +65,7 @@ const dispatch = {
 
 // Click handler
 atClick(section, (e) => {
-  const track = closestData(e, 'track');
-  if (track) return console.log(`play ${track}`);
+  const trackId = closestData(e, 'track');
+  if (trackId) return playChosenTrack(trackId);
   dispatch[closestData(e)]?.();;
 });
