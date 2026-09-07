@@ -1,4 +1,4 @@
-import {qjs, rollDie} from './utility.js';
+import {qjs, drawInteger} from './utility.js';
 import {prng} from './prngs.js';
 import {music} from './music.js';
 
@@ -21,7 +21,7 @@ export const sfx = {
   raptor() {
     const {element} = this;
     if (element.src && !element.ended) return;
-    const id = rollDie(raptorIds, prng.sfx);
+    const id = drawInteger(raptorWeights, prng.sfx);
     play(this.raptorSounds[id]);
   },
   trexSounds: {
@@ -45,6 +45,5 @@ function play(sound) {
   sfx.element.play();
 };
 
-const raptorIds = sfx.raptorSounds.flatMap((s, i) => {
-  return Array(s.freqWeight).fill(i);
-});
+const raptorWeights =
+  sfx.raptorSounds.map(sound => sound.freqWeight);
