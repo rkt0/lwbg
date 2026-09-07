@@ -59,8 +59,8 @@ export const music = {
 
 // Configuration settings
 const nRecent = 6;
-// const heavyStartScript = [false, true, true, false];
-// const heavyRunMax = 2;
+const heavyStartScript = [false, true, true, false];
+const heavyRunMax = 2;
 
 // State
 const recent = [];
@@ -76,23 +76,16 @@ function updateRecent() {
   if (recent.length > nRecent) recent.shift();
 }
 function nextTrackRequiredHeavy() {
-  const l = recent.length;
-  if (!l) return false;
-  const half = Math.floor(nRecent / 2);
-  if (l >= half * 2) return;
-  const nHeavy = recent.filter(t => t.heavy).length;
-  if (nHeavy === half) return false;
-  if (l - nHeavy === half) return true;
-  // if (recentIds.length in heavyStartScript) {
-  //   return heavyStartScript[recentIds.length];
-  // }
-  // if (recentIds.length < heavyRunMax) return;
-  // const lastFew = recentIds.slice(-heavyRunMax);
-  // const lastFewHeavyStatus = lastFew.map(id => {
-  //   return music.playlist[id].heavy;
-  // });
-  // const lastHeavyStatus = lastFewHeavyStatus.pop();
-  // if (lastFewHeavyStatus.every(x => x === lastHeavyStatus)) return !lastHeavyStatus;
+  if (recent.length in heavyStartScript) {
+    return heavyStartScript[recent.length];
+  }
+  if (recent.length < heavyRunMax) return;
+  const possibleHeavyRun =
+    recent.slice(-heavyRunMax).map(t => t.heavy);
+  const runEnd = possibleHeavyRun.pop();
+  if (possibleHeavyRun.every(x => x === runEnd)) {
+    return !runEnd;
+  }
 }
 function drawTrack(tracks) {
   const weights = tracks.map(t => t.freqWeight);
