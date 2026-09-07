@@ -6,7 +6,6 @@ class SoundEffect {
   constructor(title, freqWeight = 1) {
     this.src = `audio/sfx/${title}.mp3`;
     this.title = title;
-    // freqWeight should be a positive integer
     this.freqWeight = freqWeight;
   }
 }

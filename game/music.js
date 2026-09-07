@@ -1,6 +1,4 @@
-import {
-  qjs, qd, arrayCumSum, drawInteger,
-} from './utility.js';
+import {qjs, qd, drawInteger} from './utility.js';
 import {prng} from './prngs.js';
 
 class Track {
