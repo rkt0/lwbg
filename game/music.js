@@ -1,4 +1,4 @@
-import {qjs, qd} from './utility.js';
+import {qjs, qd, arrayCumSum} from './utility.js';
 import {prng} from './prngs.js';
 import {debug} from './debug.js';
 
@@ -123,23 +123,40 @@ function nextTrackRequiredHeavy() {
   // const lastHeavyStatus = lastFewHeavyStatus.pop();
   // if (lastFewHeavyStatus.every(x => x === lastHeavyStatus)) return !lastHeavyStatus;
 }
+function drawTrack(tracks) {
+  const weights = tracks.map(t => t.freqWeight);
+  const cumulative = arrayCumSum(weights);
+  const total = cumulative.at(-1);
+  if (!total) return;
+  const rand = prng.music() * total;
+  let id = 0;
+  while (cumulative[id] < rand) id++;
+  return tracks[id];
+}
 function nextTrack() {
   if (debug.music.cycle) {
-    if (nowPlaying == null) return debug.music.start;
-    return (nowPlaying + 1) % nTracks;
+    // This is wrong
+    if (nowPlaying == null) id = debug.music.start;
+    else id = (nowPlaying + 1) % nTracks;
   }
   const requiredHeavy = nextTrackRequiredHeavy();
-  let track;
-  while (true) {
-    const rand = prng.music();
-    let id = 0;
-    while (cdf[id] < rand) id++;
-    track = music.playlist[id];
-    if (recent.includes(track)) continue;
+  const tracks = music.playlist.filter(track => {
+    if (recent.includes(track)) return false;
     const {heavy} = track;
-    if (heavy === (requiredHeavy ?? heavy)) break;
-  }
-  return track;
+    return (heavy === (requiredHeavy ?? heavy));
+  });
+  return drawTrack(tracks) ?? nowPlaying;
+  // let track;
+  // while (true) {
+  //   const rand = prng.music();
+  //   let id = 0;
+  //   while (cdf[id] < rand) id++;
+  //   track = music.playlist[id];
+  //   if (recent.includes(track)) continue;
+  //   const {heavy} = track;
+  //   if (heavy === (requiredHeavy ?? heavy)) break;
+  // }
+  // return track;
 }
 function play(track) {
   const {src, title, artist} = track;
