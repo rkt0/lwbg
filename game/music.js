@@ -1,4 +1,6 @@
-import {qjs, qd, arrayCumSum} from './utility.js';
+import {
+  qjs, qd, arrayCumSum, drawInteger,
+} from './utility.js';
 import {prng} from './prngs.js';
 
 class Track {
@@ -92,13 +94,7 @@ function nextTrackRequiredHeavy() {
 }
 function drawTrack(tracks) {
   const weights = tracks.map(t => t.freqWeight);
-  const cumulative = arrayCumSum(weights);
-  const total = cumulative.at(-1);
-  if (!total) return;
-  const rand = prng.music() * total;
-  let id = 0;
-  while (cumulative[id] < rand) id++;
-  return tracks[id];
+  return tracks[drawInteger(weights, prng.music)];
 }
 function nextTrack() {
   const requiredHeavy = nextTrackRequiredHeavy();

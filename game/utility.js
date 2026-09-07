@@ -90,6 +90,15 @@ export function lerp(v0, v1, progress) {
 export function rollDie(die, prngFn) {
   return die[Math.floor(prngFn() * die.length)];
 }
+export function drawInteger(weights, prngFn) {
+  const cumulative = arrayCumSum(weights);
+  const total = cumulative.at(-1);
+  if (!total) return;
+  const rand = prngFn() * total;
+  let id = 0;
+  while (cumulative[id] < rand) id++;
+  return id;
+}
 export function shuffle(arr, prngFn) {
   const output = [];
   const remaining = arr.slice(0);
