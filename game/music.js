@@ -134,11 +134,6 @@ function drawTrack(tracks) {
   return tracks[id];
 }
 function nextTrack() {
-  if (debug.music.cycle) {
-    // This is wrong
-    if (nowPlaying == null) id = debug.music.start;
-    else id = (nowPlaying + 1) % nTracks;
-  }
   const requiredHeavy = nextTrackRequiredHeavy();
   const tracks = music.playlist.filter(track => {
     if (recent.includes(track)) return false;
