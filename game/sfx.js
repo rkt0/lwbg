@@ -13,18 +13,18 @@ class SoundEffect {
 export const sfx = {
   element: qjs('sfx-player'),
   trexRoar() {
-    play(this.trexSounds.roar);
+    this.play(this.trexSound.roar);
   },
   trexStomp() {
-    play(this.trexSounds.stomp);
+    this.play(this.trexSound.stomp);
   },
   raptor() {
     const {element} = this;
     if (element.src && !element.ended) return;
     const id = drawInteger(raptorWeights, prng.sfx);
-    play(this.raptorSounds[id]);
+    this.play(this.raptorSounds[id]);
   },
-  trexSounds: {
+  trexSound: {
     stomp: new SoundEffect('trex-stomp'),
     roar: new SoundEffect('trex-roar'),
   },
@@ -37,13 +37,20 @@ export const sfx = {
     new SoundEffect('raptor-5', 2),
     new SoundEffect('raptor-6', 2),
   ],
+  soundFromTitle: {},
+  play(sound) {
+    if (!music.audioOn) return;
+    this.element.src = sound.src;
+    this.element.play();
+  },
 };
 
-function play(sound) {
-  if (!music.audioOn) return;
-  sfx.element.src = sound.src;
-  sfx.element.play();
-};
-
+const allSounds = [
+  ...Object.values(sfx.trexSound),
+  ...sfx.raptorSounds,
+];
+for (const sound of allSounds) {
+  sfx.soundFromTitle[sound.title] = sound;
+}
 const raptorWeights =
   sfx.raptorSounds.map(sound => sound.freqWeight);
