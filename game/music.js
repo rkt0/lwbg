@@ -1,6 +1,5 @@
 import {qjs, qd, arrayCumSum} from './utility.js';
 import {prng} from './prngs.js';
-import {debug} from './debug.js';
 
 class Track {
   constructor(title, quality, heavy) {
@@ -21,37 +20,6 @@ export const music = {
   next() {
     updateRecent();
     play(nextTrack());
-    // const {cycle, startAt} = debug.music;
-    // if (cycle) {
-    //   if (isNull(nowPlaying)) play(startAt);
-    //   else play((nowPlaying + 1) % nTracks);
-    //   return;
-    // }
-    // if (!isNull(nowPlaying)) {
-    //   if (recentIds.length === tooRecent) {
-    //     recentIds.shift();
-    //   }
-    //   recentIds.push(nowPlaying);
-    // }
-    // let nextId, okNext;
-    // while (!okNext) {
-    //   const rand = prng.music();
-    //   nextId = 0;
-    //   while (cdf[nextId] < rand) nextId++;
-    //   if (recentIds.includes(nextId)) continue;
-    //   const half = Math.floor(tooRecent / 2);
-    //   const l = recentIds.length;
-    //   const nHeavy = recentIds.filter((e) => {
-    //     return this.playlist[e].heavy
-    //   }).length;
-    //   const nextIsHeavy = this.playlist[nextId].heavy;
-    //   if (l >= half * 2) okNext = true;
-    //   else if (l) {
-    //     okNext = nHeavy === half ? !nextIsHeavy :
-    //       l - nHeavy === half ? nextIsHeavy : true;
-    //   } else okNext = !nextIsHeavy;
-    // }
-    // play(nextId);
   },
   reconcilePlayPauseState() {
     if (!this.allowed) return;
@@ -98,10 +66,13 @@ const nRecent = 6;
 const recent = [];
 let nowPlaying;
 
+// Element references
+const songElement = qd('song');
+const artistElement = qd('artist');
+
 // Helper functions
 function updateRecent() {
-  if (nowPlaying == null) return;
-  recent.push(nowPlaying);
+  if (nowPlaying) recent.push(nowPlaying);
   if (recent.length > nRecent) recent.shift();
 }
 function nextTrackRequiredHeavy() {
@@ -141,17 +112,6 @@ function nextTrack() {
     return (heavy === (requiredHeavy ?? heavy));
   });
   return drawTrack(tracks) ?? nowPlaying;
-  // let track;
-  // while (true) {
-  //   const rand = prng.music();
-  //   let id = 0;
-  //   while (cdf[id] < rand) id++;
-  //   track = music.playlist[id];
-  //   if (recent.includes(track)) continue;
-  //   const {heavy} = track;
-  //   if (heavy === (requiredHeavy ?? heavy)) break;
-  // }
-  // return track;
 }
 function play(track) {
   const {src, title, artist} = track;
@@ -162,18 +122,7 @@ function play(track) {
   if (music.audioOn) music.element.play();
 };
 
-const nTracks = music.playlist.length;
-const cdf = Array(nTracks).fill(0);
-cdf[0] = music.playlist[0].freqWeight;
-for (let i = 1; i < nTracks; i++) {
-  cdf[i] = cdf[i - 1] + music.playlist[i].freqWeight;
-}
-const total = cdf[nTracks - 1];
-for (let i = 0; i < nTracks; i++) cdf[i] /= total;
-
-const songElement = qd('song');
-const artistElement = qd('artist');
-
+// When track ends, advance to next track
 music.element.addEventListener('ended', () => {
   music.next();
 });
