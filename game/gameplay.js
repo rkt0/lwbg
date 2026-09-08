@@ -179,8 +179,7 @@ export const gp = {
   async moveTrex(space, isLast, silent) {
     const [l, t] = pl.trex[space];
     if (!silent) {
-      if (gs.trex === 1) sfx.trexRoar();
-      else sfx.trexStomp();
+      sfx.play(space ? 'trex-stomp' : 'trex-roar');
     }
     const location = {top: `${t}px`, left: `${l}px`};
     const aTime = anim.time.moveTrex;

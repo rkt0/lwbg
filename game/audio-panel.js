@@ -33,12 +33,11 @@ for (const [i, track] of music.playlist.entries()) {
 qjs('playlist').append(...tracks);
 
 // Create T-rex sound effect list
-const trexEntries = Object.entries(sfx.trexSound);
 const trexSoundElements = [];
-for (const [name, {key}] of trexEntries) {
+for (const {key} of sfx.trexSounds) {
   const element = template('sound');
   element.dataset.soundKey = key;
-  element.textContent = name;
+  element.textContent = key.split('-').at(-1);
   trexSoundElements.push(element);
 }
 qjs('trex-sounds').append(...trexSoundElements);
@@ -88,9 +87,6 @@ function hideSfxPanel() {
   sfxPanel.style.display = 'none';
   showMusicPanel();
 }
-function playChosenSound(soundKey) {
-  sfx.play(sfx.soundFromKey[soundKey]);
-}
 
 // Dispatch table for click handler
 const dispatch = {
@@ -107,6 +103,6 @@ atClick(section, (e) => {
   const trackIndex = closestData(e, 'track-index');
   if (trackIndex) return playChosenTrack(trackIndex);
   const soundKey = closestData(e, 'sound-key');
-  if (soundKey) return playChosenSound(soundKey);
+  if (soundKey) return sfx.play(soundKey);
   dispatch[closestData(e)]?.();;
 });
