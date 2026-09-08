@@ -24,9 +24,9 @@ const sfxPanel = qjs('sfx-panel');
 
 // Create playlist
 const tracks = [];
-for (const [id, track] of music.playlist.entries()) {
+for (const [i, track] of music.playlist.entries()) {
   const element = template('track');
-  element.dataset.track = id;
+  element.dataset.trackIndex = i;
   element.textContent = track.title;
   tracks.push(element);
 }
@@ -35,9 +35,9 @@ qjs('playlist').append(...tracks);
 // Create T-rex sound effect list
 const trexEntries = Object.entries(sfx.trexSound);
 const trexSoundElements = [];
-for (const [name, {title}] of trexEntries) {
+for (const [name, {key}] of trexEntries) {
   const element = template('sound');
-  element.dataset.sound = title;
+  element.dataset.soundKey = key;
   element.textContent = name;
   trexSoundElements.push(element);
 }
@@ -48,9 +48,9 @@ const raptorSoundElements = [];
 const sorted = sfx.raptorSounds.toSorted((a, b) => {
   return b.freqWeight - a.freqWeight;
 });
-for (const {title} of sorted) {
+for (const {key} of sorted) {
   const element = template('sound');
-  element.dataset.sound = title;
+  element.dataset.soundKey = key;
   raptorSoundElements.push(element);
 }
 qjs('raptor-sounds').append(...raptorSoundElements);
@@ -74,8 +74,8 @@ function hidePlaylist() {
   playlistPanel.style.display = 'none';
   showMusicPanel();
 }
-function playChosenTrack(id) {
-  music.next(music.playlist[id]);
+function playChosenTrack(index) {
+  music.next(music.playlist[index]);
   hidePlaylist();
 }
 function showSfxPanel() {
@@ -88,8 +88,8 @@ function hideSfxPanel() {
   sfxPanel.style.display = 'none';
   showMusicPanel();
 }
-function playChosenSound(soundTitle) {
-  sfx.play(sfx.soundFromTitle[soundTitle]);
+function playChosenSound(soundKey) {
+  sfx.play(sfx.soundFromKey[soundKey]);
 }
 
 // Dispatch table for click handler
@@ -104,9 +104,9 @@ const dispatch = {
 
 // Click handler
 atClick(section, (e) => {
-  const trackId = closestData(e, 'track');
-  if (trackId) return playChosenTrack(trackId);
-  const soundTitle = closestData(e, 'sound');
-  if (soundTitle) return playChosenSound(soundTitle);
+  const trackIndex = closestData(e, 'track-index');
+  if (trackIndex) return playChosenTrack(trackIndex);
+  const soundKey = closestData(e, 'sound-key');
+  if (soundKey) return playChosenSound(soundKey);
   dispatch[closestData(e)]?.();;
 });

@@ -3,9 +3,9 @@ import {prng} from './prngs.js';
 import {music} from './music.js';
 
 class SoundEffect {
-  constructor(title, freqWeight = 1) {
-    this.src = `audio/sfx/${title}.mp3`;
-    this.title = title;
+  constructor(key, freqWeight = 1) {
+    this.src = `audio/sfx/${key}.mp3`;
+    this.key = key;
     this.freqWeight = freqWeight;
   }
 }
@@ -37,7 +37,7 @@ export const sfx = {
     new SoundEffect('raptor-5', 2),
     new SoundEffect('raptor-6', 2),
   ],
-  soundFromTitle: {},
+  soundFromKey: {},
   play(sound) {
     if (!music.audioOn) return;
     this.element.src = sound.src;
@@ -50,7 +50,7 @@ const allSounds = [
   ...sfx.raptorSounds,
 ];
 for (const sound of allSounds) {
-  sfx.soundFromTitle[sound.title] = sound;
+  sfx.soundFromKey[sound.key] = sound;
 }
 const raptorWeights =
   sfx.raptorSounds.map(sound => sound.freqWeight);
