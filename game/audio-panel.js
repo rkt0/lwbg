@@ -9,12 +9,18 @@ export const audioPanel = {
     if (!music.allowed) return;
     section.style.display = '';
     section.inert = false;
-  },
-  hide() {
-    section.inert = true;
-    section.style.display = 'none';
+    return new Promise((resolve) => {
+      finish = () => {
+        section.inert = true;
+        section.style.display = 'none';
+        resolve();
+      }
+    });
   },
 };
+
+// Must be in this scope
+let finish;
 
 // Element references
 const section = qjs('audio-panel');
@@ -92,7 +98,7 @@ function hideSfxPanel() {
 const dispatch = {
   'next-track': () => music.next(),
   'choose-track': showPlaylist,
-  'hide-audio': () => audioPanel.hide(),
+  'hide-audio': () => finish(),
   'hide-playlist': hidePlaylist,
   'show-sfx': showSfxPanel,
   'hide-sfx': hideSfxPanel,
