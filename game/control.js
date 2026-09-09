@@ -13,11 +13,7 @@ export const control = {
     });
     section.inert = false;
     return new Promise((resolve) => {
-      finish = async () => {
-        section.inert = true;
-        await anim.fade(section, 0, aTime);
-        resolve();
-      };
+      finish = resolve;
     });
   },
   async change(species, level) {
@@ -36,6 +32,9 @@ export const control = {
     continueButton.disabled = false;
   },
 };
+
+// Must be in this scope
+let finish;
 
 // Initialize control menus
 const section = qjs('control');
@@ -66,15 +65,14 @@ for (const menu of qda('control-species')) {
   levelButtons[species] = buttons;
 }
 
-// Must be in this scope
-let finish;
-
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
 
 // Add player control screen click handler
-atClick(section, (e) => {
+atClick(section, async (e) => {
   if (continueButton.contains(e.target)) {
+    section.inert = true;
+    await anim.fade(section, 0, aTime);
     return finish();
   }
   const levelData = closestData(e, 'control-level');
