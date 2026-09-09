@@ -10,11 +10,7 @@ export const audioPanel = {
     section.style.display = '';
     section.inert = false;
     return new Promise((resolve) => {
-      finish = () => {
-        section.inert = true;
-        section.style.display = 'none';
-        resolve();
-      }
+      finish = resolve;
     });
   },
 };
@@ -61,6 +57,11 @@ for (const {key} of sorted) {
 qjs('raptor-sounds').append(...raptorSoundElements);
 
 // Needed for click handler
+function hide() {
+  section.inert = true;
+  section.style.display = 'none';
+  finish();
+}
 function showMusicPanel() {
   musicPanel.style.display = '';
   musicPanel.inert = false;
@@ -98,7 +99,7 @@ function hideSfxPanel() {
 const dispatch = {
   'next-track': () => music.next(),
   'choose-track': showPlaylist,
-  'hide-audio': () => finish(),
+  'hide-audio': hide,
   'hide-playlist': hidePlaylist,
   'show-sfx': showSfxPanel,
   'hide-sfx': hideSfxPanel,
