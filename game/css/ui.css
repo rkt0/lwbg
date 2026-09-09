@@ -58,7 +58,6 @@
   z-index: 3;
 
   .choices {
-    /* grid-template: repeat(3, 1fr) / repeat(2, 1fr); */
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -72,17 +71,16 @@
 .start-options {
   display: grid;
   place-content: center;
-  gap: var(--gap);
-  --lane: 78px;
-  grid-template-columns: repeat(3, var(--lane));
-  grid-template-rows: repeat(3, var(--lane));
+  gap: 1.25em;
+  grid-template-columns: repeat(3, 90px);
+  grid-template-rows: repeat(4, auto);
 
   button {
     grid-column: 1 / -1;
+    padding-block: 0.5em;
 
     &.small {
       grid-column: span 1;
-      text-align: center;
       display: grid;
       place-content: center;
 

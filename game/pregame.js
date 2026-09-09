@@ -12,6 +12,7 @@ import {sb} from './sidebar.js';
 import {toggle} from './toggle.js';
 import {control} from './control.js';
 import {gp} from './gameplay.js';
+import {audioPanel} from './audio-panel.js';
 import {autoSave} from './auto-save.js';
 
 export async function showStartOptions(time = aTime) {
@@ -48,6 +49,7 @@ atClick(dom.start, (e) => {
 const dispatch = {
   'start-new': startNew,
   'load-saved': loadSaved,
+  'show-audio-start': () => audioPanel.show(),
   'load-overwrite': loadOverwrite,
   'load-copy': loadCopy,
 };

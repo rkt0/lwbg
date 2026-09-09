@@ -6,9 +6,10 @@ import {anim} from './animation.js';
 import {pieces} from './pieces.js';
 import {message} from './message.js';
 import {sb} from './sidebar.js';
-import {toggle} from './toggle.js';
 import {control} from './control.js';
 import {gp} from './gameplay.js';
+import {toggle} from './toggle.js';
+import {audioPanel} from './audio-panel.js';
 import {edit} from './edit-mode.js';
 import {autoSave} from './auto-save.js';
 import {showStartOptions} from './pregame.js';
@@ -116,4 +117,5 @@ const dispatch = {
   'save-point': savePoint,
   'change-control': controlInGame,
   'begin-edit': beginEdit,
+  'show-audio-more': () => audioPanel.show(),
 };
