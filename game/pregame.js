@@ -49,7 +49,7 @@ atClick(dom.start, (e) => {
 const dispatch = {
   'start-new': startNew,
   'load-saved': loadSaved,
-  'show-audio-start': () => audioPanel.show(),
+  'show-audio-start': audioPanel,
   'load-overwrite': loadOverwrite,
   'load-copy': loadCopy,
 };

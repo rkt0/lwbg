@@ -4,16 +4,14 @@ import {template} from './template.js';
 import {music} from './music.js';
 import {sfx} from './sfx.js';
 
-export const audioPanel = {
-  show() {
-    if (!music.allowed) return;
-    section.style.display = '';
-    section.inert = false;
-    return new Promise((resolve) => {
-      finish = resolve;
-    });
-  },
-};
+export function audioPanel() {
+  if (!music.allowed) return;
+  section.style.display = '';
+  section.inert = false;
+  return new Promise((resolve) => {
+    finish = resolve;
+  });
+}
 
 // Must be in this scope
 let finish;

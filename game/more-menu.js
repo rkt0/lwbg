@@ -117,5 +117,5 @@ const dispatch = {
   'save-point': savePoint,
   'change-control': controlInGame,
   'begin-edit': beginEdit,
-  'show-audio-more': () => audioPanel.show(),
+  'show-audio-more': audioPanel,
 };
