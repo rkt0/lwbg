@@ -5,23 +5,27 @@ import {anim} from './animation.js';
 import {music} from './music.js';
 import {sfx} from './sfx.js';
 
-export async function audioPanel(scrim) {
+export async function audioPanel(waitForFadeOut) {
   if (!music.allowed) return;
-  await anim.fade(section, 1, anim.time.menuFade);
+  await anim.fade(section, 1, aTime);
   section.inert = false;
+  wait = waitForFadeOut;
   return new Promise((resolve) => {
     finish = resolve;
   });
 }
 
 // Must be in this scope
-let finish;
+let finish, wait;
 
 // Element references
 const section = qjs('audio-panel');
 const musicPanel = qjs('music-panel');
 const playlistPanel = qjs('playlist-panel');
 const sfxPanel = qjs('sfx-panel');
+
+// Animation time for menu fade
+const aTime = anim.time.menuFade;
 
 // Create playlist
 const tracks = [];
@@ -58,7 +62,8 @@ qjs('raptor-sounds').append(...raptorSoundElements);
 // Needed for click handler
 async function hide() {
   section.inert = true;
-  await anim.fade(section, 0, anim.time.menuFade);
+  const fade = anim.fade(section, 0, aTime);
+  if (wait) await fade;
   finish();
 }
 function showMusicPanel() {

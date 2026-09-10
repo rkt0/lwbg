@@ -73,6 +73,11 @@ async function controlInGame() {
   gp.resume();
   gp.handleControlChange();
 }
+async function showAudioPanel() {
+  await moreMenu.hide(false);
+  await audioPanel();
+  gp.resume();
+}
 async function showQuit() {
   moreOptions.inert = true;
   await anim.fade(moreOptions, 0, aTime);
@@ -117,5 +122,5 @@ const dispatch = {
   'save-point': savePoint,
   'change-control': controlInGame,
   'begin-edit': beginEdit,
-  'show-audio-more': audioPanel,
+  'show-audio-more': showAudioPanel,
 };

@@ -237,13 +237,13 @@ export const gp = {
     // Call again to apply zoom center
     zoom.zoomDefault();
   },
-  interrupt(time = anim.time.menuFade) {
+  async interrupt(time = anim.time.menuFade) {
     dom.gameplay.inert = true;
     document.body.style.overflow = 'hidden';
-    anim.fade(scrim, 1, time);
+    await anim.fade(scrim, 1, time);
   },
-  resume(time = anim.time.menuFade) {
-    anim.fade(scrim, 0, time);
+  async resume(time = anim.time.menuFade) {
+    await anim.fade(scrim, 0, time);
     document.body.style.overflow = 'visible';
     dom.gameplay.inert = false;
   },

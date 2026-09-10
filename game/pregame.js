@@ -56,7 +56,7 @@ const dispatch = {
 // Start screen click handlers
 async function startNew() {
   await hideStartOptions();
-  await control.show();
+  await control.show(true);
   if (debug.skipAutoSave) return startGame();
   await showStartHelp('save-introduction');
   let failure;
@@ -92,7 +92,7 @@ async function loadSaved() {
 }
 async function showAudioPanel() {
   await hideStartOptions();
-  await audioPanel();
+  await audioPanel(true);
   showStartOptions();
 }
 async function loadOverwrite() {
@@ -138,7 +138,7 @@ async function startGame(load) {
   gp.initializeView();
   if (load) {
     await Promise.all([ready, control.show()]);
-    gp.resume();
+    await gp.resume();
     gp.handleControlChange();
   } else await ready;
   sb.show();

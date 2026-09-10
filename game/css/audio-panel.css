@@ -2,10 +2,6 @@
   background: none;
   place-items: center;
   z-index: 2;
-
-  .scrim {
-    z-index: -1;
-  }
 }
 
 .music-panel > .choices {

@@ -7,11 +7,12 @@ import {anim} from './animation.js';
 import {ai} from './ai.js';
 
 export const control = {
-  async show() {
+  async show(waitForFadeOut) {
     await anim.fade(section, 1, aTime, {
       display: '',
     });
     section.inert = false;
+    wait = waitForFadeOut;
     return new Promise((resolve) => {
       finish = resolve;
     });
@@ -34,7 +35,7 @@ export const control = {
 };
 
 // Must be in this scope
-let finish;
+let finish, wait;
 
 // Initialize control menus
 const section = qjs('control');
@@ -72,7 +73,8 @@ const aTime = anim.time.menuFade;
 atClick(section, async (e) => {
   if (continueButton.contains(e.target)) {
     section.inert = true;
-    await anim.fade(section, 0, aTime);
+    const fade = anim.fade(section, 0, aTime);
+    if (wait) await fade;
     return finish();
   }
   const levelData = closestData(e, 'control-level');
