@@ -15,9 +15,8 @@ import {gp} from './gameplay.js';
 import {audioPanel} from './audio-panel.js';
 import {autoSave} from './auto-save.js';
 
-export async function showStartOptions(time = aTime) {
+export function showStartOptions(time = aTime) {
   autoSave.clear();
-  // await anim.fade(help, 0, time);
   dom.startOptions.inert = false;
   anim.fade(dom.startOptions, 1, time, {display: ''});
 }
