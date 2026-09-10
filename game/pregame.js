@@ -17,7 +17,7 @@ import {autoSave} from './auto-save.js';
 
 export async function showStartOptions(time = aTime) {
   autoSave.clear();
-  await anim.fade(help, 0, time);
+  // await anim.fade(help, 0, time);
   dom.startOptions.inert = false;
   anim.fade(dom.startOptions, 1, time, {display: ''});
 }
@@ -49,7 +49,7 @@ atClick(dom.start, (e) => {
 const dispatch = {
   'start-new': startNew,
   'load-saved': loadSaved,
-  'show-audio-start': audioPanel,
+  'show-audio-start': showAudioPanel,
   'load-overwrite': loadOverwrite,
   'load-copy': loadCopy,
 };
@@ -60,12 +60,15 @@ async function startNew() {
   await control.show();
   if (debug.skipAutoSave) return startGame();
   await showStartHelp('save-introduction');
+  let failure;
   try {
     await autoSave.createFile();
+  } catch {
+    failure = true;
+  } finally {
+    await hideStartHelp();
   }
-  catch {
-    return showStartOptions();
-  }
+  if (failure) return showStartOptions();
   await showStartHelp('save-created');
   startGame();
 }
@@ -73,17 +76,25 @@ async function loadSaved() {
   if (debug.skipAutoSave) return;
   await hideStartOptions();
   await showStartHelp('load-introduction');
-  hideStartHelp();
+  let failure;
   try {
     await autoSave.selectFileToLoad();
-  }
-  catch (error) {
+  } catch (error) {
+    failure = true;
     if (error.message === 'invalid file') {
+      await hideStartHelp();
       await showStartHelp('load-invalid-file');
     }
-    return showStartOptions();
+  } finally {
+    await hideStartHelp();
   }
+  if (failure) return showStartOptions();
   showFork();
+}
+async function showAudioPanel() {
+  await hideStartOptions();
+  await audioPanel();
+  showStartOptions();
 }
 async function loadOverwrite() {
   autoSave.fh = autoSave.fhLoad;
@@ -100,6 +111,7 @@ async function loadCopy() {
     await autoSave.createFile(true);
   }
   catch {
+    await hideStartHelp();
     return showStartOptions();
   }
   await showStartHelp('save-created');
@@ -145,8 +157,8 @@ async function showStartHelp(templateId) {
   await anim.fade(help, 1, aTime);
   await waitForClick(dom.start);
 }
-function hideStartHelp() {
-  anim.fade(help, 0, aTime);
+async function hideStartHelp() {
+  await anim.fade(help, 0, aTime);
 }
 function showFork() {
   fork.inert = false;

@@ -1,12 +1,13 @@
 import {qjs, closestData} from './utility.js';
 import {atClick} from './mouse-events.js';
 import {template} from './template.js';
+import {anim} from './animation.js';
 import {music} from './music.js';
 import {sfx} from './sfx.js';
 
-export function audioPanel() {
+export async function audioPanel(scrim) {
   if (!music.allowed) return;
-  section.style.display = '';
+  await anim.fade(section, 1, anim.time.menuFade);
   section.inert = false;
   return new Promise((resolve) => {
     finish = resolve;
@@ -55,9 +56,9 @@ for (const {key} of sorted) {
 qjs('raptor-sounds').append(...raptorSoundElements);
 
 // Needed for click handler
-function hide() {
+async function hide() {
   section.inert = true;
-  section.style.display = 'none';
+  await anim.fade(section, 0, anim.time.menuFade);
   finish();
 }
 function showMusicPanel() {
