@@ -66,36 +66,36 @@ async function hide() {
   if (wait) await fade;
   finish();
 }
-function showMusicPanel() {
-  musicPanel.style.display = '';
+async function showMusicPanel() {
+  await anim.fade(musicPanel, 1, aTime);
   musicPanel.inert = false;
 }
-function hideMusicPanel() {
+async function hideMusicPanel() {
   musicPanel.inert = true;
-  musicPanel.style.display = 'none';
+  await anim.fade(musicPanel, 0, aTime);
 }
-function showPlaylist() {
-  hideMusicPanel();
-  playlistPanel.style.display = '';
+async function showPlaylist() {
+  await hideMusicPanel();
+  await anim.fade(playlistPanel, 1, aTime);
   playlistPanel.inert = false;
 }
-function hidePlaylist() {
+async function hidePlaylist() {
   playlistPanel.inert = true;
-  playlistPanel.style.display = 'none';
+  await anim.fade(playlistPanel, 0, aTime);
   showMusicPanel();
 }
 function playChosenTrack(index) {
   music.next(music.playlist[index]);
   hidePlaylist();
 }
-function showSfxPanel() {
-  hideMusicPanel();
-  sfxPanel.style.display = '';
+async function showSfxPanel() {
+  await hideMusicPanel();
+  await anim.fade(sfxPanel, 1, aTime);
   sfxPanel.inert = false;
 }
-function hideSfxPanel() {
+async function hideSfxPanel() {
   sfxPanel.inert = true;
-  sfxPanel.style.display = 'none';
+  await anim.fade(sfxPanel, 0, aTime);
   showMusicPanel();
 }
 
