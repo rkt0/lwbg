@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/tv-matte.css">
 <link rel="stylesheet" href="css/control.css">
 <link rel="stylesheet" href="css/audio-panel.css">
+<link rel="stylesheet" href="css/audio-controls.css">
 <link rel="icon" type="image/png" sizes="64x64"
   href="img/icon/icon-64.png">
 <section data-js="gameplay" inert data-dormant
@@ -216,8 +217,7 @@
   <div data-js="music-panel" class="music-panel info">
     <div data-song class="large-text">&nbsp;</div>
     <div data-artist>&nbsp;</div>
-    <audio data-js="music-player" muted controls>
-    </audio>
+    <audio data-js="music-player" muted></audio>
     <div class="choices">
       <button type="button" data-js="next-track">
         Next Track
@@ -354,6 +354,23 @@
       <use href="img/sprite.svg#-off"/>
     </svg>
   </button>
+</template>
+<template id="audio-controls">
+  <div class="audio-controls">
+    <button type="button" data-js="play-pause">
+      X
+    </button>
+    <div data-time="current" class="time">
+      0:00
+    </div>
+    <div class="progress-container">
+      <div data-progress-fill class="progress-fill">
+      </div>
+    </div>
+    <div data-time="duration" class="time">
+      0:00
+    </div>
+  </div>
 </template>
 <template id="track">
   <div data-track-index="" class="audio-item"></div>

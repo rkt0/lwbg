@@ -2,6 +2,7 @@
   --color-dark: #191818;
   --color-text: var(--color-dark);
   --color-border: var(--color-dark);
+  --color-light: #d5cfca;
   --color-selected: #ffd300;
   --color-selected-fill:
     rgb(from var(--color-selected) r g b / 0.4);
