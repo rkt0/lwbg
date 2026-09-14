@@ -2,7 +2,7 @@
   grid-column: span 2;
   width: 100%;
   display: grid;
-  grid-template-columns: auto auto 1fr auto;
+  grid-template-columns: auto auto 1fr auto auto;
   grid-template-rows: repeat(1, auto);
   gap: 12px;
   place-items: center;
@@ -12,7 +12,14 @@
     --size: 54px;
     width: var(--size);
     height: var(--size);
-    margin-right: 6px;
+
+    &:first-child {
+      margin-right: 6px;
+    }
+
+    &:last-child {
+      margin-left: 6px;
+    }
   }
 
   .progress-container {
