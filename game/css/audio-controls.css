@@ -19,7 +19,7 @@
     width: 100%;
     height: 18px;
     cursor: pointer;
-    border: var(--button-border);
+    outline: var(--button-border);
     background: color-mix(
       in srgb, var(--gray-alpha), var(--color-dark)
     );

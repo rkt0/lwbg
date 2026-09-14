@@ -1,4 +1,5 @@
 import {qd} from './utility.js';
+import {atClick} from './mouse-events.js';
 import {template} from './template.js';
 import {music} from './music.js';
 
@@ -10,7 +11,8 @@ audio.after(controls);
 // Other element references
 const current = qd('time="current"', controls);
 const duration = qd('time="duration"', controls);
-const progressFill = qd('progress-fill', controls);
+const progress = qd('progress', controls);
+const progressFill = progress.firstElementChild;
 
 // Update current time and duration
 function formatTime(seconds) {
@@ -27,4 +29,11 @@ audio.addEventListener('timeupdate', () => {
   current.textContent = formatTime(currentTime);
   const percent = 100 * currentTime / duration;
   progressFill.style.width = `${percent}%`;
+});
+
+// Incorporate these into audio panel click handler
+atClick(progress, (e) => {
+  const rect = progress.getBoundingClientRect();
+  const p = (e.clientX - rect.left) / rect.width;
+  audio.currentTime = p * audio.duration;
 });

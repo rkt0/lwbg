@@ -1,7 +1,18 @@
-function createClickEvent() {
-  return new Event('clickstart', {
-    bubbles: true, cancelable: true,
-  });
+class CustomEvent extends Event {
+  constructor(type, options = {}, data = {}) {
+    super(type, options);
+    Object.assign(this, data);
+  }
+}
+
+const options = {bubbles: true, cancelable: true};
+function createClickEvent(sourceMouseEvent) {
+  let data = {};
+  if (sourceMouseEvent) {
+    const {clientX, clientY} = sourceMouseEvent;
+    data = {clientX, clientY};
+  }
+  return new CustomEvent('clickstart', options, data);
 }
 
 export function click(element) {
@@ -23,5 +34,5 @@ export function waitForClick(element) {
 const mainButton = 0;
 document.addEventListener('mousedown', (e) => {
   if (e.button !== mainButton || !e.isTrusted) return;
-  e.target.dispatchEvent(createClickEvent());
+  e.target.dispatchEvent(createClickEvent(e));
 });
