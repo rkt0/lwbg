@@ -4,13 +4,10 @@
   z-index: 2;
 }
 
-.choices {
-  margin-block: 0.5em;
-}
-
 .music-panel {
   .choices {
     grid-template-columns: repeat(2, 1fr);
+    margin-block: 0.5em;
   }
 }
 
@@ -48,7 +45,7 @@
   }
 
   .choices {
-    margin-top: 1.25em;
+    margin-block: 1.25em 0.5em;
   }
 }
 
