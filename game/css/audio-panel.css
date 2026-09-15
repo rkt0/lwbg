@@ -4,31 +4,19 @@
   z-index: 2;
 }
 
-.music-panel > .choices {
+.choices {
   margin-block: 0.5em;
-  grid-template-columns: repeat(2, 1fr);
 }
 
-audio {
-  display: block;
-  width: 450px; /* should match max of info */
-  margin-block: 1em 1.5em;
-  filter:
-    invert(0.95) hue-rotate(-15deg) saturate(0.4);
-}
-
-.playlist-panel {
-  position: fixed;
-  max-width: unset;
-  z-index: 1;
-  inset: var(--matte, 0);
-  place-self: center;
+.music-panel {
+  .choices {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .audio-list {
-  margin-block: 0.375em 0.875em;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--columns), 1fr);
 }
 
 .audio-item {
@@ -41,18 +29,31 @@ audio {
   }
 }
 
+.playlist-panel {
+  position: fixed;
+  max-width: unset;
+  z-index: 1;
+  inset: var(--matte, 0);
+  place-self: center;
+
+  .audio-list {
+    margin-block: 0.375em 0.875em;
+    --columns: 3;
+  }
+}
+
 .sfx-panel {
   .audio-list {
-    margin-block: 0 calc(1em * 7 / 6);
+    margin-bottom: 0.75em;
   }
 
   .choices {
-    margin-block: 1.5em 0.5em;
+    margin-top: 1.25em;
   }
 }
 
 .trex-sounds {
-  grid-template-columns: repeat(2, 1fr);
+  --columns: 2;
   padding-inline: 20%;
 
   .audio-item {
@@ -61,7 +62,7 @@ audio {
 }
 
 .raptor-sounds {
-  grid-template-columns: repeat(7, 1fr);
+  --columns: 7;
   counter-reset: raptor-sound;
 
   .audio-item::before {
