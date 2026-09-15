@@ -71,31 +71,24 @@ const groupWidth = cssValue('--button-size', {
   element: toggle.groupElement,
 });
 
-// Required since user can change audio via controls
-const audioElements = [music.element, sfx.element];
-function handleVolumeChange() {
-  for (const element of audioElements) {
-    element.muted = this.muted;
-    element.blur();
+// Maintain audio status in consistent state
+music.element.addEventListener('volumechange', () => {
+  if (!sfx.temporary) {
+    sfx.element.muted = music.element.muted;
   }
-  music.audioOn = !this.muted;
+  music.audioOn = !music.element.muted;
   music.reconcilePlayPauseState();
   for (const icon of icons.audio) {
     const isOnIcon = icon.dataset.stateIcon === 'on';
     const makeInactive = isOnIcon !== music.audioOn;
     icon.classList.toggle('inactive', makeInactive);
   }
-}
-for (const element of audioElements) {
-  element.addEventListener(
-    'volumechange', handleVolumeChange,
-  );
-}
-music.element.addEventListener('play', function() {
-  this.muted = false;
 });
-music.element.addEventListener('pause', function() {
-  this.muted = true;
+music.element.addEventListener('play', () => {
+  music.element.muted = false;
+});
+music.element.addEventListener('pause', () => {
+  music.element.muted = true;
 });
 
 // Required since user can leave fullscreen via Escape

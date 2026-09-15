@@ -121,6 +121,6 @@ atClick(section, (e) => {
   const trackIndex = closestData(e, 'track-index');
   if (trackIndex) return playChosenTrack(trackIndex);
   const soundKey = closestData(e, 'sound-key');
-  if (soundKey) return sfx.play(soundKey);
+  if (soundKey) return sfx.play(soundKey, true);
   dispatch[closestData(e)]?.();;
 });

@@ -12,6 +12,7 @@ class SoundEffect {
 
 export const sfx = {
   element: qjs('sfx-player'),
+  temporary: false,
   trexSounds: [
     new SoundEffect('trex-stomp'),
     new SoundEffect('trex-roar'),
@@ -25,8 +26,11 @@ export const sfx = {
     new SoundEffect('raptor-5', 2),
     new SoundEffect('raptor-6', 2),
   ],
-  play(soundKey) {
-    if (!music.audioOn) return;
+  play(soundKey, force) {
+    if (force) {
+      this.temporary = true;
+      this.element.muted = false;
+    } else if (!music.audioOn) return;
     this.element.src = sounds[soundKey].src;
     this.element.play();
   },
@@ -43,3 +47,8 @@ const sounds = Object.fromEntries([
 ].map(sound => [sound.key, sound]));
 const raptorWeights =
   sfx.raptorSounds.map(sound => sound.freqWeight);
+
+sfx.element.addEventListener('ended', () => {
+  sfx.temporary = false;
+  sfx.element.muted = !music.audioOn;
+});
