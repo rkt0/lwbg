@@ -1,11 +1,12 @@
 import {
-  qjs, closestData, camelFromKebab, cssValue,
+  qjs, qda, closestData, camelFromKebab, cssValue,
 } from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
-import {zoom} from './zoom.js';
 import {anim} from './animation.js';
 import {music} from './music.js';
+import './audio-controls.js';
+import {zoom} from './zoom.js';
 import {sfx} from './sfx.js';
 
 export const toggle = {
@@ -112,6 +113,7 @@ document.addEventListener('fullscreenchange', () => {
 
 // Initialize buttons
 const icons = {};
+const sites = [toggle.groupElement, dom.startOptions];
 for (const item of template('toggle-button-group')) {
   const button = template('toggle-button');
   const {value} = item;
@@ -126,12 +128,18 @@ for (const item of template('toggle-button-group')) {
     svg.dataset.stateIcon = which;
   }
   button.classList.add('small');
-  const buttonClone = button.cloneNode(true);
-  icons[camelFromKebab(value)] = [
-    ...button.children, ...buttonClone.children,
-  ];
-  toggle.groupElement.append(button);
-  dom.startOptions.append(buttonClone);
+  const buttons = [button];
+  const buttonIcons = [];
+  const buttonSites = [...sites];
+  if (value === 'audio') {
+    buttonSites.push(...qda('audio-controls'));
+  }
+  for (const site of buttonSites) {
+    const b = buttons.pop() ?? button.cloneNode(true);
+    buttonIcons.push(...b.children);
+    site.append(b);
+  }
+  icons[camelFromKebab(value)] = buttonIcons;
 }
 
 // Audio should be on by default

@@ -84,10 +84,8 @@
       display: grid;
       place-content: center;
 
-      .icon:not(.inactive) {
+      .icon {
         --size: 1.25em;
-        width: var(--size);
-        height: var(--size);
       }
     }
   }
@@ -109,12 +107,6 @@
     border-style: none none solid solid;
     display: grid;
     place-content: center;
-
-    .icon {
-      --size: 24px;
-      width: var(--size);
-      height: var(--size);
-    }
   }
 }
 

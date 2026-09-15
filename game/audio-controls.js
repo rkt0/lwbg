@@ -1,16 +1,17 @@
 import {qd} from './utility.js';
-import {atClick} from './mouse-events.js';
 import {template} from './template.js';
 import {music} from './music.js';
 
 // Initialize controls
 const controls = template('audio-controls');
 const audio = music.element;
+controls.dataset.audioControls = audio.dataset.js;
 audio.after(controls);
 
 // Other element references
 const current = qd('time="current"', controls);
 const duration = qd('time="duration"', controls);
+const restart = qd('restart-audio', controls);
 const progress = qd('progress', controls);
 const progressFill = progress.firstElementChild;
 
@@ -31,9 +32,19 @@ audio.addEventListener('timeupdate', () => {
   progressFill.style.width = `${percent}%`;
 });
 
-// Incorporate these into audio panel click handler
-atClick(progress, (e) => {
-  const rect = progress.getBoundingClientRect();
-  const p = (e.clientX - rect.left) / rect.width;
-  audio.currentTime = p * audio.duration;
-});
+// Needed for click handler
+function seek(e) {
+  let proportion = 0;
+  if (e) {
+    const rect = progress.getBoundingClientRect();
+    proportion = (e.clientX - rect.left) / rect.width;
+  }
+  audio.currentTime = proportion * audio.duration;
+}
+
+// Click handler
+export function handleAudioControlsClick(e) {
+  if (restart.contains(e.target)) return seek();
+  if (progress.contains(e.target)) seek(e);
+  // Button to toggle audio handled in audio-panel.js
+}

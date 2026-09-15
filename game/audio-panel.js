@@ -4,6 +4,10 @@ import {template} from './template.js';
 import {anim} from './animation.js';
 import {music} from './music.js';
 import {sfx} from './sfx.js';
+import {
+  handleAudioControlsClick,
+} from './audio-controls.js';
+import {toggle} from './toggle.js';
 
 export async function audioPanel(waitForFadeOut) {
   if (!music.allowed) return;
@@ -111,6 +115,9 @@ const dispatch = {
 
 // Click handler
 atClick(section, (e) => {
+  if (closestData(e, 'toggle')) return toggle.audio();
+  const controls = closestData(e, 'audio-controls');
+  if (controls) return handleAudioControlsClick(e);
   const trackIndex = closestData(e, 'track-index');
   if (trackIndex) return playChosenTrack(trackIndex);
   const soundKey = closestData(e, 'sound-key');

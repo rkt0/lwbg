@@ -25,6 +25,7 @@ pieces.js
 
 # Level 4
 ai.js
+audio-controls.js
 message.js
 sfx.js
 sidebar.js

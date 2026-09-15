@@ -11,6 +11,11 @@
     --size: 54px;
     width: var(--size);
     height: var(--size);
+
+    .icon {
+      --size: 32px;
+      place-self: center;
+    }
   }
 
   .progress-area {

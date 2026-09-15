@@ -356,9 +356,12 @@
   </button>
 </template>
 <template id="audio-controls">
-  <div class="audio-controls">
-    <button type="button" data-js="restart">
-      X
+  <div data-audio-controls="" class="audio-controls">
+    <button type="button" data-restart-audio
+      title="Restart Track">
+      <svg class="icon">
+        <use href="img/sprite.svg#restart-audio"/>
+      </svg>
     </button>
     <div class="progress-area">
       <div data-time="current" class="time">
@@ -372,9 +375,6 @@
         </div>
       </div>
     </div>
-    <button type="button" data-js="play-pause">
-      X
-    </button>
   </div>
 </template>
 <template id="track">
