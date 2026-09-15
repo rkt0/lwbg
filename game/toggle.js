@@ -76,10 +76,9 @@ const audioElements = [music.element, sfx.element];
 function handleVolumeChange() {
   for (const element of audioElements) {
     element.muted = this.muted;
-    element.volume = this.volume;
     element.blur();
   }
-  music.audioOn = !this.muted && this.volume > 0;
+  music.audioOn = !this.muted;
   music.reconcilePlayPauseState();
   for (const icon of icons.audio) {
     const isOnIcon = icon.dataset.stateIcon === 'on';
