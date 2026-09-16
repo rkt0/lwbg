@@ -29,7 +29,7 @@ audio.addEventListener('timeupdate', () => {
   const {currentTime, duration} = audio;
   current.textContent = formatTime(currentTime);
   const percent = 100 * currentTime / duration;
-  progressFill.style.width = `${percent}%`;
+  progressFill.style.width = `${percent || 0}%`;
 });
 
 // Needed for click handler

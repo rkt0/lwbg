@@ -89,8 +89,10 @@ async function hidePlaylist() {
   showMusicPanel();
 }
 function playChosenTrack(index) {
-  music.next(music.playlist[index]);
+  // Reset progress element to 0 even if audio is off
+  music.element.currentTime = 0;
   hidePlaylist();
+  music.next(music.playlist[index]);
 }
 async function showSfxPanel() {
   await hideMusicPanel();
