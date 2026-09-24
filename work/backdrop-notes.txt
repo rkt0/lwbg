@@ -1,0 +1,25 @@
+72 button
+---------
+14 .gameplay
+18 .hud .sidebar
+ 2 .hud .edit-banner
+ 3 .hud .toggle-button-group
+---------
+ 8 .start
+11 .control
+ 8 .audio-panel
+ 8 .hud .more-menu
+
+
+16 .info
+--------
+ 3 .hud .sidebar
+ 1 .hud .edit-banner
+ 1 .hud &.game-over
+ 1 .hud &.message
+--------
+ 1 .front
+ 2 .start
+ 2 .control
+ 3 .audio-panel
+ 2 .hud .more-menu
