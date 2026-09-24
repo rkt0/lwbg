@@ -52,6 +52,7 @@
 }
 
 .more-menu {
+  background: none;
   display: grid;
   place-content: center;
   pointer-events: auto;

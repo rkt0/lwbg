@@ -136,8 +136,6 @@ function clicked(element, event) {
 atClick(dom.hud, (e) => {
   const isEditBanner = clicked(edit.bannerElement, e);
   if (isEditBanner) return edit.handleBannerClick(e);
-  const isMoreMenu = clicked(moreMenu.element, e);
-  if (isMoreMenu) return moreMenu.handleClick(e);
   const isMessage = clicked(message.element, e);
   if (isMessage) return message.hide();
   const isToggle = clicked(toggle.groupElement, e);

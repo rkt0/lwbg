@@ -23,3 +23,7 @@
  2 .control
  3 .audio-panel
  2 .hud .more-menu
+
+
+3 sections with jungle
+4 sections without jungle

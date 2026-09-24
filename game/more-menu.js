@@ -1,5 +1,7 @@
 import {qjs, closestData} from './utility.js';
-import {waitForClick} from './mouse-events.js';
+import {
+  atClick, waitForClick,
+} from './mouse-events.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
 import {anim} from './animation.js';
@@ -15,28 +17,24 @@ import {autoSave} from './auto-save.js';
 import {showStartOptions} from './pregame.js';
 
 export const moreMenu = {
-  element: qjs('more-menu'),
   isActive() {
-    return this.element.style.display !== 'none';
+    return section.style.display !== 'none';
   },
   async show() {
     gp.interrupt();
     const aOpts = {display: ''};
     anim.fade(moreOptions, 1, 0, aOpts);
-    await anim.fade(this.element, 1, aTime, aOpts);
+    await anim.fade(section, 1, aTime, aOpts);
     moreOptions.inert = false;
   },
   async hide(resumeGameplay = true) {
     moreOptions.inert = true;
     quitOptions.inert = true;
     if (resumeGameplay) gp.resume();
-    await anim.fade(this.element, 0, aTime);
-    for (const child of this.element.children) {
+    await anim.fade(section, 0, aTime);
+    for (const child of section.children) {
       child.style.display = 'none';
     }
-  },
-  handleClick(e) {
-    dispatch[closestData(e)]?.();
   },
 };
 
@@ -44,6 +42,7 @@ export const moreMenu = {
 const aTime = anim.time.menuFade;
 
 // Element references
+const section = qjs('more-menu');
 const moreOptions = qjs('more-options');
 const quitOptions = qjs('quit-options');
 const saveHelp = qjs('manual-save-help');
@@ -124,3 +123,6 @@ const dispatch = {
   'begin-edit': beginEdit,
   'show-audio-more': showAudioPanel,
 };
+
+// Add click handler
+atClick(section, (e) => dispatch[closestData(e)]?.());
