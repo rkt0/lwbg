@@ -9,15 +9,22 @@ import {
 } from './audio-controls.js';
 import {toggle} from './toggle.js';
 
-export async function audioPanel(waitForFadeOut) {
-  if (!music.allowed) return;
-  await anim.fade(section, 1, aTime);
-  section.inert = false;
-  wait = waitForFadeOut;
-  return new Promise((resolve) => {
-    finish = resolve;
-  });
-}
+export const audioPanel = {
+  async show(waitForFadeOut) {
+    if (!music.allowed) return;
+    await anim.fade(section, 1, aTime);
+    musicPanel.inert = false;
+    wait = waitForFadeOut;
+    return new Promise((resolve) => {
+      finish = resolve;
+    });
+  },
+  cancel() {
+    if (!musicPanel.inert) hide();
+    else if (!playlistPanel.inert) hidePlaylist();
+    else if (!sfxPanel.inert) hideSfxPanel();
+  },
+};
 
 // Must be in this scope
 let finish, wait;
@@ -65,7 +72,7 @@ qjs('raptor-sounds').append(...raptorSoundElements);
 
 // Needed for click handler
 async function hide() {
-  section.inert = true;
+  musicPanel.inert = true;
   const fade = anim.fade(section, 0, aTime);
   if (wait) await fade;
   finish();

@@ -42,6 +42,7 @@ function handleConfirmKey() {
 }
 function handleCancelKey() {
   if (moreMenu.isActive()) moreMenu.hide();
+  audioPanel.cancel();
   if (!gp.isActive()) return;
   else if (edit.on || gs.phase === 'move') {
     clickIfOk(qjs('cancel'));
@@ -82,9 +83,6 @@ const dispatch = {
   '_': handleZoomKey,
   '=': handleZoomKey,
   '+': handleZoomKey,
-
-  'x': () => audioPanel.show(),
-  'q': () => audioPanel.hide(),
 };
 
 // Add key handler

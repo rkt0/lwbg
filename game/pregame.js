@@ -92,7 +92,7 @@ async function loadSaved() {
 }
 async function showAudioPanel() {
   await hideStartOptions();
-  await audioPanel(true);
+  await audioPanel.show(true);
   showStartOptions();
 }
 async function loadOverwrite() {

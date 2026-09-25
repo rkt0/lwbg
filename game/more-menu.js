@@ -74,7 +74,7 @@ async function controlInGame() {
 }
 async function showAudioPanel() {
   await moreMenu.hide(false);
-  await audioPanel();
+  await audioPanel.show();
   gp.resume();
 }
 async function showQuit() {
