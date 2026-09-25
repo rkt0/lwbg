@@ -93,15 +93,14 @@ button {
   font: inherit;
   border: var(--button-border);
   background: color-mix(
-    in srgb, var(--blue-alpha), transparent
+    in srgb, var(--blue-alpha), var(--color-jungle)
   );
-  backdrop-filter: var(--blur);
 
-  :where(.start, .control, .more-menu) & {
+  :where(.gameplay, .hud) & {
     background: color-mix(
-      in srgb, var(--blue-alpha), var(--color-jungle)
+      in srgb, var(--blue-alpha), transparent
     );
-    backdrop-filter: none;
+    backdrop-filter: var(--blur);
   }
 
   :where(.gameplay) &.small {
@@ -109,28 +108,27 @@ button {
     width: var(--size);
     height: var(--size);
   }
-}
 
-button:enabled:hover {
-  box-shadow: var(--hover-shadow);
-  color: var(--hover-shadow-text);
-  cursor: pointer;
+  &:enabled:hover {
+    box-shadow: var(--hover-shadow);
+    color: var(--hover-shadow-text);
+    cursor: pointer;
+  }
 }
 
 .info {
   max-width: 450px;
   padding: 1em 1.5em;
-  background: color-mix(
-    in srgb, var(--gray-alpha), transparent
-  );
   border: var(--button-border);
-  backdrop-filter: var(--blur);
+  background: color-mix(
+    in srgb, var(--gray-alpha), var(--color-jungle)
+  );
 
-  :where(.front, .start, .control, .more-menu) & {
+  :where(.hud) & {
     background: color-mix(
-      in srgb, var(--gray-alpha), var(--color-jungle)
+      in srgb, var(--gray-alpha), transparent
     );
-    backdrop-filter: none;
+    backdrop-filter: var(--blur);
   }
 }
 
@@ -173,10 +171,6 @@ p {
   border-style: solid;
   border-color: transparent;
   border-width: var(--matte, 0);
-
-  &.zoomed-out {
-    background: none;
-  }
 }
 
 .icon {
