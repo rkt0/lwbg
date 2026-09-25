@@ -65,7 +65,6 @@ data {
 }
 
 section {
-  background-image: var(--bg-jungle);
   position: fixed;
   z-index: 0;
   box-sizing: border-box;
@@ -75,6 +74,10 @@ section {
   display: grid;
   place-content: center;
   gap: var(--gap);
+}
+
+.jungle {
+  background-image: var(--bg-jungle);
 
   .zoomed-out & {
     background-image: none;

@@ -1,5 +1,4 @@
 .hud {
-  background: none;
   pointer-events: none;
   z-index: 1;
 }
@@ -52,7 +51,6 @@
 }
 
 .more-menu {
-  background: none;
   display: grid;
   place-content: center;
   pointer-events: auto;

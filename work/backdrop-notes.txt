@@ -8,7 +8,7 @@
  8 .start
 11 .control
  8 .audio-panel
- 8 .hud .more-menu
+ 8 .more-menu
 
 
 16 .info
@@ -22,8 +22,4 @@
  2 .start
  2 .control
  3 .audio-panel
- 2 .hud .more-menu
-
-
-3 sections with jungle
-4 sections without jungle
+ 2 .more-menu
