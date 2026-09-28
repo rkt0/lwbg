@@ -83,22 +83,6 @@
   stroke-width: var(--board-border-width);
 }
 
-.building {
-  stroke: var(--color-border);
-  stroke-width: var(--board-border-width);
-  pointer-events: auto;
-
-  &.move {
-    stroke: var(--color-selected);
-    fill: var(--color-selected-fill);
-  }
-
-  &.path {
-    stroke: var(--color-path);
-    fill: rgb(from var(--color-path) r g b / 0.2);
-  }
-}
-
 .raptor-space {
   stroke: var(--color-dino-space);
   stroke-width: var(--board-border-width);
@@ -113,47 +97,4 @@
     stroke: var(--color-path);
     fill: rgb(from var(--color-path) r g b / 0.2);
   }
-}
-
-.raptor-entrance {
-  stroke: var(--color-dino-space);
-  stroke-width: 4px;
-  fill: var(--orange-over-jungle);
-  pointer-events: none;
-}
-
-.jump-land-marker {
-  position: absolute;
-  box-sizing: border-box;
-  width: var(--jump-land-width);
-  height: var(--jump-land-height);
-  border: solid var(--jump-land-border-width)
-    var(--color-border);
-  background: #aa9ead;
-  pointer-events: none;
-  display: grid;
-  place-items: center;
-}
-
-.helo {
-  position: absolute;
-  pointer-events: none;
-}
-
-.debug-labels {
-  top: 0;
-  pointer-events: none;
-  z-index: 4;
-}
-
-.human-space-labels {
-  fill: #00a;
-}
-
-.raptor-point-labels {
-  fill: var(--color-selected);
-}
-
-.raptor-space-labels {
-  fill: var(--color-dino-space);
 }

@@ -22,13 +22,6 @@
   --hover-shadow-text: #000;
 }
 
-@font-face {
-  font-family: Atkinson;
-  src: url("../font/atkinson-bold.ttf")
-    format("truetype");
-  font-weight: bold;
-}
-
 body {
   display: none;
   margin: 0px;
@@ -177,4 +170,26 @@ p {
   --size: 1em;
   width: var(--size);
   height: var(--size);
+}
+
+.expandable {
+  --full-height: 48px;
+
+  &::before {
+    content: attr(data-short);
+    display: inline-block;
+    transform: translateY(var(--vertical-adjust, 0));
+  }
+
+  &:hover {
+    box-sizing: border-box;
+    height: var(--full-height);
+    width: auto;
+    padding-inline: 0.5em;
+
+    &::before {
+      content: attr(data-long);
+      transform: none;
+    }
+  }
 }

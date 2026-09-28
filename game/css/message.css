@@ -1,0 +1,33 @@
+.message {
+  position: fixed;
+  top: var(--matte-top, 0);
+  left: var(--matte-left, 0);
+  right: var(--matte-right, 0);
+  margin-left: auto;
+  margin-right: auto;
+  width: 540px;
+  height: auto;
+  padding: 12px;
+  border-top-style: none;
+  text-wrap: balance;
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  z-index: 1;
+
+  &:hover {
+    box-shadow: var(--hover-shadow);
+    color: transparent;
+    cursor: pointer;
+
+    &::before {
+      content: "Hide Message";
+      position: absolute;
+      color: var(--hover-shadow-text);
+    }
+  }
+
+  &.being-hidden {
+    color: transparent;
+  }
+}

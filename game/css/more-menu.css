@@ -1,0 +1,10 @@
+.more-menu {
+  display: grid;
+  place-content: center;
+  pointer-events: auto;
+  z-index: 3;
+
+  .choices {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

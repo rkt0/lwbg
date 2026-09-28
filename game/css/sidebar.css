@@ -109,21 +109,3 @@
 .unusual-action {
   background: #dc79ffaa;
 }
-
-.edit-banner {
-  position: fixed;
-  margin: var(--matte, 0);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  pointer-events: auto;
-  z-index: 1;
-
-  .banner {
-    box-sizing: border-box;
-    height: var(--button-height);
-    border-style: none solid solid none;
-    padding: 0 1em;
-    place-content: center;
-    line-height: 0.875;
-  }
-}

@@ -1,0 +1,22 @@
+.start-options {
+  display: grid;
+  place-content: center;
+  gap: 1.25em;
+  grid-template-columns: repeat(3, 90px);
+  grid-template-rows: repeat(4, auto);
+
+  button {
+    grid-column: 1 / -1;
+    padding-block: 0.5em;
+
+    &.small {
+      grid-column: span 1;
+      display: grid;
+      place-content: center;
+
+      .icon {
+        --size: 1.25em;
+      }
+    }
+  }
+}
