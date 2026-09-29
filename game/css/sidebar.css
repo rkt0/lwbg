@@ -1,7 +1,6 @@
 :root {
   --sidebar-button-width: 111px;
   --sidebar-button-height: 57px;
-  --zoom-button-size: 36px;
 }
 
 .sidebar {
@@ -49,12 +48,13 @@
 .zoom-button-group {
   display: grid;
   grid-auto-flow: column;
+  --size: 36px;
 
   .zoom-button {
     box-sizing: border-box;
     display: block;
-    height: var(--zoom-button-size);
-    width: var(--zoom-button-size);
+    height: var(--size);
+    width: var(--size);
     border-style: none;
     background: none;
     backdrop-filter: none;
@@ -69,9 +69,8 @@
 .zoom-indicator {
   display: none;
   position: relative;
-  top: calc(0px - var(--zoom-button-size) * 5 / 8);
-  margin-bottom:
-    calc(0px - var(--zoom-button-size) * 5 / 6);
+  top: calc(0px - var(--size) * 5 / 8);
+  margin-bottom: calc(0px - var(--size) * 5 / 6);
 
   .current & {
     display: block;

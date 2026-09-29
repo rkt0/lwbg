@@ -1,3 +1,8 @@
+:root {
+  --jump-land-width: 78px;
+  --jump-land-height: 42px;
+}
+
 .building {
   stroke: var(--color-border);
   stroke-width: var(--board-border-width);
@@ -26,8 +31,7 @@
   box-sizing: border-box;
   width: var(--jump-land-width);
   height: var(--jump-land-height);
-  border: solid var(--jump-land-border-width)
-    var(--color-border);
+  border: solid 3px var(--color-border);
   background: #aa9ead;
   pointer-events: none;
   display: grid;
