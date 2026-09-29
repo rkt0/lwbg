@@ -26,9 +26,6 @@
   }
 
   .edit-turn-die {
-    position: absolute;
-    left: 100%;
-    top: 50%;
     --size: var(--full-height);
     transform: translateY(-50%);
     border-style: solid;
@@ -88,6 +85,12 @@
   place-content: center;
   /* needed since it is already present */
   left: 0;
+
+  .edit-turn-die {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+  }
 }
 
 .roll-display {

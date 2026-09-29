@@ -7,6 +7,12 @@
   width: calc(var(--height) - var(--pad) * 2);
   height: var(--height);
   padding-inline: var(--pad);
+
+  .edit-turn-die {
+    position: relative;
+    left: calc(var(--height) - var(--pad));
+    top: calc(var(--height) / -2);
+  }
 }
 
 .die-human {
