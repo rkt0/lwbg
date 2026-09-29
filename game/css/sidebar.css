@@ -1,6 +1,6 @@
 :root {
-  --button-width: 111px;
-  --button-height: 57px;
+  --sidebar-button-width: 111px;
+  --sidebar-button-height: 57px;
   --zoom-button-size: 36px;
 }
 
@@ -16,13 +16,13 @@
   .info {
     box-sizing: border-box;
     position: relative;
-    width: var(--size, var(--button-width));
+    width: var(--size, var(--sidebar-button-width));
     border-style: none solid solid none;
     padding: 0px;
   }
 
   button {
-    height: var(--size, var(--button-height));
+    height: var(--size, var(--sidebar-button-height));
   }
 
   .edit-turn-die {
@@ -65,7 +65,6 @@
     &.current {
       box-shadow: none;
       cursor: default;
-      color: var(--color-text);
     }
   }
 }

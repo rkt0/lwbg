@@ -52,7 +52,9 @@ const rollDisplay = qjs('roll-display');
 rollDisplay.append(...Object.values(dom.dice));
 
 // Squeeze all faces and set display to none
-const dieWidth = cssValue('--die-content-width');
+const dieWidth = cssValue('width', {
+  element: Object.values(dom.dice).pop(),
+});
 async function initializeFace(face) {
   await document.fonts.ready;
   const copy = face.cloneNode(true);

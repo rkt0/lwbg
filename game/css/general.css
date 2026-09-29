@@ -1,22 +1,7 @@
 :root {
-  --color-dark: #191818;
-  --color-text: var(--color-dark);
-  --color-border: var(--color-dark);
-  --color-light: #d5cfca;
-  --color-selected: #ffd300;
-  --color-selected-fill:
-    rgb(from var(--color-selected) r g b / 0.4);
-  --fg-alpha: 66.7%;
-  --gray-alpha: #bdb8b4 var(--fg-alpha);
-  --blue-alpha: #00adf0 var(--fg-alpha);
-  --orange-alpha: #ff9145 var(--fg-alpha);
-  --color-jungle: #47650b;
-  --orange-over-jungle: color-mix(
-    in srgb, var(--orange-alpha), var(--color-jungle)
-  );
   --button-border: solid 3px var(--color-border);
   --gap: 1.5em;
-  --bg-jungle: url("../img/bg/jungle.png");
+  --jungle: url("../img/bg/jungle.png");
   --blur: blur(6px);
   --hover-shadow: inset 0px 0px 0px 999px #0003;
   --hover-shadow-text: #000;
@@ -27,14 +12,14 @@ body {
   margin: 0px;
   overscroll-behavior: none;
   background: var(--color-dark);
-  color: var(--color-text);
+  color: var(--color-dark);
   text-align: center;
   user-select: none;
   font: bold 24px Atkinson;
   image-rendering: pixelated;
 
   &.zoomed-out {
-    background-image: var(--bg-jungle);
+    background-image: var(--jungle);
     background-size: calc(512px * var(--bg-scale));
   }
 }
@@ -70,7 +55,7 @@ section {
 }
 
 .jungle {
-  background-image: var(--bg-jungle);
+  background-image: var(--jungle);
 
   .zoomed-out & {
     background-image: none;
@@ -94,12 +79,12 @@ button {
       in srgb, var(--blue-alpha), transparent
     );
     backdrop-filter: var(--blur);
-  }
 
-  :where(.gameplay) &.small {
-    --size: 36px;
-    width: var(--size);
-    height: var(--size);
+    &.small {
+      --size: 36px;
+      width: var(--size);
+      height: var(--size);
+    }
   }
 
   &:enabled:hover {

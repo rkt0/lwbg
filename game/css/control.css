@@ -25,7 +25,6 @@
     background: var(--color-selected);
     box-shadow: none;
     cursor: default;
-    color: var(--color-text);
   }
 
   .manual-control {

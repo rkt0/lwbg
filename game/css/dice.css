@@ -1,17 +1,12 @@
-:root {
-  --die-content-width: 60px;
-  --die-content-height: 66px;
-  --die-border-width: 3px;
-}
-
 .die {
   box-sizing: content-box;
-  width: var(--die-content-width);
-  height: var(--die-content-height);
-  padding: 0 3px; /* (dch - dcw) / 2 */
-  border: solid var(--die-border-width)
-    var(--color-border);
+  border: solid 3px var(--color-border);
   border-radius: 12px;
+  --height: 66px;
+  --pad: 3px;
+  width: calc(var(--height) - var(--pad) * 2);
+  height: var(--height);
+  padding-inline: var(--pad);
 }
 
 .die-human {
@@ -25,7 +20,7 @@
 
 .face {
   font-size: 36px;
-  line-height: var(--die-content-height);
+  line-height: var(--height, auto);
   text-transform: uppercase;
 
   &.copy {

@@ -5,9 +5,6 @@
   --raptor-piece-height: 72px;
   --trex-piece-width: 75px;
   --trex-piece-height: 48px;
-  --color-dino-space: #a3061b;
-  --color-dino-highlighted:
-    rgb(from var(--color-dino-space) r g b / 0.8);
 }
 
 .human-piece {

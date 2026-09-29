@@ -108,9 +108,10 @@ for (const element of sbElement.children) {
 }
 
 // Other values
-const buttonWidth = cssValue('--button-width');
 const leftShow = {left: '0px'};
-const leftHide = {left: `-${buttonWidth}px`};
+const leftHide = {
+  left: `-${cssValue('--sidebar-button-width')}px`,
+};
 const bTime = anim.time.buttonSlide;
 const linear = {easing: 'linear'};
 

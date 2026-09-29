@@ -8,7 +8,7 @@
 
   .banner {
     box-sizing: border-box;
-    height: var(--button-height);
+    height: var(--sidebar-button-height);
     border-style: none solid solid none;
     padding: 0 1em;
     place-content: center;

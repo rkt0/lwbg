@@ -26,9 +26,6 @@
   --button-size: 39px;
 
   button {
-    box-sizing: border-box;
-    width: var(--button-size);
-    height: var(--button-size);
     border-style: none none solid solid;
     display: grid;
     place-content: center;
