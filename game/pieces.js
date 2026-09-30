@@ -1,6 +1,9 @@
-import {qd, sequence, shuffle} from './utility.js';
+import {
+  qd, sequence, shuffle, sizeFromStyle, cssValue,
+} from './utility.js';
 import {template} from './template.js';
 import {prng} from './prngs.js';
+import {pl} from './game-objects.js';
 import {bd} from './board-topology.js';
 import {dom} from './dom.js';
 import {debug} from './debug.js';
@@ -52,6 +55,7 @@ export const pieces = {
     }
     this.shuffleFeatures();
     this.addImgs();
+    adjustPieceLocationCoordinates();
   },
 };
 
@@ -110,4 +114,18 @@ function makeRaptorPiece(p) {
   element.dataset.raptorPiece = p;
   dom.gameplay.append(element);
   dom.raptorPiece.push(element);
+}
+
+function adjustPieceLocationCoordinates() {
+  for (const species of Object.keys(pl)) {
+    const [element] = [dom[`${species}Piece`]].flat();
+    const size = sizeFromStyle(element);
+    for (const [i, point] of pl[species].entries()) {
+      point[1] -= size[1] / 2;
+      if (species === 'trex' && i) continue;
+      point[0] -= size[0] / 2;
+    }
+    pl[species].ps = size;
+  }
+  pl.human.margin = cssValue('--board-border-width');
 }

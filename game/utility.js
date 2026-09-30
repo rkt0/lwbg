@@ -138,6 +138,12 @@ export function setSvgSize(svg, size) {
   svg.setAttribute('height', height);
 }
 
+export function sizeFromStyle(element) {
+  const style = getComputedStyle(element);
+  const dimensions = ['width', 'height'];
+  return dimensions.map(d => parseInt(style[d] || 0));
+}
+
 export function cssValue(property, {
   element = document.documentElement, float = false,
 } = {}) {

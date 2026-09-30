@@ -1,6 +1,6 @@
 import {
-  svgElement, cssValue, cssValueWH, cssValueSides, 
-  setSvgSize,
+  svgElement, setSvgSize,
+  cssValue, cssValueWH, cssValueSides, 
 } from './utility.js';
 import {template} from './template.js';
 import {bd} from './board-topology.js';
@@ -216,20 +216,6 @@ addJumps(dom.gameplay, geom.jumpMarkers);
 // Make helicopters
 addExtraSpace(geom.heloCorners);
 addHelos(dom.gameplay, geom.heloCorners);
-
-// Additional piece layout adjustments
-for (const species of Object.keys(pl)) {
-  const pieceSize = cssValueWH(`--${species}-piece`);
-  const offset = pieceSize.map(t => t / 2);
-  if (species === 'trex') offset[0] = 0;
-  for (const point of pl[species]) {
-    point[0] -= offset[0];
-    point[1] -= offset[1];
-  }
-  pl[species].ps = [...pieceSize];
-}
-pl.trex[0][0] -= pl.trex.ps[0] / 2;
-pl.human.margin = cssValue('--board-border-width');
 
 // Set dimensions of board and debug labels
 zoom.boardSize = cssValueWH('--raw-board');

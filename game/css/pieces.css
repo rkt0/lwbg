@@ -1,16 +1,12 @@
 :root {
-  --human-piece-width: 36px;
-  --human-piece-height: 60px;
-  --raptor-piece-width: 144px;
-  --raptor-piece-height: 72px;
   --trex-piece-width: 75px;
   --trex-piece-height: 48px;
 }
 
 .human-piece {
   position: absolute;
-  width: var(--human-piece-width);
-  height: var(--human-piece-height);
+  width: 36px;
+  height: 60px;
   --color-highlight: #008b4bcc;
   z-index: 0;
   --z-index-selected: 3;
@@ -36,8 +32,8 @@
 
 .raptor-piece {
   position: absolute;
-  width: var(--raptor-piece-width);
-  height: var(--raptor-piece-height);
+  width: 144px;
+  height: 72px;
   --color-highlight: var(--color-dino-highlighted);
   z-index: 1;
 
@@ -49,8 +45,8 @@
 
 .trex-piece {
   position: absolute;
-  width: var(--trex-piece-width);
-  height: var(--trex-piece-height);
+  width: 75px;
+  height: 48px;
   --color-highlight: var(--color-dino-highlighted);
   z-index: 1;
 }
