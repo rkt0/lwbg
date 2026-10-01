@@ -63,7 +63,7 @@
   color: #ccc;
   -webkit-text-stroke: 1px var(--color-dark);
   position: absolute;
-  transform: translateY(3.5px);
+  translate: 0 3.5px;
   z-index: 2;
 
   .dead & {

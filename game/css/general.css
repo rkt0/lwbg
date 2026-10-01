@@ -154,7 +154,7 @@ p {
   &::before {
     content: attr(data-short);
     display: inline-block;
-    transform: translateY(var(--vertical-adjust, 0));
+    translate: 0 var(--vertical-adjust, 0);
   }
 
   &:hover {
@@ -165,7 +165,7 @@ p {
 
     &::before {
       content: attr(data-long);
-      transform: none;
+      translate: none;
     }
   }
 }
