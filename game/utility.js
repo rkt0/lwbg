@@ -138,6 +138,20 @@ export function setSvgSize(svg, size) {
   svg.setAttribute('height', height);
 }
 
+export function numericStyles(element, properties) {
+  const style = getComputedStyle(element);
+  const result = {};
+  for (const property of properties) {
+    const raw = style.getPropertyValue(property) || 0;
+    result[property] = parseFloat(raw);
+  }
+  return result;
+}
+export function numberFromStyle(property, element) {
+  const style = getComputedStyle(element);
+  const raw = style.getPropertyValue(property) || 0;
+  return parseFloat(raw);
+}
 export function sizeFromStyle(element) {
   const style = getComputedStyle(element);
   const dimensions = ['width', 'height'];

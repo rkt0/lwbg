@@ -6,6 +6,9 @@
   --raw-board-height: 2232px;
   --human-space-size: 72px;
   --trex-space-size: 24px;
+}
+
+.gameplay {
   --board-border-width: 6px;
 }
 

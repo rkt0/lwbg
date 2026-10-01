@@ -3,6 +3,7 @@
   display: grid;
   place-items: center;
   gap: 12px;
+  outline: none 6px var(--color-selected);
 
   &:is(.raptor-piece, .trex-piece) {
     z-index: 1;
@@ -11,8 +12,7 @@
   }
 
   &.selected {
-    outline: solid var(--board-border-width)
-      var(--color-selected);
+    outline-style: solid;
   }
 
   img {

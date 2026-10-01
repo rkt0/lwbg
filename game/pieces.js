@@ -1,5 +1,5 @@
 import {
-  qd, sequence, shuffle, sizeFromStyle, cssValue,
+  qd, sequence, shuffle, numericStyles,
 } from './utility.js';
 import {template} from './template.js';
 import {prng} from './prngs.js';
@@ -117,13 +117,17 @@ function makeRaptorPiece(p) {
 function adjustPieceLocationCoordinates() {
   for (const species of Object.keys(pl)) {
     const [element] = [dom[`${species}Piece`]].flat();
-    const size = sizeFromStyle(element);
+    const {
+      width, height, 'outline-width': margin,
+    } = numericStyles(element, [
+      'width', 'height', 'outline-width',
+    ]);
     for (const [i, point] of pl[species].entries()) {
-      point[1] -= size[1] / 2;
+      point[1] -= height / 2;
       if (species === 'trex' && i) continue;
-      point[0] -= size[0] / 2;
+      point[0] -= width / 2;
     }
-    pl[species].ps = size;
+    pl[species].ps = [width, height];
+    if (species === 'human') pl.human.margin = margin;
   }
-  pl.human.margin = cssValue('--board-border-width');
 }
