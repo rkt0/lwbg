@@ -27,11 +27,10 @@
   <svg data-js="board">
     <g data-js="raptor-space-group"></g>
   </svg>
-  <div data-trex-piece class="trex-piece">
-    <img src="img/trex/trex.png"
-      class="trex-component base">
+  <div data-trex-piece class="piece trex-piece">
+    <img src="img/trex/trex.png">
     <img src="img/trex/shadow-trex.png"
-      class="trex-component shadow">
+      class="shadow">
     <div data-js="trex-edit" class="trex-edit">
       <data value="-1">⬆</data>
       <data value="+1">⬇</data>
@@ -281,7 +280,7 @@
   <div data-trex-space="" class="trex-space"></div>
 </template>
 <template id="human-piece">
-  <div class="human-piece">
+  <div class="piece human-piece">
     <div class="dead-marker">🕱</div>
     <button type="button" data-dormant data-kill=""
       data-short="🕱" data-long="Kill Human" disabled
@@ -290,7 +289,7 @@
   </div>
 </template>
 <template id="raptor-piece">
-  <div class="raptor-piece"></div>
+  <div class="piece raptor-piece"></div>
 </template>
 <template id="jump-land-marker">
   <div class="jump-land-marker"></div>

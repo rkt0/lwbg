@@ -1,74 +1,59 @@
-.human-piece {
+.piece {
   position: absolute;
-  width: 36px;
-  height: 60px;
-  --color-highlight: #008b4bcc;
-  z-index: 0;
-  --z-index-selected: 3;
   display: grid;
-  grid-template: 100% auto / 100%;
   place-items: center;
   gap: 12px;
 
-  &.selected {
-    outline: solid var(--board-border-width)
-      var(--color-selected);
-    z-index: var(--z-index-selected);
+  &:is(.raptor-piece, .trex-piece) {
+    z-index: 1;
+    --color-highlight: 
+      rgb(from var(--color-dino-space) r g b / 0.8);
   }
-
-  &.on-selected {
-    z-index: var(--z-index-selected);
-  }
-
-  &.dead {
-    --color-highlight: #aaac;
-  }
-
-  &.dead:not(.selected) {
-    z-index: 2;
-  }
-}
-
-.raptor-piece {
-  position: absolute;
-  width: 144px;
-  height: 72px;
-  --color-highlight: var(--color-dino-highlighted);
-  z-index: 1;
-  display: grid;
-  place-items: center;
 
   &.selected {
     outline: solid var(--board-border-width)
       var(--color-selected);
   }
-}
 
-.trex-piece {
-  position: absolute;
-  width: 75px;
-  height: 48px;
-  --color-highlight: var(--color-dino-highlighted);
-  z-index: 1;
-  display: grid;
-  grid-auto-flow: column;
-}
-
-.human-component {
-  margin: 0 0 1px 1px;
-  grid-area: 1 / 1;
-}
-
-.raptor-component {
-  grid-area: 1 / 1;
-}
-
-.trex-component {
-  grid-area: 1 / 1;
+  img {
+    grid-area: 1 / 1;
+  }
 }
 
 .shadow {
   z-index: 1;
+}
+
+.human-piece {
+  width: 36px;
+  height: 60px;
+  z-index: 0;
+  --color-highlight: #008b4bcc;
+  grid-template: 100% auto / 100%;
+
+  &.dead {
+    --color-highlight: #aaac;
+    z-index: 2;
+  }
+
+  &:is(.selected, .on-selected) {
+    z-index: 3;
+  }
+
+  img {
+    margin: 0 0 1px 1px;
+  }
+}
+
+.raptor-piece {
+  width: 144px;
+  height: 72px;
+}
+
+.trex-piece {
+  width: 75px;
+  height: 48px;
+  grid-auto-flow: column;
 }
 
 .dead-marker {
@@ -92,7 +77,6 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding-left: 12px;
 }
 
 .kill {

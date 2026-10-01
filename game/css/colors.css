@@ -15,6 +15,4 @@
   );
   --color-path: #a28600;
   --color-dino-space: #a3061b;
-  --color-dino-highlighted:
-    rgb(from var(--color-dino-space) r g b / 0.8);
 }

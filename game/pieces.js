@@ -70,12 +70,11 @@ function addHumanImgs() {
     for (const [piece, id] of ids.entries()) {
       const imgB = document.createElement('img');
       imgB.src = `img/human/${f}/${f}-${id}.png`;
-      imgB.classList.add('human-component', f);
       const imgS = document.createElement('img');
       imgS.src = `img/human/shadow/shadow-${f}${
         f === 'hat' ? `_${hatShadow[id]}` : ''
       }.png`;
-      imgS.classList.add('human-component', 'shadow');
+      imgS.classList.add('shadow');
       dom.humanPiece[piece].append(imgB, imgS);
       dom.variableImages.push(imgB, imgS);
     }
@@ -91,10 +90,9 @@ function addRaptorImgs() {
     }
     const imgB = document.createElement('img');
     imgB.src = `img/raptor/raptor-${idS}-${idC}.png`;
-    imgB.classList.add('raptor-component');
     const imgS = document.createElement('img');
     imgS.src = `img/raptor/shadow-raptor-${idS}.png`;
-    imgS.classList.add('raptor-component', 'shadow');
+    imgS.classList.add('shadow');
     dom.raptorPiece[piece].append(imgB, imgS);
     dom.variableImages.push(imgB, imgS);
   }
