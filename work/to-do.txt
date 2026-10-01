@@ -1,3 +1,4 @@
 reorganize/rename css
 fix weird horizontal line in jungle image
 refactor hud slide animations
+css text-box-trim
