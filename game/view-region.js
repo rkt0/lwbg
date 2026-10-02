@@ -11,23 +11,24 @@ import {anim} from './animation.js';
 function movePlanRegion() {
   if (gs.turn === 'trex') return trexMoveRegion();
   const corners = mv.plan.map(s => pl[gs.turn][s]);
-  const [pw, ph] = pl[gs.turn].ps;
+  const {halfWidth, halfHeight} = pl[gs.turn];
   const regions = corners.map(([x, y]) => ({
-    left: x, right: x + pw, top: y, bottom: y + ph,
+    left: x - halfWidth, right: x + halfWidth,
+    top: y - halfHeight, bottom: y + halfHeight,
   }));
   return boundingBox(...regions);
 };
 function trexMoveRegion() {
   const [oldL, oldT] = pl.trex[gs.trex];
   const [newL, newT] = pl.trex[gs.trex - 1];
-  const [pw, ph] = pl.trex.ps;
+  const {halfWidth, halfHeight} = pl.trex;
   const pieceRegionOld = {
-    left: oldL, right: oldL + pw,
-    top: oldT, bottom: oldT + ph,
+    left: oldL - halfWidth, right: oldL + halfWidth,
+    top: oldT - halfHeight, bottom: oldT + halfHeight,
   };
   const pieceRegionNew = {
-    left: newL, right: newL + pw,
-    top: newT, bottom: newT + ph,
+    left: newL - halfWidth, right: newL + halfWidth,
+    top: newT - halfHeight, bottom: newT + halfHeight,
   };
   const elementOld = dom.trexSpace[gs.trex];
   const elementNew = gs.trex === 1 ?

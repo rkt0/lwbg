@@ -55,7 +55,8 @@ export const pieces = {
     }
     this.shuffleFeatures();
     this.addImgs();
-    adjustPieceLocationCoordinates();
+    storePieceSizes();
+    adjustTrexCoordinates();
   },
 };
 
@@ -114,7 +115,7 @@ function makeRaptorPiece(p) {
   dom.raptorPiece.push(element);
 }
 
-function adjustPieceLocationCoordinates() {
+function storePieceSizes() {
   for (const species of Object.keys(pl)) {
     const [element] = [dom[`${species}Piece`]].flat();
     const {
@@ -122,12 +123,14 @@ function adjustPieceLocationCoordinates() {
     } = numericStyles(element, [
       'width', 'height', 'outline-width',
     ]);
-    for (const [i, point] of pl[species].entries()) {
-      point[1] -= height / 2;
-      if (species === 'trex' && i) continue;
-      point[0] -= width / 2;
-    }
-    pl[species].ps = [width, height];
-    if (species === 'human') pl.human.margin = margin;
+    pl[species].halfWidth = width / 2;
+    pl[species].halfHeight = height / 2;
+    if (species !== 'human') continue;
+    pl.human.cellWidth = width + margin;
+  }
+}
+function adjustTrexCoordinates() {
+  for (const [i, point] of pl.trex.entries()) {
+    if (i) point[0] += pl.trex.halfWidth;
   }
 }

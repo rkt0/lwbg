@@ -1,5 +1,6 @@
 .piece {
   position: absolute;
+  translate: -50% -50%;
   display: grid;
   place-items: center;
   gap: 12px;

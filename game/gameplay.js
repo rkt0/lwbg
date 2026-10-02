@@ -44,14 +44,13 @@ export const gp = {
   adjustHumanPositions() {
     const bldgs = [...bd.bldgHumanSpaces];
     for (const space of [...bldgs, bd.humanDead]) {
-      const occupants = hPiecesOn(space);
-      if (!occupants.length) continue;
-      const sep = pl.human.ps[0] + (
-        space === bd.humanDead ? 0 : pl.human.margin
-      );
-      const offset = (occupants.length - 1) * sep / 2;
-      for (const [i, p] of occupants.entries()) {
-        const adj = sep * i - offset;
+      const pieces = hPiecesOn(space);
+      if (!pieces.length) continue;
+      const delta = space === bd.humanDead ?
+        pl.human.halfWidth * 2 : pl.human.cellWidth;
+      const offset = (pieces.length - 1) * delta / 2;
+      for (const [i, p] of pieces.entries()) {
+        const adj = delta * i - offset;
         const l = pl.human[space][0] + adj;
         const location = {left: `${l}px`};
         const aTime = anim.time.adjustHuman;
