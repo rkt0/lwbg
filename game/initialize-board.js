@@ -1,6 +1,6 @@
 import {
   svgElement, setSvgSize,
-  cssValue, cssValueWH, cssValueSides, 
+  numericStyles, cssValueWH, cssValueSides, 
 } from './utility.js';
 import {template} from './template.js';
 import {bd} from './board-topology.js';
@@ -96,7 +96,7 @@ for (const space of Object.keys(geom.adjustRaptor)) {
 for (const [s, pts] of raptorSpacePoints.entries()) {
   const element = svgElement('polygon');
   element.setAttribute('points', pts.join(' '));
-  element.classList.add('raptor-space');
+  element.classList.add('space', 'raptor-space');
   element.dataset.raptorSpace = s;
   dom.raptorSpaceGroup.append(element);
   dom.raptorSpace.push(element);
@@ -110,13 +110,12 @@ if (debug.boardLabels.raptorSpace) {
 
 // Make human spaces
 addExtraSpace(geom.humanSpaces);
-const humanSpaceSize = cssValue('--human-space-size');
 for (const [
   space, [x, y],
 ] of geom.humanSpaces.entries()) {
   const element = template('human-space');
-  element.style.left = `${x - humanSpaceSize / 2}px`;
-  element.style.top = `${y - humanSpaceSize / 2}px`;
+  element.style.left = `${x}px`;
+  element.style.top = `${y}px`;
   element.dataset.humanSpace = space;
   dom.gameplay.append(element);
   dom.humanSpace.push(element);
@@ -145,23 +144,24 @@ for (const edge of bd.humanEdges) {
 
 // Make T-rex spaces
 addExtraSpace(geom.trexSpaces);
-const trexSpaceSize = cssValue('--trex-space-size');
+let trexSpaceHalfWidth = 0;
 for (const [
   space, [x, y],
 ] of geom.trexSpaces.entries()) {
   const element = template('trex-space');
-  element.style.left = `${x - trexSpaceSize / 2}px`;
-  element.style.top = `${y - trexSpaceSize / 2}px`;
+  element.style.left = `${x}px`;
+  element.style.top = `${y}px`;
   element.dataset.trexSpace = space;
   dom.gameplay.append(element);
   dom.trexSpace.push(element);
-  pl.trex.push([x + trexSpaceSize / 2, y]);
+  if (space && !trexSpaceHalfWidth) {
+    const {width} = numericStyles(element, ['width']);
+    trexSpaceHalfWidth = width / 2;
+  }
+  pl.trex.push([x + trexSpaceHalfWidth, y]);
 }
 dom.trexSpace[0].remove();
 dom.trexSpace[0] = null;
-// Below is ok here since values represent
-// piece location centers that will only
-// be adjusted to top-left corners later
 pl.trex[0] = [...pl.raptor[bd.bldgRaptorSpaces[
   bd.bldgHumanSpaces.indexOf(bd.humanStart)
 ]]];

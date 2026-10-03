@@ -4,8 +4,6 @@
   --extra-space-bottom: 324px;
   --raw-board-width: 4176px;
   --raw-board-height: 2232px;
-  --human-space-size: 72px;
-  --trex-space-size: 24px;
 }
 
 .gameplay {
@@ -26,18 +24,23 @@
   );
 }
 
-.human-space {
+div.space {
   position: absolute;
   box-sizing: border-box;
-  width: var(--human-space-size);
-  height: var(--human-space-size);
-  background: #929e74;
+  width: var(--size);
+  height: var(--size);
+  translate: -50% -50%;
   border: solid var(--board-border-width)
-    var(--color-default, var(--color-border));
+    var(--color-border);
+}
+
+.human-space {
+  --size: 72px;
+  background: #929e74;
   border-radius: 50%;
 
   .zoomed-out & {
-    --color-default: var(--color-light);
+    border-color: var(--color-light);
   }
 
   &.move,
@@ -55,21 +58,16 @@
 }
 
 .trex-space {
-  position: absolute;
-  box-sizing: border-box;
-  width: var(--trex-space-size);
-  height: var(--trex-space-size);
+  --size: 24px;
   background: var(--color-dino-space);
-  border: solid var(--board-border-width)
-    var(--color-border);
 }
 
 .human-edge {
-  stroke: var(--color-default, var(--color-border));
+  stroke: var(--color-border);
   stroke-width: var(--board-border-width);
 
   .zoomed-out & {
-    --color-default: var(--color-light);
+    stroke: var(--color-light);
   }
 
   &.path {
