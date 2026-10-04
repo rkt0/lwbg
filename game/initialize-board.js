@@ -60,7 +60,9 @@ for (let s = 0; s < bd.nRaptorSpaces; s++) {
 }
 
 // Extra space at edges of board
-const extraSpace = cssValueSides('--extra-space');
+const extraSpace = cssValueSides('--extra-space', {
+  element: dom.gameplay,
+});
 function addExtraSpace(pts, full) {
   for (const point of pts) {
     if (!point) continue;
@@ -218,7 +220,9 @@ addExtraSpace(geom.heloCorners);
 addHelos(dom.gameplay, geom.heloCorners);
 
 // Set dimensions of board and debug labels
-zoom.boardSize = cssValueWH('--raw-board');
+zoom.boardSize = cssValueWH('--raw-board', {
+  element: dom.gameplay,
+});
 addExtraSpace([zoom.boardSize], true);
 setSvgSize(dom.board, zoom.boardSize);
 for (const svg of dom.debugLabelSvg) {

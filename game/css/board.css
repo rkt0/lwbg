@@ -1,17 +1,10 @@
-:root {
+.gameplay {
+  position: absolute;
   --extra-space-left: 432px;
   --extra-space-top: 324px;
   --extra-space-bottom: 324px;
   --raw-board-width: 4176px;
   --raw-board-height: 2232px;
-}
-
-.gameplay {
-  --board-border-width: 6px;
-}
-
-.full-board {
-  position: absolute;
   width: calc(
     var(--raw-board-width) +
     var(--extra-space-left, 0px) +
@@ -22,6 +15,7 @@
     var(--extra-space-top, 0px) +
     var(--extra-space-bottom, 0px)
   );
+  --board-border-width: 6px;
 }
 
 div.space {
