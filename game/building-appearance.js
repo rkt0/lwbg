@@ -1,4 +1,4 @@
-import {svgElement, cssValueWH} from './utility.js';
+import {svgElement} from './utility.js';
 import {template} from './template.js';
 
 export function addBldgBgs(svg) {
@@ -78,11 +78,10 @@ for (let i = 0; i < nRays; i++) {
   );
 }
 
-const [jumpW, jumpH] = cssValueWH('--jump-land');
 function addJumpMarker(container, [x, y], text) {
   const element = template('jump-land-marker');
   element.append(text);
-  element.style.left = `${x - jumpW / 2}px`;
-  element.style.top = `${y - jumpH / 2}px`;
+  element.style.left = `${x}px`;
+  element.style.top = `${y}px`;
   container.append(element);
 }

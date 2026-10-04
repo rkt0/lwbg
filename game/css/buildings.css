@@ -1,8 +1,3 @@
-:root {
-  --jump-land-width: 78px;
-  --jump-land-height: 42px;
-}
-
 .building {
   stroke: var(--color-border);
   stroke-width: var(--board-border-width);
@@ -29,8 +24,9 @@
 .jump-land-marker {
   position: absolute;
   box-sizing: border-box;
-  width: var(--jump-land-width);
-  height: var(--jump-land-height);
+  width: 78px;
+  height: 42px;
+  translate: -50% -50%;
   border: solid 3px var(--color-border);
   background: #aa9ead;
   pointer-events: none;
