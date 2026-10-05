@@ -1,6 +1,5 @@
 import {
-  svgElement, setSvgSize,
-  numericStyles, cssValueWH, cssValueSides, 
+  svgElement, setSvgSize, numericStyles, 
 } from './utility.js';
 import {template} from './template.js';
 import {bd} from './board-topology.js';
@@ -59,24 +58,7 @@ for (let s = 0; s < bd.nRaptorSpaces; s++) {
   bd.raptorChoices.enter.push(enterChoices);
 }
 
-// Extra space at edges of board
-const extraSpace = cssValueSides('--extra-space', {
-  element: dom.gameplay,
-});
-function addExtraSpace(pts, full) {
-  for (const point of pts) {
-    if (!point) continue;
-    point[0] += extraSpace.left;
-    point[1] += extraSpace.top;
-    if (full) {
-      point[0] += extraSpace.right;
-      point[1] += extraSpace.bottom;
-    }
-  }
-}
-
 // Get coordinates of raptor spaces
-addExtraSpace(geom.raptorPoints);
 const raptorSpacePoints = geom.raptorSpaces.map(
   ptIds => ptIds.map(id => geom.raptorPoints[id])
 );
@@ -111,7 +93,6 @@ if (debug.boardLabels.raptorSpace) {
 }
 
 // Make human spaces
-addExtraSpace(geom.humanSpaces);
 for (const [
   space, [x, y],
 ] of geom.humanSpaces.entries()) {
@@ -145,7 +126,6 @@ for (const edge of bd.humanEdges) {
 }
 
 // Make T-rex spaces
-addExtraSpace(geom.trexSpaces);
 let trexSpaceHalfWidth = 0;
 for (const [
   space, [x, y],
@@ -182,9 +162,10 @@ for (let i = 0; i < bd.trexStart; i++) {
   dom.board.append(line);
 }
 
-// Make entrance markers
-addExtraSpace(geom.entranceMarkers);
+// Make other board items
 addEntrances(dom.board, geom.entranceMarkers);
+addJumps(dom.gameplay, geom.jumpMarkers);
+addHelos(dom.gameplay, geom.heloCorners);
 
 // Make buildings
 addBldgBgs(dom.board);
@@ -210,24 +191,11 @@ for (const [i, bg] of geom.bldgBgId.entries()) {
   pl.human[hSpace] = [...pl.raptor[rSpace]];
 }
 
-// Make jump markers
-addExtraSpace(geom.jumpMarkers.jump);
-addExtraSpace(geom.jumpMarkers.land);
-addJumps(dom.gameplay, geom.jumpMarkers);
-
-// Make helicopters
-addExtraSpace(geom.heloCorners);
-addHelos(dom.gameplay, geom.heloCorners);
-
 // Set dimensions of board and debug labels
-zoom.boardSize = cssValueWH('--raw-board', {
-  element: dom.gameplay,
-});
-addExtraSpace([zoom.boardSize], true);
+dom.gameplay.style.width = `${geom.boardSize[0]}px`;
+dom.gameplay.style.height = `${geom.boardSize[1]}px`;
+zoom.boardSize = geom.boardSize;
 setSvgSize(dom.board, zoom.boardSize);
 for (const svg of dom.debugLabelSvg) {
   setSvgSize(svg, zoom.boardSize);
 }
-
-// Set initial view
-addExtraSpace([geom.initialViewCenter]);

@@ -1,5 +1,23 @@
+const extraSpace = {left: 432, top: 324, bottom: 324};
+function coordinate(point) {
+  if (!point) return;
+  const {left = 0, top = 0} = extraSpace;
+  return [point[0] + left, point[1] + top];
+}
+function coordinateList(...points) {
+  return points.map(coordinate);
+}
+function sizeWithSpace([width, height]) {
+  const {
+    left = 0, right = 0, top = 0, bottom = 0,
+  } = extraSpace;
+  return [
+    width + left + right, height + top + bottom,
+  ];
+}
+
 export const geom = {
-  raptorPoints: [
+  raptorPoints: coordinateList(
     [ 324,   72],
     [ 475,   72],
     [1025,   72],
@@ -170,7 +188,7 @@ export const geom = {
     // 144
     [1944, 1085],
     [1534, 1525],
-  ],
+  ),
   raptorSpaces: [
     [0, 1, 11, 10, 9],
     [1, 2, 16, 11],
@@ -266,7 +284,7 @@ export const geom = {
     // center, end, start
     9, 10, 8,
   ],
-  humanSpaces: [
+  humanSpaces: coordinateList(
     [ 536, 1116],
     [ 624,  904],
     [ 565,  782],
@@ -394,8 +412,8 @@ export const geom = {
     [3948, 1210],
     // 108
     [3924, 1859],
-  ],
-  trexSpaces: [
+  ),
+  trexSpaces: coordinateList(
     [ 213, 1116],
     [ 213, 1263],
     [ 213, 1347],
@@ -409,8 +427,8 @@ export const geom = {
     [ 213, 1935],
     [ 213, 2019],
     [ 213, 2103],
-  ],
-  entranceMarkers: [
+  ),
+  entranceMarkers: coordinateList(
     [ 710,  517],
     [1392,  486],
     [1962,  580],
@@ -419,11 +437,14 @@ export const geom = {
     [1789, 1990],
     [2050, 1730],
     [2775, 1765],
-  ],
+  ),
   jumpMarkers: {
-    jump: [[1108, 592], [1756, 1561]],
-    land: [[1446, 592], [2104, 1561]],
+    jump: coordinateList([1108, 592], [1756, 1561]),
+    land: coordinateList([1446, 592], [2104, 1561]),
   },
-  heloCorners: [[3607,  920], [3607, 1229]],
-  initialViewCenter: [414, 1116],
+  heloCorners: coordinateList(
+    [3607,  920], [3607, 1229]
+  ),
+  initialViewCenter: coordinate([414, 1116]),
+  boardSize: sizeWithSpace([4176, 2232]),
 };

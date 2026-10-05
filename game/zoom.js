@@ -1,12 +1,13 @@
 import {qjs} from './utility.js';
 import {template} from './template.js';
+import {geom} from './board-geometry.js';
 import {dom} from './dom.js';
 import {tvMatte} from './tv-matte.js';
 import {anim} from './animation.js';
 
 export const zoom = {
   factorCurrent: null,
-  center: {},
+  center: geom.initialViewCenter,
   zoomOut() {
     const [bw, bh] = this.boardSize;
     const [wwm, whm] = tvMatte.windowWHMatted();
@@ -38,24 +39,24 @@ export const zoom = {
     const matte = tvMatte.current();
     const shiftX = wwm / 2 + matte.left;
     const shiftY = whm / 2 + matte.top;
-    zoom.center = {
-      left: (scrollX + shiftX) / this.factorCurrent,
-      top: (scrollY + shiftY) / this.factorCurrent,
-    };
+    zoom.center = [
+      (scrollX + shiftX) / this.factorCurrent,
+      (scrollY + shiftY) / this.factorCurrent,
+    ];
   },
   adjustCenterForMatte(direction) {
     const matte = tvMatte.current();
-    this.center.left += matte.left * direction;
-    this.center.top += matte.top * direction;
+    this.center[0] += matte.left * direction;
+    this.center[1] += matte.top * direction;
   },
   applyCenter() {
-    const {left: cl, top: ct} = this.center;
+    const [left, top] = this.center;
     const fc = this.factorCurrent;
     const [wwm, whm] = tvMatte.windowWHMatted();
     const matte = tvMatte.current();
     const shiftX = wwm / 2 + matte.left;
     const shiftY = whm / 2 + matte.top;
-    scroll(cl * fc - shiftX, ct * fc - shiftY);
+    scroll(left * fc - shiftX, top * fc - shiftY);
   },
   isZoomedOut() {
     return (zoom.factorCurrent ?? 1) < 1;

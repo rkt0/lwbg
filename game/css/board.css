@@ -2,24 +2,7 @@
   position: absolute;
   box-sizing: content-box;
   padding: 0;
-  --extra-space-left: 432px;
-  --extra-space-top: 324px;
-  --extra-space-bottom: 324px;
-  --raw-board-width: 4176px;
-  --raw-board-height: 2232px;
-  width: calc(
-    var(--raw-board-width) +
-    var(--extra-space-left, 0px) +
-    var(--extra-space-right, 0px)
-  );
-  height: calc(
-    var(--raw-board-height) +
-    var(--extra-space-top, 0px) +
-    var(--extra-space-bottom, 0px)
-  );
-  border-style: solid;
-  border-color: transparent;
-  border-width: var(--matte, 0);
+  border: solid var(--matte, 0) transparent;
   --board-border-width: 6px;
 }
 

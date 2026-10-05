@@ -1,7 +1,6 @@
 import {qjs, sleep} from './utility.js';
 import {click} from './mouse-events.js';
 import {bd} from './board-topology.js';
-import {geom} from './board-geometry.js';
 import {gs, mv, pl} from './game-objects.js';
 import {dom} from './dom.js';
 import {zoom} from './zoom.js';
@@ -230,8 +229,6 @@ export const gp = {
   },
   initializeView() {
     zoom.zoomDefault();
-    zoom.center.left = geom.initialViewCenter[0];
-    zoom.center.top = geom.initialViewCenter[1];
     zoom.factorCurrent = null;
     // Call again to apply zoom center
     zoom.zoomDefault();
