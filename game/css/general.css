@@ -48,19 +48,6 @@ body {
   height: 0;
 }
 
-.large-text {
-  font-size: 32px;
-}
-
-svg {
-  display: block;
-}
-
-.inactive,
-data {
-  display: none;
-}
-
 section {
   position: fixed;
   z-index: 0;
@@ -71,13 +58,13 @@ section {
   display: grid;
   place-content: center;
   gap: var(--gap);
-}
 
-.jungle {
-  background-image: var(--jungle);
+  &.jungle {
+    background-image: var(--jungle);
 
-  .zoomed-out & {
-    background-image: none;
+    .zoomed-out & {
+      background-image: none;
+    }
   }
 }
 
@@ -113,6 +100,37 @@ button {
   }
 }
 
+svg {
+  display: block;
+}
+
+p {
+  text-align: left;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.inactive,
+data {
+  display: none;
+}
+
+.large-text {
+  font-size: 32px;
+}
+
+.icon {
+  --size: 1em;
+  width: var(--size);
+  height: var(--size);
+}
+
 .info {
   max-width: 450px;
   padding: 1em 1.5em;
@@ -139,24 +157,6 @@ button {
     box-sizing: border-box;
     padding: 0.5em 1em;
   }
-}
-
-p {
-  text-align: left;
-
-  &:first-child {
-    margin-top: 0;
-  }
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-.icon {
-  --size: 1em;
-  width: var(--size);
-  height: var(--size);
 }
 
 .expandable {

@@ -3,19 +3,6 @@
   z-index: 1;
 }
 
-.game-over {
-  position: fixed;
-  width: auto;
-  padding: 1em 2em;
-  z-index: 1;
-  inset: var(--matte, 0);
-  place-self: center;
-
-  .heading {
-    margin-block: 0.25em 0.75em;
-  }
-}
-
 .toggle-button-group {
   position: absolute;
   margin: var(--matte, 0);
@@ -29,6 +16,37 @@
     border-style: none none solid solid;
     display: grid;
     place-content: center;
+  }
+}
+
+.edit-banner {
+  position: fixed;
+  margin: var(--matte, 0);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  pointer-events: auto;
+  z-index: 1;
+
+  .banner {
+    box-sizing: border-box;
+    height: var(--sidebar-button-height);
+    border-style: none solid solid none;
+    padding: 0 1em;
+    place-content: center;
+    line-height: 0.875;
+  }
+}
+
+.game-over {
+  position: fixed;
+  width: auto;
+  padding: 1em 2em;
+  z-index: 1;
+  inset: var(--matte, 0);
+  place-self: center;
+
+  .heading {
+    margin-block: 0.25em 0.75em;
   }
 }
 
