@@ -93,7 +93,7 @@ button {
     in srgb, var(--blue-alpha), var(--color-jungle)
   );
 
-  :where(.gameplay, .hud) & {
+  :where(.glass) & {
     background: color-mix(
       in srgb, var(--blue-alpha), transparent
     );
@@ -121,7 +121,7 @@ button {
     in srgb, var(--gray-alpha), var(--color-jungle)
   );
 
-  :where(.hud) & {
+  :where(.glass) & {
     background: color-mix(
       in srgb, var(--gray-alpha), transparent
     );
