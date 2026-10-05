@@ -1,0 +1,11 @@
+.gameplay {
+  position: absolute;
+  box-sizing: content-box;
+  padding: 0;
+  border: solid var(--matte, 0) transparent;
+  --board-border-width: 6px;
+  --color-selected-fill:
+    rgb(from var(--color-selected) r g b / 0.4);
+  --color-path: #a28600;
+  --color-dino-space: #a3061b;
+}

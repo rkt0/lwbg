@@ -54,3 +54,10 @@
     }
   }
 }
+
+@font-face {
+  font-family: Atkinson-Mono;
+  src: url("../font/atkinson-mono-bold.ttf")
+    format("truetype");
+  font-weight: bold;
+}

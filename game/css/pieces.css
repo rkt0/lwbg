@@ -6,7 +6,8 @@
   gap: 12px;
   outline: none 6px var(--color-selected);
 
-  &:is(.raptor-piece, .trex-piece) {
+  &.raptor-piece,
+  &.trex-piece {
     z-index: 1;
     --color-highlight: 
       rgb(from var(--color-dino-space) r g b / 0.8);
@@ -37,7 +38,8 @@
     z-index: 2;
   }
 
-  &:is(.selected, .on-selected) {
+  &.selected,
+  &.on-selected {
     z-index: 3;
   }
 
