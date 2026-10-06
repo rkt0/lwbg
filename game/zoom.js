@@ -10,7 +10,7 @@ export const zoom = {
   center: geom.initialViewCenter,
   zoomOut() {
     const [bw, bh] = this.boardSize;
-    const [wwm, whm] = tvMatte.windowWHMatted();
+    const [wwm, whm] = tvMatte.windowSizeMatted();
     const matte = tvMatte.current();
     let factor = Math.min(wwm / bw, whm / bh);
     factor = Math.max(factor, factorOutMax);
@@ -35,7 +35,7 @@ export const zoom = {
     buttons.in.classList.add('current');
   },
   setCenter() {
-    const [wwm, whm] = tvMatte.windowWHMatted();
+    const [wwm, whm] = tvMatte.windowSizeMatted();
     const matte = tvMatte.current();
     const shiftX = wwm / 2 + matte.left;
     const shiftY = whm / 2 + matte.top;
@@ -52,7 +52,7 @@ export const zoom = {
   applyCenter() {
     const [left, top] = this.center;
     const fc = this.factorCurrent;
-    const [wwm, whm] = tvMatte.windowWHMatted();
+    const [wwm, whm] = tvMatte.windowSizeMatted();
     const matte = tvMatte.current();
     const shiftX = wwm / 2 + matte.left;
     const shiftY = whm / 2 + matte.top;

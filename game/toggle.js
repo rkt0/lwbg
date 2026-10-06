@@ -1,5 +1,6 @@
 import {
-  qjs, qda, closestData, camelFromKebab, cssValue,
+  qjs, qda, closestData, camelFromKebab,
+  numericStyles,
 } from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
@@ -67,9 +68,9 @@ const dispatch = {
 };
 
 // Other values
-const groupWidth = cssValue('--button-size', {
-  element: toggle.groupElement,
-});
+const groupWidth = numericStyles(
+  toggle.groupElement, ['--button-size'],
+)['--button-size'];
 
 // Maintain audio status in consistent state
 music.element.addEventListener('volumechange', () => {

@@ -111,7 +111,7 @@ export function shuffle(arr, prngFn) {
   return output;
 }
 
-export function windowWH() {
+export function windowSize() {
   const {innerWidth, innerHeight} = window;
   return [innerWidth, innerHeight];
 }
@@ -146,48 +146,6 @@ export function numericStyles(element, properties) {
     result[property] = parseFloat(raw);
   }
   return result;
-}
-export function numberFromStyle(property, element) {
-  const style = getComputedStyle(element);
-  const raw = style.getPropertyValue(property) || 0;
-  return parseFloat(raw);
-}
-export function sizeFromStyle(element) {
-  const style = getComputedStyle(element);
-  const dimensions = ['width', 'height'];
-  return dimensions.map(d => parseInt(style[d] || 0));
-}
-
-export function cssValue(property, {
-  element = document.documentElement, float = false,
-} = {}) {
-  const style = getComputedStyle(element);
-  const raw = style.getPropertyValue(property) || 0;
-  return float ? parseFloat(raw) : parseInt(raw);
-}
-export function cssValueWH(propertyStem, {
-  element = document.documentElement, float = false,
-} = {}) {
-  const style = getComputedStyle(element);
-  const dimensions = ['width', 'height'];
-  return dimensions.map(dimension => {
-    const property = `${propertyStem}-${dimension}`;
-    const raw = style.getPropertyValue(property) || 0;
-    return float ? parseFloat(raw) : parseInt(raw);
-  });
-}
-export function cssValueSides(propertyStem, {
-  element = document.documentElement, float = false,
-} = {}) {
-  const style = getComputedStyle(element);
-  const sides = ['top', 'right', 'bottom', 'left'];
-  return Object.fromEntries(sides.map(side => {
-    const property = `${propertyStem}-${side}`;
-    const raw = style.getPropertyValue(property) || 0;
-    return [
-      side, float ? parseFloat(raw) : parseInt(raw),
-    ];
-  }));
 }
 
 export async function fileContents(fh, splitLines) {

@@ -1,4 +1,6 @@
-import {qjs, cssValue, sleep} from './utility.js';
+import {
+  qjs, numericStyles, sleep,
+} from './utility.js';
 import {dom} from './dom.js';
 import {anim} from './animation.js';
 
@@ -109,9 +111,11 @@ for (const element of sbElement.children) {
 
 // Other values
 const leftShow = {left: '0px'};
-const leftHide = {
-  left: `-${cssValue('--sidebar-button-width')}px`,
-};
+const leftHide = {left: `-${
+  numericStyles(document.documentElement, [
+    '--sidebar-button-width',
+  ])['--sidebar-button-width']
+}px`};
 const bTime = anim.time.buttonSlide;
 const linear = {easing: 'linear'};
 

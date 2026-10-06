@@ -51,7 +51,7 @@ export async function bringMoveIntoView() {
     top: region.top - pv,
     bottom: region.bottom + pv,
   };
-  const [wwm, whm] = tvMatte.windowWHMatted();
+  const [wwm, whm] = tvMatte.windowSizeMatted();
   const matte = tvMatte.current();
   if (target.right - target.left > wwm) {
     const midpoint = (target.left + target.right) / 2;
