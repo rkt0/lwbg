@@ -35,6 +35,7 @@ export const zoom = {
     buttons.in.classList.add('current');
   },
   setCenter() {
+    if (!this.factorCurrent) return;
     const [wwm, whm] = tvMatte.windowSizeMatted();
     const matte = tvMatte.current();
     const shiftX = wwm / 2 + matte.left;
@@ -43,11 +44,6 @@ export const zoom = {
       (scrollX + shiftX) / this.factorCurrent,
       (scrollY + shiftY) / this.factorCurrent,
     ];
-  },
-  adjustCenterForMatte(direction) {
-    const matte = tvMatte.current();
-    this.center[0] += matte.left * direction;
-    this.center[1] += matte.top * direction;
   },
   applyCenter() {
     const [left, top] = this.center;
@@ -71,7 +67,6 @@ const factorOutMax = 0.125;
 function zoomGeneral(factor) {
   if (!zoom.factorCurrent) {
     zoom.factorCurrent = 1;
-    zoom.adjustCenterForMatte(1);
     zoom.applyCenter();
     return;
   }
