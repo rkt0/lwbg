@@ -23,10 +23,10 @@ export const anim = {
   },
   async slide(element, side, to, duration) {
     const off = {
-      left: '-100% 0%', right: '100% 0%',
-      top: '0% -100%', bottom: '0% 100%',
+      left: '-100% 0', right: '100% 0',
+      top: '0 -100%', bottom: '0 100%',
     }[side];
-    const xf = [off, '0% 0%'];
+    const xf = [off, '0 0'];
     if (to) element.style.display = '';
     else xf.reverse();
     const keyframes = {translate: xf};
