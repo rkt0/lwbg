@@ -42,8 +42,9 @@ export const edit = {
     if (gs.phase !== 'roll') enableDiceEdit();
     gp.humanItemsClickable(true);
     gp.raptorItemsClickable(true);
-    await anim.slide(this.bannerElement, 1, eTime);
-    this.bannerElement.inert = false;
+    const {bannerElement} = this;
+    await anim.slide(bannerElement, 'top', 1, eTime);
+    bannerElement.inert = false;
     sb.changeShowMoreButtonVisibility(false);
   },
   async cancelSelection() {
@@ -151,7 +152,7 @@ async function editGame(gsNew) {
 }
 async function endEditMode() {
   edit.bannerElement.inert = true;
-  anim.slide(edit.bannerElement, 0, eTime);
+  anim.slide(edit.bannerElement, 'top', 0, eTime);
   for (const element of toFade) {
     anim.fade(element, 0, eTime);
   }

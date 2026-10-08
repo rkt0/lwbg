@@ -15,7 +15,7 @@ export const message = {
     } else this.element.replaceChildren(node);
     if (append) this.element.dataset.appendable = '';
     this.element.classList.remove('being-hidden');
-    await anim.slide(this.element, 1, aTime);
+    await anim.slide(this.element, 'top', 1, aTime);
     this.element.inert = false;
   },
   async hide() {
@@ -24,7 +24,7 @@ export const message = {
     this.element.inert = true;
     this.element.classList.add('being-hidden');
     delete this.element.dataset.appendable;
-    await anim.slide(this.element, 0, aTime);
+    await anim.slide(this.element, 'top', 0, aTime);
   },
 };
 

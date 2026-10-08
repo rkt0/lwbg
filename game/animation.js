@@ -21,15 +21,17 @@ export const anim = {
     };
     await persist(element, where, options, where);
   },
-  async slide(element, to, duration, {
-    display = '', easing = 'linear',
-  } = {}) {
-    const xf = ['translateY(-100%)', 'translateY(0)'];
-    if (to) element.style.display = display;
+  async slide(element, side, to, duration) {
+    const off = {
+      left: '-100% 0%', right: '100% 0%',
+      top: '0% -100%', bottom: '0% 100%',
+    }[side];
+    const xf = [off, '0% 0%'];
+    if (to) element.style.display = '';
     else xf.reverse();
-    const keyframes = {transform: xf};
-    const options = {duration, easing};
-    const final = {transform: xf.at(-1)};
+    const keyframes = {translate: xf};
+    const options = {duration, easing: 'linear'};
+    const final = {translate: xf.at(-1)};
     await persist(element, keyframes, options, final);
     if (!to) element.style.display = 'none';
   },
