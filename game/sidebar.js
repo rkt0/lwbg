@@ -1,6 +1,4 @@
-import {
-  qjs, numericStyles, sleep,
-} from './utility.js';
+import {qjs, sleep} from './utility.js';
 import {dom} from './dom.js';
 import {anim} from './animation.js';
 
@@ -10,8 +8,7 @@ export const sb = {
     const {element, current} = menuItem[identifier];
     if (current) return;
     menuItem[identifier].current = true;
-    element.style.display = '';
-    await anim.move(element, leftShow, bTime, linear);
+    await anim.slide(element, 'left', 1, aTime);
     if (isProperButton(element)) {
       element.disabled = false;
     }
@@ -25,8 +22,7 @@ export const sb = {
       if (element.disabled) return;
       element.disabled = true;
     }
-    await anim.move(element, leftHide, bTime, linear);
-    element.style.display = 'none';
+    await anim.slide(element, 'left', 0, aTime);
   },
   async replace(identifierOld, identifierNew) {
     await this.hide(identifierOld);
@@ -52,10 +48,10 @@ export const sb = {
       species === 'human' ? 'Humans' :
       species === 'trex' ? 'T-Rex' : 'Raptors';
     if (turnSpan.textContent === speciesText) return;
-    const aTime = immediate ? 0 : anim.time.turnFade;
-    await anim.fade(turnSpan, 0, aTime);
+    const fTime = immediate ? 0 : anim.time.turnFade;
+    await anim.fade(turnSpan, 0, fTime);
     turnSpan.textContent = speciesText;
-    anim.fade(turnSpan, 1, aTime);
+    anim.fade(turnSpan, 1, fTime);
   },
   async displayRollResult(rollState, immediate) {
     for (const die of Object.values(dom.dice)) {
@@ -109,15 +105,8 @@ for (const element of sbElement.children) {
   menuItem[js] = {element, initial};
 }
 
-// Other values
-const leftShow = {left: '0px'};
-const leftHide = {left: `-${
-  numericStyles(document.documentElement, [
-    '--sidebar-button-width',
-  ])['--sidebar-button-width']
-}px`};
-const bTime = anim.time.buttonSlide;
-const linear = {easing: 'linear'};
+// Animation time for button slide
+const aTime = anim.time.buttonSlide;
 
 // Helper functions
 function isProperButton(element) {
@@ -125,12 +114,10 @@ function isProperButton(element) {
   return nn === 'button';
 }
 async function showSidebar() {
-  sbElement.style.display = '';
-  await anim.move(sbElement, leftShow, bTime, linear);
+  await anim.slide(sbElement, 'left', 1, aTime);
   sbElement.inert = false;
 }
 async function hideSidebar() {
   sbElement.inert = true;
-  await anim.move(sbElement, leftHide, bTime, linear);
-  sbElement.style.display = 'none';
+  await anim.slide(sbElement, 'left', 0, aTime);
 }

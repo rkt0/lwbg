@@ -1,6 +1,5 @@
 import {
   qjs, qda, closestData, camelFromKebab,
-  numericStyles,
 } from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
@@ -13,18 +12,14 @@ import {sfx} from './sfx.js';
 export const toggle = {
   groupElement: qjs('toggle-button-group'),
   async showGroup() {
-    this.groupElement.style.display = '';
-    await anim.move(this.groupElement, {
-      right: '0px',
-    }, anim.time.buttonSlide, {easing: 'linear'});
-    this.groupElement.inert = false;
+    const {groupElement} = this;
+    await anim.slide(groupElement, 'right', 1, aTime);
+    groupElement.inert = false;
   },
   async hideGroup() {
-    this.groupElement.inert = true;
-    await anim.move(this.groupElement, {
-      right: `-${groupWidth}px`,
-    }, anim.time.buttonSlide, {easing: 'linear'});
-    this.groupElement.style.display = 'none';
+    const {groupElement} = this;
+    groupElement.inert = true;
+    await anim.slide(groupElement, 'right', 0, aTime);
   },
   audio() {
     music.element.muted = !music.element.muted;
@@ -59,10 +54,8 @@ const dispatch = {
   'tv-mode': () => toggle.tvMode(),
 };
 
-// Other values
-const groupWidth = numericStyles(
-  toggle.groupElement, ['--button-size'],
-)['--button-size'];
+// Animation time for button slide
+const aTime = anim.time.buttonSlide;
 
 // Maintain audio status in consistent state
 music.element.addEventListener('volumechange', () => {
