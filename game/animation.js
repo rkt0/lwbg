@@ -53,12 +53,12 @@ export const anim = {
     const top = distances.map((d) => `-${d}px`);
     await element.animate({top}, {duration}).finished;
   },
-  async roll(element, duration, {
-    turns = 2, easing = 'ease',
-  } = {}) {
-    await element.animate({
-      rotate: `${turns}turn`,
-    }, {duration, easing, fill: 'forwards'}).finished;
+  async roll(element, duration) {
+    const rotate = `${dieTurns}turn`;
+    const options = {
+      duration, easing: 'ease', fill: 'forwards',
+    };
+    await element.animate({rotate}, options).finished;
   },
   blinkPieces(on) {
     blinkPieceElements ??= [
@@ -106,6 +106,7 @@ const bounceSettings = {
   decayRate: 0.5,
   timePerBounce: 4 * 1000 / 60,
 };
+const dieTurns = 2;
 
 // Helper function to animate, persist, and cancel
 async function persist(
