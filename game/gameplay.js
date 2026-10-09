@@ -136,10 +136,11 @@ export const gp = {
     let aTime = anim.time.moveHuman;
     if (isNowDead) aTime = anim.time.killHuman;
     else if (gs.je) aTime = anim.time.jumpHuman;
-    await anim.move(element, location, aTime, {
-      endDelay: isLast ? 0 : anim.time.pauseMidMove,
-      delay: isNowDead ? anim.time.killHumanDelay : 0,
-    });
+    if (isNowDead) {
+      await sleep(anim.time.killHumanDelay);
+    }
+    await anim.move(element, location, aTime);
+    if (!isLast) await sleep(anim.time.pauseMidMove);
     this.adjustHumanPositions();
     // Only relevant in edit mode
     this.checkEatenByAnyRaptor();
@@ -162,9 +163,8 @@ export const gp = {
     const element = dom.raptorPiece[piece];
     const location = {top: `${t}px`, left: `${l}px`};
     const aTime = anim.time.moveRaptor;
-    await anim.move(element, location, aTime, {
-      endDelay: isLast ? 0 : anim.time.pauseMidMove,
-    });
+    await anim.move(element, location, aTime);
+    if (!isLast) await sleep(anim.time.pauseMidMove);
     // Piece location update needs to occur
     // here for checkEatenByRaptor(piece)
     // to work right

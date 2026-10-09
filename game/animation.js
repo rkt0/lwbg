@@ -11,12 +11,8 @@ export const anim = {
     await persist(element, keyframes, options, final);
     if (!to) element.style.display = 'none';
   },
-  async move(element, where, duration, {
-    delay = 0, endDelay = 0, easing = 'ease-in-out',
-  } = {}) {
-    const options = {
-      duration, delay, endDelay, easing,
-    };
+  async move(element, where, duration) {
+    const options = {duration, easing: 'ease-in-out'};
     await persist(element, where, options, where);
   },
   async slide(element, side, to, duration) {
