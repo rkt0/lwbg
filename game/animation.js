@@ -29,14 +29,14 @@ export const anim = {
     await persist(element, keyframes, options, final);
     if (!to) element.style.display = 'none';
   },
-  isAnimated(element, options = {}) {
-    const animations = element.getAnimations(options);
+  isAnimated(element) {
+    const animations = element.getAnimations();
     return animations.some((animation) => {
       return animation.playState === 'running';
     });
   },
-  cancelAll(element, options = {}) {
-    const animations = element.getAnimations(options);
+  cancelAll(element) {
+    const animations = element.getAnimations();
     for (const a of animations) a.cancel();
   },
   async bounce(element = dom.gameplay, {
