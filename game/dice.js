@@ -66,8 +66,8 @@ async function initializeFace(face) {
   if (width <= dieWidth) return;
   const scale = dieWidth / width;
   const translate = dieWidth * (scale - 1) / 2;
-  face.style.transform =
-    `translateX(${translate}px) scaleX(${scale})`;
+  face.style.translate = `${translate}px 0`;
+  face.style.scale = `${scale} 1`;
   face.style.display = 'none';
 }
 for (const face of qda('roll')) initializeFace(face);
