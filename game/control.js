@@ -8,9 +8,7 @@ import {ai} from './ai.js';
 
 export const control = {
   async show(waitForFadeOut) {
-    await anim.fade(section, 1, aTime, {
-      display: '',
-    });
+    await anim.fade(section, 1, aTime);
     section.inert = false;
     wait = waitForFadeOut;
     return new Promise((resolve) => {

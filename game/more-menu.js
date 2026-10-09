@@ -22,9 +22,8 @@ export const moreMenu = {
   },
   async show() {
     gp.interrupt();
-    const aOpts = {display: ''};
-    anim.fade(moreOptions, 1, 0, aOpts);
-    await anim.fade(section, 1, aTime, aOpts);
+    anim.fade(moreOptions, 1, 0);
+    await anim.fade(section, 1, aTime);
     moreOptions.inert = false;
   },
   async hide(resumeGameplay = true) {
@@ -62,7 +61,7 @@ async function manualSave() {
 async function savePoint() {
   moreOptions.inert = true;
   await anim.fade(moreOptions, 0, aTime);
-  await anim.fade(saveHelp, 1, aTime, {display: ''});
+  await anim.fade(saveHelp, 1, aTime);
   await waitForClick(saveHelp);
   manualSave();
 }
@@ -80,9 +79,7 @@ async function showAudioPanel() {
 async function showQuit() {
   moreOptions.inert = true;
   await anim.fade(moreOptions, 0, aTime);
-  await anim.fade(quitOptions, 1, aTime, {
-    display: '',
-  });
+  await anim.fade(quitOptions, 1, aTime);
   quitOptions.inert = false;
 }
 async function confirmQuit() {
@@ -105,7 +102,7 @@ async function confirmQuit() {
   pieces.shuffleFeatures();
   pieces.addImgs();
   showStartOptions(0);
-  anim.fade(dom.start, 1, aTime, {display: ''});
+  anim.fade(dom.start, 1, aTime);
 }
 function beginEdit() {
   moreMenu.hide();

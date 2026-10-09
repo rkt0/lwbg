@@ -182,7 +182,7 @@ function replaceDieValue(species, type, value) {
   }
   if (type === 'movement') gs.rollN = value;
   else gs.rollGo = value;
-  dom.faces[name][value].style.display = 'block';
+  dom.faces[name][value].style.display = '';
   if (type === 'movement') {
     gs.je = value === 'Jump' || value === 'Enter';
   }

@@ -36,9 +36,7 @@ export const gp = {
     sb.hide('roll-display');
     sb.hide('turn-display');
     if ((zoom.factorCurrent ?? 1) < 1) return;
-    anim.fade(dom.gameOver, 1, anim.time.menuFade, {
-      display: '',
-    });
+    anim.fade(dom.gameOver, 1, anim.time.menuFade);
   },
   adjustHumanPositions() {
     const bldgs = [...bd.bldgHumanSpaces];
@@ -244,9 +242,8 @@ export const gp = {
     dom.gameplay.inert = false;
   },
   isActive() {
-    const {display} = dom.gameplay.style;
-    if (display !== 'block') return false;
-    return scrim.style.display !== 'block';
+    return dom.gameplay.style.display !== 'none' &&
+      scrim.style.display === 'none';
   },
   async handleControlChange() {
     if (!ai.control.changed) return;

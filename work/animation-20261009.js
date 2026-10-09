@@ -3,10 +3,12 @@ import {debug} from './debug.js';
 
 export const anim = {
   time: {},
-  async fade(element, to, duration) {
-    if (to) element.style.display = '';
+  async fade(element, to, duration, {
+    display = 'block', easing = 'linear',
+  } = {}) {
+    if (to) element.style.display = display;
     const keyframes = {opacity: [1 - to, to]};
-    const options = {duration, easing: 'linear'};
+    const options = {duration, easing};
     const final = {opacity: to};
     await persist(element, keyframes, options, final);
     if (!to) element.style.display = 'none';

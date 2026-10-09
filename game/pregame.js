@@ -18,14 +18,14 @@ import {autoSave} from './auto-save.js';
 export function showStartOptions(time = aTime) {
   autoSave.clear();
   dom.startOptions.inert = false;
-  anim.fade(dom.startOptions, 1, time, {display: ''});
+  anim.fade(dom.startOptions, 1, time);
 }
 
 export async function initializeFront() {
   await waitForClick(front);
   addWarningBeforeUnload();
   await anim.fade(front, 0, aTime);
-  anim.fade(dom.start, 1, aTime, {display: ''});
+  anim.fade(dom.start, 1, aTime);
   music.allowed = true;
   if (music.audioOn) music.next();
 }
@@ -161,7 +161,7 @@ async function hideStartHelp() {
 }
 function showFork() {
   fork.inert = false;
-  anim.fade(fork, 1, aTime, {display: ''});
+  anim.fade(fork, 1, aTime);
 }
 async function hideFork() {
   fork.inert = true;
