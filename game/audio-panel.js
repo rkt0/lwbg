@@ -1,4 +1,4 @@
-import {qjs, closestData} from './utility.js';
+import {qr, closestData} from './utility.js';
 import {atClick} from './mouse-events.js';
 import {template} from './template.js';
 import {anim} from './animation.js';
@@ -30,10 +30,10 @@ export const audioPanel = {
 let finish, wait;
 
 // Element references
-const section = qjs('audio-panel');
-const musicPanel = qjs('music-panel');
-const playlistPanel = qjs('playlist-panel');
-const sfxPanel = qjs('sfx-panel');
+const section = qr('audio-panel');
+const musicPanel = qr('music-panel');
+const playlistPanel = qr('playlist-panel');
+const sfxPanel = qr('sfx-panel');
 
 // Animation time for menu fade
 const aTime = anim.time.menuFade;
@@ -46,7 +46,7 @@ for (const [i, track] of music.playlist.entries()) {
   element.textContent = track.title;
   tracks.push(element);
 }
-qjs('playlist').append(...tracks);
+qr('playlist').append(...tracks);
 
 // Create T-rex sound effect list
 const trexSoundElements = [];
@@ -56,7 +56,7 @@ for (const {key} of sfx.trexSounds) {
   element.textContent = key.split('-').at(-1);
   trexSoundElements.push(element);
 }
-qjs('trex-sounds').append(...trexSoundElements);
+qr('trex-sounds').append(...trexSoundElements);
 
 // Create raptor sound effect list
 const raptorSoundElements = [];
@@ -68,7 +68,7 @@ for (const {key} of sorted) {
   element.dataset.soundKey = key;
   raptorSoundElements.push(element);
 }
-qjs('raptor-sounds').append(...raptorSoundElements);
+qr('raptor-sounds').append(...raptorSoundElements);
 
 // Needed for click handler
 async function hide() {

@@ -1,4 +1,4 @@
-import {qjs, sleep} from './utility.js';
+import {qr, sleep} from './utility.js';
 import {click} from './mouse-events.js';
 import {bd} from './board-topology.js';
 import {gs, mv, pl} from './game-objects.js';
@@ -30,8 +30,8 @@ export const gp = {
     if (!immediate) {
       await sleep(anim.time.gameOverDelay);
     }
-    qjs('humans-saved').textContent = nSaved;
-    qjs('humans-total').textContent = nTotal;
+    qr('humans-saved').textContent = nSaved;
+    qr('humans-total').textContent = nTotal;
     message.hide();
     sb.hide('roll-display');
     sb.hide('turn-display');
@@ -249,7 +249,7 @@ export const gp = {
     if (!ai.control.changed) return;
     await this.save();
     if (ai.control[gs.turn] && gs.phase !== 'roll') {
-      click(qjs('cancel'));
+      click(qr('cancel'));
       sb.hide('ok-no-move');
       sb.hide('decline');
       sb.show('ok-ai-move');
@@ -292,7 +292,7 @@ export const gp = {
 let humanClickableItems;
 
 // Element references
-const scrim = qjs('scrim');
+const scrim = qr('scrim');
 
 // Helper functions
 function hPiecesOn(space) {

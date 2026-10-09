@@ -20,130 +20,132 @@
 <link rel="stylesheet" href="css/tv-matte.css">
 <link rel="icon" type="image/png" sizes="64x64"
   href="img/icon/icon-64.png">
-<section data-js="gameplay" inert data-dormant
+<section data-ref="gameplay" inert data-dormant
   class="gameplay jungle glass">
-  <svg data-js="board">
-    <g data-js="raptor-space-group"></g>
+  <svg data-ref="board">
+    <g data-ref="raptor-space-group"></g>
   </svg>
   <div data-trex-piece class="piece trex-piece">
     <img src="img/trex/trex.png">
     <img src="img/trex/shadow-trex.png"
       class="shadow">
-    <div data-js="trex-edit" class="trex-edit">
+    <div data-ref="trex-edit" class="trex-edit">
       <data value="-1">⬆</data>
       <data value="+1">⬇</data>
     </div>
   </div>
 </section>
-<section data-js="hud" data-dormant class="hud glass">
-  <div data-js="sidebar" class="sidebar">
-    <button type="button" data-js="show-more"
+<section data-ref="hud" data-dormant
+  class="hud glass">
+  <div data-ref="sidebar" class="sidebar">
+    <button type="button" data-ref="show-more"
       data-initial title="More Actions">
       • • •
     </button>
     <div data-initial class="zoom-display info">
       <div class="heading">Zoom</div>
-      <div data-js="zoom-button-group"
+      <div data-ref="zoom-button-group"
         class="zoom-button-group">
         <data value="out">&minus;</data>
         <data value="default">•</data>
         <data value="in">+</data>
       </div>
     </div>
-    <div data-js="turn-display" data-initial
+    <div data-ref="turn-display" data-initial
       class="turn-display info">
-      Turn:<br><span data-js="turn-text">&nbsp;</span>
+      Turn:<br>
+      <span data-ref="turn-text">&nbsp;</span>
     </div>
-    <div data-js="roll-display"
+    <div data-ref="roll-display"
       class="roll-display info">
     </div>
-    <button type="button" data-js="roll-dice"
+    <button type="button" data-ref="roll-dice"
       data-initial class="default-action">
       Roll
     </button>
-    <button type="button" data-js="ok-trex-move"
+    <button type="button" data-ref="ok-trex-move"
       class="default-action">
       Move
     </button>
-    <button type="button" data-js="ok-no-move"
+    <button type="button" data-ref="ok-no-move"
       class="default-action">
       OK
     </button>
-    <button type="button" data-js="ok-ai-move"
+    <button type="button" data-ref="ok-ai-move"
       class="default-action">
       Move
     </button>
-    <button type="button" data-js="decline"
+    <button type="button" data-ref="decline"
       class="unusual-action">
       Decline
     </button>
-    <button type="button" data-js="unroll-dice"
+    <button type="button" data-ref="unroll-dice"
       class="unusual-action">
       Unroll
     </button>
-    <button type="button" data-js="cancel"
+    <button type="button" data-ref="cancel"
       class="cancel-action">
       Cancel
     </button>
-    <button type="button" data-js="confirm"
+    <button type="button" data-ref="confirm"
       class="default-action">
       Confirm
     </button>
   </div>
-  <div data-js="toggle-button-group"
+  <div data-ref="toggle-button-group"
     class="toggle-button-group">
   </div>
-  <div data-js="edit-banner" inert data-dormant
+  <div data-ref="edit-banner" inert data-dormant
     class="edit-banner">
     <div class="info banner">
       Edit Mode On
     </div>
-    <button type="button" data-js="edit-revert"
+    <button type="button" data-ref="edit-revert"
       class="banner">
       Revert Changes
     </button>
-    <button type="button" data-js="edit-confirm"
+    <button type="button" data-ref="edit-confirm"
       class="banner default-action">
       Confirm Changes
     </button>
   </div>
-  <div data-js="message" inert data-dormant
+  <div data-ref="message" inert data-dormant
     class="message info">
   </div>
-  <div data-js="game-over" data-dormant
+  <div data-ref="game-over" data-dormant
     class="game-over info">
     <div class="heading large-text">Game Over</div>
     Humans Saved:<br>
-    <span data-js="humans-saved"></span>
-    of <span data-js="humans-total"></span>
+    <span data-ref="humans-saved"></span>
+    of <span data-ref="humans-total"></span>
   </div>
-  <div data-js="scrim" data-dormant class="scrim">
+  <div data-ref="scrim" data-dormant class="scrim">
   </div>
 </section>
-<section data-js="more-menu" data-dormant
+<section data-ref="more-menu" data-dormant
   class="more-menu">
-  <div data-js="more-options" inert data-dormant
+  <div data-ref="more-options" inert data-dormant
     class="choices">
-    <button type="button" data-js="hide-more">
+    <button type="button" data-ref="hide-more">
       Return to Game
     </button>
-    <button type="button" data-js="save-point">
+    <button type="button" data-ref="save-point">
       Create New Save Point
     </button>
-    <button type="button" data-js="show-audio-more">
+    <button type="button" data-ref="show-audio-more">
       Show Audio Panel
     </button>
-    <button type="button" data-js="begin-edit">
+    <button type="button" data-ref="begin-edit">
       Edit (Cheat)
     </button>
-    <button type="button" data-js="change-control">
+    <button type="button" data-ref="change-control">
       Change Player Control
     </button>
-    <button type="button" data-js="show-quit">
+    <button type="button" data-ref="show-quit">
       Quit Game
     </button>
   </div>
-  <div data-js="manual-save-help" data-dormant
+  <div data-ref="manual-save-help" data-dormant
     class="info">
     <p>You will now be asked to create a file.
     This file will allow you to resume your game
@@ -154,7 +156,7 @@
     that you're about to create).
     <p>Click anywhere to continue.
   </div>
-  <div data-js="quit-options" inert data-dormant
+  <div data-ref="quit-options" inert data-dormant
     class="decision">
     <div class="info">
       <p>Do you really want to quit the game?
@@ -162,36 +164,36 @@
       later from your saved game file.)
     </div>
     <div class="choices">
-      <button type="button" data-js="abort-quit">
+      <button type="button" data-ref="abort-quit">
         Return to Game
       </button>
-      <button type="button" data-js="confirm-quit">
+      <button type="button" data-ref="confirm-quit">
         Quit Game
       </button>
     </div>
   </div>
 </section>
-<section data-js="front"
+<section data-ref="front"
   class="front large-text jungle">
   <div class="info">Click anywhere to start</div>
 </section>
-<section data-js="start" data-dormant
+<section data-ref="start" data-dormant
   class="start jungle">
-  <div data-js="start-options"
+  <div data-ref="start-options"
     class="start-options large-text">
-    <button type="button" data-js="start-new">
+    <button type="button" data-ref="start-new">
       Start New Game
     </button>
-    <button type="button" data-js="load-saved">
+    <button type="button" data-ref="load-saved">
       Load Saved Game
     </button>
-    <button type="button" data-js="show-audio-start">
+    <button type="button" data-ref="show-audio-start">
       Show Audio Panel
     </button>
   </div>
-  <div data-js="start-help" data-dormant class="info">
+  <div data-ref="start-help" data-dormant class="info">
   </div>
-  <div data-js="start-fork" data-dormant
+  <div data-ref="start-fork" data-dormant
     class="decision">
     <div class="info">
       <p>Do you want to use this same file as
@@ -200,67 +202,67 @@
       alone and create a new auto-save file?
     </div>
     <div class="choices">
-      <button type="button" data-js="load-overwrite">
+      <button type="button" data-ref="load-overwrite">
         Use Same File (Overwrite)
       </button>
-      <button type="button" data-js="load-copy">
+      <button type="button" data-ref="load-copy">
         Create New File
       </button>
     </div>
   </div>
 </section>
-<section data-js="control" inert data-dormant
+<section data-ref="control" inert data-dormant
   class="control">
   <data value="human">Humans</data>
   <data value="raptor">Raptors</data>
-  <button type="button" data-js="control-continue" 
+  <button type="button" data-ref="control-continue" 
     disabled class="control-continue large-text">
     Continue
   </button>
 </section>
-<section data-js="audio-panel" data-dormant
+<section data-ref="audio-panel" data-dormant
   class="audio-panel">
-  <div data-js="music-panel" inert
+  <div data-ref="music-panel" inert
     class="music-panel info">
     <div data-song class="large-text">&nbsp;</div>
     <div data-artist>&nbsp;</div>
-    <audio data-js="music-player" muted></audio>
+    <audio data-ref="music-player" muted></audio>
     <div class="choices">
-      <button type="button" data-js="next-track">
+      <button type="button" data-ref="next-track">
         Next Track
       </button>
-      <button type="button" data-js="choose-track">
+      <button type="button" data-ref="choose-track">
         Choose Track
       </button>
-      <button type="button" data-js="hide-audio">
+      <button type="button" data-ref="hide-audio">
         Hide Panel
       </button>
-      <button type="button" data-js="show-sfx">
+      <button type="button" data-ref="show-sfx">
         SFX Panel
       </button>
     </div>
   </div>
-  <div data-js="playlist-panel" inert data-dormant
+  <div data-ref="playlist-panel" inert data-dormant
     class="playlist-panel info">
     <div class="large-text">Choose Music Track</div>
-    <div data-js="playlist" class="audio-list"></div>
+    <div data-ref="playlist" class="audio-list"></div>
     <div class="choices">
-      <button type="button" data-js="hide-playlist">
+      <button type="button" data-ref="hide-playlist">
         Return to Music Panel
       </button>
     </div>
   </div>
-  <div data-js="sfx-panel" inert data-dormant
+  <div data-ref="sfx-panel" inert data-dormant
     class="sfx-panel info">
-    <audio data-js="sfx-player" muted></audio>
+    <audio data-ref="sfx-player" muted></audio>
     <div class="large-text">T-Rex Sounds</div>
-    <div data-js="trex-sounds"
+    <div data-ref="trex-sounds"
       class="trex-sounds audio-list"></div>
     <div class="large-text">Raptor Sounds</div>
-    <div data-js="raptor-sounds"
+    <div data-ref="raptor-sounds"
       class="raptor-sounds audio-list"></div>
     <div class="choices">
-      <button type="button" data-js="hide-sfx">
+      <button type="button" data-ref="hide-sfx">
         Return to Music Panel
       </button>
     </div>
@@ -319,13 +321,13 @@
   </button>
 </template>
 <template id="zoom-button">
-  <button type="button" data-js=""
+  <button type="button" data-ref=""
     title="" class="zoom-button">
     <div class="zoom-indicator">▾</div>
   </button>
 </template>
 <template id="die">
-  <div data-js="" class="die"></div>
+  <div data-ref="" class="die"></div>
 </template>
 <template id="face">
   <div class="face" data-roll=""></div>

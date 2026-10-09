@@ -1,4 +1,4 @@
-import {qjs} from './utility.js';
+import {qr} from './utility.js';
 import {template} from './template.js';
 import {geom} from './board-geometry.js';
 import {dom} from './dom.js';
@@ -90,11 +90,11 @@ function zoomGeneral(factor) {
 };
 
 // Initialize buttons
-const zoomButtonGroup = qjs('zoom-button-group');
+const zoomButtonGroup = qr('zoom-button-group');
 const buttons = {};
 for (const item of zoomButtonGroup.children) {
   const button = template('zoom-button');
-  button.dataset.js = `zoom-${item.value}`;
+  button.dataset.ref = `zoom-${item.value}`;
   button.title = `Zoom ${
     item.value.replace(/^./, x => x.toUpperCase())
   }`;

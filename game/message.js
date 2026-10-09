@@ -1,9 +1,9 @@
-import {qjs} from './utility.js';
+import {qr} from './utility.js';
 import {template} from './template.js';
 import {anim} from './animation.js';
 
 export const message = {
-  element: qjs('message'),
+  element: qr('message'),
   suppress: false,
   async show(templateId, append) {
     if (this.suppress) return;

@@ -1,16 +1,16 @@
-export function qr(ref, base = document) {
-  return base.querySelector(`[data-ref="${ref}"]`);
+export function qjs(value, parent = document) {
+  return parent.querySelector(`[data-js="${value}"]`);
 }
-export function qd(attr, base = document) {
+export function qd(attr, parent = document) {
   const selector = `[data-${attr}]`;
-  return base.querySelector(selector);
+  return parent.querySelector(selector);
 }
-export function qda(attr, base = document) {
+export function qda(attr, parent = document) {
   const selector = `[data-${attr}]`;
-  return [...base.querySelectorAll(selector)];
+  return [...parent.querySelectorAll(selector)];
 }
 
-export function closestData(event, attr = 'ref') {
+export function closestData(event, attr = 'js') {
   const selector = `[data-${attr}]`;
   const element = event.target.closest(selector);
   return element?.dataset[camelFromKebab(attr)];

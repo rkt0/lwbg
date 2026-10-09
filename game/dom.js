@@ -1,13 +1,13 @@
-import {qjs, qd} from './utility.js';
+import {qr, qd} from './utility.js';
 
 export const dom = {
-  gameplay: qjs('gameplay'),
-  hud: qjs('hud'),
-  start: qjs('start'),
-  startOptions: qjs('start-options'),
-  board: qjs('board'),
+  gameplay: qr('gameplay'),
+  hud: qr('hud'),
+  start: qr('start'),
+  startOptions: qr('start-options'),
+  board: qr('board'),
   debugLabelSvg: [],
-  raptorSpaceGroup: qjs('raptor-space-group'),
+  raptorSpaceGroup: qr('raptor-space-group'),
   raptorSpace: [],
   humanSpace: [],
   humanEdge: {},
@@ -15,7 +15,7 @@ export const dom = {
   humanPiece: [],
   raptorPiece: [],
   trexPiece: qd('trex-piece'),
-  gameOver: qjs('game-over'),
+  gameOver: qr('game-over'),
   dice: {},
   faces: {},
   editKill: [],

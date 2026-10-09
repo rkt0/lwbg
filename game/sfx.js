@@ -1,4 +1,4 @@
-import {qjs, drawInteger} from './utility.js';
+import {qr, drawInteger} from './utility.js';
 import {prng} from './prngs.js';
 import {music} from './music.js';
 
@@ -11,7 +11,7 @@ class SoundEffect {
 }
 
 export const sfx = {
-  element: qjs('sfx-player'),
+  element: qr('sfx-player'),
   temporary: false,
   trexSounds: [
     new SoundEffect('trex-stomp'),

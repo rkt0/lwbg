@@ -1,5 +1,5 @@
 import {
-  qjs, closestData, addWarningBeforeUnload,
+  qr, closestData, addWarningBeforeUnload,
 } from './utility.js';
 import {atClick} from './mouse-events.js';
 import {waitForClick} from './mouse-events.js';
@@ -34,9 +34,9 @@ export async function initializeFront() {
 const aTime = anim.time.menuFade;
 
 // Element references
-const front = qjs('front');
-const help = qjs('start-help');
-const fork = qjs('start-fork');
+const front = qr('front');
+const help = qr('start-help');
+const fork = qr('start-fork');
 
 // Add start screen click handlers
 atClick(dom.start, (e) => {

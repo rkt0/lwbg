@@ -1,4 +1,4 @@
-import {qjs, qd, drawInteger} from './utility.js';
+import {qr, qd, drawInteger} from './utility.js';
 import {prng} from './prngs.js';
 
 class Track {
@@ -14,7 +14,7 @@ class Track {
 }
 
 export const music = {
-  element: qjs('music-player'),
+  element: qr('music-player'),
   audioOn: false,
   allowed: false,
   offScript: false,

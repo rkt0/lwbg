@@ -1,5 +1,5 @@
 import {
-  qjs, qda, closestData, camelFromKebab,
+  qr, qda, closestData, camelFromKebab,
 } from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
@@ -10,7 +10,7 @@ import {zoom} from './zoom.js';
 import {sfx} from './sfx.js';
 
 export const toggle = {
-  groupElement: qjs('toggle-button-group'),
+  groupElement: qr('toggle-button-group'),
   async showGroup() {
     const {groupElement} = this;
     await anim.slide(groupElement, 'right', 1, aTime);

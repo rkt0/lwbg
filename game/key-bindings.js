@@ -1,4 +1,4 @@
-import {qjs} from './utility.js';
+import {qr} from './utility.js';
 import {click} from './mouse-events.js';
 import {gs, mv} from './game-objects.js';
 import {music} from './music.js';
@@ -20,32 +20,33 @@ function clickIfOk(button) {
 // Key handlers
 function handleConfirmKey() {
   if (!gp.isActive()) return;
-  let js;
-  if (edit.on) js = 'edit-confirm';
+  let ref;
+  if (edit.on) ref = 'edit-confirm';
   else switch (gs.phase) {
     case 'select':
-      if (ai.control[gs.turn]) js = 'ok-ai-move';
+      if (ai.control[gs.turn]) ref = 'ok-ai-move';
       else if (gs.je && mv.toGo === -1) {
-        js = 'ok-no-move';
+        ref = 'ok-no-move';
       }
       break;
     case 'roll':
-      js = 'roll-dice';
+      ref = 'roll-dice';
       break;
     case 'move':
       if (gs.turn === 'trex') {
-        js = gs.rollN ? 'ok-trex-move' : 'ok-no-move';
-      } else if (!mv.toGo) js = 'confirm';
+        ref =
+          gs.rollN ? 'ok-trex-move' : 'ok-no-move';
+      } else if (!mv.toGo) ref = 'confirm';
       break;
   }
-  if (js) clickIfOk(qjs(js));
+  if (ref) clickIfOk(qr(ref));
 }
 function handleCancelKey() {
   if (moreMenu.isActive()) moreMenu.hide();
   audioPanel.cancel();
   if (!gp.isActive()) return;
   else if (edit.on || gs.phase === 'move') {
-    clickIfOk(qjs('cancel'));
+    clickIfOk(qr('cancel'));
   }
 }
 function handleEscapeKey() {

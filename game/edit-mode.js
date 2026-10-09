@@ -1,5 +1,5 @@
 import {
-  qjs, qd, closestData, sleep, deepCopy,
+  qr, qd, closestData, sleep, deepCopy,
 } from './utility.js';
 import {click} from './mouse-events.js';
 import {template} from './template.js';
@@ -13,7 +13,7 @@ import {sb} from './sidebar.js';
 import {gp} from './gameplay.js';
 
 export const edit = {
-  bannerElement: qjs('edit-banner'),
+  bannerElement: qr('edit-banner'),
   clear() {
     this.on = false;
     this.gsPrevious = {};
@@ -22,7 +22,7 @@ export const edit = {
   },
   async begin() {
     if (gs.turn !== 'trex' && gs.turn !== 'over') {
-      click(qjs('cancel'));
+      click(qr('cancel'));
     }
     this.on = true;
     this.gsPrevious = deepCopy(gs);
@@ -249,7 +249,7 @@ function enableDiceEdit(enable = true) {
 };
 
 // Initialize T-rex buttons
-const trexEdit = qjs('trex-edit');
+const trexEdit = qr('trex-edit');
 const trexButtons = [];
 for (const item of trexEdit.children) {
   const button = template('trex-button');
@@ -267,9 +267,9 @@ function makeChangeButton(parent, change) {
   parent.append(button);
   changeButtons.push(button);
 }
-makeChangeButton(qjs('turn-display'), 'turn');
-for (const die of qjs('roll-display').children) {
-  makeChangeButton(die, die.dataset.js);
+makeChangeButton(qr('turn-display'), 'turn');
+for (const die of qr('roll-display').children) {
+  makeChangeButton(die, die.dataset.ref);
 }
 
 // Animation time for edit control fade

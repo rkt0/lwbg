@@ -1,6 +1,4 @@
-import {
-  qjs, qd, qda, closestData,
-} from './utility.js';
+import {qr, qd, qda, closestData} from './utility.js';
 import {atClick} from './mouse-events.js';
 import {template} from './template.js';
 import {anim} from './animation.js';
@@ -36,8 +34,8 @@ export const control = {
 let finish, wait;
 
 // Initialize control menus
-const section = qjs('control');
-const continueButton = qjs('control-continue');
+const section = qr('control');
+const continueButton = qr('control-continue');
 for (const item of section.children) {
   if (item === continueButton) continue;
   const menu = template('control-menu');

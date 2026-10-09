@@ -1,4 +1,4 @@
-import {qjs, sleep} from './utility.js';
+import {qr, sleep} from './utility.js';
 import {dom} from './dom.js';
 import {anim} from './animation.js';
 
@@ -36,11 +36,11 @@ export const sb = {
   },
   reset() {
     const entries = Object.entries(menuItem);
-    for (const [js, item] of entries) {
+    for (const [ref, item] of entries) {
       // Set current to ensure that show/hide will run
       item.current = !item.initial;
-      if (item.initial) this.show(js);
-      else this.hide(js);
+      if (item.initial) this.show(ref);
+      else this.hide(ref);
     }
   },
   async displayTurn(species, immediate) {
@@ -93,16 +93,16 @@ export const sb = {
 };
 
 // Element references
-const sbElement = qjs('sidebar');
-const turnSpan = qjs('turn-text');
+const sbElement = qr('sidebar');
+const turnSpan = qr('turn-text');
 
 // Menu item element references and status
 const menuItem = {};
 for (const element of sbElement.children) {
-  const {js} = element.dataset;
-  if (!js) continue;
+  const {ref} = element.dataset;
+  if (!ref) continue;
   const initial = 'initial' in element.dataset;
-  menuItem[js] = {element, initial};
+  menuItem[ref] = {element, initial};
 }
 
 // Animation time for button slide

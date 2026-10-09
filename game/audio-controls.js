@@ -5,7 +5,7 @@ import {music} from './music.js';
 // Initialize controls
 const controls = template('audio-controls');
 const audio = music.element;
-controls.dataset.audioControls = audio.dataset.js;
+controls.dataset.audioControls = audio.dataset.ref;
 audio.after(controls);
 
 // Other element references

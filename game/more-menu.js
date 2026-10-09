@@ -1,4 +1,4 @@
-import {qjs, closestData} from './utility.js';
+import {qr, closestData} from './utility.js';
 import {
   atClick, waitForClick,
 } from './mouse-events.js';
@@ -41,10 +41,10 @@ export const moreMenu = {
 const aTime = anim.time.menuFade;
 
 // Element references
-const section = qjs('more-menu');
-const moreOptions = qjs('more-options');
-const quitOptions = qjs('quit-options');
-const saveHelp = qjs('manual-save-help');
+const section = qr('more-menu');
+const moreOptions = qr('more-options');
+const quitOptions = qr('quit-options');
+const saveHelp = qr('manual-save-help');
 
 // More menu click handlers
 async function manualSave() {

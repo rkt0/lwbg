@@ -1,4 +1,4 @@
-import {qjs, qda, numericStyles} from './utility.js';
+import {qr, qda, numericStyles} from './utility.js';
 import {template} from './template.js';
 import {dom} from './dom.js';
 
@@ -27,7 +27,7 @@ for (const [species, sObj] of Object.entries(dice)) {
   for (const [type, values] of Object.entries(sObj)) {
     const name = `${species}-${type}`;
     const die = template('die');
-    die.dataset.js = `die-${name}`;
+    die.dataset.ref = `die-${name}`;
     die.classList.add(`die-${species}`);
     const facesTemplate =
       template(`die-${species}-faces`) ??
@@ -48,7 +48,7 @@ for (const [species, sObj] of Object.entries(dice)) {
     }
   }
 }
-const rollDisplay = qjs('roll-display');
+const rollDisplay = qr('roll-display');
 rollDisplay.append(...Object.values(dom.dice));
 
 // Squeeze all faces and set display to none
