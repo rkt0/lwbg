@@ -39,19 +39,16 @@ export const anim = {
     const animations = element.getAnimations();
     for (const a of animations) a.cancel();
   },
-  async bounce(element = dom.gameplay, {
-    maxDistance = 64,
-    decayRate = 0.5,
-    timePerBounce = 4 * 1000 / 60,
-  } = {}) {
+  async bounce() {
+    const element = dom.gameplay;
     const distances = [0];
-    let d = maxDistance;
+    let d = bounceSettings.maxDistance;
     let duration = 0;
     while (d >= 1) {
       const halfway = d * Math.SQRT1_2;
       distances.push(halfway, d, halfway, 0);
-      d *= decayRate;
-      duration += timePerBounce;
+      d *= bounceSettings.decayRate;
+      duration += bounceSettings.timePerBounce;
     }
     const top = distances.map((d) => `-${d}px`);
     await element.animate({top}, {duration}).finished;
@@ -102,6 +99,13 @@ const multiplier = {
 for (const [key, m] of Object.entries(multiplier)) {
   anim.time[key] = m * baseTime;
 }
+
+// Other animation settings
+const bounceSettings = {
+  maxDistance: 64,
+  decayRate: 0.5,
+  timePerBounce: 4 * 1000 / 60,
+};
 
 // Helper function to animate, persist, and cancel
 async function persist(
