@@ -22,7 +22,7 @@ export const edit = {
   },
   async begin() {
     if (gs.turn !== 'trex' && gs.turn !== 'over') {
-      click(qr('cancel'));
+      click(cancelButton);
     }
     this.on = true;
     this.gsPrevious = deepCopy(gs);
@@ -278,3 +278,4 @@ const eTime = anim.time.editControlFade;
 // Other element references
 const changeTurnButton = qd('change="turn"');
 const toFade = [...trexButtons, ...changeButtons];
+const cancelButton = qr('cancel');

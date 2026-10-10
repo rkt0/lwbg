@@ -30,8 +30,8 @@ export const gp = {
     if (!immediate) {
       await sleep(anim.time.gameOverDelay);
     }
-    qr('humans-saved').textContent = nSaved;
-    qr('humans-total').textContent = nTotal;
+    humansSaved.textContent = nSaved;
+    humansTotal.textContent = nTotal;
     message.hide();
     sb.hide('roll-display');
     sb.hide('turn-display');
@@ -249,7 +249,7 @@ export const gp = {
     if (!ai.control.changed) return;
     await this.save();
     if (ai.control[gs.turn] && gs.phase !== 'roll') {
-      click(qr('cancel'));
+      click(cancelButton);
       sb.hide('ok-no-move');
       sb.hide('decline');
       sb.show('ok-ai-move');
@@ -293,6 +293,9 @@ let humanClickableItems;
 
 // Element references
 const scrim = qr('scrim');
+const cancelButton = qr('cancel');
+const humansSaved = qr('humans-saved');
+const humansTotal = qr('humans-total');
 
 // Helper functions
 function hPiecesOn(space) {

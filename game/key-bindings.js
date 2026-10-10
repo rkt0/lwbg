@@ -39,14 +39,14 @@ function handleConfirmKey() {
       } else if (!mv.toGo) ref = 'confirm';
       break;
   }
-  if (ref) clickIfOk(qr(ref));
+  if (ref) clickIfOk(elementFromRef(ref));
 }
 function handleCancelKey() {
   if (moreMenu.isActive()) moreMenu.hide();
   audioPanel.cancel();
   if (!gp.isActive()) return;
   else if (edit.on || gs.phase === 'move') {
-    clickIfOk(qr('cancel'));
+    clickIfOk(elementFromRef('cancel'));
   }
 }
 function handleEscapeKey() {
@@ -58,6 +58,13 @@ function handleZoomKey(e) {
   if (!gp.isActive()) return;
   if (zoom.factorCurrent !== 1) zoom.zoomDefault();
   else dispatchZoomKey[e.key]?.();
+}
+
+// Element reference cache
+const cache = {};
+function elementFromRef(ref) {
+  if (!(ref in cache)) cache[ref] = qr(ref);
+  return cache[ref];
 }
 
 // Dispatch table for zoom handler

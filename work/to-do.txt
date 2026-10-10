@@ -1,3 +1,2 @@
 fix weird horizontal line in jungle image
 css text-box-trim
-cache button references: click(qr()), clickIfOk(qr())
