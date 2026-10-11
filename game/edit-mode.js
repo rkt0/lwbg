@@ -3,7 +3,7 @@ import {
 } from './utility.js';
 import {click} from './mouse-events.js';
 import {template} from './template.js';
-import {gs} from './game-objects.js';
+import {gs, mv} from './game-objects.js';
 import {dom} from './dom.js';
 import {dice} from './dice.js';
 import {anim} from './animation.js';
@@ -21,8 +21,9 @@ export const edit = {
     this.dieCodes = {movement: 0, continue: 0};
   },
   async begin() {
-    if (gs.turn !== 'trex' && gs.turn !== 'over') {
+    if (mv.selected !== null) {
       click(cancelButton);
+      await sleep(anim.time.buttonSlide);
     }
     this.on = true;
     this.gsPrevious = deepCopy(gs);

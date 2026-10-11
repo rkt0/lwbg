@@ -1,1 +1,0 @@
-cancel/confirm shift downward on begin edit
