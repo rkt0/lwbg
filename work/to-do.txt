@@ -1,1 +1,0 @@
-fix weird horizontal line in jungle image
